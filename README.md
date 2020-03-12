@@ -1,4 +1,4 @@
-###Gruppo 28
+### Gruppo 28
 scaglione Margara<br><br>
 componenti del gruppo:
 * Crippa - Dario - 866558 - 10529288 - dario2.crippa@mail.polimi.it
