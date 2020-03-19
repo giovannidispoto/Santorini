@@ -1,7 +1,7 @@
 # Prova Finale Ingegneria del Software 2020
 
 
-## Gruppo AM00
+## Gruppo AM28
 
 
 - ###   10529288    Dario Crippa ([@AstroWLAN](https://github.com/AstroWLAN))<br>dario2.crippa@mail.polimi.it
