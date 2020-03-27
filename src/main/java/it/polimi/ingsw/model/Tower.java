@@ -61,29 +61,27 @@ public class Tower {
     /**
      * Remove the block from the tower
      * @param block block to delete
-     * @return true if the block was added, false otherwise
      * @throws RuntimeException if the block passed is not the latest in the tower or if the tower is empty
      */
-    public boolean removeBlock(Block block) throws RuntimeException{
+    public void removeBlock(Block block) throws RuntimeException{
         if(towerBlocks.size() == 1)
             throw new RuntimeException("Trying to remove block in a empty tower");
         if(towerBlocks.get(towerBlocks.size()-1) != block)
             throw new RuntimeException("Trying to remove block that's not the latest of the tower");
-        return towerBlocks.remove(block);
+         towerBlocks.remove(block);
     }
 
     /**
      * Remove the latest block from the tower
-     * @return block removed
      * @throws RuntimeException if the tower is empty
      */
-    public Block removeLatestBlock() throws RuntimeException{
+    public void removeLatestBlock() throws RuntimeException{
         /* TODO: Check if tower is not completed => last block is a dome*/
         if(towerBlocks.get(towerBlocks.size()-1) == Block.DOME)
             throw new RuntimeException("Trying to remove Dome");
         if(towerBlocks.size() == 1 )
             throw new RuntimeException("Trying to remove block in a void tower");
-        return towerBlocks.remove(towerBlocks.size() - 1 );
+        towerBlocks.remove(towerBlocks.size() - 1 );
     }
 
 }

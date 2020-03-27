@@ -30,7 +30,7 @@ public class Cell {
      * @return
      */
     public boolean isWorkerPresent(){
-        return this.cellWorker == null;
+        return this.cellWorker != null;
     }
 
     /**

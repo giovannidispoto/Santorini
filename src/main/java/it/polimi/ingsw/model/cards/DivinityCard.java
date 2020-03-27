@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model.cards;
 
 /**
- * The DivinityCard class model the card used in the game
+ * The DivinityCard class represent the card used in the game
  */
 public class DivinityCard {
     private final String cardName;
     private final String cardImage;
     private final Type cardType;
     private final int numberOfPlayersAllowed;
+    private final String cardEffect;
 
     /**
      * Create divinity card
@@ -16,11 +17,12 @@ public class DivinityCard {
      * @param cardType Type of the card, according to enum
      * @param numberOfPlayersAllowed Number of player
      */
-    public DivinityCard(String cardName, String cardImage, Type cardType, int numberOfPlayersAllowed) {
+    public DivinityCard(String cardName, String cardImage, Type cardType, String cardEffect, int numberOfPlayersAllowed) {
         this.cardName = cardName;
         this.cardImage = cardImage;
         this.cardType = cardType;
         this.numberOfPlayersAllowed = numberOfPlayersAllowed;
+        this.cardEffect = cardEffect;
     }
 
     public String getCardName() {

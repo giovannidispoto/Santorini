@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 public enum Type {
-    MOVMENT,
+    MOVEMENT,
     BUILD,
     WIN,
     OTHER

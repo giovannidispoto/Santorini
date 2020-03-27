@@ -6,7 +6,7 @@ package it.polimi.ingsw.model;
 public abstract class Turn {
     private final int N_VIEW_ROWS = 3;
     private final int N_VIEW_COLUMNS = 3;
-    private Match currentMatch;
+    protected Match currentMatch;
     private int movesLeft;
     private int blocksLeft;
     private boolean changeLevel;
@@ -27,7 +27,7 @@ public abstract class Turn {
         currentMatch.nextPlayer();
     }
 
-    public abstract void checkLocalCondition();
+    public abstract void checkLocalCondition(Worker selectedWorker);
     public abstract void moveWorker(Worker selectedWorker, int newRow, int newCol);
     public abstract void buildBlock(Worker selectedWorker,int blockRow, int blockCol);
 }

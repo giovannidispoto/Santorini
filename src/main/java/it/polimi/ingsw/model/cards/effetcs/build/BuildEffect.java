@@ -19,5 +19,5 @@ public abstract class BuildEffect extends Turn {
     public void moveWorker(Worker selectedWorker, int newRow, int newCol){}
 
 
-    public void checkLocalCondition(){}
+    public void checkLocalCondition(Worker currentWorker){}
 }

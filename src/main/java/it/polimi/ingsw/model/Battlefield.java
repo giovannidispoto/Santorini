@@ -75,7 +75,7 @@ public class Battlefield {
      * @param newColWorker
      * @param newRowWorker
      */
-    public void updateWorkerPosition(Worker worker, int oldRowWorker, int oldColWorker, int newColWorker, int newRowWorker) throws RuntimeException {
+    public void updateWorkerPosition(Worker worker, int oldRowWorker, int oldColWorker, int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
             throw new RuntimeException("Trying to update the position of a worker that's not in game");
         boardCells[oldRowWorker][oldColWorker].setWorker(null);
@@ -118,8 +118,8 @@ public class Battlefield {
         workerView[1][2] = (w.getColWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker()][w.getColWorker() + 1])) ? boardCells[w.getRowWorker()][w.getColWorker() + 1] : null ;
         workerView[0][1] = (w.getRowWorker() - 1  >= 0 && p.test(boardCells[w.getRowWorker() - 1][w.getColWorker()])) ? boardCells[w.getRowWorker()-1][w.getColWorker()] : null ;
         workerView[2][1] = (w.getRowWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker() + 1][w.getColWorker()])) ? boardCells[w.getRowWorker()+1][w.getColWorker()] : null ;
-        workerView[0][0] = (w.getRowWorker() -1 >= 0 && w.getColWorker() -1 >= 0 && p.test(boardCells[w.getRowWorker()][w.getColWorker()]) ) ? boardCells[w.getRowWorker()][w.getColWorker()] : null ;
-        workerView[0][2] = (w.getRowWorker() -1 >= 0 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()+1]) ) ? boardCells[w.getRowWorker()+1][w.getColWorker()+1] : null ;
+        workerView[0][0] = (w.getRowWorker() -1 >= 0 && w.getColWorker() -1 >= 0 && p.test(boardCells[w.getRowWorker()-1][w.getColWorker()-1]) ) ? boardCells[w.getRowWorker()-1][w.getColWorker()-1] : null ;
+        workerView[0][2] = (w.getRowWorker() -1 >= 0 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()-1][w.getColWorker()+1]) ) ? boardCells[w.getRowWorker()-1][w.getColWorker()+1] : null ;
         workerView[2][0] = (w.getRowWorker() +1 <= 4 && w.getColWorker() -1 >= 0 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()-1])) ? boardCells[w.getRowWorker()+1][w.getColWorker()-1] : null ;
         workerView[2][2] = (w.getRowWorker() +1 <= 4 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()+1]) ) ? boardCells[w.getRowWorker()+1][w.getColWorker()+1] : null ;
 

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.DivinityCard;
+import it.polimi.ingsw.model.cards.GlobalEffect;
+import it.polimi.ingsw.model.cards.effetcs.basic.BasicTurn;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 
 /**
@@ -18,7 +18,8 @@ public class Match {
     private List<DivinityCard> matchCards;
     private List<Turn> matchTurn;
     private Map<String,Turn> turnMap;
-    private List<GlobalCondition> matchGlobalConditions;
+    Worker selectedWorker;
+    private List<GlobalWinCondition> matchGlobalConditions;
     private List<GlobalEffect> matchGlobalEffects;
     private Player currentPlayer;
 
@@ -45,34 +46,45 @@ public class Match {
      *
      * @param newPlayer
      */
-    public void addPlayer(Player newPlayer){
-        if(matchPlayers.contains(newPlayer))
-                throw new RuntimeException("Player already in game");
+    public void addPlayer(Player newPlayer) {
+        if (matchPlayers.contains(newPlayer))
+            throw new RuntimeException("Player already in game");
         matchPlayers.add(newPlayer);
     }
 
-    /**
-     *
-     */
-    public void playTurn() {
-        Turn t = generateTurn();
-        //move
-        //build
-        //pass turn
-        //create worker view based on conditions passed with a function
-    }
+   public void setSelectedWorker(Worker selectedWorker){
+        if(!selectedWorker.getOwnerWorker().equals(currentPlayer))
+            throw new RuntimeException("Trying to use worker of another player");
+
+        this.selectedWorker = selectedWorker;
+   }
+
+   public Worker getSelectedWorker(){
+        return this.selectedWorker;
+   }
 
     /**
      *
      *
      * @return
      */
-    private Turn generateTurn(){
-
-        return null;
+    public Turn generateTurn(){
+        //In questo caso sto giocando con un turno base
+        return new BasicTurn(this);
     }
 
     public void nextPlayer(){
+        if(matchPlayers.size() == 3)
            currentPlayer = matchPlayers.get((matchPlayers.indexOf(currentPlayer) + 1) % 3);
+        else
+            currentPlayer = matchPlayers.get((matchPlayers.indexOf(currentPlayer) + 1) % 2);
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void reachLevel3(){
+        //current player reach level 3
     }
 }

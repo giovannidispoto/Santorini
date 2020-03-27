@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-public abstract class GlobalCondition {
+public abstract class GlobalWinCondition {
     private Player subject;
     private Match match;
 
-    public GlobalCondition(Player subject, Match match){
+    public GlobalWinCondition(Player subject, Match match){
         this.subject = subject;
         this.match = match;
     }

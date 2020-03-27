@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class TowersCondition extends GlobalCondition {
+public class TowersCondition extends GlobalWinCondition {
     private int numberOfFullTowers;
 
     public TowersCondition(Player player, Match match,int numberOfFullTowers) {

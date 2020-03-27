@@ -66,7 +66,8 @@ class TowerTest {
             t1.removeBlock(Block.DOME);
         });
 
-        assertTrue(t2.removeBlock(Block.DOME));
+        t2.removeBlock(Block.DOME);
+        assertTrue(t2.getHeight() == 3);
 
 
     }
@@ -86,7 +87,8 @@ class TowerTest {
         /*Expected error trying to remove latest block from empty tower*/
         assertThrows(RuntimeException.class, t::removeLatestBlock);
         assertThrows(RuntimeException.class, t2::removeLatestBlock);
-        assertTrue(t1.removeLatestBlock() == Block.LEVEL_1);
+        t1.removeLatestBlock();
+        assertTrue(t1.getHeight() == 0);
 
     }
 }

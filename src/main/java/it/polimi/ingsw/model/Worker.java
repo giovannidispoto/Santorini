@@ -51,9 +51,15 @@ public class Worker {
         return colWorker;
     }
 
+    public void setWorkerPosition(int rowWorker, int colWorker){
+        this.rowWorker = rowWorker;
+        this.colWorker = colWorker;
+        Battlefield.getBattelfieldInstance().updateWorkerPosition(this, rowWorker, colWorker);
+    }
+
     public void changeWorkerPosition(int newRowWorker, int newColWorker){
+        Battlefield.getBattelfieldInstance().updateWorkerPosition(this, rowWorker, colWorker, newRowWorker, newColWorker);
         this.rowWorker = newRowWorker;
         this.colWorker = newColWorker;
-        Battlefield.getBattelfieldInstance().updateWorkerPosition(this, newRowWorker, newColWorker);
     }
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.DivinityCard;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -10,7 +10,7 @@ import java.util.List;
 * */
 public class Player {
 
-    private final Date playerBirthday;
+    private final LocalDate playerBirthday;
     private final String playerNickname;
     private DivinityCard playerCard;
     private List<Worker> playerWorkers;
@@ -22,7 +22,7 @@ public class Player {
      * @param playerBirthday
      * @param playerColor
      */
-    public Player(String playerNickname,Date playerBirthday, Color playerColor ){
+    public Player(String playerNickname, LocalDate playerBirthday, Color playerColor ){
         this.playerNickname = playerNickname;
         this.playerBirthday = playerBirthday;
         this.playerColor = playerColor;
@@ -36,13 +36,12 @@ public class Player {
         this.playerCard = card;
     }
 
+
     /**
      *
      * @return
      */
-    public Worker chooseWorker(){
-        return null;
-    }
+
 
 
 }

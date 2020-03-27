@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.effetcs.win;
 
 import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Worker;
 
 public class JumpEffect extends WinEffect {
     /**
@@ -11,7 +12,7 @@ public class JumpEffect extends WinEffect {
     }
 
     @Override
-    public void checkLocalCondition() {
+    public void checkLocalCondition(Worker selectedWorker) {
 
     }
 }

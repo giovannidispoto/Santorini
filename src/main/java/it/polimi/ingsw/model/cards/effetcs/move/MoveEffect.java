@@ -14,7 +14,7 @@ public abstract class MoveEffect extends Turn {
     }
 
     @Override
-    public void checkLocalCondition() {
+    public void checkLocalCondition(Worker selectedWorker) {
 
     }
 

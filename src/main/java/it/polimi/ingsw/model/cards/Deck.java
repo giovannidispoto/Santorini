@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The Deck class model the effective deck composed by DivinityCards
@@ -10,16 +11,17 @@ public class Deck {
     private List<DivinityCard> listOfCards;
     private Deck deckInstance = null;
 
-    private Deck(){
-        //Inizizialize deck with cards
+    public Deck(List<DivinityCard> listOfCards){
+       this.listOfCards = List.copyOf(listOfCards);
     }
 
-    private Deck get(){
-        if(deckInstance == null)
-            deckInstance = new Deck();
-        return deckInstance;
+    public DivinityCard getDivinityCard(String cardName){
+        DivinityCard div = null;
+        for(DivinityCard card : listOfCards){
+            if(card.getCardName().equals(cardName))
+                div = card;
+        }
+        return div;
     }
-
-
 
 }
