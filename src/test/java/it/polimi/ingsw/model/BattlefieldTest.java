@@ -13,6 +13,7 @@ class BattlefieldTest {
 
     final  Worker w1 = new Worker(new Player("Pippo", LocalDate.now(), Color.BLUE),Color.BLUE);
     final Worker w2 = new Worker(new Player("Pluto", LocalDate.now(), Color.GREY),Color.GREY);
+
     @Test
     void battleFieldCreation() {
         Battlefield b = Battlefield.getBattelfieldInstance();

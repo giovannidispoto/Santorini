@@ -13,7 +13,7 @@ public abstract class Turn {
 
 
     /**
-     *
+     * Create turn in Match
      * @param currentMatch
      */
     public Turn(Match currentMatch) {
