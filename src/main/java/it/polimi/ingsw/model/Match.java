@@ -18,7 +18,7 @@ public class Match {
     private List<DivinityCard> matchCards;
     private List<Turn> matchTurn;
     private Map<String,Turn> turnMap;
-    Worker selectedWorker;
+    private Worker selectedWorker;
     private List<GlobalWinCondition> matchGlobalConditions;
     private List<GlobalEffect> matchGlobalEffects;
     private Player currentPlayer;
@@ -85,6 +85,10 @@ public class Match {
     }
 
     public void reachLevel3(){
-        //current player reach level 3
+       //controller method
+    }
+
+    public Player declareWinner(){
+        return currentPlayer;
     }
 }

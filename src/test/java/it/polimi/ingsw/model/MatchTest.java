@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MatchTest {
     final  Player p1 = new Player("Pippo", LocalDate.now(), Color.BLUE);
     final Player p2 = new Player("Pluto", LocalDate.now() ,Color.GREY);
-    final Worker w1 = new Worker(p1,Color.BLUE);
-    final Worker w2 = new Worker(p2,Color.GREY);
+    final Worker w1 = new Worker(p1);
+    final Worker w2 = new Worker(p2);
 
     @Test
     void playGameTurnWithoutCard() {

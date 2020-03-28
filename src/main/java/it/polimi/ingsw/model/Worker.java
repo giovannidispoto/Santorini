@@ -12,11 +12,10 @@ public class Worker {
     /**
      *
      * @param ownerWorker
-     * @param workerColor
      */
-    public Worker(Player ownerWorker, Color workerColor) {
+    public Worker(Player ownerWorker) {
         this.ownerWorker = ownerWorker;
-        this.workerColor = workerColor;
+        this.workerColor = ownerWorker.getPlayerColor();
 
     }
     /**

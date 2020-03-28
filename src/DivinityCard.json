@@ -1,4 +1,4 @@
-{"DivinityCard":[
+{"listOfCards":[
 	{ "cardName":"Apollo", "cardImage":"URL", "cardType":"MOVEMENT", "cardEffect":"Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated", "numberOfPlayersAllowed":3},
 	{ "cardName":"Artemis", "cardImage":"URL", "cardType":"MOVEMENT", "cardEffect":"Your Move: Your Worker may move one additional time, but not back to its initial space", "numberOfPlayersAllowed":3},
 	{ "cardName":"Athena", "cardImage":"URL", "cardType":"MOVEMENT", "cardEffect":"Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn", "numberOfPlayersAllowed":3},

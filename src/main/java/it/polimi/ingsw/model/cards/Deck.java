@@ -9,7 +9,6 @@ import java.util.Optional;
 public class Deck {
 
     private List<DivinityCard> listOfCards;
-    private Deck deckInstance = null;
 
     public Deck(List<DivinityCard> listOfCards){
        this.listOfCards = List.copyOf(listOfCards);

@@ -18,7 +18,11 @@ public class BasicTurn extends Turn {
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {
+        int lvl_b = Battlefield.getBattelfieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         selectedWorker.changeWorkerPosition(newRow,newCol);
+        int lvl_a = Battlefield.getBattelfieldInstance().getCell(newRow, newCol).getTower().getHeight();
+        if(lvl_a - lvl_b == 1 && lvl_a == 3)
+            reachLevel3 = true;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class BasicTurn extends Turn {
 
     public void checkLocalCondition(Worker selectedWorker){
         //controllo le condizioni di vittoria per Pan
-        if(Battlefield.getBattelfieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getRowWorker()).getTower().getHeight() == 3)
+        if(reachLevel3)
                 currentMatch.reachLevel3();
     }
 

@@ -36,6 +36,14 @@ public class Player {
         this.playerCard = card;
     }
 
+    /**
+     * Get color of player
+     * @return color
+    * */
+    public Color getPlayerColor() {
+        return playerColor;
+    }
+
 
     /**
      *
