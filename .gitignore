@@ -1,0 +1,53 @@
+#GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
+
+#------ BLACKLIST ------
+# Ignore everything	(rules = 1)
+*
+
+#------ WHITELIST ------
+# Don't Ignore those folders and files
+
+#root	(rules = 3)
+!.gitignore
+!pom.xml
+!README.md
+
+#DELIVERABLES/	(rules = 2) (You can do everything here, this folder has it's own gitignore)
+!DELIVERABLES/
+!DELIVERABLES/*
+
+#src/	(rules = 2)
+!src/
+!src/DivinityCard.json
+
+#test/	(rules = 7)
+!src/test/
+!src/test/java/
+!src/test/java/it/
+!src/test/java/it/polimi/
+!src/test/java/it/polimi/ingsw/
+!src/test/java/it/polimi/ingsw/model/
+!src/test/java/it/polimi/ingsw/model/*.java
+
+#main/	(rules = 19)
+!src/main/
+!src/main/java/
+!src/main/java/it/
+!src/main/java/it/polimi/
+!src/main/java/it/polimi/ingsw/
+!src/main/java/it/polimi/ingsw/model/
+!src/main/java/it/polimi/ingsw/model/*.java
+!src/main/java/it/polimi/ingsw/model/cards/
+!src/main/java/it/polimi/ingsw/model/cards/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/
+!src/main/java/it/polimi/ingsw/model/cards/effects/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/basic/
+!src/main/java/it/polimi/ingsw/model/cards/effects/basic/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/build/
+!src/main/java/it/polimi/ingsw/model/cards/effects/build/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/move/
+!src/main/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/win/
+!src/main/java/it/polimi/ingsw/model/cards/effects/win/*.java
+
+#Maintained by Gorlenah
