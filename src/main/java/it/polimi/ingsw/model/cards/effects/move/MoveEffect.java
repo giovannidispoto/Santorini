@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards.effetcs.move;
+package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Turn;

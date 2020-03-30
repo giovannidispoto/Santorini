@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards.effetcs.build;
+package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
