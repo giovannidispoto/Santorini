@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards.effetcs;
+package it.polimi.ingsw.model.cards.effects;
 
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.DivinityCard;
