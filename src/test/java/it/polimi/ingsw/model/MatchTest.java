@@ -16,7 +16,7 @@ class MatchTest {
 
     @Test
     void playGameTurnWithoutCard() {
-        Battlefield b = Battlefield.getBattelfieldInstance();
+        Battlefield b = Battlefield.getBattlefieldInstance();
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -34,40 +34,40 @@ class MatchTest {
 
         //Play Pippo
         m.setSelectedWorker(w1);
-        Cell[][] before = Battlefield.getBattelfieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
+        Cell[][] before = Battlefield.getBattlefieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
         Turn t = m.generateTurn();
         t.moveWorker(m.getSelectedWorker(),1,1 );
-        Cell[][] after = Battlefield.getBattelfieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
+        Cell[][] after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
         t.buildBlock(m.getSelectedWorker(), 0, 1);
         t.passTurn();
 
-        assertFalse(Battlefield.getBattelfieldInstance().getCell(0,0).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(0,4).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(0,1).getTower().getHeight() == 1);
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(0,0).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(0,1).getTower().getHeight() == 1);
 
         assertThrows(RuntimeException.class, ()->m.setSelectedWorker(w1));
 
         //Play Pluto
         m.setSelectedWorker(w2);
-        before = Battlefield.getBattelfieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
+        before = Battlefield.getBattlefieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
         t = m.generateTurn();
         t.moveWorker(m.getSelectedWorker(),4,4 );
-        after = Battlefield.getBattelfieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
+        after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
         t.buildBlock(m.getSelectedWorker(), 4, 3);
         t.passTurn();
 
-        assertFalse(Battlefield.getBattelfieldInstance().getCell(0,4).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(4,4).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(4,3).getTower().getHeight() == 1);
-        Battlefield.getBattelfieldInstance().cleanField();
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(4,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(4,3).getTower().getHeight() == 1);
+        Battlefield.getBattlefieldInstance().cleanField();
     }
 
     @Test
     void playGameTurnWithoutCardTowerLevel() {
 
-        Battlefield b = Battlefield.getBattelfieldInstance();
+        Battlefield b = Battlefield.getBattlefieldInstance();
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -86,15 +86,15 @@ class MatchTest {
 
         //Building Block near player
         //Level 2 Tower
-        Battlefield.getBattelfieldInstance().getCell(0,1).getTower().addNextBlock();
-        Battlefield.getBattelfieldInstance().getCell(0,1).getTower().addNextBlock();
+        Battlefield.getBattlefieldInstance().getCell(0,1).getTower().addNextBlock();
+        Battlefield.getBattlefieldInstance().getCell(0,1).getTower().addNextBlock();
         //Level 3 Tower
-        Battlefield.getBattelfieldInstance().getCell(1,0).getTower().addNextBlock();
-        Battlefield.getBattelfieldInstance().getCell(1,0).getTower().addNextBlock();
-        Battlefield.getBattelfieldInstance().getCell(1,0).getTower().addNextBlock();
+        Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
+        Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
+        Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
         Turn t = m.generateTurn();
-        Cell[][] before = Battlefield.getBattelfieldInstance().getWorkerView(w1,
-                (cell)->!cell.isWorkerPresent() && Battlefield.getBattelfieldInstance().getCell(m.getSelectedWorker().getRowWorker(), m.getSelectedWorker().getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
+        Cell[][] before = Battlefield.getBattlefieldInstance().getWorkerView(w1,
+                (cell)->!cell.isWorkerPresent() && Battlefield.getBattlefieldInstance().getCell(m.getSelectedWorker().getRowWorker(), m.getSelectedWorker().getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
         int nCell = 0;
 
         for(int i = 0; i < 3; i++) {
@@ -105,13 +105,13 @@ class MatchTest {
         assertTrue(nCell == 1);
 
         t.moveWorker(m.getSelectedWorker(),1,1 );
-        Cell[][] after = Battlefield.getBattelfieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
+        Cell[][] after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
         t.buildBlock(m.getSelectedWorker(), 1,0);
 
-        assertFalse(Battlefield.getBattelfieldInstance().getCell(0,0).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(0,4).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattelfieldInstance().getCell(1,0).getTower().isCompleted());
-        Battlefield.getBattelfieldInstance().cleanField();
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(0,0).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,0).getTower().isCompleted());
+        Battlefield.getBattlefieldInstance().cleanField();
     }
 }

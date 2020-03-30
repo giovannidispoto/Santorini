@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 /**
- * The Color enum represent workers color int the game
+ * Represents the colors assigned to the players and their workers
  */
 public enum Color {
     BROWN,

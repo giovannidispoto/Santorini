@@ -2,18 +2,17 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.GlobalEffect;
-import it.polimi.ingsw.model.cards.effetcs.basic.BasicTurn;
+import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * The Match class represent the effective match of players (2 o 3)
+ * Match class represents a match performed by a small group of players (2 or 3)
  */
 public class Match {
     private Battlefield matchBoard;
-    /*This list is managed in circular way*/
+    /* Circle List */
     private List<Player> matchPlayers;
     private List<DivinityCard> matchCards;
     private List<Turn> matchTurn;
@@ -24,27 +23,28 @@ public class Match {
     private Player currentPlayer;
 
     /**
-     *
-     * @param matchPlayers
-     * @param matchCards
+     * Class Constructor
+     * @param matchPlayers are the players who take part in the game
+     * @param matchCards are the cards picked for this game match
      */
     public Match(List<Player> matchPlayers, List<DivinityCard> matchCards) {
-        this.matchBoard = Battlefield.getBattelfieldInstance();
+        this.matchBoard = Battlefield.getBattlefieldInstance();
         this.matchPlayers = List.copyOf(matchPlayers);
         this.matchCards = List.copyOf(matchCards);
     }
 
     /**
-     *
-     * @param choosenPlayer
+     * Generates a new turn
+     * @return Turn object
      */
-    public void removePlayer(Player choosenPlayer) {
-        matchPlayers.remove(choosenPlayer);
+    public Turn generateTurn(){
+        //In this case I'm playing with a Basic Turn
+        return new BasicTurn(this);
     }
 
     /**
-     *
-     * @param newPlayer
+     * Adds a new player to the match
+     * @param newPlayer who has to be added
      */
     public void addPlayer(Player newPlayer) {
         if (matchPlayers.contains(newPlayer))
@@ -52,43 +52,48 @@ public class Match {
         matchPlayers.add(newPlayer);
     }
 
-   public void setSelectedWorker(Worker selectedWorker){
-        if(!selectedWorker.getOwnerWorker().equals(currentPlayer))
-            throw new RuntimeException("Trying to use worker of another player");
-
-        this.selectedWorker = selectedWorker;
-   }
-
-   public Worker getSelectedWorker(){
-        return this.selectedWorker;
-   }
-
     /**
-     *
-     *
-     * @return
+     * Removes a player from the match
+     * @param chosenPlayer who has to be removed
      */
-    public Turn generateTurn(){
-        //In questo caso sto giocando con un turno base
-        return new BasicTurn(this);
+    public void removePlayer(Player chosenPlayer) {
+        matchPlayers.remove(chosenPlayer);
     }
 
+    /**
+     * Indicates the next player
+     */
     public void nextPlayer(){
         if(matchPlayers.size() == 3)
-           currentPlayer = matchPlayers.get((matchPlayers.indexOf(currentPlayer) + 1) % 3);
+            currentPlayer = matchPlayers.get((matchPlayers.indexOf(currentPlayer) + 1) % 3);
         else
             currentPlayer = matchPlayers.get((matchPlayers.indexOf(currentPlayer) + 1) % 2);
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public void reachLevel3(){
-       //controller method
-    }
-
+    /**
+     * Declares the match winner
+     */
     public Player declareWinner(){
         return currentPlayer;
+    }
+
+    /**
+     * Says what happens when a player reaches the level three of a tower
+     */
+    public void reachLevel3(){/* Controller Method... */}
+
+    public Worker getSelectedWorker(){
+        return this.selectedWorker;
+    }
+
+    public void setSelectedWorker(Worker selectedWorker){
+        if(!selectedWorker.getOwnerWorker().equals(currentPlayer))
+            throw new RuntimeException("Trying to use worker of another player");
+
+        this.selectedWorker = selectedWorker;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

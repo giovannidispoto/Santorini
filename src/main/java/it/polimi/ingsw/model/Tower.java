@@ -4,13 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * The Tower class represent building inside the game
+ * Tower class represents a tower object of the game
  */
 public class Tower {
     List<Block> towerBlocks;
 
     /**
-     * Costruct the tower and initialize it at ground level
+     * Class constructor
+     * Towers are initialized to the GROUND level
      */
     public Tower(){
         towerBlocks = new LinkedList<>();
@@ -18,32 +19,16 @@ public class Tower {
     }
 
     /**
-     * Provide height of the tower
-     * @return height of the tower
-     */
-    public int getHeight(){
-        return towerBlocks.size() - 1;
-    }
-
-    /**
-     * Check if the tower is completed or not
-     * @return true if the tower is completed, false otherwise
+     * Checks tower status (completed or not)
+     * @return boolean value : TRUE if completed - FALSE otherwise
      */
     public boolean isCompleted(){
         return getHeight() == 4;
-    }
+    } //Maximum height is 4
 
     /**
-     *
-     * @return
-     */
-    public Block getLastBlock(){
-        return towerBlocks.get(towerBlocks.size() - 1);
-    }
-
-    /**
-     * Add the block into the tower
-     * @param block block to add
+     * Adds a specified block above the tower
+     * @param block that has to be added
      */
     public void addBlock(Block block){
         towerBlocks.add(block);
@@ -59,9 +44,9 @@ public class Tower {
     }
 
     /**
-     * Remove the block from the tower
-     * @param block block to delete
-     * @throws RuntimeException if the block passed is not the latest in the tower or if the tower is empty
+     * Removes a specified block from the tower
+     * @param block that has to be removed
+     * @throws RuntimeException if the block passed is not the last one added to the tower or if the tower has no blocks
      */
     public void removeBlock(Block block) throws RuntimeException{
         if(towerBlocks.size() == 1)
@@ -72,8 +57,8 @@ public class Tower {
     }
 
     /**
-     * Remove the latest block from the tower
-     * @throws RuntimeException if the tower is empty
+     * Remove the last block from the tower
+     * @throws RuntimeException if the tower has no blocks
      */
     public void removeLatestBlock() throws RuntimeException{
         /* TODO: Check if tower is not completed => last block is a dome*/
@@ -84,4 +69,19 @@ public class Tower {
         towerBlocks.remove(towerBlocks.size() - 1 );
     }
 
+    /**
+     * Provides height of the tower
+     * @return integer value (the height of the tower)
+     */
+    public int getHeight(){
+        return towerBlocks.size() - 1;
+    }
+
+    /**
+     * Gets the last block added to the tower
+     * @return Block object
+     */
+    public Block getLastBlock(){
+        return towerBlocks.get(towerBlocks.size() - 1);
+    }
 }

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model;
 
 /**
- * */
+ * Worker class represents a pawn of the game
+ */
 public class Worker {
     private final Player ownerWorker;
     private final Color workerColor;
@@ -10,41 +11,51 @@ public class Worker {
     private Cell[][] workerView;
 
     /**
-     *
-     * @param ownerWorker
+     * Class Constructor
+     * @param workerOwner The player who owns the pawn
      */
-    public Worker(Player ownerWorker) {
-        this.ownerWorker = ownerWorker;
-        this.workerColor = ownerWorker.getPlayerColor();
+    public Worker(Player workerOwner) {
+        this.ownerWorker = workerOwner;
+        this.workerColor = workerOwner.getPlayerColor();
 
     }
+
     /**
-     *
-     * @return
+     * Updates the worker position
+     */
+    public void changeWorkerPosition(int newRowWorker, int newColWorker){
+        Battlefield.getBattlefieldInstance().updateWorkerPosition(this, rowWorker, colWorker, newRowWorker, newColWorker);
+        this.rowWorker = newRowWorker;
+        this.colWorker = newColWorker;
+    }
+
+    /**
+     * Gets the owner of the worker
+     * @return Player object
      */
     public Player getOwnerWorker() {
         return ownerWorker;
     }
 
     /**
-     *
-     * @return
+     * Gets the color associated with the worker
+     * @return Color object
      */
     public Color getWorkerColor() {
         return workerColor;
     }
 
     /**
-     *
-     * @return
+     * Gets the x coordinate of the worker inside the ground
+     * @return integer
      */
     public int getRowWorker() {
         return rowWorker;
     }
 
     /**
-     *
-     * @return
+     * Gets the y coordinate of the worker inside the ground
+     * @return integer
      */
     public int getColWorker() {
         return colWorker;
@@ -53,12 +64,6 @@ public class Worker {
     public void setWorkerPosition(int rowWorker, int colWorker){
         this.rowWorker = rowWorker;
         this.colWorker = colWorker;
-        Battlefield.getBattelfieldInstance().updateWorkerPosition(this, rowWorker, colWorker);
-    }
-
-    public void changeWorkerPosition(int newRowWorker, int newColWorker){
-        Battlefield.getBattelfieldInstance().updateWorkerPosition(this, rowWorker, colWorker, newRowWorker, newColWorker);
-        this.rowWorker = newRowWorker;
-        this.colWorker = newColWorker;
+        Battlefield.getBattlefieldInstance().updateWorkerPosition(this, rowWorker, colWorker);
     }
 }

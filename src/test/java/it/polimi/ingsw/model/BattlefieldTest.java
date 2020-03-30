@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +18,7 @@ class BattlefieldTest {
 
     @Test
     void battleFieldCreation() {
-        Battlefield b = Battlefield.getBattelfieldInstance();
+        Battlefield b = Battlefield.getBattlefieldInstance();
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
         workers.add(w2);
@@ -27,12 +26,12 @@ class BattlefieldTest {
         w1.setWorkerPosition(0,0);
         w2.setWorkerPosition(0,4);
 
-        Battlefield.getBattelfieldInstance().cleanField();
+        Battlefield.getBattlefieldInstance().cleanField();
     }
 
     @Test
     void battleFieldChangeWorkerPosition(){
-        Battlefield b = Battlefield.getBattelfieldInstance();
+        Battlefield b = Battlefield.getBattlefieldInstance();
 
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -51,12 +50,12 @@ class BattlefieldTest {
         assertTrue(!b.getCell(0,4).isWorkerPresent());
         assertTrue(b.getCell(3,3).getWorker().equals(w1));
         assertTrue(b.getCell(4,4).getWorker().equals(w2));
-        Battlefield.getBattelfieldInstance().cleanField();
+        Battlefield.getBattlefieldInstance().cleanField();
     }
 
     @Test
     void battleFieldWorkerView() {
-        Battlefield b = Battlefield.getBattelfieldInstance();
+        Battlefield b = Battlefield.getBattlefieldInstance();
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
         workers.add(w2);
@@ -117,6 +116,6 @@ class BattlefieldTest {
 
         assertEquals(nOne,  2);
         assertEquals(nTwo, 4);
-        Battlefield.getBattelfieldInstance().cleanField();
+        Battlefield.getBattlefieldInstance().cleanField();
     }
 }

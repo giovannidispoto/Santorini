@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * The DeckReader class read all the card from JSON and create Deck
+ * Reads all the cards from a JSON file and it's used to create a Deck object
  */
 public class DeckReader {
 
     /**
-     * Load deck from reader passed
-     * @param reader file to read
-     * @return deck of divinity card
-     * @throws IOException
+     * Loads the card deck from a file
+     * @param reader file that has to be read
+     * @return Deck object (of divinity cards)
+     * @throws IOException exception
      */
     public Deck loadDeck(Reader reader) throws IOException {
         BufferedReader buff = new BufferedReader(reader);

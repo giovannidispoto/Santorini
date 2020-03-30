@@ -4,13 +4,23 @@ public abstract class GlobalWinCondition {
     private Player subject;
     private Match match;
 
+    /**
+     * Class Constructor
+     */
     public GlobalWinCondition(Player subject, Match match){
         this.subject = subject;
         this.match = match;
     }
+
+    /**
+     * Reports to the current match that there is a winner
+     */
     public void callWinner(){
         //code
     }
 
+    /**
+     * Check if a win condition has been triggered (abstract)
+     */
     public abstract void checkWinCondition();
 }

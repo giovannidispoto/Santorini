@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Worker;
 
 /**
- *
+ * NoLevelUpCondition Class describes a global effect
  */
 public class NoLevelUpCondition extends GlobalEffect {
 
@@ -29,7 +29,7 @@ public class NoLevelUpCondition extends GlobalEffect {
 
     @Override
     public Cell[][] applyEffect(Worker w) {
-        Battlefield battlefield = Battlefield.getBattelfieldInstance();
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
         return battlefield.getWorkerView(w, (cell)->cell.getTower().getHeight()<= battlefield.getCell(w.getRowWorker(),w.getColWorker()).getTower().getHeight());
     }
 }

@@ -1,16 +1,16 @@
 package it.polimi.ingsw.model;
 
 /**
- * The Cell class represent the cell inside the battelfield
+ * Class Cell represents a single cell of the board
  */
 public class Cell {
-    /* Tower in the cell, defualt to ground level*/
+
     private Tower cellTower;
     private Worker cellWorker;
 
     /**
-     *
-     * @param tower
+     * Class Constructor
+     * @param tower inside the cell (the default value is GROUND)
      */
     public Cell(Tower tower){
         this.cellTower = tower;
@@ -18,35 +18,35 @@ public class Cell {
     }
 
     /**
-     *
-     * @return
-     */
-    public Tower getTower(){
-        return this.cellTower;
-    }
-
-    /**
-     *
-     * @return
+     * Looks in there is a worker in the cell
+     * @return boolean value about the presence of a worker in  the cell
      */
     public boolean isWorkerPresent(){
         return this.cellWorker != null;
     }
 
     /**
-     *
-     * @param worker
+     * Removes a worker from the cell
      */
-    public void setWorker(Worker worker){
-        this.cellWorker = worker;
+    public void removeWorker(){
+        this.cellWorker = null;
+    }
+
+    /**
+     * Gets the tower inside the cell
+     * @return Tower object
+     */
+    public Tower getTower(){
+        return this.cellTower;
     }
 
     public Worker getWorker(){return this.cellWorker;}
 
     /**
-     *
+     * Sets a worker in the cell
+     * @param worker subject
      */
-    public void removeWorker(){
-        this.cellWorker = null;
+    public void setWorker(Worker worker){
+        this.cellWorker = worker;
     }
 }

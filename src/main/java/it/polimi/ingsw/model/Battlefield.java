@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * The Battlefield class represent the board where game is played
+ * Battlefield Class represents the board where the game is played
  */
 public class Battlefield {
     private Cell[][] boardCells;
@@ -18,31 +18,24 @@ public class Battlefield {
     private static Battlefield instance = null;
 
     /**
-     * Factory method that return the battelfield istance that is a singleton
-     * @return Battlefield
-     */
-    public static Battlefield getBattelfieldInstance(){
-        if(instance == null)
-            instance = new Battlefield();
-        return instance;
-    }
-
-    /**
-     * Set workers in game
-     * @param workersInGame workers in game
-     */
-    public void setWorkersInGame(List<Worker> workersInGame){
-        this.workersInGame = List.copyOf(workersInGame);
-    }
-    /**
-     * Create battelfield
+     * Class constructor
      * */
     private Battlefield() {
         initializeBoard();
     }
 
     /**
-     * Inizalize the board with new Cell and Tower
+     * Factory method that returns the Battlefield instance (Singleton)
+     * @return Battlefield object
+     */
+    public static Battlefield getBattlefieldInstance(){
+        if(instance == null)
+            instance = new Battlefield();
+        return instance;
+    }
+
+    /**
+     * Initializes the board with new cells and towers
      */
     private void initializeBoard(){
         boardCells = new Cell[N_COLUMNS][N_ROWS];
@@ -52,7 +45,7 @@ public class Battlefield {
     }
 
     /**
-     * Reset actual state of Battelfield
+     * Resets the board
      */
     public void cleanField(){
         initializeBoard();
@@ -60,8 +53,8 @@ public class Battlefield {
     }
 
     /**
-     * Remove worker of a Player
-     * @param player Player to remove from the game
+     * Removes a player's worker
+     * @param player who's worker has to be removed
      */
     public void removeWorker(Player player){
         workersInGame = workersInGame.stream()
@@ -70,10 +63,10 @@ public class Battlefield {
     }
 
     /**
-     *
-     * @param worker
-     * @param newColWorker
-     * @param newRowWorker
+     * Registers a worker position change
+     * @param worker subject of the action
+     * @param newColWorker new y coordinate of the worker
+     * @param newRowWorker new x coordinate of the worker
      */
     public void updateWorkerPosition(Worker worker, int oldRowWorker, int oldColWorker, int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
@@ -81,35 +74,36 @@ public class Battlefield {
         boardCells[oldRowWorker][oldColWorker].setWorker(null);
         boardCells[newRowWorker][newColWorker].setWorker(worker);
     }
+
     public void updateWorkerPosition(Worker worker,int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
             throw new RuntimeException("Trying to update the position of a worker that's not in game");
         boardCells[newRowWorker][newColWorker].setWorker(worker);
     }
 
-
     public Cell getCell(int x, int y){
         return boardCells[x][y];
     }
 
     /**
-     *
-     * @param x
-     * @param y
-     * @return
+     * Gets the tower inside a cell
+     * @param x cell coordinate
+     * @param y cell coordinate
+     * @return Tower object
      */
    public Tower getTower(int x, int y){
         return boardCells[x][y].getTower();
    }
 
     /**
-     * Calculate the view matrix used from the worker to know how to move
-     * @param w worker
-     * @param p predicate used for checking if some movement are permitted
-     * @return view matrix
+     * Generates the worker's view matrix to show the space where are allowed actions (move or build)
+     * @param w subject
+     * @param p predicate used to check if a particular movement is allowed
+     * @return view matrix, a Cell multidimensional array
      */
+
    public Cell[][] getWorkerView(Worker w, Predicate<Cell> p){
-       //get worker matrix
+       //gets worker's matrix
         Cell[][] workerView = new Cell[N_ROWS_VIEW][N_COLUMNS_VIEW];
 
         //workerView[1][1] = boardCells[w.getRowWorker()][w.getColWorker()];
@@ -129,4 +123,13 @@ public class Battlefield {
    public Cell[][] getWorkerView(Worker w){
        return getWorkerView(w, (cell)-> true);
    }
+
+    /**
+     * Sets Workers in game
+     * @param workersInGame workers in game
+     */
+
+    public void setWorkersInGame(List<Worker> workersInGame){
+        this.workersInGame = List.copyOf(workersInGame);
+    }
 }
