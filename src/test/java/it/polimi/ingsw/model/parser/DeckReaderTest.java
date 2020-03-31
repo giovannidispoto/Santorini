@@ -16,10 +16,9 @@ class DeckReaderTest {
     @Test
     void readerTest() throws IOException {
 
-        // create a reader and load from Divinities.json
-        Reader reader = Files.newBufferedReader(Paths.get("src/Divinities.json"));
         DeckReader deckReader = new DeckReader();
-        Deck deck = deckReader.loadDeck(reader);
+        //load from *.json
+        Deck deck = deckReader.loadDeck(Files.newBufferedReader(Paths.get("src/Divinities.json")));
 
         assertNotNull(deck.getDivinityCard("Apollo"));
         assertSame(deck.getDivinityCard("Apollo").getCardType(), Type.MOVEMENT);
