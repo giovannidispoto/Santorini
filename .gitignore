@@ -18,20 +18,31 @@
 
 #src/	(rules = 2)
 !src/
-!src/Divinties.json
+!src/*.json
 
-#test/	(rules = 9)
+#test/	(rules = 19)
 !src/test/
 !src/test/java/
 !src/test/java/it/
 !src/test/java/it/polimi/
 !src/test/java/it/polimi/ingsw/
+#model/
 !src/test/java/it/polimi/ingsw/model/
 !src/test/java/it/polimi/ingsw/model/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/move
-!src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+#model/cards/
+!src/test/java/it/polimi/ingsw/model/cards/
+!src/test/java/it/polimi/ingsw/model/cards/*.java
+#model/cards/effects/*
+!src/test/java/it/polimi/ingsw/model/cards/effects/
+!src/test/java/it/polimi/ingsw/model/cards/effects/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/basic
+!src/test/java/it/polimi/ingsw/model/cards/effects/basic/*.java
 !src/test/java/it/polimi/ingsw/model/cards/effects/build
 !src/test/java/it/polimi/ingsw/model/cards/effects/build/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/move
+!src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/win
+!src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
 
 
 #main/	(rules = 19)
@@ -40,10 +51,13 @@
 !src/main/java/it/
 !src/main/java/it/polimi/
 !src/main/java/it/polimi/ingsw/
+#model/
 !src/main/java/it/polimi/ingsw/model/
 !src/main/java/it/polimi/ingsw/model/*.java
+#model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/*.java
+#model/cards/effects/*
 !src/main/java/it/polimi/ingsw/model/cards/effects/
 !src/main/java/it/polimi/ingsw/model/cards/effects/*.java
 !src/main/java/it/polimi/ingsw/model/cards/effects/basic/
