@@ -13,8 +13,17 @@ public class ExtraMove extends MoveEffect {
      * @param currentMatch
      * @param movesLeft
      */
-    public ExtraMove(Match currentMatch, int movesLeft) {
+    /* public ExtraMove(Match currentMatch, int movesLeft) {
         super(currentMatch);
+        this.movesLeft = movesLeft;
+    }*/
+
+    /**
+     *
+     * @param movesLeft
+     */
+    public ExtraMove(int movesLeft){
+        super();
         this.movesLeft = movesLeft;
     }
 

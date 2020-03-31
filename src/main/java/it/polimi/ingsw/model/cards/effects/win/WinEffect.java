@@ -8,9 +8,9 @@ public abstract class WinEffect extends Turn {
     /**
      * @param currentMatch
      */
-    public WinEffect(Match currentMatch) {
+   /* public WinEffect(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     public void moveWorker(Worker selectedWorker, int newRow, int newCol){
 

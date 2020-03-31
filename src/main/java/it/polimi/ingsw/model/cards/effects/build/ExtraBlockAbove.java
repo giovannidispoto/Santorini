@@ -7,9 +7,9 @@ public class ExtraBlockAbove extends BuildEffect {
     /**
      * @param currentMatch
      */
-    public ExtraBlockAbove(Match currentMatch) {
+    /* public ExtraBlockAbove(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) {

@@ -10,9 +10,11 @@ public abstract class MoveEffect extends Turn {
     /**
      * @param currentMatch
      */
-    public MoveEffect(Match currentMatch) {
+   /* public MoveEffect(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
+
+    public MoveEffect(){}
 
     @Override
     public void checkLocalCondition(Worker selectedWorker) {

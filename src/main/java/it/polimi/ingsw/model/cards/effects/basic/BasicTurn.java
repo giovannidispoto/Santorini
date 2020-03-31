@@ -10,9 +10,9 @@ public class BasicTurn extends Turn {
     /**
      * @param currentMatch is the actual match
      */
-    public BasicTurn(Match currentMatch) {
-        super(currentMatch);
-    }
+   // public BasicTurn(Match currentMatch) {
+    //    super(currentMatch);
+    //}
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {

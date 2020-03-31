@@ -7,9 +7,9 @@ public class CantLevelUp extends MoveEffect {
     /**
      * @param currentMatch
      */
-    public CantLevelUp(Match currentMatch) {
+    /*public CantLevelUp(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {

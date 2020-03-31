@@ -6,9 +6,9 @@ public class RemoveBlock extends BasicTurn {
     /**
      * @param currentMatch is the actual match
      */
-    public RemoveBlock(Match currentMatch) {
-        super(currentMatch);
-    }
+    //public RemoveBlock(Match currentMatch) {
+    //    super(currentMatch);
+    //}
 
     public void removeBlock(){
 

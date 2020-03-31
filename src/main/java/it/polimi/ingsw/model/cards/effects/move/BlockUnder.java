@@ -9,9 +9,9 @@ public class BlockUnder extends MoveEffect {
     /**
      * @param currentMatch
      */
-    public BlockUnder(Match currentMatch) {
+    /*ublic BlockUnder(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) throws RuntimeException {

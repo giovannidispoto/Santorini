@@ -7,9 +7,9 @@ public class JumpEffect extends WinEffect {
     /**
      * @param currentMatch
      */
-    public JumpEffect(Match currentMatch) {
+    /*public JumpEffect(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void checkLocalCondition(Worker selectedWorker) {

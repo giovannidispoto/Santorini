@@ -13,8 +13,12 @@ public abstract class BuildEffect extends Turn {
     /**
      * @param currentMatch
      */
-    public BuildEffect(Match currentMatch) {
-        super(currentMatch);
+   // public BuildEffect(Match currentMatch) {
+   //     super(currentMatch);
+   // }
+
+    public BuildEffect(){
+        //null
     }
 
     public void moveWorker(Worker selectedWorker, int newRow, int newCol){

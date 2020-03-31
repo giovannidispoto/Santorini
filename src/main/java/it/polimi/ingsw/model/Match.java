@@ -42,11 +42,12 @@ public class Match {
      */
     public Turn generateTurn(){
         //In this case I'm playing with a DomeEveryWhere Turn
-        //return new BasicTurn(this);
-        //return new ExtraMove(this,3);
-        //return new DomeEverywhere(this);
-        //return new BlockUnder(this);
-        return new BlockUnder(this);
+        Turn t = new BasicTurn();
+       //Turn t = new ExtraMove(3);
+        //Turn t = new DomeEverywhere();
+      // Turn t = new BlockUnder();
+       t.setCurrentMatch(this);
+       return t;
     }
 
     /**

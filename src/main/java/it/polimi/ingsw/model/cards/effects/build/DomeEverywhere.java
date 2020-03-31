@@ -9,9 +9,9 @@ public class DomeEverywhere extends BuildEffect {
     /**
      * @param currentMatch
      */
-    public DomeEverywhere(Match currentMatch) {
+   /* public DomeEverywhere(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) throws RuntimeException {

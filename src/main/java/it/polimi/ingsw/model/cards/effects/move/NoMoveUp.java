@@ -8,9 +8,9 @@ public class NoMoveUp extends MoveEffect {
     /**
      * @param currentMatch
      */
-    public NoMoveUp(Match currentMatch) {
+    /* public NoMoveUp(Match currentMatch) {
         super(currentMatch);
-    }
+    }*/
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {

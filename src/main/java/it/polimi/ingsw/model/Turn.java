@@ -17,7 +17,19 @@ public abstract class Turn {
      * Class Constructor
      * @param currentMatch that holds all the parameters of the current match
      */
-    public Turn(Match currentMatch) {
+    /*public Turn(Match currentMatch) {
+        this.currentMatch = currentMatch;
+    }*/
+
+    public Turn(){
+        //null
+    }
+
+    /**
+     *
+     * @param currentMatch
+     */
+    public void setCurrentMatch(Match currentMatch){
         this.currentMatch = currentMatch;
     }
 
