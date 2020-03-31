@@ -29,6 +29,8 @@
 #model/
 !src/test/java/it/polimi/ingsw/model/
 !src/test/java/it/polimi/ingsw/model/*.java
+!src/test/java/it/polimi/ingsw/model/parser
+!src/test/java/it/polimi/ingsw/model/parser/*.java
 #model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/*.java
@@ -54,6 +56,8 @@
 #model/
 !src/main/java/it/polimi/ingsw/model/
 !src/main/java/it/polimi/ingsw/model/*.java
+!src/main/java/it/polimi/ingsw/model/parser
+!src/main/java/it/polimi/ingsw/model/parser/*.java
 #model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/*.java
