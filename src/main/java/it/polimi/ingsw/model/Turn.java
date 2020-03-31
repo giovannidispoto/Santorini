@@ -11,7 +11,7 @@ public abstract class Turn {
     protected int movesLeft;
     protected int blocksLeft;
     private boolean changeLevel;
-
+    protected boolean reachLevel3 = false;
 
     /**
      * Class Constructor

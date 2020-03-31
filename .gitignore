@@ -1,4 +1,4 @@
-#GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
+ #GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
 
 #------ BLACKLIST ------
 # Ignore everything	(rules = 1)
@@ -18,7 +18,7 @@
 
 #src/	(rules = 2)
 !src/
-!src/DivinityCard.json
+!src/Divinties.json
 
 #test/	(rules = 9)
 !src/test/

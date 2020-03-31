@@ -7,8 +7,6 @@ import it.polimi.ingsw.model.Worker;
 
 public class BasicTurn extends Turn {
 
-    private boolean reachLevel3 = false;
-
     /**
      * @param currentMatch is the actual match
      */
@@ -36,7 +34,6 @@ public class BasicTurn extends Turn {
     }
 
     public void checkLocalCondition(Worker selectedWorker){
-        //controllo le condizioni di vittoria per Pan
         if(reachLevel3)
                 currentMatch.reachLevel3();
     }

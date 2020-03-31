@@ -34,12 +34,15 @@ public class ExtraMove extends MoveEffect {
         int oldCol = selectedWorker.getColWorker();
         selectedWorker.changeWorkerPosition(newRow,newCol);
         movesLeft--;
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
         if(movesLeft > 0) {
-            Battlefield battlefield = Battlefield.getBattlefieldInstance();
             Cell[][] newView = battlefield.getWorkerViewForMove(selectedWorker);
             newView[oldRow][oldCol] = null;
             selectedWorker.setWorkerView(newView);
         }
+        //Set Worker Build Matrix
+        if(movesLeft==0)
+            selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker,(cell)->!cell.isWorkerPresent()));
 
     }
 
