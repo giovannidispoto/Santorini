@@ -28,6 +28,9 @@
 !src/test/java/it/polimi/ingsw/
 !src/test/java/it/polimi/ingsw/model/
 !src/test/java/it/polimi/ingsw/model/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/move
+!src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+
 
 #main/	(rules = 19)
 !src/main/
