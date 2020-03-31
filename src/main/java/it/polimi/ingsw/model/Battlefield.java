@@ -12,8 +12,8 @@ public class Battlefield {
     private Cell[][] boardCells;
     private static int N_ROWS = 5;
     private static int N_COLUMNS= 5;
-    private static int N_ROWS_VIEW = 3;
-    private static int N_COLUMNS_VIEW= 3;
+    private static int N_ROWS_VIEW = 5;
+    private static int N_COLUMNS_VIEW= 5;
     private List<Worker> workersInGame;
     private static Battlefield instance = null;
 
@@ -106,22 +106,48 @@ public class Battlefield {
        //gets worker's matrix
         Cell[][] workerView = new Cell[N_ROWS_VIEW][N_COLUMNS_VIEW];
 
-        //workerView[1][1] = boardCells[w.getRowWorker()][w.getColWorker()];
-        workerView[1][1] = null;
-        workerView[1][0] = (w.getColWorker() - 1 >= 0 && p.test(boardCells[w.getRowWorker()][w.getColWorker() - 1])) ? boardCells[w.getRowWorker()][w.getColWorker() - 1] : null ;
-        workerView[1][2] = (w.getColWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker()][w.getColWorker() + 1])) ? boardCells[w.getRowWorker()][w.getColWorker() + 1] : null ;
-        workerView[0][1] = (w.getRowWorker() - 1  >= 0 && p.test(boardCells[w.getRowWorker() - 1][w.getColWorker()])) ? boardCells[w.getRowWorker()-1][w.getColWorker()] : null ;
-        workerView[2][1] = (w.getRowWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker() + 1][w.getColWorker()])) ? boardCells[w.getRowWorker()+1][w.getColWorker()] : null ;
-        workerView[0][0] = (w.getRowWorker() -1 >= 0 && w.getColWorker() -1 >= 0 && p.test(boardCells[w.getRowWorker()-1][w.getColWorker()-1]) ) ? boardCells[w.getRowWorker()-1][w.getColWorker()-1] : null ;
-        workerView[0][2] = (w.getRowWorker() -1 >= 0 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()-1][w.getColWorker()+1]) ) ? boardCells[w.getRowWorker()-1][w.getColWorker()+1] : null ;
-        workerView[2][0] = (w.getRowWorker() +1 <= 4 && w.getColWorker() -1 >= 0 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()-1])) ? boardCells[w.getRowWorker()+1][w.getColWorker()-1] : null ;
-        workerView[2][2] = (w.getRowWorker() +1 <= 4 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()+1]) ) ? boardCells[w.getRowWorker()+1][w.getColWorker()+1] : null ;
+        for(int i = 0; i < N_ROWS_VIEW; i++)
+            for (int j = 0; j < N_COLUMNS_VIEW; j++)
+                workerView[i][j] = null;
+
+            if((w.getColWorker() - 1 >= 0 && p.test(boardCells[w.getRowWorker()][w.getColWorker() - 1])))
+                workerView[w.getRowWorker()][w.getColWorker()-1] = boardCells[w.getRowWorker()][w.getColWorker() - 1];
+
+            if((w.getColWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker()][w.getColWorker() + 1])))
+                workerView[w.getRowWorker()][w.getColWorker() + 1] = boardCells[w.getRowWorker()][w.getColWorker() + 1];
+
+            if((w.getRowWorker() - 1  >= 0 && p.test(boardCells[w.getRowWorker() - 1][w.getColWorker()])))
+                workerView[w.getRowWorker()-1][w.getColWorker()] = boardCells[w.getRowWorker() - 1][w.getColWorker()];
+
+            if(w.getRowWorker() + 1 <= 4 && p.test(boardCells[w.getRowWorker() + 1][w.getColWorker()]))
+                workerView[w.getRowWorker()+1][w.getColWorker()] = boardCells[w.getRowWorker() + 1][w.getColWorker()];
+
+            if((w.getRowWorker() -1 >= 0 && w.getColWorker() -1 >= 0 && p.test(boardCells[w.getRowWorker()-1][w.getColWorker()-1])))
+                workerView[w.getRowWorker()-1][w.getColWorker()-1] = boardCells[w.getRowWorker()-1][w.getColWorker()-1];
+
+            if((w.getRowWorker() -1 >= 0 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()-1][w.getColWorker()+1]) ))
+                workerView[w.getRowWorker()-1][w.getColWorker()+1] =  boardCells[w.getRowWorker()-1][w.getColWorker()+1];
+
+            if((w.getRowWorker() +1 <= 4 && w.getColWorker() -1 >= 0 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()-1])))
+                workerView[w.getRowWorker()+1][w.getColWorker()-1] =  boardCells[w.getRowWorker()+1][w.getColWorker()-1];
+
+            if((w.getRowWorker() +1 <= 4 && w.getColWorker() +1 <= 4 && p.test( boardCells[w.getRowWorker()+1][w.getColWorker()+1])))
+                workerView[w.getRowWorker()+1][w.getColWorker()+1] = boardCells[w.getRowWorker()+1][w.getColWorker()+1];
 
        return workerView;
    }
 
    public Cell[][] getWorkerView(Worker w){
        return getWorkerView(w, (cell)-> true);
+   }
+
+    /**
+     *
+     * @param w
+     * @return
+     */
+   public Cell[][] getWorkerViewForMove(Worker w){
+       return getWorkerView(w, (cell)->!cell.isWorkerPresent() && this.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
    }
 
     /**

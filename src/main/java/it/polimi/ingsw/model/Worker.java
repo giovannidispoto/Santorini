@@ -46,6 +46,22 @@ public class Worker {
     }
 
     /**
+     *
+     * @param workerView
+     */
+    public void setWorkerView(Cell[][] workerView){
+        this.workerView = workerView;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Cell[][] getWorkerView(){
+        return this.workerView;
+    }
+
+    /**
      * Gets the x coordinate of the worker inside the ground
      * @return integer
      */

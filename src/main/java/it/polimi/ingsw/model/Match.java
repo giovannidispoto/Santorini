@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
+import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class Match {
      */
     public Turn generateTurn(){
         //In this case I'm playing with a Basic Turn
-        return new BasicTurn(this);
+        //return new BasicTurn(this);
+        return new ExtraMove(this,3);
     }
 
     /**

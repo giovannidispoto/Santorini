@@ -68,8 +68,8 @@ class BattlefieldTest {
         int nOne = 0;
         int nTwo = 0;
 
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for(int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (workerViewOne[i][j] != null) nOne++;
                 if (workerViewTwo[i][j] != null) nTwo++;
             }
@@ -87,8 +87,8 @@ class BattlefieldTest {
        nOne = 0;
        nTwo = 0;
 
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for(int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (workerViewOne[i][j] != null) nOne++;
                 if (workerViewTwo[i][j] != null) nTwo++;
             }
@@ -107,8 +107,8 @@ class BattlefieldTest {
         nOne = 0;
         nTwo = 0;
 
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for(int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (workerViewOne[i][j] != null) nOne++;
                 if (workerViewTwo[i][j] != null) nTwo++;
             }

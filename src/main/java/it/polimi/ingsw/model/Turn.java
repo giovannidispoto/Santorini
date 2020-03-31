@@ -5,11 +5,11 @@ package it.polimi.ingsw.model;
  */
 public abstract class Turn {
 
-    private final int N_VIEW_ROWS = 3;
-    private final int N_VIEW_COLUMNS = 3;
+    private final int N_VIEW_ROWS = 5;
+    private final int N_VIEW_COLUMNS = 5;
     protected Match currentMatch;
-    private int movesLeft;
-    private int blocksLeft;
+    protected int movesLeft;
+    protected int blocksLeft;
     private boolean changeLevel;
 
 
@@ -27,7 +27,21 @@ public abstract class Turn {
     public void passTurn(){
         currentMatch.nextPlayer();
     }
+    /**
+     * Get moves left in the turn
+     * @return moves left
+     */
+    public int getMovesLeft(){
+        return movesLeft;
+    }
 
+    /**
+     * Get blocks left in the turn
+     * @return blocks left
+     */
+    public int getBlocksLeft(){
+        return blocksLeft;
+    }
     /**
      * Abstract methods that are specialized by the sons of this class
      */

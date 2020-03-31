@@ -29,9 +29,10 @@ public class BasicTurn extends Turn {
     public void buildBlock(Worker selectedWorker, int x, int y) {
         int lvOne = Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
        Battlefield.getBattlefieldInstance().getTower(x,y).addNextBlock();
-
+/*
        if(Battlefield.getBattlefieldInstance().getTower(x,y).getHeight() == 3 && lvOne == 2)
-           reachLevel3 = true;
+           reachLevel3 = true;*/
+
     }
 
     public void checkLocalCondition(Worker selectedWorker){
