@@ -30,6 +30,8 @@
 !src/test/java/it/polimi/ingsw/model/*.java
 !src/test/java/it/polimi/ingsw/model/cards/effects/move
 !src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/build
+!src/test/java/it/polimi/ingsw/model/cards/effects/build/*.java
 
 
 #main/	(rules = 19)
