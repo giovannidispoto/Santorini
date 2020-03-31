@@ -44,8 +44,9 @@ public class Match {
         //In this case I'm playing with a DomeEveryWhere Turn
         //return new BasicTurn(this);
         //return new ExtraMove(this,3);
-        return new DomeEverywhere(this);
+        //return new DomeEverywhere(this);
         //return new BlockUnder(this);
+        return new BlockUnder(this);
     }
 
     /**
