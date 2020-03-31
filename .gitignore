@@ -20,7 +20,7 @@
 !src/
 !src/*.json
 
-#test/	(rules = 19)
+#test/	(rules = 21)
 !src/test/
 !src/test/java/
 !src/test/java/it/
@@ -47,7 +47,7 @@
 !src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
 
 
-#main/	(rules = 19)
+#main/	(rules = 21)
 !src/main/
 !src/main/java/
 !src/main/java/it/
