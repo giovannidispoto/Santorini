@@ -20,7 +20,7 @@
 !src/
 !src/DivinityCard.json
 
-#test/	(rules = 7)
+#test/	(rules = 9)
 !src/test/
 !src/test/java/
 !src/test/java/it/
