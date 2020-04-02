@@ -10,46 +10,33 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DomeEverywhereTest {
-
-    final Player p1 = new Player("Mark Zuckerberg", LocalDate.now(), Color.BLUE);
+    final Player p1 = new Player("Chester Bennington", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
 
     @Test
-    void addDomeAboveEmptyCell() {
-
-        Battlefield b = Battlefield.getBattlefieldInstance();
-
+    void groundDome() {
+        //Preliminary stuff
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         players.add(p1);
-
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
-        b.setWorkersInGame(workers);
-        w1.setWorkerPosition(0,0);
-
+        battlefield.setWorkersInGame(workers);
+        w1.setWorkerPosition(1,1);
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
-        //Simulation : CURRENT PLAYER - Mark
+        //Simulation : CURRENT PLAYER - Chester Bennington
         //0. Generate Turn
         Turn t = m.generateTurn();
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
-        //2. Generate Worker View Matrix for movement
-        m.getSelectedWorker().setWorkerView(Battlefield.getBattlefieldInstance().getWorkerViewForMove(m.getSelectedWorker()));
-        //3. Check GlobalEffect...
-        //4. Movement Phase
-        t.moveWorker(m.getSelectedWorker(),1,1);
-        //5. CheckLocalWin...
-        t.checkLocalCondition(m.getSelectedWorker());
-        //6. BuildPhase...
-        t.buildBlock(m.getSelectedWorker(), 1, 0);
-        //7. CheckGlobalWin...
-        //8. PassTurn
-        //t.passTurn();
+        //2. Generate Building Matrix
+        w1.setWorkerView(t.generateBuildingMatrix(w1));
+        //3. Build()
+        t.buildBlock(m.getSelectedWorker(),2,1);
 
-        //ASSERTION
-        //Check if the new built block is a DOME
-        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,0).getTower().getLastBlock().equals(Block.DOME));
+        //ASSERT : We expect a DOME above the ground level
+        assertTrue(battlefield.getCell(2,1).getTower().getLastBlock().equals(Block.DOME));
     }
 }

@@ -8,12 +8,18 @@ import it.polimi.ingsw.model.Worker;
 public class BasicTurn extends Turn {
 
     /**
-     * @param currentMatch is the actual match
+     * Class Constructor
      */
-   // public BasicTurn(Match currentMatch) {
-    //    super(currentMatch);
-    //}
+   public BasicTurn() {
+       super();
+   }
 
+    /**
+     * This method describes a basic move action
+     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+     * @param newRow is the x coordinate of the destination cell
+     * @param newCol is the y coordinate of the destination cell
+     */
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {
         int lvl_b = Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
@@ -23,20 +29,23 @@ public class BasicTurn extends Turn {
             reachLevel3 = true;
     }
 
+    /**
+     * This method describes a basic move action
+     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+     * @param newBlockRow is the newBlockRow coordinate of the destination cell
+     * @param newBlockCol is the newBlockCol coordinate of the destination cell
+     */
     @Override
-    public void buildBlock(Worker selectedWorker, int x, int y) {
-        int lvOne = Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
-       Battlefield.getBattlefieldInstance().getTower(x,y).addNextBlock();
-/*
-       if(Battlefield.getBattlefieldInstance().getTower(x,y).getHeight() == 3 && lvOne == 2)
-           reachLevel3 = true;*/
-
+    public void buildBlock(Worker selectedWorker, int newBlockRow, int newBlockCol) {
+       Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
     }
 
+    /**
+     * This method checks the local win condition
+     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+     */
     public void checkLocalCondition(Worker selectedWorker){
         if(reachLevel3)
                 currentMatch.reachLevel3();
     }
-
-
 }

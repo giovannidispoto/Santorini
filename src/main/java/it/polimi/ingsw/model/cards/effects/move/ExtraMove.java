@@ -4,23 +4,14 @@ import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.cards.effects.move.MoveEffect;
 
 /**
- * ExtraMove class represent the effect that allow player more movement
+ * ExtraMove class represents the effect that allows the player to do an extra move
  */
 public class ExtraMove extends MoveEffect {
     /**
-     * @param currentMatch
-     * @param movesLeft
-     */
-    /* public ExtraMove(Match currentMatch, int movesLeft) {
-        super(currentMatch);
-        this.movesLeft = movesLeft;
-    }*/
-
-    /**
-     *
-     * @param movesLeft
+     * Class Constructor
      */
     public ExtraMove(int movesLeft){
         super();
@@ -28,32 +19,38 @@ public class ExtraMove extends MoveEffect {
     }
 
     /**
-     *
-     * @param selectedWorker
-     * @param newRow
-     * @param newCol
-     * @throws RuntimeException
+     * This method allows you to do an extra move (but not in the old cell)
+     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+     * @param newRow is the x coordinate of the destination cell
+     * @param newCol is the y coordinate of the destination cell
      */
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) throws RuntimeException {
-        if(selectedWorker.getWorkerView()[newRow][newCol] == null)
-            throw new RuntimeException("Illegal coordinates for worker");
+        //Check coordinates
+        if(selectedWorker.getWorkerView()[newRow][newCol]==null)
+            throw new RuntimeException("Unexpected Error!");
 
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //Save actual position
         int oldRow = selectedWorker.getRowWorker();
         int oldCol = selectedWorker.getColWorker();
-        selectedWorker.changeWorkerPosition(newRow,newCol);
-        movesLeft--;
-        Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        if(movesLeft > 0) {
-            Cell[][] newView = battlefield.getWorkerViewForMove(selectedWorker);
-            newView[oldRow][oldCol] = null;
-            selectedWorker.setWorkerView(newView);
+        if(movesLeft>0){
+            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
+            selectedWorker.changeWorkerPosition(newRow,newCol);
+            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+            if(lvl_a - lvl_b == 1 && lvl_a == 3)
+                reachLevel3 = true;
+            Cell[][] updatedMatrix = generateMovementMatrix(selectedWorker);
+            updatedMatrix[oldRow][oldCol]=null;
+            selectedWorker.setWorkerView(updatedMatrix);
         }
-        //Set Worker Build Matrix
-        if(movesLeft==0)
-            selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker,(cell)->!cell.isWorkerPresent()));
-
+        else{
+            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
+            selectedWorker.changeWorkerPosition(newRow,newCol);
+            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+            if(lvl_a - lvl_b == 1 && lvl_a == 3)
+                reachLevel3 = true;
+        }
+        movesLeft--;
     }
-
-
 }

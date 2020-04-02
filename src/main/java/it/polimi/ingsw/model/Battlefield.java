@@ -110,6 +110,8 @@ public class Battlefield {
             for (int j = 0; j < N_COLUMNS_VIEW; j++)
                 workerView[i][j] = null;
 
+            workerView[w.getRowWorker()][w.getColWorker()]=boardCells[w.getRowWorker()][w.getColWorker()];
+
             if((w.getColWorker() - 1 >= 0 && p.test(boardCells[w.getRowWorker()][w.getColWorker() - 1])))
                 workerView[w.getRowWorker()][w.getColWorker()-1] = boardCells[w.getRowWorker()][w.getColWorker() - 1];
 
@@ -139,15 +141,6 @@ public class Battlefield {
 
    public Cell[][] getWorkerView(Worker w){
        return getWorkerView(w, (cell)-> true);
-   }
-
-    /**
-     *
-     * @param w
-     * @return
-     */
-   public Cell[][] getWorkerViewForMove(Worker w){
-       return getWorkerView(w, (cell)->!cell.isWorkerPresent() && this.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
    }
 
     /**

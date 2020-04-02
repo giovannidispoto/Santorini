@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards.effects.move;
+package it.polimi.ingsw.model.cards.effects.basic;
 
 import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Test;
@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExtraMoveTest {
+class BlockUnderTest {
 
-    final Player p1 = new Player("Mark Zuckerberg", LocalDate.now(), Color.BLUE);
+    final  Player p1 = new Player("Steve Jobs", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
 
     @Test
-    void tripleMove() {
+    void buildUnderYourself() {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
@@ -27,20 +27,17 @@ class ExtraMoveTest {
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
-        //Simulation : CURRENT PLAYER - Mark Zuckerberg
+        //Simulation : CURRENT PLAYER - Steve Jobs
         //0. Generate Turn
         Turn t = m.generateTurn();
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
-        //2. Generate Movement Matrix
-        w1.setWorkerView(t.generateMovementMatrix(w1));
-        //3. Move()
-        t.moveWorker(m.getSelectedWorker(),2,2);
-        //4. Move () again
-        t.moveWorker(m.getSelectedWorker(),3,3);
-        //5. Move () again and again
-        t.moveWorker(m.getSelectedWorker(),4,4);
-        //ASSERT : We expect that the worker has reached the cell[3][3]
-        assertTrue(battlefield.getCell(4,4).getWorker().equals(w1));
+        //2. Generate Building Matrix
+        w1.setWorkerView(t.generateBuildingMatrix(w1));
+        //3. Build()
+        t.buildBlock(m.getSelectedWorker(),m.getSelectedWorker().getRowWorker(),m.getSelectedWorker().getColWorker());
+
+        //ASSERT : We expect a new block under the selected worker
+        assertTrue(battlefield.getCell(m.getSelectedWorker().getRowWorker(),m.getSelectedWorker().getColWorker()).getTower().getHeight()==1);
     }
 }

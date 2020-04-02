@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model.parser;
 
 import it.polimi.ingsw.model.Turn;
-import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
-import it.polimi.ingsw.model.cards.effects.move.BlockUnder;
+import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;

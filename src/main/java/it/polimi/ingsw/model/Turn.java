@@ -15,11 +15,10 @@ public abstract class Turn {
 
     /**
      * Class Constructor
-     * @param currentMatch that holds all the parameters of the current match
-     */
-    /*public Turn(Match currentMatch) {
+    *
+     public Turn(Match currentMatch) {
         this.currentMatch = currentMatch;
-    }*/
+    }
 
     public Turn(){
         //null
@@ -60,4 +59,19 @@ public abstract class Turn {
     public abstract void checkLocalCondition(Worker selectedWorker);
     public abstract void moveWorker(Worker selectedWorker, int newRow, int newCol);
     public abstract void buildBlock(Worker selectedWorker,int blockRow, int blockCol);
+
+    public Cell[][] generateMovementMatrix(Worker selectedWorker) {
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent() && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
+        Cell[][] returnMatrix = battlefield.getWorkerView(selectedWorker, (cell)->battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
+        returnMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=null;
+        return returnMatrix;
+    };
+    public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        Cell[][] returnMatrix = battlefield.getWorkerView(selectedWorker);
+        returnMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=null;
+        return returnMatrix;
+        //return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent());
+    };
 }

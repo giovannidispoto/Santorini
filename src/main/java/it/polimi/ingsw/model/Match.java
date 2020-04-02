@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
+import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
-import it.polimi.ingsw.model.cards.effects.move.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 
 import java.util.List;
@@ -42,10 +42,10 @@ public class Match {
      */
     public Turn generateTurn(){
         //In this case I'm playing with a DomeEveryWhere Turn
-        Turn t = new BasicTurn();
-       //Turn t = new ExtraMove(3);
         //Turn t = new DomeEverywhere();
-      // Turn t = new BlockUnder();
+       //Turn t = new ExtraMove(2);
+        //Turn t = new DomeEverywhere();
+      Turn t = new ExtraMove(3);
        t.setCurrentMatch(this);
        return t;
     }

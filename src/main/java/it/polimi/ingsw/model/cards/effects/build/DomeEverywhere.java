@@ -6,18 +6,27 @@ import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
 
 public class DomeEverywhere extends BuildEffect {
+
     /**
-     * @param currentMatch
+     * Class Constructor
      */
-   /* public DomeEverywhere(Match currentMatch) {
-        super(currentMatch);
-    }*/
+    public DomeEverywhere() {
+        super();
+    }
 
+    /**
+     * This method allows you to build a Dome everywhere (except where is a worker)
+     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+     * @param newBlockRow is the x coordinate of the new block
+     * @param newBlockCol is the y coordinate of the new block
+     */
     @Override
-    public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) throws RuntimeException {
-        if(selectedWorker.getWorkerView()[blockRow][blockCol] == null)
-            throw new RuntimeException("Illegal coordinates for worker");
-
-        selectedWorker.getWorkerView()[blockRow][blockCol].getTower().addBlock(Block.DOME);
+    public void buildBlock(Worker selectedWorker, int newBlockRow, int newBlockCol) throws RuntimeException {
+        //Check coordinates
+        if(selectedWorker.getWorkerView()[newBlockRow][newBlockCol]==null)
+            throw new RuntimeException("Unexpected Error!");
+        //Add a Dome
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        battlefield.getCell(newBlockRow,newBlockCol).getTower().addBlock(Block.DOME);
     }
 }
