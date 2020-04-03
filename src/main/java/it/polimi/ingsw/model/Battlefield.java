@@ -110,7 +110,7 @@ public class Battlefield {
             for (int j = 0; j < N_COLUMNS_VIEW; j++)
                 workerView[i][j] = null;
 
-            workerView[w.getRowWorker()][w.getColWorker()]=boardCells[w.getRowWorker()][w.getColWorker()];
+            //workerView[w.getRowWorker()][w.getColWorker()]=boardCells[w.getRowWorker()][w.getColWorker()];
 
             if((w.getColWorker() - 1 >= 0 && p.test(boardCells[w.getRowWorker()][w.getColWorker() - 1])))
                 workerView[w.getRowWorker()][w.getColWorker()-1] = boardCells[w.getRowWorker()][w.getColWorker() - 1];

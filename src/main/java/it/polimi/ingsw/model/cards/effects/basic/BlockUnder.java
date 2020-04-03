@@ -21,6 +21,10 @@ public class BlockUnder extends BasicTurn {
      */
     @Override
     public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
-        return Battlefield.getBattlefieldInstance().getWorkerView(selectedWorker);
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        Cell[][] underBlockMatrix = battlefield.getWorkerView(selectedWorker);
+        underBlockMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker());
+        //return Battlefield.getBattlefieldInstance().getWorkerView(selectedWorker);
+        return underBlockMatrix;
     }
 }

@@ -40,9 +40,10 @@ public class ExtraMove extends MoveEffect {
             int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
                 reachLevel3 = true;
-            Cell[][] updatedMatrix = generateMovementMatrix(selectedWorker);
-            updatedMatrix[oldRow][oldCol]=null;
-            selectedWorker.setWorkerView(updatedMatrix);
+            //Cell[][] updatedMatrix = generateMovementMatrix(selectedWorker);
+            //updatedMatrix[oldRow][oldCol]=null;
+            //selectedWorker.setWorkerView(updatedMatrix);
+            selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent() && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight() && !cell.equals(battlefield.getCell(oldRow,oldCol))));
         }
         else{
             int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
