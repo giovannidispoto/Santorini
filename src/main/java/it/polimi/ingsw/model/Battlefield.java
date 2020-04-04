@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
  */
 public class Battlefield {
     private Cell[][] boardCells;
-    private static int N_ROWS = 5;
-    private static int N_COLUMNS= 5;
-    private static int N_ROWS_VIEW = 5;
-    private static int N_COLUMNS_VIEW= 5;
+    public static int N_ROWS = 5;
+    public static int N_COLUMNS= 5;
+    public static int N_ROWS_VIEW = 5;
+    public static int N_COLUMNS_VIEW= 5;
     private List<Worker> workersInGame;
     private static Battlefield instance = null;
 

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
+import it.polimi.ingsw.model.cards.effects.move.PushCharacter;
 import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
 
 import java.util.List;
@@ -45,9 +46,10 @@ public class Match {
     public Turn generateTurn(){
         //In this case I'm playing with a DomeEveryWhere Turn
         //Turn t = new DomeEverywhere();
-       //Turn t = new ExtraMove(2);
+        //Turn t = new ExtraMove(2);
         //Turn t = new DomeEverywhere();
-      Turn t = new BasicTurn();
+        //Turn t = new BasicTurn();
+        Turn t = new PushCharacter();
        t.setCurrentMatch(this);
        return t;
     }
