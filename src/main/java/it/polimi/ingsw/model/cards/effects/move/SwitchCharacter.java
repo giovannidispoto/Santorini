@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
 
 public class SwitchCharacter extends MoveEffect {
@@ -51,14 +50,14 @@ public class SwitchCharacter extends MoveEffect {
             selectedWorker.changeWorkerPosition(newRow,newCol);
             int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachLevel3 = true;
+                reachedLevel3 = true;
         }
         else{
             int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
             selectedWorker.changeWorkerPosition(newRow,newCol);
             int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachLevel3 = true;
+                reachedLevel3 = true;
             battlefield.getCell(oldRowSelectedWorker,oldColSelectedWorker).setWorker(enemyWorker);
         }
         movesLeft--;

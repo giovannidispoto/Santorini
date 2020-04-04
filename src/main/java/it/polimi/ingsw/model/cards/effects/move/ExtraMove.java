@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.cards.effects.move.MoveEffect;
 
 /**
  * ExtraMove class represents the effect that allows the player to do an extra move
@@ -39,7 +36,7 @@ public class ExtraMove extends MoveEffect {
             selectedWorker.changeWorkerPosition(newRow,newCol);
             int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachLevel3 = true;
+                reachedLevel3 = true;
             //Cell[][] updatedMatrix = generateMovementMatrix(selectedWorker);
             //updatedMatrix[oldRow][oldCol]=null;
             //selectedWorker.setWorkerView(updatedMatrix);
@@ -50,7 +47,7 @@ public class ExtraMove extends MoveEffect {
             selectedWorker.changeWorkerPosition(newRow,newCol);
             int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachLevel3 = true;
+                reachedLevel3 = true;
         }
         movesLeft--;
     }

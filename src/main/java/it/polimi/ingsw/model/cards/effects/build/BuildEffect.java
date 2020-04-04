@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.Worker;
 
@@ -27,15 +26,15 @@ public abstract class BuildEffect extends Turn {
         selectedWorker.changeWorkerPosition(newRow,newCol);
         int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
         if(lvl_a - lvl_b == 1 && lvl_a == 3)
-            reachLevel3 = true;
+            reachedLevel3 = true;
         //Set Worker Build Matrix
         selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker,(cell)->!cell.isWorkerPresent()));
     }
 
 
     public void checkLocalCondition(Worker currentWorker){
-        if(reachLevel3)
-            currentMatch.reachLevel3();
+        if(reachedLevel3)
+            currentMatch.declareWinner();
     }
 
 

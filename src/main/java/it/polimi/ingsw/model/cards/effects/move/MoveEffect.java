@@ -8,22 +8,22 @@ import it.polimi.ingsw.model.Worker;
 public abstract class MoveEffect extends Turn {
 
     /**
-     * @param currentMatch
+     * Class Constructor
      */
-   /* public MoveEffect(Match currentMatch) {
-        super(currentMatch);
-    }*/
+    public MoveEffect() {
+        super();
+    }
 
-    public MoveEffect(){}
 
     @Override
     public void checkLocalCondition(Worker selectedWorker) {
-
+        if(reachedLevel3) {
+            //currentMatch.declareWinner(); controller method needed
+        }
     }
 
     @Override
     public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) {
-        Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         Battlefield.getBattlefieldInstance().getTower(blockRow,blockCol).addNextBlock();
     }
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class SwitchCharacterTest {
 
     final Player p1 = new Player("Ferruccio Resta", LocalDate.now(), Color.BLUE);
@@ -83,5 +86,36 @@ class SwitchCharacterTest {
         assertTrue(battlefield.getCell(0,1).getWorker().equals(w1));
         assertTrue(battlefield.getCell(1,2).getWorker().equals(w3));
         assertTrue(battlefield.getCell(1,0).getWorker().equals(w2));
+    }
+
+    @Test
+    void switchMovementException() {
+        //Preliminary stuff
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        List<Player> players = new ArrayList<>();
+        players.add(p1);
+        players.add(p2);
+        List<Worker> workers = new ArrayList<>();
+        workers.add(w1);
+        workers.add(w2);
+        workers.add(w3);
+        battlefield.setWorkersInGame(workers);
+        w1.setWorkerPosition(1,1);
+        w2.setWorkerPosition(1,0);
+        w3.setWorkerPosition(1,2);
+        Match m = new Match(players,new ArrayList<>());
+        m.setCurrentPlayer(p1);
+
+        //Simulation : CURRENT PLAYER - Ferruccio Resta
+        //0. Generate Turn
+        Turn t = m.generateTurn();
+        //1. Worker Selection Phase
+        m.setSelectedWorker(w1);
+        //2. Generate Movement Matrix
+        w1.setWorkerView(t.generateMovementMatrix(w1));
+
+        //ASSERTS
+        Throwable expectedException = assertThrows(RuntimeException.class, () -> t.moveWorker(m.getSelectedWorker(),1,0));
+        assertEquals("Unexpected Error!", expectedException.getMessage());
     }
 }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
+import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
 
@@ -46,7 +47,7 @@ public class Match {
         //Turn t = new DomeEverywhere();
        //Turn t = new ExtraMove(2);
         //Turn t = new DomeEverywhere();
-      Turn t = new SwitchCharacter();
+      Turn t = new BasicTurn();
        t.setCurrentMatch(this);
        return t;
     }
@@ -85,11 +86,6 @@ public class Match {
     public Player declareWinner(){
         return currentPlayer;
     }
-
-    /**
-     * Says what happens when a player reaches the level three of a tower
-     */
-    public void reachLevel3(){/* Controller Method... */}
 
     public Worker getSelectedWorker(){
         return this.selectedWorker;
