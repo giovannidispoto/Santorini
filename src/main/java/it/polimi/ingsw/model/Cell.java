@@ -25,6 +25,8 @@ public class Cell {
         return this.cellWorker != null;
     }
 
+    public boolean isFriendWorkerPresent(Worker selectedWorker) {return (this.cellWorker!=null && this.cellWorker.getOwnerWorker().equals(selectedWorker.getOwnerWorker()));}
+
     /**
      * Removes a worker from the cell
      */

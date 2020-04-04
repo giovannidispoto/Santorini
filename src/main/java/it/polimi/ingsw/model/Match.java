@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
+import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
 
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class Match {
         //Turn t = new DomeEverywhere();
        //Turn t = new ExtraMove(2);
         //Turn t = new DomeEverywhere();
-      Turn t = new BlockUnder();
+      Turn t = new SwitchCharacter();
        t.setCurrentMatch(this);
        return t;
     }
