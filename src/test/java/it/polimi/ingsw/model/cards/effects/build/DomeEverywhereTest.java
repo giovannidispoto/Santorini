@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class DomeEverywhereTest {
     final Player p1 = new Player("Chester Bennington", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
@@ -41,6 +40,8 @@ class DomeEverywhereTest {
 
         //ASSERT : We expect a DOME above the ground level
         assertTrue(battlefield.getCell(2,1).getTower().getLastBlock().equals(Block.DOME));
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -68,5 +69,7 @@ class DomeEverywhereTest {
         //Building under the current worker
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.buildBlock(m.getSelectedWorker(),1,1));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }

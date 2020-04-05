@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class BasicTurnTest {
     final Player p1 = new Player("Bill Gates", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
@@ -46,6 +45,8 @@ class BasicTurnTest {
         //ASSERTs : We expect a new position for the worker and a new block beside him
         assertTrue(battlefield.getCell(2,2).getWorker().equals(w1));
         assertTrue(battlefield.getCell(1,1).getTower().getHeight()==1);
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -73,6 +74,8 @@ class BasicTurnTest {
         //Building outside the worker view
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.buildBlock(w1,3,3));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -100,5 +103,7 @@ class BasicTurnTest {
         //Move outside the worker view
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.moveWorker(w1,3,3));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }

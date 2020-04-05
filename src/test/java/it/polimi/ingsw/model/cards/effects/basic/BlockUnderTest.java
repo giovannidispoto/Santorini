@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class BlockUnderTest {
 
     final  Player p1 = new Player("Steve Jobs", LocalDate.now(), Color.BLUE);
@@ -42,6 +41,8 @@ class BlockUnderTest {
 
         //ASSERT : We expect a new block under the selected worker
         assertTrue(battlefield.getCell(m.getSelectedWorker().getRowWorker(),m.getSelectedWorker().getColWorker()).getTower().getHeight()==1);
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -69,5 +70,7 @@ class BlockUnderTest {
         //Building outside the worker view
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.buildBlock(m.getSelectedWorker(),3,3));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }

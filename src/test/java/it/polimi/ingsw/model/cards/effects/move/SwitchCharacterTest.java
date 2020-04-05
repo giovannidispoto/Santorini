@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class SwitchCharacterTest {
 
     final Player p1 = new Player("Ferruccio Resta", LocalDate.now(), Color.BLUE);
@@ -52,6 +51,8 @@ class SwitchCharacterTest {
         assertTrue(battlefield.getCell(1,2).getWorker().equals(w1));
         assertTrue(battlefield.getCell(1,1).getWorker().equals(w3));
         assertTrue(battlefield.getCell(1,0).getWorker().equals(w2));
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -86,6 +87,8 @@ class SwitchCharacterTest {
         assertTrue(battlefield.getCell(0,1).getWorker().equals(w1));
         assertTrue(battlefield.getCell(1,2).getWorker().equals(w3));
         assertTrue(battlefield.getCell(1,0).getWorker().equals(w2));
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -117,5 +120,7 @@ class SwitchCharacterTest {
         //ASSERTS
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.moveWorker(m.getSelectedWorker(),1,0));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }

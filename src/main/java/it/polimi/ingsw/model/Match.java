@@ -49,7 +49,7 @@ public class Match {
         //Turn t = new ExtraMove(2);
         //Turn t = new DomeEverywhere();
         //Turn t = new BasicTurn();
-        Turn t = new PushCharacter();
+        Turn t = new BasicTurn();
        t.setCurrentMatch(this);
        return t;
     }

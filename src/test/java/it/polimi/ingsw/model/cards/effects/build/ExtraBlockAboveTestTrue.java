@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class ExtraBlockAboveTestTrue {
 
     final Player p1 = new Player("Steve Wozniak", LocalDate.now(), Color.BLUE);
@@ -42,6 +41,8 @@ class ExtraBlockAboveTestTrue {
 
         //ASSERTS
         assertTrue(battlefield.getCell(2,2).getTower().getHeight()==2);
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -70,5 +71,7 @@ class ExtraBlockAboveTestTrue {
         //ASSERTS
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.buildBlock(m.getSelectedWorker(),2,1));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }

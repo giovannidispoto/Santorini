@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class ExtraMoveTest {
 
     final Player p1 = new Player("Mark Zuckerberg", LocalDate.now(), Color.BLUE);
@@ -45,6 +44,8 @@ class ExtraMoveTest {
         t.moveWorker(m.getSelectedWorker(),4,4);
         //ASSERT : We expect that the worker has reached the cell[3][3]
         assertTrue(battlefield.getCell(4,4).getWorker().equals(w1));
+
+        battlefield.cleanField();
     }
 
     @Test
@@ -75,5 +76,7 @@ class ExtraMoveTest {
         //ASSERTS
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.moveWorker(m.getSelectedWorker(),2,2));
         assertEquals("Unexpected Error!", expectedException.getMessage());
+
+        battlefield.cleanField();
     }
 }
