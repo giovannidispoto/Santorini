@@ -4,8 +4,7 @@ import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Block;
-import static it.polimi.ingsw.model.Battlefield.N_COLUMNS_VIEW;
-import static it.polimi.ingsw.model.Battlefield.N_ROWS_VIEW;
+
 
 public class PushCharacter extends MoveEffect {
     /**
@@ -26,17 +25,17 @@ public class PushCharacter extends MoveEffect {
                 && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
 
         //check valid movements in enemy's cells
-        for(int i = 0; i < N_ROWS_VIEW; i++) {
-            for (int j = 0; j < N_COLUMNS_VIEW; j++) {
-                //check only possibles valid movements
+        for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++) {
+            for (int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++) {
+                //check only possibles valid movements (by selected worker)
                 if (minotaurMatrix[i][j] != null){
-                    //check worker (enemy) presence
+                    //check worker presence (enemy: due to getWorkerView)
                     if(minotaurMatrix[i][j].isWorkerPresent()){
                         //check possible player direction
                         int directionRow = i- selectedWorker.getRowWorker();
                         int directionCol = j - selectedWorker.getColWorker();
                         //check valid push direction inside battlefield
-                        if(i+directionRow < N_ROWS_VIEW && j+directionCol < N_COLUMNS_VIEW) {
+                        if(i+directionRow < Battlefield.N_ROWS_VIEW && j+directionCol < Battlefield.N_COLUMNS_VIEW) {
                             //get cell on that direction
                             Cell forcedMoveCell = battlefield.getCell(i + directionRow, j + directionCol);
 
@@ -63,7 +62,7 @@ public class PushCharacter extends MoveEffect {
 
 
     /**
-     * Allows you to do a basic-move or to push away your enemy and move in his cell
+     * Allows you to do a basic-move or to push away your enemy and move in his cell (only if you can push your enemy)
      * @param selectedWorker is the worker selected by the current player
      * @param newRow is the new x coordinate of the worker
      * @param newCol is the new y coordinate of the worker
@@ -83,20 +82,21 @@ public class PushCharacter extends MoveEffect {
         if(battlefield.getCell(newRow, newCol).isWorkerPresent())
             enemyWorker = battlefield.getCell(newRow,newCol).getWorker();
 
-        //basic move
         int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+        //basic move
         if(enemyWorker==null){
             selectedWorker.changeWorkerPosition(newRow,newCol);
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
                 reachedLevel3 = true;
         }
+        //enemy push
         else{
-            //enemy push
             enemyWorker.changeWorkerPosition(newRow + directionRowSelectedWorker,newCol + directionColSelectedWorker);
             selectedWorker.changeWorkerPosition(newRow, newCol);
             if(lvl_a - lvl_b == 1 && lvl_a == 3)
                 reachedLevel3 = true;
+            //changed into: enemyWorker.changeWorkerPosition
             //battlefield.getCell(newRow + directionRowSelectedWorker,newCol + directionColSelectedWorker).setWorker(enemyWorker);
         }
         movesLeft--;

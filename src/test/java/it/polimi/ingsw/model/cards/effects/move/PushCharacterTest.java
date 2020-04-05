@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.Alphanumeric.class)
 class PushCharacterTest {
 
     final Player p1 = new Player("Player1", LocalDate.now(), Color.BLUE);
@@ -49,14 +46,16 @@ class PushCharacterTest {
         //3. Move()
         t.moveWorker(m.getSelectedWorker(),4,0);
 
-        //Check if the workers have changed position
+        //Check if the worker has changed position
         assertFalse(Battlefield.getBattlefieldInstance().getCell(4,1).isWorkerPresent());
         assertEquals(battlefield.getCell(4, 0).getWorker(), w1);
+        //Clean battlefield for next tests
+        battlefield.cleanField();
     }
 
     //test push enemy and win
     @Test
-    void pushEnemy1True() {
+    void pushEnemyTrue() {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
@@ -94,12 +93,16 @@ class PushCharacterTest {
         assertEquals(battlefield.getCell(1, 3).getWorker(), w1);
         assertEquals(battlefield.getCell(0, 4).getWorker(), w3);
         assertEquals(2, Battlefield.getBattlefieldInstance().getCell(0, 4).getTower().getHeight());
+        assertEquals(3, Battlefield.getBattlefieldInstance().getCell(1, 3).getTower().getHeight());
+        assertEquals(2, Battlefield.getBattlefieldInstance().getCell(2, 2).getTower().getHeight());
+        //Clean battlefield for next tests
+        battlefield.cleanField();
     }
 
     //Test illegal moves = False
     //test enemy can't move, because have a worker behind
     @Test
-    void pushEnemy2False() {
+    void pushEnemy1False() {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
@@ -111,8 +114,9 @@ class PushCharacterTest {
         workers.add(w3);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(0, 2);
-        w2.setWorkerPosition(0, 1);
-        w3.setWorkerPosition(0, 0);
+        w2.setWorkerPosition(0, 0);
+        //enemy
+        w3.setWorkerPosition(0, 1);
         Match m = new Match(players, new ArrayList<>());
         m.setCurrentPlayer(p1);
 
@@ -125,15 +129,21 @@ class PushCharacterTest {
         w1.setWorkerView(t.generateMovementMatrix(w1));
 
         //Assertion : move to 0,1 illegal
-        assertEquals(battlefield.getCell(0, 0).getWorker(), w3);
+        assertEquals(battlefield.getCell(0, 2).getWorker(), w1);
+        assertEquals(battlefield.getCell(0, 0).getWorker(), w2);
+        //enemy
+        assertEquals(battlefield.getCell(0, 1).getWorker(), w3);
+        //control workerView
         Cell[][] workerView =w1.getWorkerView();
         assertNull(workerView[0][1]);
         assertThrows(RuntimeException.class, ()->t.moveWorker(m.getSelectedWorker(),0,1));
+        //Clean battlefield for next tests
+        battlefield.cleanField();
     }
 
     //test enemy in perimeter
     @Test
-    void pushEnemy3False() {
+    void pushEnemy2False() {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
@@ -157,15 +167,19 @@ class PushCharacterTest {
         w1.setWorkerView(t.generateMovementMatrix(w1));
 
         //Assertion : move to 4,4 illegal
+        assertEquals(battlefield.getCell(4, 3).getWorker(), w1);
         assertEquals(battlefield.getCell(4, 4).getWorker(), w3);
+        //control workerView
         Cell[][] workerView =w1.getWorkerView();
         assertNull(workerView[4][4]);
         assertThrows(RuntimeException.class, ()->t.moveWorker(m.getSelectedWorker(),4,4));
+        //Clean battlefield for next tests
+        battlefield.cleanField();
     }
 
     //test enemy that can't move, because have a dome behind
     @Test
-    void pushEnemy4False() {
+    void pushEnemy3False() {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
@@ -191,9 +205,13 @@ class PushCharacterTest {
         w1.setWorkerView(t.generateMovementMatrix(w1));
 
         //Assertion : move to 2,1 illegal
+        assertEquals(battlefield.getCell(2, 2).getWorker(), w1);
         assertEquals(battlefield.getCell(2, 1).getWorker(), w3);
+        //control workerView
         Cell[][] workerView =w1.getWorkerView();
         assertNull(workerView[2][1]);
         assertThrows(RuntimeException.class, ()->t.moveWorker(m.getSelectedWorker(),2,1));
+        //Clean battlefield for next tests
+        battlefield.cleanField();
     }
 }
