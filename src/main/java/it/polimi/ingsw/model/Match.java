@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
+import it.polimi.ingsw.model.cards.effects.move.NoMoveUp;
 import it.polimi.ingsw.model.cards.effects.move.PushCharacter;
 import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
 
@@ -49,7 +50,8 @@ public class Match {
         //Turn t = new ExtraMove(2);
         //Turn t = new DomeEverywhere();
         //Turn t = new BasicTurn();
-        Turn t = new PushCharacter();
+        //Turn t = new PushCharacter();
+        Turn t = new NoMoveUp();
        t.setCurrentMatch(this);
        return t;
     }
