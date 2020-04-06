@@ -22,5 +22,7 @@ class DeckReaderTest {
         assertSame(deck.getDivinityCard("Apollo").getCardType(), Type.MOVEMENT);
         assertNotNull(deck.getDivinityCard("Demeter"));
         assertSame(deck.getDivinityCard("Demeter").getCardType(), Type.BUILD);
+        assertNotNull(deck.getDivinityCard("Chronus"));
+        assertSame(deck.getDivinityCard("Chronus").getCardType(), Type.WIN);
     }
 }

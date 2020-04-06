@@ -9,7 +9,7 @@
 	{ "cardName":"Pan", "cardType":"MOVEMENT", "cardEffect":"Win Condition: You also win if your Worker moves down two or more levels", "numberOfPlayersAllowed":3},
 	{ "cardName":"Prometheus", "cardType":"MOVEMENT", "cardEffect":"Your Turn: If your Worker does not move up, it may build both before and after moving", "numberOfPlayersAllowed":3},
 	{ "cardName":"Ares", "cardType":"BUILDING", "cardEffect":"End of Your Turn: You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block", "numberOfPlayersAllowed":3},
-	{ "cardName":"Chronus", "cardType":"SPECIAL", "cardEffect":"Win Condition: You also win when there are at least five Complete Towers on the board", "numberOfPlayersAllowed":2},
+	{ "cardName":"Chronus", "cardType":"WIN", "cardEffect":"Win Condition: You also win when there are at least five Complete Towers on the board", "numberOfPlayersAllowed":2},
 	{ "cardName":"Hestia", "cardType":"BUILDING", "cardEffect":"Your Build: Your Worker may build one additional time, but this cannot be on a perimeter space", "numberOfPlayersAllowed":3},
 	{ "cardName":"Triton", "cardType":"MOVEMENT", "cardEffect":"Your Move: Each time your Worker moves into a perimeter space, it may immediately move again", "numberOfPlayersAllowed":3},
 	{ "cardName":"Zeus", "cardType":"BUILDING", "cardEffect":"Your Build: Your Worker may build a block under itself", "numberOfPlayersAllowed":3}
