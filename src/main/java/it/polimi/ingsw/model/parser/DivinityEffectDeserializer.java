@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.parser;
 
 import com.google.gson.*;
 import it.polimi.ingsw.model.Turn;
+import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
@@ -58,6 +59,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     break;
                 case "JumpEffect":
                     t = new JumpEffect();
+                    break;
+                case "BasicTurn":
+                    t = new BasicTurn();
                     break;
             }
             map.put(cardName,t);

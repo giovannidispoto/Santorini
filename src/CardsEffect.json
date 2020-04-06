@@ -26,8 +26,10 @@
 	{ 	"cardName":"Prometheus", 
 		"Effect":{"effectName":"CantLevelUp", "buildBeforeMove":true, "buildAfterMove":true}
 	},
-	{
-		"cardName" : "Zeus",
+	{	"cardName" : "Zeus",
 		"Effect": {"effectName": "BlockUnder"}
+	},
+	{	"cardName" : "Chronus",
+		"Effect": {"effectName": "BasicTurn"}
 	}
 ]}

@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.Worker;
 public abstract class BuildEffect extends Turn {
 
     /**
-     * @param currentMatch
+     * //@param currentMatch
      */
    // public BuildEffect(Match currentMatch) {
    //     super(currentMatch);
@@ -30,7 +30,7 @@ public abstract class BuildEffect extends Turn {
 
     public void checkLocalCondition(Worker currentWorker){
         if(reachedLevel3)
-            currentMatch.declareWinner();
+            currentMatch.declareWinner(currentWorker.getOwnerWorker());
     }
 
 

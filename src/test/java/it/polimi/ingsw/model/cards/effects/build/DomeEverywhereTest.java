@@ -3,11 +3,8 @@ package it.polimi.ingsw.model.cards.effects.build;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -47,7 +44,7 @@ class DomeEverywhereTest {
         t.buildBlock(m.getSelectedWorker(),2,1);
 
         //ASSERT : We expect a DOME above the ground level
-        assertTrue(battlefield.getCell(2,1).getTower().getLastBlock().equals(Block.DOME));
+        assertEquals(battlefield.getCell(2, 1).getTower().getLastBlock(), Block.DOME);
 
         battlefield.cleanField();
     }

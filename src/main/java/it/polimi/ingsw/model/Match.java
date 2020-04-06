@@ -3,13 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
-import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
-import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
-import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
-import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
-import it.polimi.ingsw.model.cards.effects.move.NoMoveUp;
-import it.polimi.ingsw.model.cards.effects.move.PushCharacter;
-import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
 import it.polimi.ingsw.model.parser.DivinityEffectReader;
 
 import java.io.FileNotFoundException;
@@ -33,6 +26,7 @@ public class Match {
     private List<GlobalEffect> matchGlobalEffects;
     private Map<Player,Turn> playerTurn;
     private Player currentPlayer;
+    public Player winner; //debug for testing
     private final String pathToFile = "src/CardsEffect.json";
 
     /**
@@ -104,9 +98,11 @@ public class Match {
 
     /**
      * Declares the match winner
+     * @param winner is the winner player
      */
-    public Player declareWinner(){
-        return currentPlayer;
+    public void declareWinner(Player winner){
+        //How represent winner win? (discussion on slack)
+        this.winner =winner;//debug
     }
 
     public Worker getSelectedWorker(){

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,17 +55,13 @@ class TowerTest {
         t2.addBlock(Block.DOME);
 
         /* Expected exception trying to remove block from a empty Tower */
-        assertThrows(RuntimeException.class,  ()->{
-            t.removeBlock(Block.DOME);
-        });
+        assertThrows(RuntimeException.class,  ()-> t.removeBlock(Block.DOME));
 
         /* Expected exception trying to remove not the latest block of the tower */
-        assertThrows(RuntimeException.class, ()->{
-            t1.removeBlock(Block.DOME);
-        });
+        assertThrows(RuntimeException.class, ()-> t1.removeBlock(Block.DOME));
 
         t2.removeBlock(Block.DOME);
-        assertTrue(t2.getHeight() == 3);
+        assertEquals(3, t2.getHeight());
 
 
     }
@@ -88,7 +82,7 @@ class TowerTest {
         assertThrows(RuntimeException.class, t::removeLatestBlock);
         assertThrows(RuntimeException.class, t2::removeLatestBlock);
         t1.removeLatestBlock();
-        assertTrue(t1.getHeight() == 0);
+        assertEquals(0, t1.getHeight());
 
     }
 }

@@ -16,7 +16,7 @@ public abstract class GlobalWinCondition {
      * Reports to the current match that there is a winner
      */
     public void callWinner(){
-        //code
+        match.declareWinner(subject);
     }
 
     /**

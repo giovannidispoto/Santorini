@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -55,7 +54,7 @@ class MatchTest {
         assertFalse(Battlefield.getBattlefieldInstance().getCell(0,0).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattlefieldInstance().getCell(0,1).getTower().getHeight() == 1);
+        assertEquals(1, Battlefield.getBattlefieldInstance().getCell(0, 1).getTower().getHeight());
 
         assertThrows(RuntimeException.class, ()->m.setSelectedWorker(w1));
 
@@ -71,7 +70,7 @@ class MatchTest {
         assertFalse(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,4).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattlefieldInstance().getCell(2,4).getTower().getHeight() == 1);
+        assertEquals(1, Battlefield.getBattlefieldInstance().getCell(2, 4).getTower().getHeight());
         Battlefield.getBattlefieldInstance().cleanField();
     }
 
@@ -117,7 +116,7 @@ class MatchTest {
                 if (before[i][j] != null) nCell++;
             }
         }
-        assertTrue(nCell == 1);
+        assertEquals(1, nCell);
 
         m.getSelectedWorker().setWorkerView(t.generateMovementMatrix(m.getSelectedWorker()));
 
