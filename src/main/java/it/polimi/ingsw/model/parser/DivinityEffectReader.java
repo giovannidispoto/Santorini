@@ -17,9 +17,9 @@ import java.util.Map;
 public class DivinityEffectReader {
 
     /**
-     *
-     * @param reader
-     * @return
+     * Return map association between card name and effect
+     * @param reader file to read
+     * @return association between card and relative effect
      */
     public Map<String, Turn> load(Reader reader){
         BufferedReader buff = new BufferedReader(reader);

@@ -10,6 +10,8 @@ public abstract class Turn {
     protected Match currentMatch;
     protected int movesLeft;
     protected int blocksLeft;
+    protected int moves;
+    protected int blocks;
     private boolean changeLevel;
     protected boolean reachedLevel3 = false;
 
@@ -19,6 +21,8 @@ public abstract class Turn {
      public Turn(Match currentMatch) {
         this.currentMatch = currentMatch;
     }
+    */
+
 
     public Turn(){
         //null
@@ -74,4 +78,9 @@ public abstract class Turn {
         return returnMatrix;*/
         return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent());
     };
+
+    public void resetTurn(){
+        this.movesLeft = this.moves;
+        this.blocksLeft = this.blocks;
+    }
 }

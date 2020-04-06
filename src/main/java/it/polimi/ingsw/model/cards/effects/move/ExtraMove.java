@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards.effects.move;
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Worker;
 
+
 /**
  * ExtraMove class represents the effect that allows the player to do an extra move
  */
@@ -13,7 +14,9 @@ public class ExtraMove extends MoveEffect {
     public ExtraMove(int movesLeft){
         super();
         this.movesLeft = movesLeft;
+        this.moves = movesLeft;
     }
+
 
     /**
      * This method allows you to do an extra move (but not in the old cell)

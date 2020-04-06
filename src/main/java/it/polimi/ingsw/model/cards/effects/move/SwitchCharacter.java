@@ -12,6 +12,7 @@ public class SwitchCharacter extends MoveEffect {
         super();
     }
 
+
     /**
      * Allows you to choose a cell occupied by an enemy worker
      * @param selectedWorker is the worker selected by the current player

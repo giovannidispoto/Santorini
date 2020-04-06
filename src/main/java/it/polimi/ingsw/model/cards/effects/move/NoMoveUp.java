@@ -12,6 +12,7 @@ public class NoMoveUp extends MoveEffect {
         super();
     }
 
+
     /**
      * If you level up with one of your workers, you block the level up of the other players until your next turn
      * @param selectedWorker is the worker selected by the current player

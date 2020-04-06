@@ -1,10 +1,15 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class DomeEverywhereTest {
     final Player p1 = new Player("Chester Bennington", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
+    final DeckReader reader = new DeckReader();
 
     @Test
-    void groundDome() {
+    void groundDome() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Atlas"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -30,7 +38,7 @@ class DomeEverywhereTest {
 
         //Simulation : CURRENT PLAYER - Chester Bennington
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Building Matrix
@@ -45,10 +53,12 @@ class DomeEverywhereTest {
     }
 
     @Test
-    void extraDomeException() {
+    void extraDomeException() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Atlas"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -59,7 +69,7 @@ class DomeEverywhereTest {
 
         //Simulation : CURRENT PLAYER - Chester Bennington
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Building Matrix

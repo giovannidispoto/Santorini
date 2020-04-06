@@ -7,15 +7,17 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.cards.effects.build.BuildEffect;
 
 public class ExtraBlockAbove extends BuildEffect{
-    private boolean blockAbove;
+    private boolean buildInSameCell;
     /**
      * Class Constructor
      */
-    public ExtraBlockAbove(boolean blockAbove,int blocksLeft) {
+    public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft) {
         super();
-        this.blockAbove=blockAbove;
+        this.buildInSameCell=buildInSameCell;
         this.blocksLeft=blocksLeft;
+        this.blocks = blocksLeft;
     }
+
 
     @Override
     public void buildBlock(Worker selectedWorker, int newBlockRow, int newBlockCol) {
@@ -25,7 +27,7 @@ public class ExtraBlockAbove extends BuildEffect{
 
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //Hephaestus
-        if(blockAbove){
+        if(buildInSameCell){
             if(blocksLeft>0){
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(newBlockRow,newBlockCol))));

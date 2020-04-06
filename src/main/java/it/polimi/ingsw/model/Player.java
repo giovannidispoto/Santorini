@@ -30,6 +30,14 @@ public class Player {
     }
 
     /**
+     * Gets player card
+     * @return player card
+     */
+    public DivinityCard getPlayerCard() {
+        return playerCard;
+    }
+
+    /**
      * Assigns a divinity card to the player
      * @param card that has to be given to the player
      */

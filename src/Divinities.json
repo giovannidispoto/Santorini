@@ -7,5 +7,6 @@
 	{ "cardName":"Hephaestus", "cardType":"BUILD", "cardEffect":"Your Build: Your Worker may build one additional block (not dome) on top of your first block", "numberOfPlayersAllowed":3},
 	{ "cardName":"Minotaur", "cardType":"MOVEMENT", "cardEffect":"Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level", "numberOfPlayersAllowed":3},
 	{ "cardName":"Pan", "cardType":"MOVEMENT", "cardEffect":"Win Condition: You also win if your Worker moves down two or more levels", "numberOfPlayersAllowed":3},
-	{ "cardName":"Prometheus", "cardType":"MOVEMENT", "cardEffect":"Your Turn: If your Worker does not move up, it may build both before and after moving", "numberOfPlayersAllowed":3}
+	{ "cardName":"Prometheus", "cardType":"MOVEMENT", "cardEffect":"Your Turn: If your Worker does not move up, it may build both before and after moving", "numberOfPlayersAllowed":3},
+	{ "cardName": "Zeus", "cardType": "BUILD", "cardEffect": "Lorem ipsum dolor sit amet", "numberOfPlayersAllowed":3}
 ]}

@@ -2,10 +2,15 @@ package it.polimi.ingsw.model.cards.effects.basic;
 
 import com.google.gson.JsonElement;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +20,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class BasicTurnTest {
     final Player p1 = new Player("Bill Gates", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
+    final DeckReader reader = new DeckReader();
+
+
     @Test
-    void basicUsage() {
+    void basicUsage() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -30,7 +40,7 @@ class BasicTurnTest {
 
         //Simulation : CURRENT PLAYER - Bill Gates
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(true);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -50,10 +60,12 @@ class BasicTurnTest {
     }
 
     @Test
-    void basicUsageExceptionBuilding() {
+    void basicUsageExceptionBuilding() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -64,7 +76,7 @@ class BasicTurnTest {
 
         //Simulation : CURRENT PLAYER - Bill Gates
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(true);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //4. Generate Building Matrix
@@ -79,10 +91,12 @@ class BasicTurnTest {
     }
 
     @Test
-    void basicUsageExceptionMovement() {
+    void basicUsageExceptionMovement() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -93,7 +107,7 @@ class BasicTurnTest {
 
         //Simulation : CURRENT PLAYER - Bill Gates
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(true);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix

@@ -1,8 +1,13 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +18,15 @@ class ExtraBlockAboveTestTrue {
 
     final Player p1 = new Player("Steve Wozniak", LocalDate.now(), Color.BLUE);
     final Worker w1 = new Worker(p1);
+    final DeckReader reader = new DeckReader();
 
     @Test
-    void extraAboveTrue() {
+    void extraAboveTrue() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Hephaestus"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -29,7 +37,7 @@ class ExtraBlockAboveTestTrue {
 
         //Simulation : CURRENT PLAYER - Steve Wozniak
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Building Matrix
@@ -46,10 +54,12 @@ class ExtraBlockAboveTestTrue {
     }
 
     @Test
-    void extraAboveTrueException() {
+    void extraAboveTrueException() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Hephaestus"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -60,7 +70,7 @@ class ExtraBlockAboveTestTrue {
 
         //Simulation : CURRENT PLAYER - Steve Wozniak
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Building Matrix

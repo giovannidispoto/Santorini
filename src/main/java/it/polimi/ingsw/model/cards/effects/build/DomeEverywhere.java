@@ -14,6 +14,7 @@ public class DomeEverywhere extends BuildEffect {
         super();
     }
 
+
     /**
      * This method allows you to build a Dome everywhere (except where is a worker)
      * @param selectedWorker is the worker selected by the player at the beginning of the turn

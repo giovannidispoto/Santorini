@@ -7,9 +7,10 @@ public class ExtraBlockPerimetral extends BuildEffect {
     /**
      * @param currentMatch
      */
-    /*public ExtraBlockPerimetral(Match currentMatch) {
-        super(currentMatch);
-    }*/
+    public ExtraBlockPerimetral() {
+        super();
+    }
+
 
     @Override
     public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) {

@@ -1,9 +1,14 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +20,17 @@ class NoMoveUpTest {
     final Player p2 = new Player("Player2", LocalDate.now(), Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w3 = new Worker(p2);
-
+    final DeckReader reader = new DeckReader();
     //Athena Blocks movements && generate exception
     @Test
-    void moveWorkerUp() {
+    void moveWorkerUp() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Athena"));
+        p2.setPlayerCard(d.getDivinityCard("Athena"));
+
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -38,7 +47,7 @@ class NoMoveUpTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -77,10 +86,13 @@ class NoMoveUpTest {
 
     //First Turn Athena Blocks movement, second turn not
     @Test
-    void moveWorkerUpAndNot() {
+    void moveWorkerUpAndNot() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Athena"));
+        p2.setPlayerCard(d.getDivinityCard("Athena"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -101,7 +113,7 @@ class NoMoveUpTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix

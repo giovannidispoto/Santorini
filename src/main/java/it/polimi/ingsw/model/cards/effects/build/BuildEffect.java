@@ -16,10 +16,6 @@ public abstract class BuildEffect extends Turn {
    //     super(currentMatch);
    // }
 
-    public BuildEffect(){
-        //null
-    }
-
     public void moveWorker(Worker selectedWorker, int newRow, int newCol){
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();

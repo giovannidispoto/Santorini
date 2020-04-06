@@ -1,8 +1,13 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +21,17 @@ class PushCharacterTest {
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
     final Worker w3 = new Worker(p2);
+    final DeckReader reader = new DeckReader();
+
 
     @Test
-    void basicMove() {
+    void basicMove() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -38,7 +48,7 @@ class PushCharacterTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -55,10 +65,13 @@ class PushCharacterTest {
 
     //test push enemy and win
     @Test
-    void pushEnemyTrue() {
+    void pushEnemyTrue() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -80,7 +93,7 @@ class PushCharacterTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -102,10 +115,13 @@ class PushCharacterTest {
     //Test illegal moves = False
     //test enemy can't move, because have a worker behind
     @Test
-    void pushEnemy1False() {
+    void pushEnemy1False() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -122,7 +138,7 @@ class PushCharacterTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -143,10 +159,13 @@ class PushCharacterTest {
 
     //test enemy in perimeter
     @Test
-    void pushEnemy2False() {
+    void pushEnemy2False() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -160,7 +179,7 @@ class PushCharacterTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -179,10 +198,13 @@ class PushCharacterTest {
 
     //test enemy that can't move, because have a dome behind
     @Test
-    void pushEnemy3False() {
+    void pushEnemy3False() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -198,7 +220,7 @@ class PushCharacterTest {
 
         //Simulation : CURRENT PLAYER - Player1
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix

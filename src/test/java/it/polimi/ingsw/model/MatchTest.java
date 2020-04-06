@@ -1,7 +1,12 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +18,14 @@ class MatchTest {
     final Player p2 = new Player("Pluto", LocalDate.now() ,Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
+    final DeckReader reader = new DeckReader();
 
     @Test
-    void playGameTurnWithoutCard() {
+    void playGameTurnWithoutCard() throws IOException {
         Battlefield b = Battlefield.getBattlefieldInstance();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -34,10 +43,12 @@ class MatchTest {
 
         //Play Pippo
         m.setSelectedWorker(w1);
-        Cell[][] before = Battlefield.getBattlefieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
-        Turn t = m.generateTurn();
+
+        Turn t = m.generateTurn(true);
+
+        m.getSelectedWorker().setWorkerView(t.generateMovementMatrix(m.getSelectedWorker()));
         t.moveWorker(m.getSelectedWorker(),1,1 );
-        Cell[][] after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
+        m.getSelectedWorker().setWorkerView(t.generateBuildingMatrix(m.getSelectedWorker()));
         t.buildBlock(m.getSelectedWorker(), 0, 1);
         t.passTurn();
 
@@ -50,24 +61,28 @@ class MatchTest {
 
         //Play Pluto
         m.setSelectedWorker(w2);
-        before = Battlefield.getBattlefieldInstance().getWorkerView(w1, (cell)->!cell.isWorkerPresent());
-        t = m.generateTurn();
-        t.moveWorker(m.getSelectedWorker(),4,4 );
-        after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
-        t.buildBlock(m.getSelectedWorker(), 4, 3);
+        t = m.generateTurn(true);
+        m.getSelectedWorker().setWorkerView(t.generateMovementMatrix(m.getSelectedWorker()));
+        t.moveWorker(m.getSelectedWorker(),1,4 );
+        m.getSelectedWorker().setWorkerView(t.generateBuildingMatrix(m.getSelectedWorker()));
+        t.buildBlock(m.getSelectedWorker(), 2, 4);
         t.passTurn();
 
         assertFalse(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
-        assertTrue(Battlefield.getBattlefieldInstance().getCell(4,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(1,4).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
-        assertTrue(Battlefield.getBattlefieldInstance().getCell(4,3).getTower().getHeight() == 1);
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(2,4).getTower().getHeight() == 1);
         Battlefield.getBattlefieldInstance().cleanField();
     }
 
     @Test
-    void playGameTurnWithoutCardTowerLevel() {
+    void playGameTurnWithoutCardTowerLevel() throws IOException {
 
         Battlefield b = Battlefield.getBattlefieldInstance();
+
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -92,7 +107,7 @@ class MatchTest {
         Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
         Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
         Battlefield.getBattlefieldInstance().getCell(1,0).getTower().addNextBlock();
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(true);
         Cell[][] before = Battlefield.getBattlefieldInstance().getWorkerView(w1,
                 (cell)->!cell.isWorkerPresent() && Battlefield.getBattlefieldInstance().getCell(m.getSelectedWorker().getRowWorker(), m.getSelectedWorker().getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
         int nCell = 0;
@@ -104,8 +119,11 @@ class MatchTest {
         }
         assertTrue(nCell == 1);
 
+        m.getSelectedWorker().setWorkerView(t.generateMovementMatrix(m.getSelectedWorker()));
+
         t.moveWorker(m.getSelectedWorker(),1,1 );
-        Cell[][] after = Battlefield.getBattlefieldInstance().getWorkerView(w1,(cell)->!cell.isWorkerPresent());
+
+        m.getSelectedWorker().setWorkerView(t.generateBuildingMatrix(m.getSelectedWorker()));
         t.buildBlock(m.getSelectedWorker(), 1,0);
 
         assertFalse(Battlefield.getBattlefieldInstance().getCell(0,0).isWorkerPresent());

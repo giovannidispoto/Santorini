@@ -1,10 +1,15 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +23,16 @@ class SwitchCharacterTest {
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
     final Worker w3 = new Worker(p2);
+    final DeckReader reader = new DeckReader();
 
     @Test
-    void switchMovement() {
+    void switchMovement() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -39,7 +48,7 @@ class SwitchCharacterTest {
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -56,10 +65,13 @@ class SwitchCharacterTest {
     }
 
     @Test
-    void normalMovement() {
+    void normalMovement() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -75,7 +87,7 @@ class SwitchCharacterTest {
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
@@ -92,10 +104,13 @@ class SwitchCharacterTest {
     }
 
     @Test
-    void switchMovementException() {
+    void switchMovementException() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -111,7 +126,7 @@ class SwitchCharacterTest {
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
         //0. Generate Turn
-        Turn t = m.generateTurn();
+        Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix

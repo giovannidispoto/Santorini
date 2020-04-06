@@ -1,0 +1,33 @@
+{"cardsEffects":[
+	{ 	"cardName":"Apollo", 
+		"Effect":{"effectName":"SwitchCharacter"}
+	},
+	{ 	"cardName":"Artemis", 
+		"Effect":{"effectName":"ExtraMove", "numberOfExtraMoves":2}
+	},
+	{ 	"cardName":"Athena", 
+		"Effect":{"effectName":"NoMoveUp"}
+	},
+	{ 	"cardName":"Atlas", 
+		"Effect":{"effectName":"DomeEverywhere"}
+	},
+	{ 	"cardName":"Demeter", 
+		"Effect":{"effectName":"ExtraBlockAbove", "numberOfExtraBlocks":1, "buildInSameCell":false}
+	},
+	{ 	"cardName":"Hephaestus", 
+		"Effect":{"effectName":"ExtraBlockAbove", "numberOfExtraBlocks":1, "buildInSameCell":true, "prohibitedBlocks":"DOME"}
+	},
+	{ 	"cardName":"Minotaur", 
+		"Effect":{"effectName":"PushCharacter", "pushOutBattlefield":false}
+	},
+	{ 	"cardName":"Pan", 
+		"Effect":{"effectName":"JumpEffect", "minJumpHeight":2}
+	},
+	{ 	"cardName":"Prometheus", 
+		"Effect":{"effectName":"CantLevelUp", "buildBeforeMove":true, "buildAfterMove":true}
+	},
+	{
+		"cardName" : "Zeus",
+		"Effect": {"effectName": "BlockUnder"}
+	}
+]}

@@ -10,7 +10,12 @@ import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 import it.polimi.ingsw.model.cards.effects.move.NoMoveUp;
 import it.polimi.ingsw.model.cards.effects.move.PushCharacter;
 import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
+import it.polimi.ingsw.model.parser.DivinityEffectReader;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,36 +28,49 @@ public class Match {
     private List<Player> matchPlayers;
     private List<DivinityCard> matchCards;
     private List<Turn> matchTurn;
-    private Map<String,Turn> turnMap;
     private Worker selectedWorker;
     private List<GlobalWinCondition> matchGlobalConditions;
     private List<GlobalEffect> matchGlobalEffects;
+    private Map<Player,Turn> playerTurn;
     private Player currentPlayer;
+    private final String pathToFile = "src/CardsEffect.json";
 
     /**
      * Class Constructor
      * @param matchPlayers are the players who take part in the game
      * @param matchCards are the cards picked for this game match
      */
-    public Match(List<Player> matchPlayers, List<DivinityCard> matchCards) {
+    public Match(List<Player> matchPlayers, List<DivinityCard> matchCards){
         this.matchBoard = Battlefield.getBattlefieldInstance();
         this.matchPlayers = List.copyOf(matchPlayers);
         this.matchCards = List.copyOf(matchCards);
+        this.playerTurn = new HashMap<>();
+        DivinityEffectReader reader = new DivinityEffectReader();
+        try {
+            Map<String, Turn> res = reader.load(new FileReader(pathToFile));
+            for (Player p : matchPlayers) {
+                playerTurn.put(p, res.get(p.getPlayerCard().getCardName()));
+                playerTurn.get(p).setCurrentMatch(this);
+            }
+        }catch(IOException e){
+           e.printStackTrace();
+        }
     }
 
     /**
      * Generates a new turn
+     * @param basic request basic turn
      * @return Turn object
      */
-    public Turn generateTurn(){
-        //In this case I'm playing with a DomeEveryWhere Turn
-        //Turn t = new DomeEverywhere();
-        //Turn t = new ExtraMove(2);
-        //Turn t = new DomeEverywhere();
-        //Turn t = new BasicTurn();
-        //Turn t = new PushCharacter();
-        Turn t = new NoMoveUp();
-       t.setCurrentMatch(this);
+    public Turn generateTurn(boolean basic){
+       if(basic) {
+           Turn t = new BasicTurn();
+           t.setCurrentMatch(this);
+           return t;
+       }
+
+       Turn t = playerTurn.get(currentPlayer);
+       t.resetTurn();
        return t;
     }
 
