@@ -102,7 +102,7 @@ public class Match {
      */
     public void declareWinner(Player winner){
         //How represent winner win? (discussion on slack)
-        this.winner =winner;//debug
+        this.winner = winner;//debug
     }
 
     public Worker getSelectedWorker(){

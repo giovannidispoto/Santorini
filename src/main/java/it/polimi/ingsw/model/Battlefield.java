@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -141,6 +142,28 @@ public class Battlefield {
 
    public Cell[][] getWorkerView(Worker w){
        return getWorkerView(w, (cell)-> true);
+   }
+
+    /**
+     *
+     * @return the perimeter cell list which contains the list of the perimeter cells
+     */
+   public List<Cell> getPerimeterCells() {
+        List<Cell> perimeterCells = new ArrayList<>();
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        for(int col=0;col<5;col++) {
+            perimeterCells.add(battlefield.getCell(0,col));
+        }
+        for(int col=0;col<5;col++) {
+           perimeterCells.add(battlefield.getCell(4,col));
+        }
+        for(int row=0;row<5;row++){
+            perimeterCells.add(battlefield.getCell(row,0));
+        }
+       for(int row=0;row<5;row++){
+           perimeterCells.add(battlefield.getCell(row,4));
+       }
+        return perimeterCells;
    }
 
     /**

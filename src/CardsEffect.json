@@ -31,5 +31,8 @@
 	},
 	{	"cardName" : "Chronus",
 		"Effect": {"effectName": "BasicTurn"}
+	},
+	{	"cardName" : "Triton",
+		"Effect": {"effectName": "ExtraMovePerimeter"}
 	}
 ]}

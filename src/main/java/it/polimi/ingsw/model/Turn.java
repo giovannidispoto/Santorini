@@ -8,10 +8,10 @@ public abstract class Turn {
     private final int N_VIEW_ROWS = 5;
     private final int N_VIEW_COLUMNS = 5;
     protected Match currentMatch;
-    protected int movesLeft;
-    protected int blocksLeft;
-    protected int moves;
-    protected int blocks;
+    protected int movesLeft = 1;
+    protected int blocksLeft = 1;
+    protected int moves = 1;
+    protected int blocks = 1;
     private boolean changeLevel;
     protected boolean reachedLevel3 = false;
 

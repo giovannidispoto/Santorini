@@ -6,10 +6,7 @@ import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
-import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
-import it.polimi.ingsw.model.cards.effects.move.NoMoveUp;
-import it.polimi.ingsw.model.cards.effects.move.PushCharacter;
-import it.polimi.ingsw.model.cards.effects.move.SwitchCharacter;
+import it.polimi.ingsw.model.cards.effects.move.*;
 import it.polimi.ingsw.model.cards.effects.win.JumpEffect;
 
 import java.lang.reflect.Type;
@@ -62,6 +59,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     break;
                 case "BasicTurn":
                     t = new BasicTurn();
+                    break;
+                case "ExtraMovePerimeter":
+                    t = new ExtraMovePerimeter();
                     break;
             }
             map.put(cardName,t);
