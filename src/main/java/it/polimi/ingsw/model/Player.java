@@ -46,6 +46,14 @@ public class Player {
     }
 
     /**
+     * Assigns workers to the player
+     * @param playerWorkers that has to be given to the player
+     */
+    public void setPlayerWorkers(List<Worker> playerWorkers){
+        this.playerWorkers = playerWorkers;
+    }
+
+    /**
      * Gets player color
      * @return Color object
     * */
