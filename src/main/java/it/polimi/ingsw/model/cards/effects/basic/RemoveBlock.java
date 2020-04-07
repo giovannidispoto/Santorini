@@ -12,7 +12,8 @@ public class RemoveBlock extends BasicTurn {
     }
 
 
-    public void generateRemoveMatrix(Worker selectedWorker) {
+    public void generateRemoveMatrix() {
+        Worker selectedWorker = currentMatch.getSelectedWorker();
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //change selectedWorker in the other worker that has not been moved
         Worker stationaryWorker = selectedWorker.getOwnerWorker().getStationaryWorker(selectedWorker);
