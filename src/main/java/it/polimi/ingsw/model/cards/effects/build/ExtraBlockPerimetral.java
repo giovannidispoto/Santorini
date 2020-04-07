@@ -32,9 +32,7 @@ public class ExtraBlockPerimetral extends BuildEffect {
             Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             //Set WorkerView for Special Build (No Perimeter Cells & No Worker Cell)
             selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
-                    && !battlefield.getPerimeterCells().contains(cell)
-
-            ));
+                    && !battlefield.getPerimeterCells().contains(cell)));
             blocksLeft--;
         }
         else if(blocksLeft == 1){

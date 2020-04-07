@@ -1,21 +1,20 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.cards.effects.build.BuildEffect;
 
 public class ExtraBlockAbove extends BuildEffect{
     private boolean buildInSameCell;
     /**
      * Class Constructor
+     * @param buildInSameCell boolean to split the effects
+     * @param blocksLeft set blocksLeft in turn from file
      */
     public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft) {
         super();
         this.buildInSameCell=buildInSameCell;
         this.blocksLeft=blocksLeft;
-        this.blocks = blocksLeft;
+        this.blocks=blocksLeft;
     }
 
 
@@ -28,23 +27,25 @@ public class ExtraBlockAbove extends BuildEffect{
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //Hephaestus
         if(buildInSameCell){
-            if(blocksLeft>0){
+            if(blocksLeft > 1){
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
-                selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(newBlockRow,newBlockCol))));
+                selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(newBlockRow,newBlockCol))
+                && !(cell.getTower().getHeight() > 2)));
             }
-            else{
+            else if(blocksLeft == 1){
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             }
             blocksLeft--;
         }
         //Demeter
         else{
-            if(blocksLeft>0){
+            if(blocksLeft > 1){
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+                //Remove in th WorkingMatrix the cell where you've build now
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                         && !cell.equals(battlefield.getCell(newBlockRow,newBlockCol))));
             }
-            else{
+            else if(blocksLeft == 1){
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             }
             blocksLeft--;

@@ -12,10 +12,10 @@
 		"Effect":{"effectName":"DomeEverywhere"}
 	},
 	{ 	"cardName":"Demeter", 
-		"Effect":{"effectName":"ExtraBlockAbove", "numberOfExtraBlocks":1, "buildInSameCell":false}
+		"Effect":{"effectName":"ExtraBlockAbove", "blocksLeft":2, "buildInSameCell":false}
 	},
 	{ 	"cardName":"Hephaestus", 
-		"Effect":{"effectName":"ExtraBlockAbove", "numberOfExtraBlocks":1, "buildInSameCell":true, "prohibitedBlocks":"DOME"}
+		"Effect":{"effectName":"ExtraBlockAbove", "blocksLeft":2, "buildInSameCell":true}
 	},
 	{ 	"cardName":"Minotaur", 
 		"Effect":{"effectName":"PushCharacter", "pushOutBattlefield":false}

@@ -50,7 +50,7 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     t = new DomeEverywhere();
                     break;
                 case "ExtraBlockAbove":
-                    t = new ExtraBlockAbove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("buildInSameCell").getAsBoolean(),jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("numberOfExtraBlocks").getAsInt());
+                    t = new ExtraBlockAbove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("buildInSameCell").getAsBoolean(),jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt());
                     break;
                 case "PushCharacter":
                     t = new PushCharacter();
