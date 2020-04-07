@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
+import it.polimi.ingsw.model.cards.effects.build.ExtraBlockPerimetral;
 import it.polimi.ingsw.model.cards.effects.move.*;
 import it.polimi.ingsw.model.cards.effects.win.JumpEffect;
 
@@ -21,9 +22,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
      * Method used by Gson to deserialize correctly JSON file
      * @param jsonElement json to deserialize
      * @param type type of object
-     * @param jsonDeserializationContext
+     * @param jsonDeserializationContext Context for deserialization that is passed to a custom deserializer during invocation of its method
      * @return association between card name and effect
-     * @throws JsonParseException
+     * @throws JsonParseException Exception type for parsing problems, used when non-well-formed content is encountered
      */
     @Override
     public Map<String, Turn> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -62,6 +63,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     break;
                 case "ExtraMovePerimeter":
                     t = new ExtraMovePerimeter();
+                    break;
+                case "ExtraBlockPerimetral":
+                    t = new ExtraBlockPerimetral(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt());
                     break;
             }
             map.put(cardName,t);

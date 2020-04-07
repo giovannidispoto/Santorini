@@ -151,6 +151,7 @@ class PushCharacterTest {
         //control workerView
         Cell[][] workerView =w1.getWorkerView();
         assertNull(workerView[0][1]);
+        //illegal move
         assertThrows(RuntimeException.class, ()->t.moveWorker(m.getSelectedWorker(),0,1));
         //Clean battlefield for next tests
         battlefield.cleanField();

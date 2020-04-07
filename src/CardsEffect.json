@@ -34,5 +34,8 @@
 	},
 	{	"cardName" : "Triton",
 		"Effect": {"effectName": "ExtraMovePerimeter"}
+	},
+	{	"cardName" : "Hestia",
+		"Effect": {"effectName": "ExtraBlockPerimetral", "blocksLeft":2}
 	}
 ]}
