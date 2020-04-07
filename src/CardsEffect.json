@@ -37,5 +37,8 @@
 	},
 	{	"cardName" : "Hestia",
 		"Effect": {"effectName": "ExtraBlockPerimetral", "blocksLeft":2}
+	},
+	{	"cardName" : "Ares",
+		"Effect": {"effectName": "RemoveBlock"}
 	}
 ]}

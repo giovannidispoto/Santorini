@@ -53,4 +53,16 @@ public class Player {
         return playerColor;
     }
 
+    /**
+     * Get another player who has not been moved
+     * @return stationaryWorker
+     * */
+    public Worker getStationaryWorker(Worker selectedWorker){
+        Worker stationaryWorker = null;
+        for(Worker playerWorker : playerWorkers)
+            if(!playerWorker.equals(selectedWorker))
+                stationaryWorker=playerWorker;
+        return stationaryWorker;
+    }
+
 }

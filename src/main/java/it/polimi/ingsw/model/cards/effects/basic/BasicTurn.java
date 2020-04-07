@@ -31,6 +31,8 @@ public class BasicTurn extends Turn {
         int lvl_a = Battlefield.getBattlefieldInstance().getCell(newRow, newCol).getTower().getHeight();
         if(lvl_a - lvl_b == 1 && lvl_a == 3)
             reachedLevel3 = true;
+
+        movesLeft--;
     }
 
     /**
@@ -46,6 +48,7 @@ public class BasicTurn extends Turn {
             throw new RuntimeException("Unexpected Error!");
 
        Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+       blocksLeft--;
     }
 
     /**
@@ -54,7 +57,7 @@ public class BasicTurn extends Turn {
      */
     public void checkLocalCondition(Worker selectedWorker){
         if(reachedLevel3) {
-                //currentMatch.declareWinner(); controller method needed
+                currentMatch.declareWinner(selectedWorker.getOwnerWorker()); //debug controller method needed
             }
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
+import it.polimi.ingsw.model.cards.effects.basic.RemoveBlock;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockPerimetral;
@@ -66,6 +67,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     break;
                 case "ExtraBlockPerimetral":
                     t = new ExtraBlockPerimetral(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt());
+                    break;
+                case "RemoveBlock":
+                    t = new RemoveBlock();
                     break;
             }
             map.put(cardName,t);
