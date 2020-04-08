@@ -79,21 +79,52 @@ class RemoveBlockTest {
         //Special Effect Ares
         //9. Change Worker
         m.setSelectedWorker(t.changeWorkerPlayer(m.getSelectedWorker()));
-        //10. Generate Building Matrix
+        //10. Generate Remove Matrix
         m.getSelectedWorker().setWorkerView(t.generateRemoveMatrix(m.getSelectedWorker()));
         //11. RemoveBlock()
         t.removeBlock(m.getSelectedWorker(),2,4);
         //12. PassTurn
+        //t.passTurn();
 
-
-        //ASSERT : We expect two builds, but the second with a different WorkerView (no perimeterCells)
-        assertEquals(2, battlefield.getCell(3, 2).getTower().getHeight());
-        assertEquals(4, battlefield.getCell(4, 4).getTower().getHeight());
+        //ASSERT : We expect this towers & Heights, the 2nd worker with a different WorkerView
+        /*EXPECTED Battlefield
+        ╔═══╦════╦═════╦══════╦═══╗
+        ║ 1 ║ w1 ║     ║      ║   ║
+        ╠═══╬════╬═════╬══════╬═══╣
+        ║   ║    ║     ║      ║   ║
+        ╠═══╬════╬═════╬══════╬═══╣
+        ║   ║    ║     ║      ║ 2 ║
+        ╠═══╬════╬═════╬══════╬═══╣
+        ║   ║    ║ 2   ║ 0|w2 ║   ║
+        ╠═══╬════╬═════╬══════╬═══╣
+        ║   ║    ║ 1|D ║ 2|w3 ║ 4 ║
+        ╚═══╩════╩═════╩══════╩═══╝
+         */
+        assertEquals(w1, battlefield.getCell(0, 1).getWorker());
+        assertEquals(w2, battlefield.getCell(3, 3).getWorker());
+        assertEquals(w3, battlefield.getCell(4, 3).getWorker());
         assertEquals(1, battlefield.getCell(0, 0).getTower().getHeight());
-        assertEquals(2, battlefield.getCell(4, 3).getTower().getHeight());
         assertEquals(2, battlefield.getCell(2, 4).getTower().getHeight());
+        assertEquals(2, battlefield.getCell(3, 2).getTower().getHeight());
+        assertEquals(0, battlefield.getCell(3, 3).getTower().getHeight());
         assertEquals(1, battlefield.getCell(4, 2).getTower().getHeight());
         assertEquals(Block.DOME, battlefield.getCell(4, 2).getTower().getLastBlock());
+        assertEquals(2, battlefield.getCell(4, 3).getTower().getHeight());
+        assertEquals(4, battlefield.getCell(4, 4).getTower().getHeight());
+
+        /*EXPECTED WorkerView W2
+        ╔══╦══╦═══╦══╦═══╗
+        ║  ║  ║   ║  ║   ║
+        ╠══╬══╬═══╬══╬═══╣
+        ║  ║  ║   ║  ║   ║
+        ╠══╬══╬═══╬══╬═══╣
+        ║  ║  ║   ║  ║ v ║
+        ╠══╬══╬═══╬══╬═══╣
+        ║  ║  ║ v ║  ║   ║
+        ╠══╬══╬═══╬══╬═══╣
+        ║  ║  ║   ║  ║   ║
+        ╚══╩══╩═══╩══╩═══╝
+         */
         //control workerView
         Cell[][] workerView = w2.getWorkerView();
         assertNull(workerView[2][2]);

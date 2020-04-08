@@ -1,10 +1,10 @@
  #GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
 
-#------ BLACKLIST ------
+#----------- BLACKLIST -----------
 # Ignore everything	(rules = 1)
 *
 
-#------ WHITELIST ------
+#----------- WHITELIST -----------
 # Don't Ignore those folders and files
 
 #root	(rules = 3)
@@ -20,41 +20,31 @@
 !src/
 !src/*.json
 
-#test/	(rules = 23)
-!src/test/
-!src/test/java/
-!src/test/java/it/
-!src/test/java/it/polimi/
-!src/test/java/it/polimi/ingsw/
-#model/
-!src/test/java/it/polimi/ingsw/model/
-!src/test/java/it/polimi/ingsw/model/*.java
-!src/test/java/it/polimi/ingsw/model/parser
-!src/test/java/it/polimi/ingsw/model/parser/*.java
-#model/cards/
-!src/test/java/it/polimi/ingsw/model/cards/
-!src/test/java/it/polimi/ingsw/model/cards/*.java
-#model/cards/effects/*
-!src/test/java/it/polimi/ingsw/model/cards/effects/
-!src/test/java/it/polimi/ingsw/model/cards/effects/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/basic
-!src/test/java/it/polimi/ingsw/model/cards/effects/basic/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/build
-!src/test/java/it/polimi/ingsw/model/cards/effects/build/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/move
-!src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/remove
-!src/test/java/it/polimi/ingsw/model/cards/effects/remove/*.java
-!src/test/java/it/polimi/ingsw/model/cards/effects/win
-!src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
-
-
-#main/	(rules = 23)
+#----------- MAIN_RULES -----------
+#main/	(rules = 35)
 !src/main/
 !src/main/java/
 !src/main/java/it/
 !src/main/java/it/polimi/
 !src/main/java/it/polimi/ingsw/
+#client/
+!src/main/java/it/polimi/ingsw/client
+!src/main/java/it/polimi/ingsw/client/*.java
+#client/cli
+!src/main/java/it/polimi/ingsw/client/cli
+!src/main/java/it/polimi/ingsw/client/cli/*.java
+#client/gui
+!src/main/java/it/polimi/ingsw/client/gui
+!src/main/java/it/polimi/ingsw/client/gui/*.java
+#controller
+!src/main/java/it/polimi/ingsw/controller
+!src/main/java/it/polimi/ingsw/controller/*.java
+#server
+!src/main/java/it/polimi/ingsw/server
+!src/main/java/it/polimi/ingsw/server/*.java
+#view
+!src/main/java/it/polimi/ingsw/view
+!src/main/java/it/polimi/ingsw/view/*.java
 #model/
 !src/main/java/it/polimi/ingsw/model/
 !src/main/java/it/polimi/ingsw/model/*.java
@@ -76,5 +66,52 @@
 !src/main/java/it/polimi/ingsw/model/cards/effects/remove/*.java
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/*.java
+
+#----------- TEST_RULES -----------
+#test/	(rules = 35)
+!src/test/
+!src/test/java/
+!src/test/java/it/
+!src/test/java/it/polimi/
+!src/test/java/it/polimi/ingsw/
+#client/
+!src/test/java/it/polimi/ingsw/client
+!src/test/java/it/polimi/ingsw/client/*.java
+#client/cli
+!src/test/java/it/polimi/ingsw/client/cli
+!src/test/java/it/polimi/ingsw/client/cli/*.java
+#client/gui
+!src/test/java/it/polimi/ingsw/client/gui
+!src/test/java/it/polimi/ingsw/client/gui/*.java
+#controller
+!src/test/java/it/polimi/ingsw/controller
+!src/test/java/it/polimi/ingsw/controller/*.java
+#server
+!src/test/java/it/polimi/ingsw/server
+!src/test/java/it/polimi/ingsw/server/*.java
+#view
+!src/test/java/it/polimi/ingsw/view
+!src/test/java/it/polimi/ingsw/view/*.java
+#model/
+!src/test/java/it/polimi/ingsw/model/
+!src/test/java/it/polimi/ingsw/model/*.java
+!src/test/java/it/polimi/ingsw/model/parser
+!src/test/java/it/polimi/ingsw/model/parser/*.java
+#model/cards/
+!src/test/java/it/polimi/ingsw/model/cards/
+!src/test/java/it/polimi/ingsw/model/cards/*.java
+#model/cards/effects/*
+!src/test/java/it/polimi/ingsw/model/cards/effects/
+!src/test/java/it/polimi/ingsw/model/cards/effects/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/basic
+!src/test/java/it/polimi/ingsw/model/cards/effects/basic/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/build
+!src/test/java/it/polimi/ingsw/model/cards/effects/build/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/move
+!src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/remove
+!src/test/java/it/polimi/ingsw/model/cards/effects/remove/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/win
+!src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
 
 #Maintained by Gorlenah
