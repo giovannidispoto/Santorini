@@ -4,7 +4,7 @@ import com.google.gson.*;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
-import it.polimi.ingsw.model.cards.effects.basic.RemoveBlock;
+import it.polimi.ingsw.model.cards.effects.remove.RemoveBlock;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockPerimetral;

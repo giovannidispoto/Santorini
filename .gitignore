@@ -20,7 +20,7 @@
 !src/
 !src/*.json
 
-#test/	(rules = 21)
+#test/	(rules = 23)
 !src/test/
 !src/test/java/
 !src/test/java/it/
@@ -43,11 +43,13 @@
 !src/test/java/it/polimi/ingsw/model/cards/effects/build/*.java
 !src/test/java/it/polimi/ingsw/model/cards/effects/move
 !src/test/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/remove
+!src/test/java/it/polimi/ingsw/model/cards/effects/remove/*.java
 !src/test/java/it/polimi/ingsw/model/cards/effects/win
 !src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
 
 
-#main/	(rules = 21)
+#main/	(rules = 23)
 !src/main/
 !src/main/java/
 !src/main/java/it/
@@ -70,6 +72,8 @@
 !src/main/java/it/polimi/ingsw/model/cards/effects/build/*.java
 !src/main/java/it/polimi/ingsw/model/cards/effects/move/
 !src/main/java/it/polimi/ingsw/model/cards/effects/move/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/remove/
+!src/main/java/it/polimi/ingsw/model/cards/effects/remove/*.java
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/*.java
 
