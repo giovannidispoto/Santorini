@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Deck class model the effective deck composed by DivinityCards

@@ -29,4 +29,12 @@ public class DivinityCard {
     public Type getCardType() {
         return cardType;
     }
+
+    public int getNumberOfPlayersAllowed() {
+        return numberOfPlayersAllowed;
+    }
+
+    public String getCardEffect() {
+        return cardEffect;
+    }
 }
