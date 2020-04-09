@@ -16,6 +16,10 @@ public class JumpEffect extends WinEffect {
 
     @Override
     public void moveWorker(Worker selectedWorker, int newRow, int newCol) {
+        //Check coordinates
+        if(selectedWorker.getWorkerView()[newRow][newCol] == null)
+            throw new RuntimeException("Unexpected Error!");
+
         //Save old coordinates
         oldRow=selectedWorker.getRowWorker();
         oldCol=selectedWorker.getColWorker();
@@ -26,18 +30,20 @@ public class JumpEffect extends WinEffect {
         //Check if we have reached the level 3
         if(lvl_a - lvl_b == 1 && lvl_a == 3)
             reachedLevel3 = true;
+
+        movesLeft--;
     }
 
     @Override
     public void checkLocalCondition(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        //Check if we have made a two level jump
-        if(battlefield.getCell(oldRow,oldCol).getTower().getHeight()-battlefield.getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker()).getTower().getHeight()==2){
-            //currentMatch.declareWinner(); that return the match winner... we need the controller
+        //Check if we jumped two or more levels
+        if(battlefield.getCell(oldRow,oldCol).getTower().getHeight()-battlefield.getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker()).getTower().getHeight() >= 2){
+            currentMatch.declareWinner(selectedWorker.getOwnerWorker()); //debug
         }
         //Check if we have reached the level 3
         else if(reachedLevel3){
-            //currentMatch.declareWinner(); that returns the match winner... we need the controller
+            currentMatch.declareWinner(selectedWorker.getOwnerWorker()); //debug
         }
     }
 }

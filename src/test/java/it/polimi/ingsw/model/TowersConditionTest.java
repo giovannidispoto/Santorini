@@ -87,6 +87,7 @@ class TowersConditionTest {
         //Control if p2 is the winner (turn is never passed) (with a debug variable in match)
         assertEquals(p2, m.winner);//debug
 
+        //Clean battlefield for next tests
         battlefield.cleanField();
     }
 }

@@ -17,16 +17,11 @@ public abstract class Turn {
 
     /**
      * Class Constructor
-    *
-     public Turn(Match currentMatch) {
-        this.currentMatch = currentMatch;
-    }
-    */
-
-
-    public Turn(){
+     */
+    public Turn() {
         //null
     }
+
 
     /**
      *
@@ -66,18 +61,17 @@ public abstract class Turn {
 
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent() && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
-        /*Cell[][] returnMatrix = battlefield.getWorkerView(selectedWorker, (cell)->battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
-        returnMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=null;
-        return returnMatrix;*/
+        //Basic movement: Banned Cells = workers, Higher than 1, Dome
+        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+                && !(cell.getTower().getLastBlock() == Block.DOME));
     }
 
     public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        /*Cell[][] returnMatrix = battlefield.getWorkerView(selectedWorker);
-        returnMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=null;
-        return returnMatrix;*/
-        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent());
+        //Basic building: Banned Cells = workers, Dome
+        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                && !(cell.getTower().getLastBlock() == Block.DOME));
     }
 
     /**
