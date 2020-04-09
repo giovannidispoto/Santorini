@@ -13,8 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
-    final  Player p1 = new Player("Pippo", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("Pluto", LocalDate.now() ,Color.GREY);
+    final Player p1 = new Player("Pippo", LocalDate.now(), Color.BLUE);
+    final Player p2 = new Player("Pluto", LocalDate.now(), Color.GREY);
+    final Player p3 = new Player("Hello", LocalDate.now(), Color.BROWN);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
     final DeckReader reader = new DeckReader();
@@ -129,6 +130,47 @@ class MatchTest {
         assertTrue(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,1).isWorkerPresent());
         assertTrue(Battlefield.getBattlefieldInstance().getCell(1,0).getTower().isCompleted());
+        Battlefield.getBattlefieldInstance().cleanField();
+    }
+
+    @Test
+    void testPlayersManagement() throws IOException {
+
+        Battlefield b = Battlefield.getBattlefieldInstance();
+
+        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+
+        List<Player> players = new ArrayList<>();
+        Match m = new Match(players,new ArrayList<>());
+        List<Worker> workers = new ArrayList<>();
+        workers.add(w1);
+        workers.add(w2);
+        b.setWorkersInGame(workers);
+        w1.setWorkerPosition(0,0);
+        w2.setWorkerPosition(0,4);
+
+        m.addPlayer(p1);
+        assertThrows(RuntimeException.class, ()-> m.addPlayer(p1));
+        m.removePlayer(p1);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.nextPlayer();
+
+        //set next player with worker
+        m.setCurrentPlayer(p2);
+        m.setSelectedWorker(w2);
+
+        //control worker & player colors
+        assertEquals(Color.GREY, p2.getPlayerColor());
+        assertEquals(Color.GREY, w2.getWorkerColor());
+        //remove worker
+        Battlefield.getBattlefieldInstance().getCell(0,4).removeWorker();
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
+
+        //clean battlefield for next tests
         Battlefield.getBattlefieldInstance().cleanField();
     }
 }

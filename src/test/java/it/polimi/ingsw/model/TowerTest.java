@@ -85,4 +85,15 @@ class TowerTest {
         assertEquals(0, t1.getHeight());
 
     }
+
+    @Test
+    void addAnotherDome() {
+
+        Tower t = new Tower();
+
+        t.addBlock(Block.DOME);
+
+        /*Expected error trying to addNextBlock of a Dome*/
+        assertThrows(RuntimeException.class, t::addNextBlock);
+    }
 }

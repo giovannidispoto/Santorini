@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.parser.DivinityEffectReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,8 @@ public class Match {
      */
     public Match(List<Player> matchPlayers, List<DivinityCard> matchCards){
         this.matchBoard = Battlefield.getBattlefieldInstance();
-        this.matchPlayers = List.copyOf(matchPlayers);
-        this.matchCards = List.copyOf(matchCards);
+        this.matchPlayers = new ArrayList<> (matchPlayers);
+        this.matchCards = new ArrayList<> (matchCards);
         this.playerTurn = new HashMap<>();
         DivinityEffectReader reader = new DivinityEffectReader();
         try {
