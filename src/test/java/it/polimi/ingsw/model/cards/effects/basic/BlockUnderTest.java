@@ -204,6 +204,7 @@ class BlockUnderTest {
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
         m.getSelectedWorker().setWorkerView(t.generateMovementMatrix(m.getSelectedWorker()));
+        //control workerView (MovementMatrix)
         workerView = w1.getWorkerView();
         assertNotNull(workerView[0][1]);
         assertNull(workerView[0][2]);   //Worker w2
@@ -253,7 +254,7 @@ class BlockUnderTest {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with zeus isn't the winner
+        assertEquals(p1, m.winner);//Check if p1 with zeus is the winner
         assertEquals(w1, battlefield.getCell(1, 3).getWorker());    //check position
         assertEquals(3, battlefield.getCell(1, 3).getTower().getHeight());  //check tower
         //illegal move

@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.*;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;

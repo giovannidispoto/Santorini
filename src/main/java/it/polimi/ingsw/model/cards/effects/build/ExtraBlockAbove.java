@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Block;
 import it.polimi.ingsw.model.Worker;
 
 public class ExtraBlockAbove extends BuildEffect{
@@ -8,7 +9,7 @@ public class ExtraBlockAbove extends BuildEffect{
     /**
      * Class Constructor
      * @param buildInSameCell boolean to split the effects
-     * @param blocksLeft set blocksLeft in turn from file
+     * @param blocksLeft set blocksLeft in turn
      */
     public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft) {
         super();
@@ -28,27 +29,36 @@ public class ExtraBlockAbove extends BuildEffect{
         //Hephaestus
         if(buildInSameCell){
             if(blocksLeft > 1){
+                //Regular Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+                //Set WorkerView for Special Build (Same cell where has built now, but can't build a dome, so no towerLv3)
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(newBlockRow,newBlockCol))
-                && !(cell.getTower().getHeight() > 2)));
+                        && !(cell.getTower().getHeight() > 2)
+                        && !(cell.getTower().getLastBlock() == Block.DOME)));
             }
             else if(blocksLeft == 1){
+                //Special Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             }
-            blocksLeft--;
         }
         //Demeter
         else{
             if(blocksLeft > 1){
+                //Regular Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
-                //Remove in th WorkingMatrix the cell where you've build now
+                //Remove in the WorkerMatrix the cell where you've build now, Banned Cells with: dome, worker
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
-                        && !cell.equals(battlefield.getCell(newBlockRow,newBlockCol))));
+                        && !cell.equals(battlefield.getCell(newBlockRow,newBlockCol))
+                        && !(cell.getTower().getLastBlock() == Block.DOME)));
             }
             else if(blocksLeft == 1){
+                //Special Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             }
-            blocksLeft--;
         }
+
+        blocksLeft--;
     }
+
+
 }

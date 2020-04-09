@@ -3,11 +3,8 @@ package it.polimi.ingsw.model.cards.effects.build;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -50,8 +47,8 @@ class ExtraBlockAboveTestFalse {
         t.buildBlock(m.getSelectedWorker(),0,1);
 
         //ASSERTS
-        assertTrue(battlefield.getCell(2,1).getTower().getHeight()==1);
-        assertTrue(battlefield.getCell(0,1).getTower().getHeight()==1);
+        assertEquals(1, battlefield.getCell(2, 1).getTower().getHeight());
+        assertEquals(1, battlefield.getCell(0, 1).getTower().getHeight());
 
         battlefield.cleanField();
     }

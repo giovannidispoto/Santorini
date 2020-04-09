@@ -61,7 +61,7 @@ public abstract class Turn {
 
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        //Basic movement: Banned Cells = workers, Higher than 1, Dome
+        //Basic movement: Banned Cells = workers, higher than 1 than the worker, Dome
         return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                 && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
                 && !(cell.getTower().getLastBlock() == Block.DOME));
@@ -84,7 +84,6 @@ public abstract class Turn {
         //setWorkerView without cells where there is a player or ground
         return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                 && !(cell.getTower().getHeight() == 0));
-        //the user now chooses if to make the remove or not and pass the turn (controller)
     }
 
     /**

@@ -23,7 +23,7 @@ public class BlockUnder extends BasicTurn {
         //Deny building on cells with workers and domes
         Cell[][] underBlockMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                 && !(cell.getTower().getLastBlock() == Block.DOME));
-        //Control if you can allow worker to build under it self, if is on a level3 tower can't
+        //Control if you can allow worker to build under his self, if is on a level3 tower can't
         if (battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() < 3)
         {
             underBlockMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker());
@@ -31,4 +31,6 @@ public class BlockUnder extends BasicTurn {
 
         return underBlockMatrix;
     }
+
+
 }

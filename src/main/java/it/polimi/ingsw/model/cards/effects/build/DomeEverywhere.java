@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
 
 public class DomeEverywhere extends BuildEffect {
@@ -16,7 +15,7 @@ public class DomeEverywhere extends BuildEffect {
 
 
     /**
-     * This method allows you to build a Dome everywhere (except where is a worker)
+     * This method allows you to build a Dome everywhere (except where is a worker or a dome)
      * @param selectedWorker is the worker selected by the player at the beginning of the turn
      * @param newBlockRow is the x coordinate of the new block
      * @param newBlockCol is the y coordinate of the new block

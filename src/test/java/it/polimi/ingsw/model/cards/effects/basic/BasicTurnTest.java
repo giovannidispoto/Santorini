@@ -1,14 +1,10 @@
 package it.polimi.ingsw.model.cards.effects.basic;
 
-import com.google.gson.JsonElement;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -53,8 +49,8 @@ class BasicTurnTest {
         t.buildBlock(m.getSelectedWorker(),m.getSelectedWorker().getRowWorker()-1,m.getSelectedWorker().getColWorker()-1);
 
         //ASSERTs : We expect a new position for the worker and a new block beside him
-        assertTrue(battlefield.getCell(2,2).getWorker().equals(w1));
-        assertTrue(battlefield.getCell(1,1).getTower().getHeight()==1);
+        assertEquals(battlefield.getCell(2, 2).getWorker(), w1);
+        assertEquals(1, battlefield.getCell(1, 1).getTower().getHeight());
 
         battlefield.cleanField();
     }
