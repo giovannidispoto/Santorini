@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.basic;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Block;
 import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.cards.effects.build.BuildEffect;
-import it.polimi.ingsw.model.cards.effects.move.MoveEffect;
 
 public class BlockUnder extends BasicTurn {
     /**
@@ -22,9 +20,15 @@ public class BlockUnder extends BasicTurn {
     @Override
     public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        Cell[][] underBlockMatrix = battlefield.getWorkerView(selectedWorker);
-        underBlockMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker());
-        //return Battlefield.getBattlefieldInstance().getWorkerView(selectedWorker);
+        //Deny building on cells with workers and domes
+        Cell[][] underBlockMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                && !(cell.getTower().getLastBlock() == Block.DOME));
+        //Control if you can allow worker to build under it self, if is on a level3 tower can't
+        if (battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() < 3)
+        {
+            underBlockMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker());
+        }
+
         return underBlockMatrix;
     }
 }

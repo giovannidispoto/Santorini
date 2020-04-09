@@ -36,7 +36,7 @@ public class BasicTurn extends Turn {
     }
 
     /**
-     * This method describes a basic move action
+     * This method describes a basic build action
      * @param selectedWorker is the worker selected by the player at the beginning of the turn
      * @param newBlockRow is the newBlockRow coordinate of the destination cell
      * @param newBlockCol is the newBlockCol coordinate of the destination cell
@@ -48,6 +48,7 @@ public class BasicTurn extends Turn {
             throw new RuntimeException("Unexpected Error!");
 
        Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+
        blocksLeft--;
     }
 
@@ -57,7 +58,7 @@ public class BasicTurn extends Turn {
      */
     public void checkLocalCondition(Worker selectedWorker){
         if(reachedLevel3) {
-                currentMatch.declareWinner(selectedWorker.getOwnerWorker()); //debug controller method needed
+                currentMatch.declareWinner(selectedWorker.getOwnerWorker()); //debug
             }
     }
 }

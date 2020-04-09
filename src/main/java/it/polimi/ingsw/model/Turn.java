@@ -69,7 +69,7 @@ public abstract class Turn {
 
     public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        //Basic building: Banned Cells = workers, Dome
+        //Basic building: Banned Cells = workers, Domes
         return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                 && !(cell.getTower().getLastBlock() == Block.DOME));
     }
