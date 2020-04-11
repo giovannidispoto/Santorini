@@ -23,8 +23,12 @@ public abstract class MoveEffect extends Turn {
     }
 
     @Override
-    public void buildBlock(Worker selectedWorker, int blockRow, int blockCol) {
-        Battlefield.getBattlefieldInstance().getTower(blockRow,blockCol).addNextBlock();
+    public void buildBlock(Worker selectedWorker, int newBlockRow, int newBlockCol) {
+        //Check coordinates
+        if(selectedWorker.getWorkerView()[newBlockRow][newBlockCol] == null)
+            throw new RuntimeException("Unexpected Error!");
+
+        Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
         blocksLeft--;
     }
 }

@@ -28,5 +28,7 @@ public class DomeEverywhere extends BuildEffect {
         //Add a Dome
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         battlefield.getCell(newBlockRow,newBlockCol).getTower().addBlock(Block.DOME);
+
+        blocksLeft--;
     }
 }

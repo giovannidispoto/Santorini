@@ -68,6 +68,7 @@ class ExtraBlockPerimetralTest {
         battlefield.cleanField();
     }
 
+    //general purpose test
     @Test
     void extensiveTurnTest() throws IOException {
         //Preliminary stuff
@@ -181,12 +182,12 @@ class ExtraBlockPerimetralTest {
          */
 
         //Control correct Turn Not Completed
-        //w1 hasn't build
+        //w2 hasn't build
         assertEquals(1, t.getBlocksLeft());
-        //w1 has moved
+        //w2 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with zeus isn't the winner
+        assertNull(m.winner);//Check if p1 with hestia isn't the winner
         assertEquals(w2, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
@@ -248,7 +249,7 @@ class ExtraBlockPerimetralTest {
         ╠══╬══╬══════╬══════╬════╣
         ║  ║  ║   2  ║ 3|w1 ║ w3 ║
         ╠══╬══╬══════╬══════╬════╣
-        ║  ║  ║   D  ║  1   ║    ║
+        ║  ║  ║   D  ║  2   ║    ║
         ╠══╬══╬══════╬══════╬════╣
         ║  ║  ║      ║      ║    ║
         ╠══╬══╬══════╬══════╬════╣
@@ -257,7 +258,7 @@ class ExtraBlockPerimetralTest {
          */
 
         //Control correct Turn Not Completed
-        //w1 hasn't build
+        //w1 has build
         assertEquals(0, t.getBlocksLeft());
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
@@ -266,6 +267,12 @@ class ExtraBlockPerimetralTest {
         assertEquals(w1, battlefield.getCell(1, 3).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position
         assertEquals(3, battlefield.getCell(1, 3).getTower().getHeight());  //check tower
+        assertEquals(2, battlefield.getCell(2, 3).getTower().getHeight());  //check tower
+        assertEquals(1, battlefield.getCell(0, 1).getTower().getHeight());  //check tower
+        assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check ground
+        assertEquals(2, battlefield.getCell(1, 2).getTower().getHeight());  //check tower
+        assertEquals(0, battlefield.getCell(1, 4).getTower().getHeight());  //check tower
+        assertEquals(1, battlefield.getCell(2, 2).getTower().getHeight());  //check dome
         //illegal move
         Turn finalT2 = t;
         assertThrows(RuntimeException.class, ()-> finalT2.moveWorker(m.getSelectedWorker(),1,4));

@@ -83,7 +83,8 @@ public class Match {
      * @param chosenPlayer who has to be removed
      */
     public void removePlayer(Player chosenPlayer) {
-        matchPlayers.remove(chosenPlayer);
+        Battlefield.getBattlefieldInstance().removeWorkers(chosenPlayer);   //clean battlefield
+        matchPlayers.remove(chosenPlayer);  //clean match
     }
 
     /**
