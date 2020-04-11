@@ -1,0 +1,188 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PushCharacter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.cards.effects.move</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PushCharacter (it.polimi.ingsw.model.cards.effects.move)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PushCharacter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (38/ 38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.cards.effects.move;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.Battlefield;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.Cell;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.Worker;
+<i>6</i>&nbsp;import it.polimi.ingsw.model.Block;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class PushCharacter extends MoveEffect {
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * Class Constructor
+<i>12</i>&nbsp;     */
+<i>13</i>&nbsp;    public PushCharacter() {
+<b class="fc"><i>14</i>&nbsp;        super();</b>
+<b class="fc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Allows you to choose a cell occupied by an enemy worker
+<i>21</i>&nbsp;     * @param selectedWorker is the worker selected by the current player
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    @Override
+<i>24</i>&nbsp;    public Cell[][] generateMovementMatrix(Worker selectedWorker) {
+<b class="fc"><i>25</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<i>26</i>&nbsp;        //filter cells with: workers of the same player of selectedWorker, higher than one than the worker, Domes
+<b class="fc"><i>27</i>&nbsp;        Cell[][] minotaurMatrix = battlefield.getWorkerView(selectedWorker, (cell)-&gt;!cell.isFriendWorkerPresent(selectedWorker)</b>
+<b class="fc"><i>28</i>&nbsp;                &amp;&amp; battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 &gt;= cell.getTower().getHeight()</b>
+<b class="fc"><i>29</i>&nbsp;                &amp;&amp; !(cell.getTower().getLastBlock() == Block.DOME));</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;        //check valid movements in enemy&#39;s cells
+<b class="fc"><i>32</i>&nbsp;        for(int i = 0; i &lt; Battlefield.N_ROWS_VIEW; i++) {</b>
+<b class="fc"><i>33</i>&nbsp;            for (int j = 0; j &lt; Battlefield.N_COLUMNS_VIEW; j++) {</b>
+<i>34</i>&nbsp;                //check only possibles valid movements (by selected worker)
+<b class="fc"><i>35</i>&nbsp;                if (minotaurMatrix[i][j] != null){</b>
+<i>36</i>&nbsp;                    //check worker presence (enemy: due to getWorkerView)
+<b class="fc"><i>37</i>&nbsp;                    if(minotaurMatrix[i][j].isWorkerPresent()){</b>
+<i>38</i>&nbsp;                        //check possible player direction
+<b class="fc"><i>39</i>&nbsp;                        int directionRow = i- selectedWorker.getRowWorker();</b>
+<b class="fc"><i>40</i>&nbsp;                        int directionCol = j - selectedWorker.getColWorker();</b>
+<i>41</i>&nbsp;                        //check valid push direction inside battlefield
+<b class="fc"><i>42</i>&nbsp;                        if(i+directionRow &lt; Battlefield.N_ROWS_VIEW &amp;&amp; j+directionCol &lt; Battlefield.N_COLUMNS_VIEW) {</b>
+<i>43</i>&nbsp;                            //get cell on that direction
+<b class="fc"><i>44</i>&nbsp;                            Cell forcedMoveCell = battlefield.getCell(i + directionRow, j + directionCol);</b>
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;                            //check another worker presence
+<b class="fc"><i>47</i>&nbsp;                            if (forcedMoveCell.isWorkerPresent()) {</b>
+<b class="fc"><i>48</i>&nbsp;                                minotaurMatrix[i][j] = null;</b>
+<i>49</i>&nbsp;                            }
+<i>50</i>&nbsp;                            //check dome presence
+<b class="fc"><i>51</i>&nbsp;                            if (forcedMoveCell.getTower().getLastBlock() == Block.DOME) {</b>
+<b class="fc"><i>52</i>&nbsp;                                minotaurMatrix[i][j] = null;</b>
+<i>53</i>&nbsp;                            }
+<b class="fc"><i>54</i>&nbsp;                        }</b>
+<i>55</i>&nbsp;                        else {
+<i>56</i>&nbsp;                            //can&#39;t push enemy outside battlefield
+<b class="fc"><i>57</i>&nbsp;                            minotaurMatrix[i][j] = null;</b>
+<i>58</i>&nbsp;                        }
+<i>59</i>&nbsp;                    }
+<i>60</i>&nbsp;                }
+<i>61</i>&nbsp;            }
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<b class="fc"><i>64</i>&nbsp;        return minotaurMatrix;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Allows you to do a basic-move or to push away your enemy and move in his cell (only if you can push your enemy)
+<i>70</i>&nbsp;     * @param selectedWorker is the worker selected by the current player
+<i>71</i>&nbsp;     * @param newRow is the new x coordinate of the worker
+<i>72</i>&nbsp;     * @param newCol is the new y coordinate of the worker
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    @Override
+<i>75</i>&nbsp;    public void moveWorker(Worker selectedWorker, int newRow, int newCol) {
+<i>76</i>&nbsp;        //Check coordinates
+<b class="fc"><i>77</i>&nbsp;        if(selectedWorker.getWorkerView()[newRow][newCol] == null)</b>
+<b class="fc"><i>78</i>&nbsp;            throw new RuntimeException(&quot;Unexpected Error!&quot;);</b>
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;        int directionRowSelectedWorker = newRow - selectedWorker.getRowWorker();</b>
+<b class="fc"><i>81</i>&nbsp;        int directionColSelectedWorker = newCol - selectedWorker.getColWorker();</b>
+<b class="fc"><i>82</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<b class="fc"><i>83</i>&nbsp;        Worker enemyWorker=null;</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;        //check enemy worker presence
+<b class="fc"><i>86</i>&nbsp;        if(battlefield.getCell(newRow, newCol).isWorkerPresent())</b>
+<b class="fc"><i>87</i>&nbsp;            enemyWorker = battlefield.getCell(newRow,newCol).getWorker();</b>
+<i>88</i>&nbsp;        //check towers levels
+<b class="fc"><i>89</i>&nbsp;        int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();</b>
+<b class="fc"><i>90</i>&nbsp;        int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();</b>
+<i>91</i>&nbsp;        //enemy push
+<b class="fc"><i>92</i>&nbsp;        if (enemyWorker != null) {</b>
+<b class="fc"><i>93</i>&nbsp;            enemyWorker.changeWorkerPosition(newRow + directionRowSelectedWorker, newCol + directionColSelectedWorker);</b>
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;        //basic move
+<b class="fc"><i>96</i>&nbsp;        selectedWorker.changeWorkerPosition(newRow,newCol);</b>
+<i>97</i>&nbsp;        //check win
+<b class="fc"><i>98</i>&nbsp;        if(lvl_a - lvl_b == 1 &amp;&amp; lvl_a == 3)</b>
+<b class="fc"><i>99</i>&nbsp;            reachedLevel3 = true;</b>
+<i>100</i>&nbsp;
+<b class="fc"><i>101</i>&nbsp;        movesLeft--;</b>
+<b class="fc"><i>102</i>&nbsp;    }</b>
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-11 02:12</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Player (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.cards.DivinityCard;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.time.LocalDate;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Player class represents a player which takes part to the game
+<i>10</i>&nbsp;* */
+<i>11</i>&nbsp;public class Player {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private final LocalDate playerBirthday;
+<i>14</i>&nbsp;    private final String playerNickname;
+<i>15</i>&nbsp;    private DivinityCard playerCard;
+<i>16</i>&nbsp;    private List&lt;Worker&gt; playerWorkers;
+<i>17</i>&nbsp;    private final Color playerColor;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Class constructor
+<i>21</i>&nbsp;     * @param playerNickname of the player such as SteveJobs97?
+<i>22</i>&nbsp;     * @param playerBirthday of the player, used to identify the youngest one
+<i>23</i>&nbsp;     *                       A simple integer is not enough because maybe there could be more players with the same age
+<i>24</i>&nbsp;     * @param playerColor color assigned to the player and his workers
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    public Player(String playerNickname, LocalDate playerBirthday, Color playerColor ){</b>
+<b class="fc"><i>27</i>&nbsp;        this.playerNickname = playerNickname;</b>
+<b class="fc"><i>28</i>&nbsp;        this.playerBirthday = playerBirthday;</b>
+<b class="fc"><i>29</i>&nbsp;        this.playerColor = playerColor;</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Gets player card
+<i>34</i>&nbsp;     * @return player card
+<i>35</i>&nbsp;     */
+<i>36</i>&nbsp;    public DivinityCard getPlayerCard() {
+<b class="fc"><i>37</i>&nbsp;        return playerCard;</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Assigns a divinity card to the player
+<i>42</i>&nbsp;     * @param card that has to be given to the player
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public void setPlayerCard(DivinityCard card){
+<b class="fc"><i>45</i>&nbsp;        this.playerCard = card;</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Assigns workers to the player
+<i>50</i>&nbsp;     * @param playerWorkers that has to be given to the player
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    public void setPlayerWorkers(List&lt;Worker&gt; playerWorkers){
+<b class="fc"><i>53</i>&nbsp;        this.playerWorkers = playerWorkers;</b>
+<b class="fc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * Gets player color
+<i>58</i>&nbsp;     * @return Color object
+<i>59</i>&nbsp;    * */
+<i>60</i>&nbsp;    public Color getPlayerColor() {
+<b class="fc"><i>61</i>&nbsp;        return playerColor;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Get another player who has not been moved
+<i>66</i>&nbsp;     * @return stationaryWorker
+<i>67</i>&nbsp;     * */
+<i>68</i>&nbsp;    public Worker getStationaryWorker(Worker selectedWorker){
+<b class="fc"><i>69</i>&nbsp;        Worker stationaryWorker = null;</b>
+<b class="fc"><i>70</i>&nbsp;        for(Worker playerWorker : playerWorkers)</b>
+<b class="fc"><i>71</i>&nbsp;            if(!playerWorker.equals(selectedWorker))</b>
+<b class="fc"><i>72</i>&nbsp;                stationaryWorker=playerWorker;</b>
+<b class="fc"><i>73</i>&nbsp;        return stationaryWorker;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-11 02:12</div>
+</div>
+</body>
+</html>
