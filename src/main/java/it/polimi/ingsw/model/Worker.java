@@ -1,14 +1,18 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Worker class represents a pawn of the game
  */
-public class Worker {
+public class Worker implements Subject{
     private final Player ownerWorker;
     private final Color workerColor;
     private int rowWorker;
     private int colWorker;
     private Cell[][] workerView;
+    private List<Observer> observers;
 
     /**
      * Class Constructor
@@ -17,6 +21,7 @@ public class Worker {
     public Worker(Player workerOwner) {
         this.ownerWorker = workerOwner;
         this.workerColor = workerOwner.getPlayerColor();
+        observers = new ArrayList<>();
 
     }
 
@@ -51,6 +56,8 @@ public class Worker {
      */
     public void setWorkerView(Cell[][] workerView){
         this.workerView = workerView;
+        //call observer
+        notifyUpdate();
     }
 
     /**
@@ -81,5 +88,32 @@ public class Worker {
         this.rowWorker = rowWorker;
         this.colWorker = colWorker;
         Battlefield.getBattlefieldInstance().updateWorkerPosition(this, rowWorker, colWorker);
+    }
+
+    /**
+     * Attach new Observer
+     * @param o Observer
+     */
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
+    }
+
+    /**
+     * Remove Observer
+     * @param o
+     */
+    @Override
+    public void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    /**
+     * Notify observer that matrix is changed
+     */
+    @Override
+    public void notifyUpdate() {
+        for(Observer o: observers)
+            o.update();
     }
 }

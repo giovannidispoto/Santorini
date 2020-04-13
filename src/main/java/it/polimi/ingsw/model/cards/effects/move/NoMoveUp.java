@@ -17,6 +17,7 @@ public class NoMoveUp extends MoveEffect {
         super.turnStructure.add(Step.BUILD);
         super.turnStructure.add(Step.MOVE);
         super.turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.END);
     }
 
 

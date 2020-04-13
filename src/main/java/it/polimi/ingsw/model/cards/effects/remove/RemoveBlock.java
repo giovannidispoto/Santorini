@@ -12,9 +12,10 @@ public class RemoveBlock extends BasicRemove {
     public RemoveBlock() {
         super();
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
-        turnStructure.add(Step.REMOVE);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.REMOVE);
+        super.turnStructure.add(Step.END);
     }
 
     /**

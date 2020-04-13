@@ -104,6 +104,10 @@ public class Match {
         this.winner = winner;//debug
     }
 
+    public List<Player> getMatchPlayers(){
+        return List.copyOf(matchPlayers);
+    }
+
     public Worker getSelectedWorker(){
         return this.selectedWorker;
     }

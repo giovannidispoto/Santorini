@@ -14,6 +14,7 @@ public class BasicTurn extends Turn {
        super.turnStructure = new ArrayList<>();
        turnStructure.add(Step.MOVE);
        turnStructure.add(Step.BUILD);
+       turnStructure.add(Step.END);
    }
 
 

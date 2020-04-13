@@ -11,8 +11,9 @@ public class BlockUnder extends BasicTurn {
      */
     public BlockUnder() {
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.END);
     }
 
     /**

@@ -16,8 +16,9 @@ public class JumpEffect extends WinEffect {
     public JumpEffect() {
         super();
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.END);
     }
 
     @Override
