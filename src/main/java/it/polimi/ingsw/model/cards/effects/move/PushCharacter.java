@@ -13,8 +13,8 @@ public class PushCharacter extends MoveEffect {
     public PushCharacter() {
         super();
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
 
@@ -26,8 +26,10 @@ public class PushCharacter extends MoveEffect {
     @Override
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //filter cells with: workers of the same player of selectedWorker, higher than one than the worker, Domes
         Cell[][] minotaurMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isFriendWorkerPresent(selectedWorker)
-                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
+                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+                && !(cell.getTower().getLastBlock() == Block.DOME));
 
         //check valid movements in enemy's cells
         for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++) {
@@ -86,24 +88,19 @@ public class PushCharacter extends MoveEffect {
         //check enemy worker presence
         if(battlefield.getCell(newRow, newCol).isWorkerPresent())
             enemyWorker = battlefield.getCell(newRow,newCol).getWorker();
-
+        //check towers levels
         int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
-        //basic move
-        if(enemyWorker==null){
-            selectedWorker.changeWorkerPosition(newRow,newCol);
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
-        }
         //enemy push
-        else{
-            enemyWorker.changeWorkerPosition(newRow + directionRowSelectedWorker,newCol + directionColSelectedWorker);
-            selectedWorker.changeWorkerPosition(newRow, newCol);
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
-            //changed into: enemyWorker.changeWorkerPosition
-            //battlefield.getCell(newRow + directionRowSelectedWorker,newCol + directionColSelectedWorker).setWorker(enemyWorker);
+        if (enemyWorker != null) {
+            enemyWorker.changeWorkerPosition(newRow + directionRowSelectedWorker, newCol + directionColSelectedWorker);
         }
+        //basic move
+        selectedWorker.changeWorkerPosition(newRow,newCol);
+        //check win
+        if(lvl_a - lvl_b == 1 && lvl_a == 3)
+            reachedLevel3 = true;
+
         movesLeft--;
     }
 

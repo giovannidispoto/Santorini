@@ -14,9 +14,9 @@ public class NoMoveUp extends MoveEffect {
     public NoMoveUp() {
         super();
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.BUILD);
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
 
@@ -37,7 +37,9 @@ public class NoMoveUp extends MoveEffect {
         //Get previous and next tower height
         int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+        //basic move
         selectedWorker.changeWorkerPosition(newRow,newCol);
+        //check win
         if(lvl_a - lvl_b == 1 && lvl_a == 3)
             reachedLevel3 = true;
 

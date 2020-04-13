@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Block;
 import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
 
@@ -19,8 +20,9 @@ public class ExtraMove extends MoveEffect {
         this.movesLeft = movesLeft;
         this.moves = movesLeft;
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
 
@@ -40,24 +42,25 @@ public class ExtraMove extends MoveEffect {
         //Save actual position
         int oldRow = selectedWorker.getRowWorker();
         int oldCol = selectedWorker.getColWorker();
+        //check towers levels
+        int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
+        int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+
         if(movesLeft>0){
-            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
             selectedWorker.changeWorkerPosition(newRow,newCol);
-            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
-            //Cell[][] updatedMatrix = generateMovementMatrix(selectedWorker);
-            //updatedMatrix[oldRow][oldCol]=null;
-            //selectedWorker.setWorkerView(updatedMatrix);
-            selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent() && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight() && !cell.equals(battlefield.getCell(oldRow,oldCol))));
+
+            selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                    && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+                    && !cell.equals(battlefield.getCell(oldRow,oldCol))
+                    && !(cell.getTower().getLastBlock() == Block.DOME)));
         }
         else{
-            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
             selectedWorker.changeWorkerPosition(newRow,newCol);
-            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
         }
+        //set win
+        if(lvl_a - lvl_b == 1 && lvl_a == 3)
+            reachedLevel3 = true;
+
         movesLeft--;
     }
 }

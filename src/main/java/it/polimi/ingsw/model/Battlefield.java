@@ -54,10 +54,16 @@ public class Battlefield {
     }
 
     /**
-     * Removes a player's worker
-     * @param player who's worker has to be removed
+     * Removes a player's workers from the battlefield
+     * @param player whose workers need to be removed
      */
-    public void removeWorker(Player player){
+    public void removeWorkers(Player player){
+        //removes player's workers from battlefield
+        workersInGame.stream()
+                        .filter(w->w.getOwnerWorker().equals(player))
+                            .forEach(w -> boardCells[w.getRowWorker()][w.getColWorker()].setWorker(null));
+
+        //removes player's workers from workersInGame
         workersInGame = workersInGame.stream()
                         .filter(w->!w.getOwnerWorker().equals(player))
                             .collect(Collectors.toList());
@@ -172,6 +178,6 @@ public class Battlefield {
      */
 
     public void setWorkersInGame(List<Worker> workersInGame){
-        this.workersInGame = List.copyOf(workersInGame);
+        this.workersInGame = new ArrayList<> (workersInGame);
     }
 }

@@ -27,7 +27,7 @@
 !src/main/java/it/
 !src/main/java/it/polimi/
 !src/main/java/it/polimi/ingsw/
-!src/main/java/it/polimi/ingsw/*.java
+!src/main/java/it/polimi/ingsw/Server.java
 #client/
 !src/main/java/it/polimi/ingsw/client
 !src/main/java/it/polimi/ingsw/client/*.java

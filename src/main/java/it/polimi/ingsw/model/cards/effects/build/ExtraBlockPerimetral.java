@@ -15,8 +15,8 @@ public class ExtraBlockPerimetral extends BuildEffect {
         this.blocksLeft = blocksLeft;
         this.blocks = blocksLeft;
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
     /**

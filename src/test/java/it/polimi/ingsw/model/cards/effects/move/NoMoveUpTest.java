@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.cards.NoLevelUpCondition;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,6 +20,7 @@ class NoMoveUpTest {
     final Worker w1 = new Worker(p1);
     final Worker w3 = new Worker(p2);
     final DeckReader reader = new DeckReader();
+
     //Athena Blocks movements && generate exception
     @Test
     void moveWorkerUp() throws IOException {

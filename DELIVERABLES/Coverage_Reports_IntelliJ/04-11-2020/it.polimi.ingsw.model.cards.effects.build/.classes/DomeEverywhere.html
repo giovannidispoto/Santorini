@@ -1,0 +1,117 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DomeEverywhere</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.cards.effects.build</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DomeEverywhere (it.polimi.ingsw.model.cards.effects.build)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DomeEverywhere</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.cards.effects.build;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.Battlefield;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.Block;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.Worker;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public class DomeEverywhere extends BuildEffect {
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    /**
+<i>10</i>&nbsp;     * Class Constructor
+<i>11</i>&nbsp;     */
+<i>12</i>&nbsp;    public DomeEverywhere() {
+<b class="fc"><i>13</i>&nbsp;        super();</b>
+<b class="fc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * This method allows you to build a Dome everywhere (except where is a worker or a dome)
+<i>19</i>&nbsp;     * @param selectedWorker is the worker selected by the player at the beginning of the turn
+<i>20</i>&nbsp;     * @param newBlockRow is the x coordinate of the new block
+<i>21</i>&nbsp;     * @param newBlockCol is the y coordinate of the new block
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    @Override
+<i>24</i>&nbsp;    public void buildBlock(Worker selectedWorker, int newBlockRow, int newBlockCol) throws RuntimeException {
+<i>25</i>&nbsp;        //Check coordinates
+<b class="fc"><i>26</i>&nbsp;        if(selectedWorker.getWorkerView()[newBlockRow][newBlockCol]==null)</b>
+<b class="fc"><i>27</i>&nbsp;            throw new RuntimeException(&quot;Unexpected Error!&quot;);</b>
+<i>28</i>&nbsp;        //Add a Dome
+<b class="fc"><i>29</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<b class="fc"><i>30</i>&nbsp;        battlefield.getCell(newBlockRow,newBlockCol).getTower().addBlock(Block.DOME);</b>
+<i>31</i>&nbsp;
+<b class="fc"><i>32</i>&nbsp;        blocksLeft--;</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-11 02:12</div>
+</div>
+</body>
+</html>

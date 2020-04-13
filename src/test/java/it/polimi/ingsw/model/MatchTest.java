@@ -18,6 +18,8 @@ class MatchTest {
     final Player p3 = new Player("Hello", LocalDate.now(), Color.BROWN);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
+    final Worker w3 = new Worker(p1);
+    final Worker w4 = new Worker(p2);
     final DeckReader reader = new DeckReader();
 
     @Test
@@ -146,17 +148,20 @@ class MatchTest {
         Match m = new Match(players,new ArrayList<>());
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
+        workers.add(w3);
         workers.add(w2);
+        workers.add(w4);
         b.setWorkersInGame(workers);
         w1.setWorkerPosition(0,0);
         w2.setWorkerPosition(0,4);
+        w3.setWorkerPosition(4,4);
+        w4.setWorkerPosition(0,1);
 
         m.addPlayer(p1);
         assertThrows(RuntimeException.class, ()-> m.addPlayer(p1));
-        m.removePlayer(p1);
-        m.addPlayer(p1);
         m.addPlayer(p2);
         m.addPlayer(p3);
+        m.removePlayer(p3);
         m.nextPlayer();
 
         //set next player with worker
@@ -169,6 +174,13 @@ class MatchTest {
         //remove worker
         Battlefield.getBattlefieldInstance().getCell(0,4).removeWorker();
         assertFalse(Battlefield.getBattlefieldInstance().getCell(0,4).isWorkerPresent());
+        //remove player1 from the match (loser player)
+        assertEquals(p1, w1.getOwnerWorker());
+        assertEquals(p1, w3.getOwnerWorker());
+        m.removePlayer(p1);
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(0,0).isWorkerPresent());
+        assertFalse(Battlefield.getBattlefieldInstance().getCell(4,4).isWorkerPresent());
+        assertTrue(Battlefield.getBattlefieldInstance().getCell(0,1).isWorkerPresent());
 
         //clean battlefield for next tests
         Battlefield.getBattlefieldInstance().cleanField();

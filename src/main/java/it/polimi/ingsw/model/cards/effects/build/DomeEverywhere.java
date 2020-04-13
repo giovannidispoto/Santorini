@@ -12,8 +12,8 @@ public class DomeEverywhere extends BuildEffect {
      */
     public DomeEverywhere(){
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
 
@@ -31,5 +31,7 @@ public class DomeEverywhere extends BuildEffect {
         //Add a Dome
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         battlefield.getCell(newBlockRow,newBlockCol).getTower().addBlock(Block.DOME);
+
+        blocksLeft--;
     }
 }

@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Turn</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Turn (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Turn</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (12/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90,9%
+  </span>
+  <span class="absValue">
+    (30/ 33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Turn class represents a generic turn that must be specialized with a card effect
+<i>5</i>&nbsp; */
+<i>6</i>&nbsp;public abstract class Turn {
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;    private final int N_VIEW_ROWS = 5;</b>
+<b class="fc"><i>9</i>&nbsp;    private final int N_VIEW_COLUMNS = 5;</b>
+<i>10</i>&nbsp;    protected Match currentMatch;
+<b class="fc"><i>11</i>&nbsp;    protected int movesLeft = 1;</b>
+<b class="fc"><i>12</i>&nbsp;    protected int blocksLeft = 1;</b>
+<b class="fc"><i>13</i>&nbsp;    protected int moves = 1;</b>
+<b class="fc"><i>14</i>&nbsp;    protected int blocks = 1;</b>
+<i>15</i>&nbsp;    private boolean changeLevel;
+<b class="fc"><i>16</i>&nbsp;    protected boolean reachedLevel3 = false;</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Class Constructor
+<i>20</i>&nbsp;     */
+<b class="fc"><i>21</i>&nbsp;    public Turn() {</b>
+<i>22</i>&nbsp;        //null
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     *
+<i>28</i>&nbsp;     * @param currentMatch current Match
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    public void setCurrentMatch(Match currentMatch){
+<b class="fc"><i>31</i>&nbsp;        this.currentMatch = currentMatch;</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * Manages what happens at the end of the turn
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    public void passTurn(){
+<b class="fc"><i>38</i>&nbsp;        currentMatch.nextPlayer();</b>
+<b class="fc"><i>39</i>&nbsp;    }</b>
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Get moves left in the turn
+<i>42</i>&nbsp;     * @return moves left
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public int getMovesLeft(){
+<b class="fc"><i>45</i>&nbsp;        return movesLeft;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Get blocks left in the turn
+<i>50</i>&nbsp;     * @return blocks left
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    public int getBlocksLeft(){
+<b class="fc"><i>53</i>&nbsp;        return blocksLeft;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * Abstract methods that are specialized by the sons of this class
+<i>57</i>&nbsp;     */
+<i>58</i>&nbsp;    public abstract void checkLocalCondition(Worker selectedWorker);
+<i>59</i>&nbsp;    public abstract void moveWorker(Worker selectedWorker, int newRow, int newCol);
+<i>60</i>&nbsp;    public abstract void buildBlock(Worker selectedWorker,int blockRow, int blockCol);
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public Cell[][] generateMovementMatrix(Worker selectedWorker) {
+<b class="fc"><i>63</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<i>64</i>&nbsp;        //Basic movement: Banned Cells = workers, higher than 1 than the worker, Dome
+<b class="fc"><i>65</i>&nbsp;        return battlefield.getWorkerView(selectedWorker, (cell)-&gt;!cell.isWorkerPresent()</b>
+<b class="fc"><i>66</i>&nbsp;                &amp;&amp; battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 &gt;= cell.getTower().getHeight()</b>
+<b class="fc"><i>67</i>&nbsp;                &amp;&amp; !(cell.getTower().getLastBlock() == Block.DOME));</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
+<b class="fc"><i>71</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<i>72</i>&nbsp;        //Basic building: Banned Cells = workers, Domes
+<b class="fc"><i>73</i>&nbsp;        return battlefield.getWorkerView(selectedWorker, (cell)-&gt;!cell.isWorkerPresent()</b>
+<b class="fc"><i>74</i>&nbsp;                &amp;&amp; !(cell.getTower().getLastBlock() == Block.DOME));</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * Allows you to generate a RemoveMatrix without cells where there is a player or ground (Basic remove)
+<i>79</i>&nbsp;     * @param selectedWorker is the worker selected by the current player
+<i>80</i>&nbsp;     * @return return the RemoveMatrix
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    public Cell[][] generateRemoveMatrix(Worker selectedWorker){
+<b class="nc"><i>83</i>&nbsp;        Battlefield battlefield = Battlefield.getBattlefieldInstance();</b>
+<i>84</i>&nbsp;        //setWorkerView without cells where there is a player or ground
+<b class="nc"><i>85</i>&nbsp;        return battlefield.getWorkerView(selectedWorker, (cell)-&gt;!cell.isWorkerPresent()</b>
+<b class="nc"><i>86</i>&nbsp;                &amp;&amp; !(cell.getTower().getHeight() == 0));</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * Allows you to Remove in cell(delBlockRow,delBlockCol) the Latest Block of the Tower
+<i>91</i>&nbsp;     * @param selectedWorker is the worker selected by the current player
+<i>92</i>&nbsp;     * @param delBlockRow is the x coordinate of the block to be deleted
+<i>93</i>&nbsp;     * @param delBlockCol is the y coordinate of the block to be deleted
+<i>94</i>&nbsp;     */
+<i>95</i>&nbsp;    public void removeBlock(Worker selectedWorker, int delBlockRow,int delBlockCol){
+<i>96</i>&nbsp;        //Check coordinates
+<b class="fc"><i>97</i>&nbsp;        if(selectedWorker.getWorkerView()[delBlockRow][delBlockCol]==null)</b>
+<b class="fc"><i>98</i>&nbsp;            throw new RuntimeException(&quot;Unexpected Error!&quot;);</b>
+<i>99</i>&nbsp;        //Delete Block
+<b class="fc"><i>100</i>&nbsp;        Battlefield.getBattlefieldInstance().getCell(delBlockRow,delBlockCol).getTower().removeLatestBlock();</b>
+<b class="fc"><i>101</i>&nbsp;    }</b>
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    /**
+<i>104</i>&nbsp;     * Allows you to change selectedWorker with the other worker that has not been moved
+<i>105</i>&nbsp;     * Attention: you can&#39;t choose the next worker, is the next of the list playerWorkers (in Player)
+<i>106</i>&nbsp;     * Attention2: don&#39;t launch this method if you have only 1 worker (check)
+<i>107</i>&nbsp;     * @param selectedWorker is the worker selected by the current player
+<i>108</i>&nbsp;     * @return return the new Worker (different from input selectedWorker)
+<i>109</i>&nbsp;     */
+<i>110</i>&nbsp;    public Worker changeWorkerPlayer(Worker selectedWorker){
+<i>111</i>&nbsp;        //change selectedWorker in the other worker that has not been moved
+<b class="fc"><i>112</i>&nbsp;        return selectedWorker.getOwnerWorker().getStationaryWorker(selectedWorker);</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    public void resetTurn(){
+<b class="fc"><i>116</i>&nbsp;        this.movesLeft = this.moves;</b>
+<b class="fc"><i>117</i>&nbsp;        this.blocksLeft = this.blocks;</b>
+<b class="fc"><i>118</i>&nbsp;    }</b>
+<i>119</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-11 02:12</div>
+</div>
+</body>
+</html>

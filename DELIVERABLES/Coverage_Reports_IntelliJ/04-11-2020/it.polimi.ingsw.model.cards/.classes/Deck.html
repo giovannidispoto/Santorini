@@ -1,0 +1,108 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Deck</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.cards</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Deck (it.polimi.ingsw.model.cards)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Deck</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (6/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.cards;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.List;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * The Deck class model the effective deck composed by DivinityCards
+<i>7</i>&nbsp; */
+<i>8</i>&nbsp;public class Deck {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    private List&lt;DivinityCard&gt; listOfCards;
+<i>11</i>&nbsp;
+<b class="nc"><i>12</i>&nbsp;    public Deck(List&lt;DivinityCard&gt; listOfCards){</b>
+<b class="nc"><i>13</i>&nbsp;       this.listOfCards = List.copyOf(listOfCards);</b>
+<b class="nc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public DivinityCard getDivinityCard(String cardName){
+<b class="fc"><i>17</i>&nbsp;        DivinityCard div = null;</b>
+<b class="fc"><i>18</i>&nbsp;        for(DivinityCard card : listOfCards){</b>
+<b class="fc"><i>19</i>&nbsp;            if(card.getCardName().equals(cardName))</b>
+<b class="fc"><i>20</i>&nbsp;                div = card;</b>
+<b class="fc"><i>21</i>&nbsp;        }</b>
+<b class="fc"><i>22</i>&nbsp;        return div;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-11 02:12</div>
+</div>
+</body>
+</html>

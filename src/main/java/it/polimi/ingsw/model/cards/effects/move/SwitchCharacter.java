@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.cards.effects.move;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SwitchCharacter extends MoveEffect {
     /**
@@ -12,8 +11,8 @@ public class SwitchCharacter extends MoveEffect {
     public SwitchCharacter() {
         super();
         super.turnStructure = new ArrayList<>();
-        turnStructure.add(Step.MOVE);
-        turnStructure.add(Step.BUILD);
+        super.turnStructure.add(Step.MOVE);
+        super.turnStructure.add(Step.BUILD);
     }
 
 
@@ -24,10 +23,11 @@ public class SwitchCharacter extends MoveEffect {
     @Override
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-       Cell[][] switchMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isFriendWorkerPresent(selectedWorker)
-                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight());
-       switchMatrix[selectedWorker.getRowWorker()][selectedWorker.getColWorker()]=Battlefield.getBattlefieldInstance().getCell(selectedWorker.getRowWorker(),selectedWorker.getColWorker());
-       return switchMatrix;
+        //Deny move in this cells: your workers, higher than one than the worker, Domes
+        //Allow: enemy workers cells
+        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isFriendWorkerPresent(selectedWorker)
+                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+                && !(cell.getTower().getLastBlock() == Block.DOME));
     }
 
     /**
@@ -50,21 +50,19 @@ public class SwitchCharacter extends MoveEffect {
         if(battlefield.getCell(newRow, newCol).isWorkerPresent())
             enemyWorker = battlefield.getCell(newRow,newCol).getWorker();
 
-        if(enemyWorker==null){
-            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
-            selectedWorker.changeWorkerPosition(newRow,newCol);
-            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
+        //check towers levels
+        int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
+        int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
+        //basic move
+        selectedWorker.changeWorkerPosition(newRow,newCol);
+        //check whether to apply switch effect
+        if (enemyWorker != null) {
+            enemyWorker.setWorkerPosition(oldRowSelectedWorker,oldColSelectedWorker);
         }
-        else{
-            int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
-            selectedWorker.changeWorkerPosition(newRow,newCol);
-            int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
-            if(lvl_a - lvl_b == 1 && lvl_a == 3)
-                reachedLevel3 = true;
-            battlefield.getCell(oldRowSelectedWorker,oldColSelectedWorker).setWorker(enemyWorker);
-        }
+        //check win
+        if(lvl_a - lvl_b == 1 && lvl_a == 3)
+            reachedLevel3 = true;
+
         movesLeft--;
     }
 }
