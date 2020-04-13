@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.Block;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PushCharacter extends MoveEffect {
@@ -12,6 +12,9 @@ public class PushCharacter extends MoveEffect {
      */
     public PushCharacter() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

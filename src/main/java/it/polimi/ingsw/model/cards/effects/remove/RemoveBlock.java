@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.remove;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemoveBlock extends BasicRemove {
     /**
@@ -11,6 +11,10 @@ public class RemoveBlock extends BasicRemove {
      */
     public RemoveBlock() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
+        turnStructure.add(Step.REMOVE);
     }
 
     /**

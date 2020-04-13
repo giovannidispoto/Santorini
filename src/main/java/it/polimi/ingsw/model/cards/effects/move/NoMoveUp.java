@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+
+import java.util.ArrayList;
 
 public class NoMoveUp extends MoveEffect {
     /**
@@ -10,6 +13,10 @@ public class NoMoveUp extends MoveEffect {
      */
     public NoMoveUp() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.BUILD);
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

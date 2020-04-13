@@ -1,16 +1,18 @@
 package it.polimi.ingsw.model.cards.effects.basic;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockUnder extends BasicTurn {
     /**
      * Class Constructor
      */
     public BlockUnder() {
-        super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
     /**

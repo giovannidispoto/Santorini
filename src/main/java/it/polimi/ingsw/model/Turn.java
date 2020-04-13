@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.List;
+
 /**
  * Turn class represents a generic turn that must be specialized with a card effect
  */
@@ -14,6 +16,7 @@ public abstract class Turn {
     protected int blocks = 1;
     private boolean changeLevel;
     protected boolean reachedLevel3 = false;
+    protected List<Step> turnStructure;
 
     /**
      * Class Constructor
@@ -115,5 +118,9 @@ public abstract class Turn {
     public void resetTurn(){
         this.movesLeft = this.moves;
         this.blocksLeft = this.blocks;
+    }
+
+    public List<Step> getTurnStructure() {
+        return List.copyOf(this.turnStructure);
     }
 }

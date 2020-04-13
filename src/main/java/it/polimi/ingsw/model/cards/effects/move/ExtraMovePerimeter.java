@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockPerimetral;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExtraMovePerimeter extends MoveEffect {
     /**
@@ -11,6 +12,9 @@ public class ExtraMovePerimeter extends MoveEffect {
      */
     public ExtraMovePerimeter() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

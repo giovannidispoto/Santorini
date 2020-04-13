@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards.effects.win;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.ArrayList;
 
 public class JumpEffect extends WinEffect {
     private int oldRow;
@@ -12,6 +15,9 @@ public class JumpEffect extends WinEffect {
      */
     public JumpEffect() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
     @Override

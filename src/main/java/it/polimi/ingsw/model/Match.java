@@ -19,7 +19,6 @@ public class Match {
     private Battlefield matchBoard;
     /* Circle List */
     private List<Player> matchPlayers;
-    private List<DivinityCard> matchCards;
     private List<Turn> matchTurn;
     private Worker selectedWorker;
     private List<GlobalWinCondition> matchGlobalConditions;
@@ -37,7 +36,6 @@ public class Match {
     public Match(List<Player> matchPlayers, List<DivinityCard> matchCards){
         this.matchBoard = Battlefield.getBattlefieldInstance();
         this.matchPlayers = new ArrayList<> (matchPlayers);
-        this.matchCards = new ArrayList<> (matchCards);
         this.playerTurn = new HashMap<>();
         DivinityEffectReader reader = new DivinityEffectReader();
         try {

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExtraBlockAbove extends BuildEffect{
     private boolean buildInSameCell;
@@ -16,6 +17,9 @@ public class ExtraBlockAbove extends BuildEffect{
         this.buildInSameCell=buildInSameCell;
         this.blocksLeft=blocksLeft;
         this.blocks=blocksLeft;
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SwitchCharacter extends MoveEffect {
     /**
@@ -10,6 +11,9 @@ public class SwitchCharacter extends MoveEffect {
      */
     public SwitchCharacter() {
         super();
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

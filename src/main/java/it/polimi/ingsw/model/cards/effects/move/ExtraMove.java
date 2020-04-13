@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.ArrayList;
 
 
 /**
@@ -15,6 +18,9 @@ public class ExtraMove extends MoveEffect {
         super();
         this.movesLeft = movesLeft;
         this.moves = movesLeft;
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 

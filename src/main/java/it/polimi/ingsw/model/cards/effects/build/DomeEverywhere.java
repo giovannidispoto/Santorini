@@ -1,16 +1,19 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
-import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DomeEverywhere extends BuildEffect {
 
     /**
      * Class Constructor
      */
-    public DomeEverywhere() {
-        super();
+    public DomeEverywhere(){
+        super.turnStructure = new ArrayList<>();
+        turnStructure.add(Step.MOVE);
+        turnStructure.add(Step.BUILD);
     }
 
 
