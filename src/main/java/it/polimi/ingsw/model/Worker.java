@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class Worker implements Subject{
     private final Player ownerWorker;
+    private static int count = 0;
+    private int id;
     private final Color workerColor;
     private int rowWorker;
     private int colWorker;
@@ -22,7 +24,7 @@ public class Worker implements Subject{
         this.ownerWorker = workerOwner;
         this.workerColor = workerOwner.getPlayerColor();
         observers = new ArrayList<>();
-
+        this.id = count++;
     }
 
     /**
@@ -51,8 +53,8 @@ public class Worker implements Subject{
     }
 
     /**
-     *
-     * @param workerView
+     *Set worker view
+     * @param workerView worker view
      */
     public void setWorkerView(Cell[][] workerView){
         this.workerView = workerView;
@@ -115,5 +117,13 @@ public class Worker implements Subject{
     public void notifyUpdate() {
         for(Observer o: observers)
             o.update();
+    }
+
+    /**
+     * Gets worker id
+     * @return
+     */
+    public int getId() {
+        return id;
     }
 }

@@ -38,6 +38,22 @@ public class Player {
     }
 
     /**
+     * Gets player Nickname
+     * @return player nickname
+     */
+    public String getPlayerNickname() {
+        return playerNickname;
+    }
+
+    /**
+     * Gets player worker
+     * @return player worker
+     */
+    public List<Worker> getPlayerWorkers() {
+        return List.copyOf(playerWorkers);
+    }
+
+    /**
      * Assigns a divinity card to the player
      * @param card that has to be given to the player
      */

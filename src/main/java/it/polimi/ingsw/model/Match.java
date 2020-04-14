@@ -105,7 +105,7 @@ public class Match {
     }
 
     public List<Player> getMatchPlayers(){
-        return List.copyOf(matchPlayers);
+        return this.matchPlayers;
     }
 
     public Worker getSelectedWorker(){
@@ -121,5 +121,9 @@ public class Match {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public Player getCurrentPlayer(){
+        return this.currentPlayer;
     }
 }

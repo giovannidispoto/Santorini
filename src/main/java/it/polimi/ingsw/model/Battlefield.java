@@ -23,6 +23,7 @@ public class Battlefield {
      * */
     private Battlefield() {
         initializeBoard();
+        this.workersInGame = new ArrayList<>();
     }
 
     /**
@@ -178,6 +179,6 @@ public class Battlefield {
      */
 
     public void setWorkersInGame(List<Worker> workersInGame){
-        this.workersInGame = new ArrayList<> (workersInGame);
+        this.workersInGame.addAll(new ArrayList<> (workersInGame));
     }
 }
