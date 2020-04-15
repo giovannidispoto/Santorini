@@ -6,17 +6,14 @@ import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExtraMovePerimeter extends MoveEffect {
     /**
      * Class Constructor
      */
-    public ExtraMovePerimeter() {
-        super();
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+    public ExtraMovePerimeter(List<Step> turnStructure) {
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

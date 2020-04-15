@@ -10,14 +10,11 @@ public class ExtraBlockPerimetral extends BuildEffect {
      * Class Constructor
      * @param blocksLeft set blocksLeft and blocks in turn
      */
-    public ExtraBlockPerimetral(int blocksLeft) {
+    public ExtraBlockPerimetral(int blocksLeft, List<Step> turnStructure) {
         super();
         this.blocksLeft = blocksLeft;
         this.blocks = blocksLeft;
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
     /**

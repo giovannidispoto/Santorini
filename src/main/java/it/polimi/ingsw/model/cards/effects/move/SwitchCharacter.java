@@ -3,17 +3,15 @@ package it.polimi.ingsw.model.cards.effects.move;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SwitchCharacter extends MoveEffect {
     /**
      * Class Constructor
      */
-    public SwitchCharacter() {
+    public SwitchCharacter(List<Step> turnStructure) {
         super();
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

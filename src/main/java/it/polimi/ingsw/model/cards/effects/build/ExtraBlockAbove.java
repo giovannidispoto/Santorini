@@ -12,15 +12,12 @@ public class ExtraBlockAbove extends BuildEffect{
      * @param buildInSameCell boolean to split the effects
      * @param blocksLeft set blocksLeft in turn
      */
-    public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft) {
+    public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft, List<Step> turnStructure) {
         super();
         this.buildInSameCell=buildInSameCell;
         this.blocksLeft=blocksLeft;
         this.blocks=blocksLeft;
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

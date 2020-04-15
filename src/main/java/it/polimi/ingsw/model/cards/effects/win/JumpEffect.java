@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JumpEffect extends WinEffect {
     private int oldRow;
@@ -13,12 +14,9 @@ public class JumpEffect extends WinEffect {
     /**
      * Class Constructor
      */
-    public JumpEffect() {
+    public JumpEffect(List<Step> turnStructure) {
         super();
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
     @Override

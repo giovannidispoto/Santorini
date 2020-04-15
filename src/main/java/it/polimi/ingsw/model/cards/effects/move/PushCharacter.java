@@ -10,12 +10,9 @@ public class PushCharacter extends MoveEffect {
     /**
      * Class Constructor
      */
-    public PushCharacter() {
+    public PushCharacter(List<Step> turnStructure) {
         super();
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

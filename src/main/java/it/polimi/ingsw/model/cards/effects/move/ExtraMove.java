@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -15,15 +16,11 @@ public class ExtraMove extends MoveEffect {
     /**
      * Class Constructor
      */
-    public ExtraMove(int movesLeft){
+    public ExtraMove(int movesLeft, List<Step> turnStructure){
         super();
         this.movesLeft = movesLeft;
         this.moves = movesLeft;
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

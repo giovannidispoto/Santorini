@@ -6,18 +6,15 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.cards.NoLevelUpCondition;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoMoveUp extends MoveEffect {
     /**
      * Class Constructor
      */
-    public NoMoveUp() {
+    public NoMoveUp(List<Step> turnStructure) {
         super();
-        super.turnStructure = new ArrayList<>();
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.MOVE);
-        super.turnStructure.add(Step.BUILD);
-        super.turnStructure.add(Step.END);
+        super.turnStructure = new ArrayList<>(turnStructure);
     }
 
 

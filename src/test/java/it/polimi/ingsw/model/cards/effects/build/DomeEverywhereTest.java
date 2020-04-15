@@ -46,6 +46,10 @@ class DomeEverywhereTest {
         //ASSERT : We expect a DOME above the ground level
         assertEquals(battlefield.getCell(2, 1).getTower().getLastBlock(), Block.DOME);
 
+        assertEquals(t.getTurnStructure().size(), 3);
+        assertEquals(t.getTurnStructure().get(0), Step.MOVE);
+        assertEquals(t.getTurnStructure().get(1), Step.BUILD);
+        assertEquals(t.getTurnStructure().get(2), Step.END);
         battlefield.cleanField();
     }
 
@@ -76,7 +80,11 @@ class DomeEverywhereTest {
         //Building under the current worker
         Throwable expectedException = assertThrows(RuntimeException.class, () -> t.buildBlock(m.getSelectedWorker(),1,1));
         assertEquals("Unexpected Error!", expectedException.getMessage());
-
+        assertEquals(t.getTurnStructure().size(), 3);
+        assertEquals(t.getTurnStructure().get(0), Step.MOVE);
+        assertEquals(t.getTurnStructure().get(1), Step.BUILD);
+        assertEquals(t.getTurnStructure().get(2), Step.END);
+        
         battlefield.cleanField();
     }
 }

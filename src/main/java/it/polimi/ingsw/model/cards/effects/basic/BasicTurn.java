@@ -12,9 +12,9 @@ public class BasicTurn extends Turn {
      */
    public BasicTurn() {
        super.turnStructure = new ArrayList<>();
-       turnStructure.add(Step.MOVE);
-       turnStructure.add(Step.BUILD);
-       turnStructure.add(Step.END);
+       super.turnStructure.add(Step.MOVE);
+       super.turnStructure.add(Step.BUILD);
+       super.turnStructure.add(Step.END);
    }
 
 

@@ -23,7 +23,7 @@ public class Battlefield {
      * */
     private Battlefield() {
         initializeBoard();
-        this.workersInGame = new ArrayList<>();
+
     }
 
     /**
@@ -41,6 +41,7 @@ public class Battlefield {
      */
     private void initializeBoard(){
         boardCells = new Cell[N_COLUMNS][N_ROWS];
+        workersInGame = new ArrayList<>();
         for(int i = 0; i < N_ROWS; i++)
             for(int j = 0; j < N_COLUMNS; j++)
                 boardCells[i][j] = new Cell(new Tower());
@@ -51,7 +52,6 @@ public class Battlefield {
      */
     public void cleanField(){
         initializeBoard();
-        workersInGame = null;
     }
 
     /**
@@ -177,8 +177,13 @@ public class Battlefield {
      * Sets Workers in game
      * @param workersInGame workers in game
      */
+    public void setWorkersInGame(List<Worker> workersInGameList){
 
-    public void setWorkersInGame(List<Worker> workersInGame){
-        this.workersInGame.addAll(new ArrayList<> (workersInGame));
+        for(Worker w : workersInGameList){
+            this.workersInGame.add(w);
+        }
+
+       // workersInGame.addAll(workersInGameList);
+       //this.workersInGame = new ArrayList<> (workersInGame);
     }
 }

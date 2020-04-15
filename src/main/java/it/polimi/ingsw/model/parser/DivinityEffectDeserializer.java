@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.parser;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
@@ -13,6 +15,7 @@ import it.polimi.ingsw.model.cards.effects.win.JumpEffect;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,42 +37,45 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
         Turn t = null;
         for(JsonElement jsonE : jsonArray){
             String cardName = jsonE.getAsJsonObject().get("cardName").getAsString();
+            Type listType = new TypeToken<List<Step>>() {}.getType();
+            List<Step> turnStructure = new Gson().fromJson(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("turnStructure"),listType);
+
             switch(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("effectName").getAsString()){
                 case "ExtraMove":
-                    t = new ExtraMove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("numberOfExtraMoves").getAsInt());
+                    t = new ExtraMove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("numberOfExtraMoves").getAsInt(),turnStructure);
                     break;
                 case "BlockUnder":
-                    t = new BlockUnder();
+                    t = new BlockUnder(turnStructure);
                     break;
                 case "SwitchCharacter":
-                    t = new SwitchCharacter();
+                    t = new SwitchCharacter(turnStructure);
                     break;
                 case "NoMoveUp":
-                    t = new NoMoveUp();
+                    t = new NoMoveUp(turnStructure);
                     break;
                 case "DomeEverywhere":
-                    t = new DomeEverywhere();
+                    t = new DomeEverywhere(turnStructure);
                     break;
                 case "ExtraBlockAbove":
-                    t = new ExtraBlockAbove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("buildInSameCell").getAsBoolean(),jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt());
+                    t = new ExtraBlockAbove(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("buildInSameCell").getAsBoolean(),jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt(), turnStructure);
                     break;
                 case "PushCharacter":
-                    t = new PushCharacter();
+                    t = new PushCharacter(turnStructure);
                     break;
                 case "JumpEffect":
-                    t = new JumpEffect();
+                    t = new JumpEffect(turnStructure);
                     break;
                 case "BasicTurn":
                     t = new BasicTurn();
                     break;
                 case "ExtraMovePerimeter":
-                    t = new ExtraMovePerimeter();
+                    t = new ExtraMovePerimeter(turnStructure);
                     break;
                 case "ExtraBlockPerimetral":
-                    t = new ExtraBlockPerimetral(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt());
+                    t = new ExtraBlockPerimetral(jsonE.getAsJsonObject().get("Effect").getAsJsonObject().get("blocksLeft").getAsInt(), turnStructure);
                     break;
                 case "RemoveBlock":
-                    t = new RemoveBlock();
+                    t = new RemoveBlock(turnStructure);
                     break;
             }
             map.put(cardName,t);

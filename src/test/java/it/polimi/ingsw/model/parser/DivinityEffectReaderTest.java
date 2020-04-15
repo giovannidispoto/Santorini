@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
 import it.polimi.ingsw.model.cards.effects.move.ExtraMove;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
 
@@ -30,9 +32,9 @@ class DivinityEffectReaderTest {
             "}");
 
     @Test
-    void readDivinity() {
+    void readDivinity() throws IOException {
         DivinityEffectReader der = new DivinityEffectReader();
-        Map<String, Turn> map = der.load(reader);
+        Map<String, Turn> map = der.load(new FileReader("src/CardsEffect.json"));
 
         assertTrue(map.containsKey("Zeus"));
         assertTrue(map.get("Zeus") instanceof BlockUnder);

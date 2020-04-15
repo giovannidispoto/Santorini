@@ -29,7 +29,7 @@ class ControllerBasicTest {
         c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Apollo");
         c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
 
-        //Creting new workers for players
+        //Creating new workers for players
         c.addWorkers("Steve Jobs",new ClientHandler());
         c.addWorkers("Bill Gates", new ClientHandler());
 
