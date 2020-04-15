@@ -48,6 +48,20 @@ public class PlayerTurn {
     }
 
     /**
+     * Skip current step.
+     * Possible only if step is special move or special build
+     */
+    public void skip(){
+
+        if(steps.get(0) == Step.MOVE_SPECIAL)
+            currentTurn.skipMove();
+        if(steps.get(0) == Step.BUILD_SPECIAL)
+            currentTurn.skipBuild();
+
+        steps.remove(0);
+    }
+
+    /**
      * Perform a build
      * @param w worker
      * @param x row

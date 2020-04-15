@@ -21,6 +21,16 @@ import java.util.stream.Collectors;
 public class Controller {
     private Match match;
     private PlayerTurn turn;
+    private List<Player> players;
+    private List<DivinityCard> cards;
+
+    /**
+     *
+     */
+    public Controller(){
+        this.players = new ArrayList<>();
+        this.cards = new ArrayList<>();
+    }
 
 
     /**
@@ -35,7 +45,8 @@ public class Controller {
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
         Player p = new Player(playerNickName, date, color);
         p.setPlayerCard(d.getDivinityCard(card));
-        match.addPlayer(p);
+        players.add(p);
+        cards.add(d.getDivinityCard(card));
     }
 
     /**
@@ -82,7 +93,7 @@ public class Controller {
      * Start Match
      */
     public void startMatch(){
-        match = new Match(new ArrayList<>(),new ArrayList<>());
+        match = new Match(players,cards);
 
     }
 
@@ -123,15 +134,34 @@ public class Controller {
     public void playStep(int x, int y){
         switch(turn.getCurrentState()){
             case MOVE:
+            case MOVE_SPECIAL:
                     turn.move(match.getSelectedWorker(),x,y);
                 break;
             case BUILD:
+            case BUILD_SPECIAL:
                     turn.build(match.getSelectedWorker(),x,y);
                 break;
             case REMOVE:
                     turn.remove(match.getSelectedWorker(),x,y);
                 break;
         }
+        if(turn.getCurrentState() == Step.END)
+            turn.passTurn();
+    }
+
+    /**
+     * Gets step state
+     * @return step state
+     */
+    public Step getStepState(){
+        return turn.getCurrentState();
+    }
+
+    /**
+     * Skip step if possible
+     */
+    public void skipStep(){
+        turn.skip();
     }
 
     /**

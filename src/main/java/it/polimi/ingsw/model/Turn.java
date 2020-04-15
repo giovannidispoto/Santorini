@@ -115,12 +115,33 @@ public abstract class Turn {
         return selectedWorker.getOwnerWorker().getStationaryWorker(selectedWorker);
     }
 
+    /**
+     *
+     */
     public void resetTurn(){
         this.movesLeft = this.moves;
         this.blocksLeft = this.blocks;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Step> getTurnStructure() {
         return List.copyOf(this.turnStructure);
+    }
+
+    /**
+     * Skip a move if possible
+     */
+    public void skipMove(){
+        this.movesLeft--;
+    }
+
+    /**
+     * Skip a build if possible
+     */
+    public void skipBuild(){
+        this.blocksLeft--;
     }
 }

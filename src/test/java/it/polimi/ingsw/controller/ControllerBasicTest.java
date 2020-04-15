@@ -22,12 +22,14 @@ class ControllerBasicTest {
     @Test
     void testController() throws IOException {
         Controller c = new Controller();
-        //Create Match
-        c.startMatch();
+
 
         //Adding Players
         c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Apollo");
         c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+
+        //Create Match
+        c.startMatch();
 
         //Creating new workers for players
         c.addWorkers("Steve Jobs",new ClientHandler());
@@ -52,7 +54,6 @@ class ControllerBasicTest {
         //Build
         c.playStep(1,1);
         //Pass turn
-        c.passTurn();
 
 
         //ASSERTs : We expect a new position for the worker and a new block beside him
@@ -61,6 +62,109 @@ class ControllerBasicTest {
         assertEquals(Battlefield.getBattlefieldInstance().getCell(3, 2).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(1));
         assertEquals(1, Battlefield.getBattlefieldInstance().getCell(1, 1).getTower().getHeight());
 
-       Battlefield.getBattlefieldInstance().cleanField();
+        Battlefield.getBattlefieldInstance().cleanField();
+    }
+
+    @Test
+    void testWithNoSkipMovement() throws IOException{
+
+        Controller c = new Controller();
+
+        //Adding Players
+        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Artemis");
+        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+
+        //Create Match
+        c.startMatch();
+
+        //Creating new workers for players
+        c.addWorkers("Steve Jobs",new ClientHandler());
+        c.addWorkers("Bill Gates", new ClientHandler());
+
+
+        //Set First Player of the match
+        c.setFirstPlayer("Steve Jobs");
+
+
+        //Get workers of the players
+        List<Integer> workers = c.getWorkersId("Steve Jobs");
+
+        //Set initial position of the workers
+        c.setInitialWorkerPosition("Steve Jobs", workers.get(0), 0,0);
+        c.setInitialWorkerPosition("Steve Jobs", workers.get(1), 3,2);
+
+        //Start basic turn
+        c.startTurn(false, "Steve Jobs");
+        //Select worker
+        c.selectWorker("Steve Jobs", workers.get(0));
+        //Move
+        c.playStep(0,1);
+        //Move
+        c.playStep(0,2);
+        //Build
+        c.playStep(0,3);
+        //Pass turn
+
+
+        //ASSERTs : We expect a new position for the worker and a new block beside him
+        assertEquals(Battlefield.getBattlefieldInstance().getCell(0, 2).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(0));
+        assertNotEquals(Battlefield.getBattlefieldInstance().getCell(0, 1).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(0));
+        assertEquals(Battlefield.getBattlefieldInstance().getCell(3, 2).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(1));
+        assertEquals(1, Battlefield.getBattlefieldInstance().getCell(0, 3).getTower().getHeight());
+
+        Battlefield.getBattlefieldInstance().cleanField();
+
+    }
+
+    @Test
+    void testWithSkipMovement() throws IOException{
+
+        Controller c = new Controller();
+
+        //Adding Players
+        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Artemis");
+        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+
+        //Create Match
+        c.startMatch();
+
+        //Creating new workers for players
+        c.addWorkers("Steve Jobs",new ClientHandler());
+        c.addWorkers("Bill Gates", new ClientHandler());
+
+
+        //Set First Player of the match
+        c.setFirstPlayer("Steve Jobs");
+
+
+        //Get workers of the players
+        List<Integer> workers = c.getWorkersId("Steve Jobs");
+
+        //Set initial position of the workers
+        c.setInitialWorkerPosition("Steve Jobs", workers.get(0), 0,0);
+        c.setInitialWorkerPosition("Steve Jobs", workers.get(1), 3,2);
+
+        //Start basic turn
+        c.startTurn(false, "Steve Jobs");
+        //Select worker
+        c.selectWorker("Steve Jobs", workers.get(0));
+        //Move
+        c.playStep(0,1);
+        //Move
+        c.skipStep();
+        //Build
+        Throwable expectedException = assertThrows(RuntimeException.class, () -> c.playStep(0,3)); // -> Expect error
+        c.playStep(0,2);
+        //Pass turn
+
+
+        //ASSERTs : We expect a new position for the worker and a new block beside him
+        assertEquals(Battlefield.getBattlefieldInstance().getCell(0, 1).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(0));
+        assertNotEquals(Battlefield.getBattlefieldInstance().getCell(0, 2).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(0));
+        assertEquals(Battlefield.getBattlefieldInstance().getCell(3, 2).getWorker(), c.getPlayers().get(0).getPlayerWorkers().get(1));
+        assertEquals(1, Battlefield.getBattlefieldInstance().getCell(0, 2).getTower().getHeight());
+
+        Battlefield.getBattlefieldInstance().cleanField();
+
     }
 }
