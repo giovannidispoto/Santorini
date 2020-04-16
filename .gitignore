@@ -54,6 +54,9 @@
 #model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/*.java
+#model/network/action
+!src/main/java/it/polimi/ingsw/model/network/action/
+!src/main/java/it/polimi/ingsw/model/network/action/*.java
 #model/cards/effects/*
 !src/main/java/it/polimi/ingsw/model/cards/effects/
 !src/main/java/it/polimi/ingsw/model/cards/effects/*.java
