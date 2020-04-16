@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.NoLevelUpCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,28 @@ public class PlayerTurn {
         steps = new ArrayList<>(turn.getTurnStructure());
         this.match = match;
         match.setSelectedWorker(match.getCurrentPlayer().getPlayerWorkers().get(0));
-        updateMovmentMatrix();
+
+        //Check if first step is a move or a build, then update the correct matrix
+        if(steps.get(0) == Step.MOVE || steps.get(0) == Step.MOVE_SPECIAL )
+             updateMovmentMatrix();
+        else if(steps.get(0) == Step.BUILD || steps.get(0) == Step.BUILD_SPECIAL)
+            updateBuildingMatrix();
     }
 
     /**
      * Update movement matrix when a new currentWorker is selected
+     * For global effect, add here..
      */
     public void updateMovmentMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
+        match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
+    }
+
+    /**
+     *
+     */
+    public void updateBuildingMatrix(){
+        match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
     }
 
     /**
@@ -72,6 +87,10 @@ public class PlayerTurn {
         currentTurn.buildBlock(w,x,y);
         //generate remove matrix if is necessary
         steps.remove(0);
+
+        //for turn that have a build before a move
+        if(steps.get(0) == Step.MOVE)
+            updateMovmentMatrix();
     }
 
     /**

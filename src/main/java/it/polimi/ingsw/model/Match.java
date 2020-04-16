@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.GlobalEffect;
+import it.polimi.ingsw.model.cards.NoLevelUpCondition;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.parser.DivinityEffectReader;
 
@@ -47,6 +48,7 @@ public class Match {
         }catch(IOException e){
            e.printStackTrace();
         }
+        NoLevelUpCondition.getInstance().restoreEffect();
     }
 
     /**

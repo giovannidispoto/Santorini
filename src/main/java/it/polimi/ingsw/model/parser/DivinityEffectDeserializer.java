@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
+import it.polimi.ingsw.model.cards.effects.basic.CantLevelUp;
 import it.polimi.ingsw.model.cards.effects.remove.RemoveBlock;
 import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
 import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
@@ -76,6 +77,9 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
                     break;
                 case "RemoveBlock":
                     t = new RemoveBlock(turnStructure);
+                    break;
+                case "CantLevelUp":
+                    t = new CantLevelUp(turnStructure);
                     break;
             }
             map.put(cardName,t);

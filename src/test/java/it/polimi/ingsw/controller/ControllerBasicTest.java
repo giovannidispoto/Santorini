@@ -144,7 +144,7 @@ class ControllerBasicTest {
         c.setInitialWorkerPosition("Steve Jobs", workers.get(0), 0,0);
         c.setInitialWorkerPosition("Steve Jobs", workers.get(1), 3,2);
 
-        //Start basic turn
+        //Start Artemis turn
         c.startTurn(false, "Steve Jobs");
         //Select worker
         c.selectWorker("Steve Jobs", workers.get(0));

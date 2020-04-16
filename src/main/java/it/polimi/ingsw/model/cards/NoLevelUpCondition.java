@@ -19,11 +19,22 @@ public class NoLevelUpCondition extends GlobalEffect {
         return instance;
     }
 
+    /**
+     *
+     * @param changeLevel
+     */
     public void setChangeLevel(boolean changeLevel){
         this.changeLevel = changeLevel;
     }
 
     private NoLevelUpCondition(){
+        this.changeLevel = false;
+    }
+
+    /**
+     * Restore Effect when a new match is created
+     */
+    public void restoreEffect(){
         this.changeLevel = false;
     }
 
