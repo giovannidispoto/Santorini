@@ -10,10 +10,11 @@ import java.util.Scanner;
 public class ClientThread implements Runnable {
 
     private final Socket socket;
+    private ClientHandler clientHandler;
 
     public ClientThread(Socket socket) {
         this.socket = socket;
-
+        clientHandler = new ClientHandler();
     }
 
     @Override
@@ -27,6 +28,7 @@ public class ClientThread implements Runnable {
                 if (line.equals("quit")) {
                     break;
                 } else {
+                    clientHandler.process(line);
                     out.println("Received: " + line);
                     out.flush();
                 }
