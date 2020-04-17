@@ -29,7 +29,7 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
      * @param jsonElement json to deserialize
      * @param type type of object
      * @param jsonDeserializationContext Context for deserialization that is passed to a custom deserializer during invocation of its method
-     * @return association between card name and effect
+     * @return Command executed from remote client
      * @throws JsonParseException Exception type for parsing problems, used when non-well-formed content is encountered
      */
     @Override
