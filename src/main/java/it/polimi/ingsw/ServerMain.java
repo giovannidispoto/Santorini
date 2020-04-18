@@ -2,6 +2,8 @@
 package it.polimi.ingsw;
 
 import java.io.IOException;
+
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.*;
 
 /**
@@ -12,7 +14,9 @@ public class ServerMain
 {
     public static void main( String[] args )
     {
-        Server server = new Server(1337);
+        Controller c = new Controller();
+        Server server = new Server(1337,c);
+
         try {
             server.startServer();
         } catch(IOException e) {

@@ -1,24 +1,9 @@
 package it.polimi.ingsw.model.network.action;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.model.Step;
-import it.polimi.ingsw.model.Turn;
-import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
-import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;
-import it.polimi.ingsw.model.cards.effects.basic.CantLevelUp;
-import it.polimi.ingsw.model.cards.effects.build.DomeEverywhere;
-import it.polimi.ingsw.model.cards.effects.build.ExtraBlockAbove;
-import it.polimi.ingsw.model.cards.effects.build.ExtraBlockPerimetral;
-import it.polimi.ingsw.model.cards.effects.move.*;
-import it.polimi.ingsw.model.cards.effects.remove.RemoveBlock;
-import it.polimi.ingsw.model.cards.effects.win.JumpEffect;
+import it.polimi.ingsw.model.network.action.data.PlayerInterface;
 
 import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Deserializer for Command
@@ -42,6 +27,28 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 PlayerInterface player = gson.fromJson(jsonElement.getAsJsonObject().get("data"), PlayerInterface.class);
                 c = new AddPlayerCommand(player);
                 break;
+            case "setPlayerReady":
+                c = new SetReadyPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
+                break;
+            case "getWorkersID":
+                c = new GetWorkersIDCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
+                break;
+            case "getPlayers":
+                c = new GetPlayersCommand();
+                break;
+            case "setInitialWorkerPosition":
+                c = new SetInitialWorkerPositionCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("worker").getAsInt(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("x").getAsInt(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("y").getAsInt());
+                break;
+            case "selectWorker":
+                c = new SelectWorkerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("worker").getAsInt());
+                break;
+            case "playStep":
+                c = new PlayStepCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("x").getAsInt(),jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("y").getAsInt());
+                break;
+            case "skipStep":
+                c = new SkipStepCommand();
+                break;
+
         }
 
         return c;

@@ -10,9 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,6 +21,7 @@ public class Controller {
     private PlayerTurn turn;
     private List<Player> players;
     private List<DivinityCard> cards;
+    private Map<String, ClientHandler> handlers;
 
     /**
      *
@@ -30,6 +29,7 @@ public class Controller {
     public Controller(){
         this.players = new ArrayList<>();
         this.cards = new ArrayList<>();
+        this.handlers = new HashMap<>();
     }
 
 
@@ -54,7 +54,7 @@ public class Controller {
      * @return
      */
     public List<Player> getPlayers(){
-        return match.getMatchPlayers();
+        return players;
     }
 
     /**
@@ -94,7 +94,27 @@ public class Controller {
      */
     public void startMatch(){
         match = new Match(players,cards);
+        setFirstPlayer(players.stream().min(Comparator.comparing(Player::getPlayerBirthday)).orElseThrow(NoSuchElementException::new).getPlayerNickname());
 
+    }
+
+    /**
+     * Associate nickname to a handler
+     * @param playerNickname player nickname
+     * @param handler client handler
+     */
+    public void registerHandler(String playerNickname, ClientHandler handler){
+        this.handlers.put(playerNickname, handler);
+    }
+
+    /**
+     * Check if request came from the right handler
+     * @param playerNickname nickname requested
+     * @param handler client handler
+     * @return true if nickname is associate to handler, false otherwise
+     */
+    public boolean checkHandler(String playerNickname, ClientHandler handler){
+        return this.handlers.get(playerNickname) == handler;
     }
 
     /**
@@ -165,6 +185,21 @@ public class Controller {
     }
 
     /**
+     *
+     * @param player
+     */
+    public void setPlayerReady(String player){
+        getPlayerFromString(player).setReady(true);
+        boolean start = true;
+        for(Player p : players){
+            if(!p.isReady())
+                start = false;
+        }
+        if(start)
+            startMatch();
+    }
+
+    /**
      * End Turn
      */
     public void passTurn(){
@@ -186,7 +221,7 @@ public class Controller {
      * @return player
      */
     private Player getPlayerFromString(String player){
-        Optional<Player> p = match.getMatchPlayers().stream().filter(pl -> pl.getPlayerNickname().equals(player)).findFirst();
+        Optional<Player> p = players.stream().filter(pl -> pl.getPlayerNickname().equals(player)).findFirst();
         if(p.isEmpty())
             throw new RuntimeException("Player Not Found");
 

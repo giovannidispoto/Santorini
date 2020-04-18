@@ -32,8 +32,8 @@ class ControllerBasicTest {
         c.startMatch();
 
         //Creating new workers for players
-        c.addWorkers("Steve Jobs",new ClientHandler());
-        c.addWorkers("Bill Gates", new ClientHandler());
+        c.addWorkers("Steve Jobs",new ClientHandler(null, null));
+        c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
         //Set First Player of the match
         c.setFirstPlayer("Steve Jobs");
@@ -78,8 +78,8 @@ class ControllerBasicTest {
         c.startMatch();
 
         //Creating new workers for players
-        c.addWorkers("Steve Jobs",new ClientHandler());
-        c.addWorkers("Bill Gates", new ClientHandler());
+        c.addWorkers("Steve Jobs",new ClientHandler(null, null));
+        c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
 
         //Set First Player of the match
@@ -129,8 +129,8 @@ class ControllerBasicTest {
         c.startMatch();
 
         //Creating new workers for players
-        c.addWorkers("Steve Jobs",new ClientHandler());
-        c.addWorkers("Bill Gates", new ClientHandler());
+        c.addWorkers("Steve Jobs",new ClientHandler(null, null));
+        c.addWorkers("Bill Gates", new ClientHandler(null,null));
 
 
         //Set First Player of the match

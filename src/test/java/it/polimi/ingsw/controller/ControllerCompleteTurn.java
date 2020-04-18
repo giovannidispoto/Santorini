@@ -30,8 +30,8 @@ public class ControllerCompleteTurn {
         c.startMatch();
 
         //Creating new workers for players
-        c.addWorkers("Steve Jobs",new ClientHandler());
-        c.addWorkers("Bill Gates", new ClientHandler());
+        c.addWorkers("Steve Jobs",new ClientHandler(null, null));
+        c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
 
         //Set First Player of the match

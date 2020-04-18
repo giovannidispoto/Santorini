@@ -14,6 +14,7 @@ public class Player {
     private final String playerNickname;
     private DivinityCard playerCard;
     private List<Worker> playerWorkers;
+    private boolean ready;
     private final Color playerColor;
 
     /**
@@ -89,4 +90,26 @@ public class Player {
         return stationaryWorker;
     }
 
+    /**
+     *
+     * @return
+     */
+    public LocalDate getPlayerBirthday(){
+        return this.playerBirthday;
+    }
+    /**
+     *
+     * @param ready
+     */
+    public void setReady(boolean ready){
+        this.ready = ready;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isReady(){
+        return ready;
+    }
 }

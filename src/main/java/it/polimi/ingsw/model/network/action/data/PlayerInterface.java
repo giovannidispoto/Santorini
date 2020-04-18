@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.network.action;
+package it.polimi.ingsw.model.network.action.data;
 
 import it.polimi.ingsw.model.Color;
 

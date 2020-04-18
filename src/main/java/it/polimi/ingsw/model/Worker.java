@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.server.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +118,7 @@ public class Worker implements Subject{
     @Override
     public void notifyUpdate() {
         for(Observer o: observers)
-            o.update();
+            o.update(Message.WORKERVIEW);
     }
 
     /**

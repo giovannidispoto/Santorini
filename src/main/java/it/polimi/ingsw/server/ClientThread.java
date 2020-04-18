@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.controller.Controller;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,17 +13,20 @@ public class ClientThread implements Runnable {
 
     private final Socket socket;
     private ClientHandler clientHandler;
+    private Controller controller;
+    private PrintWriter out;
 
-    public ClientThread(Socket socket) {
+    public ClientThread(Socket socket,Controller controller) {
         this.socket = socket;
-        clientHandler = new ClientHandler();
+        this.controller = controller;
+        this.clientHandler = new ClientHandler(controller, this);
     }
 
     @Override
     public void run() {
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            this.out = new PrintWriter(socket.getOutputStream());
             //read from and write to the connection until I receive "quit"
             while (true) {
                 String line = in.nextLine();
@@ -29,8 +34,7 @@ public class ClientThread implements Runnable {
                     break;
                 } else {
                     clientHandler.process(line);
-                    out.println("Received: " + line);
-                    out.flush();
+                    System.out.println("Received: "+line);
                 }
             }
             //close streams and socket
@@ -41,5 +45,14 @@ public class ClientThread implements Runnable {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Send message to client
+     * @param message
+     */
+    public void send(String message){
+        out.println(message);
+        out.flush();
     }
 }
