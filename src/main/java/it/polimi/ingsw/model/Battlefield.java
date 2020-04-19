@@ -230,6 +230,6 @@ public class Battlefield implements Subject{
         }
 
         for(Observer o: observers)
-            o.update(battlefield, Match.Message.BATTLEFIELD);
+            o.update(battlefield, Message.BATTLEFIELD);
     }
 }

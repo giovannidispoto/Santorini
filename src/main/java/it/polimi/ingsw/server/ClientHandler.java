@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Message;
 import it.polimi.ingsw.model.Observer;
 import it.polimi.ingsw.model.network.action.CommandFactory;
 import it.polimi.ingsw.model.network.action.data.BattlefieldInterface;
@@ -49,7 +50,7 @@ public class ClientHandler implements Observer {
      * @param message who update
      */
     @Override
-    public void update(CellInterface[][] cellInterfaces, Match.Message message) {
+    public void update(CellInterface[][] cellInterfaces, Message message) {
         switch (message){
             case WORKERVIEW:
                 response(new Gson().toJson(new BattlefieldInterface("workerViewUpdate", cellInterfaces)));

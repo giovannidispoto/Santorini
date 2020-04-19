@@ -11,5 +11,5 @@ public interface Observer {
      * @param cellInterfaces matrix
      * @param message who update
      */
-    public void update(CellInterface[][] cellInterfaces, Match.Message message);
+    public void update(CellInterface[][] cellInterfaces, Message message);
 }

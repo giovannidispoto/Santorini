@@ -131,7 +131,7 @@ public class Worker implements Subject{
             }
         }
         for(Observer o: observers)
-            o.update(workerView, Match.Message.WORKERVIEW);
+            o.update(workerView, Message.WORKERVIEW);
     }
 
     /**

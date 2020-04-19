@@ -129,11 +129,4 @@ public class Match {
         return this.currentPlayer;
     }
 
-    /**
-     * Message type from Observer update
-     */
-    public enum Message {
-        WORKERVIEW,
-        BATTLEFIELD
-    }
 }
