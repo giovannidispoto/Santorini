@@ -35,18 +35,19 @@ public class Controller {
 
     /**
      * Add new player in the game
-     * @param playerNickName unique nickname of the player
+     * @param playerNickname unique nickname of the player
      * @param date date of birth
      * @param color color of the player
      * @param card divinity card
      */
-    public void addNewPlayer(String playerNickName, LocalDate date, Color color, String card) throws IOException {
+    public void addNewPlayer(String playerNickname, LocalDate date, Color color, String card) throws IOException {
         DeckReader reader = new DeckReader();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        Player p = new Player(playerNickName, date, color);
+        Player p = new Player(playerNickname, date, color);
         p.setPlayerCard(d.getDivinityCard(card));
         players.add(p);
         cards.add(d.getDivinityCard(card));
+        Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
     }
 
     /**

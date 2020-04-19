@@ -41,6 +41,7 @@ public class Tower {
         if(getLastBlock() == Block.DOME)
             throw new RuntimeException("Trying to add block on a dome");
         towerBlocks.add(getLastBlock().next());
+        Battlefield.getBattlefieldInstance().notifyUpdate();
     }
 
     /**

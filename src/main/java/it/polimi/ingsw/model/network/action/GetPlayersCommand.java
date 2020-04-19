@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * GetPlayersCommand represent getPlayers action from the client
  */
 public class GetPlayersCommand implements Command {
     @Override
 
     /**
-     * @param controller
-     * @param handler
+     * Execute command
+     * @param controller context
+     * @param handler context
      */
     public void execute(Controller controller, ClientHandler handler) {
         List<Player> players = controller.getPlayers();

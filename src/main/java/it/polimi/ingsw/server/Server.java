@@ -8,17 +8,30 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Server Class
+ */
 public class Server {
 
     private int port;
     private ServerSocket serverSocket;
     private Controller controller;
 
+    /**
+     * Create new server at selcted port.
+     * Controller is one instance in all the application, so is created in main class and passed
+     * @param port port
+     * @param controller controller
+     */
     public Server(int port, Controller controller){
         this.port = port;
         this.controller = controller;
     }
 
+    /**
+     * Start Server
+     * @throws IOException
+     */
     public void startServer() throws IOException {
         //open TCP port
         serverSocket = new ServerSocket(port);

@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
 /**
- *
+ * SetInitialWorkerPosition represent setWorkerPosition action from the client
  */
 public class SetInitialWorkerPositionCommand implements Command{
     private String player;
@@ -13,11 +13,11 @@ public class SetInitialWorkerPositionCommand implements Command{
     private int y;
 
     /**
-     *
-     * @param player
-     * @param worker
-     * @param x
-     * @param y
+     * Create SetInitialWorkerPositionCommand
+     * @param player player
+     * @param worker worker
+     * @param x row
+     * @param y column
      */
     public SetInitialWorkerPositionCommand(String player, int worker, int x, int y){
         this.player = player;

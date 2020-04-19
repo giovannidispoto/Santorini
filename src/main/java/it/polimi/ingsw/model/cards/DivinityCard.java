@@ -22,18 +22,34 @@ public class DivinityCard {
         this.cardEffect = cardEffect;
     }
 
+    /**
+     * Gets card name
+     * @return card name
+     */
     public String getCardName() {
         return cardName;
     }
 
+    /**
+     * Gets card type
+     * @return card type
+     */
     public Type getCardType() {
         return cardType;
     }
 
+    /**
+     * Gets number of player allowed
+     * @return number of player allowed
+     */
     public int getNumberOfPlayersAllowed() {
         return numberOfPlayersAllowed;
     }
 
+    /**
+     * Gets card effect description
+     * @return card effect description
+     */
     public String getCardEffect() {
         return cardEffect;
     }

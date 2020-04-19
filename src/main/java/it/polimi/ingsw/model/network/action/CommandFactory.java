@@ -9,9 +9,9 @@ import com.google.gson.GsonBuilder;
 public class CommandFactory {
 
     /**
-     *
-     * @param message
-     * @return
+     * Create command from string passed
+     * @param message string command
+     * @return command
      */
     public static Command from(String message){
         GsonBuilder gsonBuilder = new GsonBuilder();

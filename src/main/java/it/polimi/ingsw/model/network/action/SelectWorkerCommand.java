@@ -4,16 +4,16 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
 /**
- *
+ * SelectWorkerCommand represent selectWorker action from the client
  */
 public class SelectWorkerCommand implements Command{
     private String playerNickname;
     private int worker;
 
     /**
-     *
-     * @param playerNickname
-     * @param worker
+     * Create SelectWorkerCommand
+     * @param playerNickname player
+     * @param worker worker
      */
     public SelectWorkerCommand(String playerNickname, int worker){
         this.playerNickname = playerNickname;
@@ -21,7 +21,7 @@ public class SelectWorkerCommand implements Command{
     }
 
     /**
-     *
+     * Execute command
      * @param controller context
      * @param handler context
      */

@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.ClientHandler;
 import java.util.List;
 
 /**
- *
+ * GetWorkersIDCommand represent getWorkers action from the client
  */
 public class GetWorkersIDCommand implements Command{
     private String player;

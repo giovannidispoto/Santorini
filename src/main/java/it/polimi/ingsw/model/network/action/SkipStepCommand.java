@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.ClientHandler;
 public class SkipStepCommand implements Command{
 
     /**
-     *
+     * Execute command
      * @param controller context
      * @param handler context
      */

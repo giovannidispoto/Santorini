@@ -9,10 +9,19 @@ public class Deck {
 
     private List<DivinityCard> listOfCards;
 
+    /**
+     * Create new Deck from cards
+     * @param listOfCards cards
+     */
     public Deck(List<DivinityCard> listOfCards){
        this.listOfCards = List.copyOf(listOfCards);
     }
 
+    /**
+     * Gets divinity card from name
+     * @param cardName name
+     * @return divinty card
+     */
     public DivinityCard getDivinityCard(String cardName){
         DivinityCard div = null;
         for(DivinityCard card : listOfCards){

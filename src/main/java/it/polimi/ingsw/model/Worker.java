@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.server.Message;
+import it.polimi.ingsw.model.network.action.data.CellInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,8 +117,21 @@ public class Worker implements Subject{
      */
     @Override
     public void notifyUpdate() {
+        CellInterface[][] workerView = new CellInterface[Battlefield.N_ROWS_VIEW][Battlefield.N_COLUMNS_VIEW];
+        String player;
+        Color workerColor;
+       // Battlefield instance = Battlefield.getBattlefieldInstance();
+        for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
+            for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
+                if(this.workerView[i][j] != null) {
+                    player = this.workerView[i][j].getWorker() != null ? this.workerView[i][j].getWorker().getOwnerWorker().getPlayerNickname():null;
+                    workerColor = player != null ? this.workerView[i][j].getWorker().getOwnerWorker().getPlayerColor(): null;
+                    workerView[i][j] = new CellInterface(player, workerColor, this.workerView[i][j].getTower().getHeight(),this.workerView[i][j].getTower().getLastBlock());
+                }
+            }
+        }
         for(Observer o: observers)
-            o.update(Message.WORKERVIEW);
+            o.update(workerView, Match.Message.WORKERVIEW);
     }
 
     /**

@@ -4,16 +4,16 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
 /**
- *
+ * PlayStepCommand represent playStp action from the client
  */
 public class PlayStepCommand implements Command {
     private int x;
     private int y;
 
     /**
-     *
-     * @param x
-     * @param y
+     * Create new PlayStep
+     * @param x row
+     * @param y column
      */
     public PlayStepCommand(int x, int y){
         this.x = x;
@@ -21,7 +21,7 @@ public class PlayStepCommand implements Command {
     }
 
     /**
-     *
+     * Execute command
      * @param controller context
      * @param handler context
      */

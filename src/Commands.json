@@ -11,7 +11,7 @@
   "action": "addNewPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
-    "date": "2019-05-06",
+    "date": "2017-05-06",
     "color": "GREY",
     "card": "Athena"
   }
@@ -25,7 +25,7 @@
   {
     "action": "setPlayerReady",
     "data": {
-      "playerNickname": "Steve Jobs"
+      "playerNickname": "Bill Gates"
     }
   },
   {
@@ -34,5 +34,64 @@
       "playerNickname": "Steve Jobs"
     }
   },
-  {"action" :  "getPlayers"}
+  {"action" :  "getPlayers"},
+  {
+    "action" : "setInitialWorkerPosition",
+    "data" : {
+      "playerNickname" : "Bill Gates",
+      "worker" : "0",
+      "x" : "0",
+      "y" : "0"
+    }
+  },
+  {
+    "action" : "setInitialWorkerPosition",
+    "data" : {
+      "playerNickname" : "Bill Gates",
+      "worker" : "1",
+      "x" : "4",
+      "y" : "3"
+    }
+  },
+  {
+    "action" : "setInitialWorkerPosition",
+    "data" : {
+      "playerNickname" : "Steve Jobs",
+      "worker" : "2",
+      "x" : "0",
+      "y" : "4"
+    }
+  },
+  {
+    "action" : "setInitialWorkerPosition",
+    "data" : {
+      "playerNickname" : "Steve Jobs",
+      "worker" : "3",
+      "x" : "4",
+      "y" : "0"
+    }
+  },
+  {"action" : "startTurn",
+    "data" :{
+      "basicTurn" : "true",
+      "playerNickname" : "Steve Jobs"
+    }
+  },
+  {
+    "action" : "selectWorker",
+    "data" : {
+      "playerNickname" : "Steve Jobs",
+      "worker" : "2"
+    }
+  },
+  {"action" : "playStep",
+  "data": {
+    "x" : "1",
+    "y" : "4"
+  }},
+  {"action" : "playStep",
+    "data": {
+      "x" : "0",
+      "y" : "4"
+    }}
 ]

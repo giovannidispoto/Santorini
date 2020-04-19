@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.model.network.action.data.CellInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Battlefield Class represents the board where the game is played
  */
-public class Battlefield {
+public class Battlefield implements Subject{
     private Cell[][] boardCells;
     public static final int N_ROWS = 5;
     public static final int N_COLUMNS= 5;
@@ -17,6 +19,7 @@ public class Battlefield {
     public static final int N_COLUMNS_VIEW= 5;
     private List<Worker> workersInGame;
     private static Battlefield instance = null;
+    private List<Observer> observers;
 
     /**
      * Class constructor
@@ -42,6 +45,7 @@ public class Battlefield {
     private void initializeBoard(){
         boardCells = new Cell[N_COLUMNS][N_ROWS];
         workersInGame = new ArrayList<>();
+        observers = new ArrayList<>();
         for(int i = 0; i < N_ROWS; i++)
             for(int j = 0; j < N_COLUMNS; j++)
                 boardCells[i][j] = new Cell(new Tower());
@@ -81,12 +85,14 @@ public class Battlefield {
             throw new RuntimeException("Trying to update the position of a worker that's not in game");
         boardCells[oldRowWorker][oldColWorker].setWorker(null);
         boardCells[newRowWorker][newColWorker].setWorker(worker);
+        notifyUpdate();
     }
 
     public void updateWorkerPosition(Worker worker,int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
             throw new RuntimeException("Trying to update the position of a worker that's not in game");
         boardCells[newRowWorker][newColWorker].setWorker(worker);
+        notifyUpdate();
     }
 
     public Cell getCell(int x, int y){
@@ -175,7 +181,7 @@ public class Battlefield {
 
     /**
      * Sets Workers in game
-     * @param workersInGame workers in game
+     * @param workersInGameList workers in game
      */
     public void setWorkersInGame(List<Worker> workersInGameList){
 
@@ -185,5 +191,45 @@ public class Battlefield {
 
        // workersInGame.addAll(workersInGameList);
        //this.workersInGame = new ArrayList<> (workersInGame);
+    }
+
+    /**
+     * Attach new Observer
+     * @param o Observer
+     */
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
+    }
+
+    /**
+     * Remove Observer
+     * @param o
+     */
+    @Override
+    public void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    /**
+     * Notify observer that matrix is changed
+     */
+    @Override
+    public void notifyUpdate() {
+        CellInterface[][] battlefield = new CellInterface[N_ROWS][N_COLUMNS];
+        String player;
+        Color workerColor;
+
+        for(int i = 0; i < N_ROWS; i++){
+            for(int j = 0; j < N_COLUMNS; j++){
+                player = this.getCell(i,j).getWorker() != null ? this.getCell(i,j).getWorker().getOwnerWorker().getPlayerNickname():null;
+                workerColor = player != null ? this.getCell(i,j).getWorker().getOwnerWorker().getPlayerColor(): null;
+                battlefield[i][j] = new CellInterface(player,workerColor, this.getCell(i,j).getTower().getHeight(), this.getCell(i,j).getTower().getLastBlock());
+
+            }
+        }
+
+        for(Observer o: observers)
+            o.update(battlefield, Match.Message.BATTLEFIELD);
     }
 }

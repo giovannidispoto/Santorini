@@ -128,4 +128,12 @@ public class Match {
     public Player getCurrentPlayer(){
         return this.currentPlayer;
     }
+
+    /**
+     * Message type from Observer update
+     */
+    public enum Message {
+        WORKERVIEW,
+        BATTLEFIELD
+    }
 }

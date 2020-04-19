@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class ClientThread implements Runnable {
 
     private final Socket socket;
@@ -16,12 +19,20 @@ public class ClientThread implements Runnable {
     private Controller controller;
     private PrintWriter out;
 
+    /**
+     *
+     * @param socket
+     * @param controller
+     */
     public ClientThread(Socket socket,Controller controller) {
         this.socket = socket;
         this.controller = controller;
         this.clientHandler = new ClientHandler(controller, this);
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         try {

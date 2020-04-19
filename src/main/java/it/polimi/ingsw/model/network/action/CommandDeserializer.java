@@ -45,6 +45,9 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
             case "playStep":
                 c = new PlayStepCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("x").getAsInt(),jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("y").getAsInt());
                 break;
+            case "startTurn":
+                c = new StartTurnCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("basicTurn").getAsBoolean(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
+                break;
             case "skipStep":
                 c = new SkipStepCommand();
                 break;
