@@ -1,5 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards.effects.global;
 
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
 import it.polimi.ingsw.model.cards.effects.global.TowersCondition;
