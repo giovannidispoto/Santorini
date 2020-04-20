@@ -21,7 +21,7 @@
 !src/*.json
 
 #----------- MAIN_RULES -----------
-#main/	(rules = 46)
+#main/	(rules = 42)
 !src/main/
 !src/main/java/
 !src/main/java/it/
@@ -58,12 +58,6 @@
 #model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/
 !src/main/java/it/polimi/ingsw/model/cards/*.java
-#model/network/action
-!src/main/java/it/polimi/ingsw/model/network/action/
-!src/main/java/it/polimi/ingsw/model/network/action/*.java
-#model/network/action/data
-!src/main/java/it/polimi/ingsw/model/network/action/data
-!src/main/java/it/polimi/ingsw/model/network/action/data/*.java
 #model/cards/effects/*
 !src/main/java/it/polimi/ingsw/model/cards/effects/
 !src/main/java/it/polimi/ingsw/model/cards/effects/*.java
@@ -81,7 +75,7 @@
 !src/main/java/it/polimi/ingsw/model/cards/effects/global/*.java
 
 #----------- TEST_RULES -----------
-#test/	(rules = 46)
+#test/	(rules = 42)
 !src/test/
 !src/test/java/
 !src/test/java/it/
@@ -118,12 +112,6 @@
 #model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/*.java
-#model/network/action
-!src/test/java/it/polimi/ingsw/model/network/action/
-!src/test/java/it/polimi/ingsw/model/network/action/*.java
-#model/network/action/data
-!src/test/java/it/polimi/ingsw/model/network/action/data
-!src/test/java/it/polimi/ingsw/model/network/action/data/*.java
 #model/cards/effects/*
 !src/test/java/it/polimi/ingsw/model/cards/effects/
 !src/test/java/it/polimi/ingsw/model/cards/effects/*.java
