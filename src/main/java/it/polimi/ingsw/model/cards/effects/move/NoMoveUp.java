@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Step;
+import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 
 import java.util.ArrayList;
 import java.util.List;

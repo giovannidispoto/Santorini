@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.parser;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.model.Step;
+import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.basic.BlockUnder;

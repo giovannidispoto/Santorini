@@ -2,12 +2,9 @@ package it.polimi.ingsw.server;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.Message;
-import it.polimi.ingsw.model.Observer;
-import it.polimi.ingsw.model.network.action.CommandFactory;
-import it.polimi.ingsw.model.network.action.data.BattlefieldInterface;
-import it.polimi.ingsw.model.network.action.data.CellInterface;
+import it.polimi.ingsw.server.actions.CommandFactory;
+import it.polimi.ingsw.server.actions.data.BattlefieldInterface;
+import it.polimi.ingsw.server.actions.data.CellInterface;
 
 /**
  * ClientHandler execute commands from socket and send response to client.

@@ -1,4 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards.effects.global;
+
+import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Player;
 
 public abstract class GlobalWinCondition {
     private Player subject;

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.DivinityCard;
-import it.polimi.ingsw.model.cards.GlobalEffect;
-import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+import it.polimi.ingsw.model.cards.effects.global.GlobalEffect;
+import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
+import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.parser.DivinityEffectReader;
 

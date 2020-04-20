@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
-import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 

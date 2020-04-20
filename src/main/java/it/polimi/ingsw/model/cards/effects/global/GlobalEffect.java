@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.effects.global;
 
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Worker;

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.cards.NoLevelUpCondition;
+import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
+import it.polimi.ingsw.server.Step;
 
 import java.util.ArrayList;
 import java.util.List;

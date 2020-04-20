@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards.effects.build;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.parser.DeckReader;
+import it.polimi.ingsw.server.Step;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;

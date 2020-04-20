@@ -1,4 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards.effects.global;
+
+import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Player;
 
 /**
  * TowersCondition class represents a global effect
@@ -13,7 +17,7 @@ public class TowersCondition extends GlobalWinCondition {
      * @param match is the current match where there is the player
      * @param numberOfFullTowers is the number of Towers for the WinCondition
      */
-    public TowersCondition(Player player, Match match,int numberOfFullTowers) {
+    public TowersCondition(Player player, Match match, int numberOfFullTowers) {
         super(player,match);
         this.numberOfFullTowers = numberOfFullTowers;
     }

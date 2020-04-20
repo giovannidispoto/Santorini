@@ -1,10 +1,10 @@
-package it.polimi.ingsw.model.network.action;
+package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.network.action.data.PlayerInterface;
-import it.polimi.ingsw.model.network.action.data.PlayersInterface;
+import it.polimi.ingsw.server.actions.data.PlayerInterface;
+import it.polimi.ingsw.server.actions.data.PlayersInterface;
 import it.polimi.ingsw.server.ClientHandler;
 
 import java.util.ArrayList;

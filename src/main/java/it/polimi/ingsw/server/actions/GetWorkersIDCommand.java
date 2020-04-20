@@ -1,8 +1,8 @@
-package it.polimi.ingsw.model.network.action;
+package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.network.action.data.WorkersIDInterface;
+import it.polimi.ingsw.server.actions.data.WorkersIDInterface;
 import it.polimi.ingsw.server.ClientHandler;
 
 import java.util.List;

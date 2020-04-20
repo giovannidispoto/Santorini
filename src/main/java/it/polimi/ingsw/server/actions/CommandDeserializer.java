@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model.network.action;
+package it.polimi.ingsw.server.actions;
 
 import com.google.gson.*;
-import it.polimi.ingsw.model.network.action.data.PlayerInterface;
+import it.polimi.ingsw.server.actions.data.PlayerInterface;
 
 import java.lang.reflect.Type;
 

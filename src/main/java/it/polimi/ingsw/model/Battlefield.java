@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.model.network.action.data.CellInterface;
+import it.polimi.ingsw.server.actions.data.CellInterface;
+import it.polimi.ingsw.server.Message;
+import it.polimi.ingsw.server.Observer;
+import it.polimi.ingsw.server.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Battlefield Class represents the board where the game is played
  */
-public class Battlefield implements Subject{
+public class Battlefield implements Subject {
     private Cell[][] boardCells;
     public static final int N_ROWS = 5;
     public static final int N_COLUMNS= 5;

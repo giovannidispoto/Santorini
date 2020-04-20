@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.network.action.data;
+package it.polimi.ingsw.server.actions.data;
 
 /**
  * Class used in update message of battlefield and worker view

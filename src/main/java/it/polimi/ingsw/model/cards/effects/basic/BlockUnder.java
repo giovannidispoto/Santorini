@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.cards.effects.basic;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.server.Step;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlockUnder extends BasicTurn {

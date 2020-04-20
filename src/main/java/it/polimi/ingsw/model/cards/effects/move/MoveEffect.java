@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
-import it.polimi.ingsw.model.Step;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.Worker;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class MoveEffect extends Turn {
 

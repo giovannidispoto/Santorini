@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.network.action.data.CellInterface;
+import it.polimi.ingsw.server.actions.data.CellInterface;
+import it.polimi.ingsw.server.Message;
+import it.polimi.ingsw.server.Observer;
+import it.polimi.ingsw.server.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
 /**
  * Worker class represents a pawn of the game
  */
-public class Worker implements Subject{
+public class Worker implements Subject {
     private final Player ownerWorker;
     private static int count = 0;
     private int id;

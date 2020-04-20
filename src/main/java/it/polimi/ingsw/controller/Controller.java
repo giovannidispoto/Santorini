@@ -5,8 +5,8 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.parser.DeckReader;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Step;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;

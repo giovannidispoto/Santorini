@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
+import it.polimi.ingsw.model.cards.effects.global.TowersCondition;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
