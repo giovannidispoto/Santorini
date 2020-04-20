@@ -96,6 +96,10 @@
 #server
 !src/test/java/it/polimi/ingsw/server
 !src/test/java/it/polimi/ingsw/server/*.java
+!src/test/java/it/polimi/ingsw/server/actions
+!src/test/java/it/polimi/ingsw/server/actions/*.java
+!src/test/java/it/polimi/ingsw/server/actions/data
+!src/test/java/it/polimi/ingsw/server/actions/data/*.java
 #view
 !src/test/java/it/polimi/ingsw/view
 !src/test/java/it/polimi/ingsw/view/*.java
@@ -120,5 +124,7 @@
 !src/test/java/it/polimi/ingsw/model/cards/effects/remove/*.java
 !src/test/java/it/polimi/ingsw/model/cards/effects/win
 !src/test/java/it/polimi/ingsw/model/cards/effects/win/*.java
+!src/test/java/it/polimi/ingsw/model/cards/effects/global
+!src/test/java/it/polimi/ingsw/model/cards/effects/global/*.java
 
 #Maintained by Gorlenah
