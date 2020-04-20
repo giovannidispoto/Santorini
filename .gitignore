@@ -16,6 +16,11 @@
 !DELIVERABLES/
 !DELIVERABLES/*
 
+#ASSETS/ (rules = 2) (You can do everything here, this folder has it's own gitignore)
+!ASSETS/
+!ASSETS/*
+
+
 #src/	(rules = 2)
 !src/
 !src/*.json

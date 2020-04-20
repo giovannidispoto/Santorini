@@ -1,0 +1,5 @@
+#GitIgnore for root/ASSETS/
+#ALL files and folders are permitted	(rules = 1)
+!*
+
+#Maintained by AstroWLAN
