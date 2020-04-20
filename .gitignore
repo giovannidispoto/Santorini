@@ -1,4 +1,4 @@
- #GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
+#GitIgnore for repository root :ing-sw-2020-Crippa-Dispoto-Facchinetti
 
 #----------- BLACKLIST -----------
 # Ignore everything	(rules = 1)
@@ -21,7 +21,7 @@
 !src/*.json
 
 #----------- MAIN_RULES -----------
-#main/	(rules = 35)
+#main/	(rules = 46)
 !src/main/
 !src/main/java/
 !src/main/java/it/
@@ -43,6 +43,10 @@
 #server
 !src/main/java/it/polimi/ingsw/server
 !src/main/java/it/polimi/ingsw/server/*.java
+!src/main/java/it/polimi/ingsw/server/actions
+!src/main/java/it/polimi/ingsw/server/actions/*.java
+!src/main/java/it/polimi/ingsw/server/actions/data
+!src/main/java/it/polimi/ingsw/server/actions/data/*.java
 #view
 !src/main/java/it/polimi/ingsw/view
 !src/main/java/it/polimi/ingsw/view/*.java
@@ -73,14 +77,17 @@
 !src/main/java/it/polimi/ingsw/model/cards/effects/remove/*.java
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/
 !src/main/java/it/polimi/ingsw/model/cards/effects/win/*.java
+!src/main/java/it/polimi/ingsw/model/cards/effects/global
+!src/main/java/it/polimi/ingsw/model/cards/effects/global/*.java
 
 #----------- TEST_RULES -----------
-#test/	(rules = 35)
+#test/	(rules = 46)
 !src/test/
 !src/test/java/
 !src/test/java/it/
 !src/test/java/it/polimi/
 !src/test/java/it/polimi/ingsw/
+!src/test/java/it/polimi/ingsw/*.java
 #client/
 !src/test/java/it/polimi/ingsw/client
 !src/test/java/it/polimi/ingsw/client/*.java
@@ -111,6 +118,12 @@
 #model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/
 !src/test/java/it/polimi/ingsw/model/cards/*.java
+#model/network/action
+!src/test/java/it/polimi/ingsw/model/network/action/
+!src/test/java/it/polimi/ingsw/model/network/action/*.java
+#model/network/action/data
+!src/test/java/it/polimi/ingsw/model/network/action/data
+!src/test/java/it/polimi/ingsw/model/network/action/data/*.java
 #model/cards/effects/*
 !src/test/java/it/polimi/ingsw/model/cards/effects/
 !src/test/java/it/polimi/ingsw/model/cards/effects/*.java
