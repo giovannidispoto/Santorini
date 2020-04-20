@@ -1,0 +1,66 @@
+#GitIgnore for root/src/test/
+
+#----------- WHITELIST -----------
+# Don't Ignore those folders and files
+
+#src/test/  (rules = 48)
+!.gitignore
+!java/
+!java/it/
+!java/it/polimi/
+!java/it/polimi/ingsw/
+!java/it/polimi/ingsw/*.java
+#client/
+!java/it/polimi/ingsw/client/
+!java/it/polimi/ingsw/client/*.java
+#client/cli
+!java/it/polimi/ingsw/client/cli/
+!java/it/polimi/ingsw/client/cli/*.java
+#client/gui
+!java/it/polimi/ingsw/client/gui/
+!java/it/polimi/ingsw/client/gui/*.java
+#client/network
+!java/it/polimi/ingsw/client/network/
+!java/it/polimi/ingsw/client/network/*.java
+!java/it/polimi/ingsw/client/network/actions/
+!java/it/polimi/ingsw/client/network/actions/*.java
+!java/it/polimi/ingsw/client/network/actions/data/
+!java/it/polimi/ingsw/client/network/actions/data/*.java
+#controller
+!java/it/polimi/ingsw/controller/
+!java/it/polimi/ingsw/controller/*.java
+#server
+!java/it/polimi/ingsw/server/
+!java/it/polimi/ingsw/server/*.java
+!java/it/polimi/ingsw/server/actions/
+!java/it/polimi/ingsw/server/actions/*.java
+!java/it/polimi/ingsw/server/actions/data
+!java/it/polimi/ingsw/server/actions/data/*.java
+#view
+!java/it/polimi/ingsw/view/
+!java/it/polimi/ingsw/view/*.java
+#model/
+!java/it/polimi/ingsw/model/
+!java/it/polimi/ingsw/model/*.java
+!java/it/polimi/ingsw/model/parser/
+!java/it/polimi/ingsw/model/parser/*.java
+#model/cards/
+!java/it/polimi/ingsw/model/cards/
+!java/it/polimi/ingsw/model/cards/*.java
+#model/cards/effects/*
+!java/it/polimi/ingsw/model/cards/effects/
+!java/it/polimi/ingsw/model/cards/effects/*.java
+!java/it/polimi/ingsw/model/cards/effects/basic/
+!java/it/polimi/ingsw/model/cards/effects/basic/*.java
+!java/it/polimi/ingsw/model/cards/effects/build/
+!java/it/polimi/ingsw/model/cards/effects/build/*.java
+!java/it/polimi/ingsw/model/cards/effects/move/
+!java/it/polimi/ingsw/model/cards/effects/move/*.java
+!java/it/polimi/ingsw/model/cards/effects/remove/
+!java/it/polimi/ingsw/model/cards/effects/remove/*.java
+!java/it/polimi/ingsw/model/cards/effects/win/
+!java/it/polimi/ingsw/model/cards/effects/win/*.java
+!java/it/polimi/ingsw/model/cards/effects/global/
+!java/it/polimi/ingsw/model/cards/effects/global/*.java
+
+#Maintained by Gorlenah
