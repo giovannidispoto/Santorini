@@ -113,4 +113,5 @@ public class CLIBuilder {
         this.currentPhase = null;
         this.numberFullTowers = 0;
     }
+
 }
