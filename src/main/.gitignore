@@ -16,7 +16,7 @@
 #client/cli
 !java/it/polimi/ingsw/client/cli/
 !java/it/polimi/ingsw/client/cli/*.java
-#client/structure
+#client/clientModel
 !java/it/polimi/ingsw/client/clientModel/
 !java/it/polimi/ingsw/client/clientModel/*.java
 #client/controller
