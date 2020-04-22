@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.network.actions;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 /**
  * Interface used in Command Pattern
@@ -8,7 +8,7 @@ import it.polimi.ingsw.client.controller.Controller;
 public interface Command {
     /**
      * Execute command
-     * @param controller context
+     * @param clientController context
      */
-    void execute(Controller controller);
+    void execute(ClientController clientController);
 }

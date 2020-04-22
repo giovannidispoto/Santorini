@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.network.actions;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class GetWorkersIDCommand implements Command{
      * Execute command
      */
     @Override
-    public void execute(Controller controller) {
-        controller.setWorkersID(workersID);
+    public void execute(ClientController clientController) {
+        clientController.setWorkersID(workersID);
     }
 }

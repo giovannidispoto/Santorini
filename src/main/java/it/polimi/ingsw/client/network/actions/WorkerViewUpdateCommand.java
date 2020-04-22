@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.network.actions;
 
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.clientModel.WorkerViewClient;
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 
 public class WorkerViewUpdateCommand implements Command {
@@ -17,7 +17,7 @@ public class WorkerViewUpdateCommand implements Command {
     }
 
     @Override
-    public void execute(Controller controller) {
+    public void execute(ClientController clientController) {
         WorkerViewClient.getWorkerViewInstance().setWorkerView(workerView);
     }
 }

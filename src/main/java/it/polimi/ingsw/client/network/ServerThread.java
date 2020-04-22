@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,18 +14,18 @@ public class ServerThread implements Runnable {
 
     private final Socket socket;
     private ServerHandler serverHandler;
-    private Controller controller;
+    private ClientController clientController;
     private PrintWriter out;
 
     /**
      *Create new ServerThread to manage clientSocket
      * @param socket socket from Client initialisation
-     * @param controller controller from Client initialisation
+     * @param clientController clientController from Client initialisation
      */
-    public ServerThread(Socket socket, Controller controller) {
+    public ServerThread(Socket socket, ClientController clientController) {
         this.socket = socket;
-        this.controller = controller;
-        this.serverHandler = new ServerHandler(controller, this);
+        this.clientController = clientController;
+        this.serverHandler = new ServerHandler(clientController, this);
     }
 
     /**

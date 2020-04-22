@@ -1,24 +1,24 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.actions.CommandFactory;
 
 /**
  * ServerHandler get server response and send command to server
  */
 public class ServerHandler{
-    private final Controller controller;
+    private final ClientController clientController;
     private final ServerThread thread;
 
     /**
      * Create ServerHandler
-     * @param controller controller
+     * @param clientController controller
      * @param thread thread
      */
-    public ServerHandler(Controller controller, ServerThread thread){
-       this.controller = controller;
+    public ServerHandler(ClientController clientController, ServerThread thread){
+       this.clientController = clientController;
        this.thread = thread;
-       controller.registerHandler(this);
+       clientController.registerHandler(this);
     }
 
     /**
@@ -26,7 +26,7 @@ public class ServerHandler{
      * @param m message
      */
     public void process(String m){
-        CommandFactory.from(m).execute(controller);
+        CommandFactory.from(m).execute(clientController);
     }
 
     /**

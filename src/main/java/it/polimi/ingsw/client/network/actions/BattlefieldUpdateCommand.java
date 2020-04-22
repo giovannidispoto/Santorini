@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.network.actions;
 
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 
 public class BattlefieldUpdateCommand implements Command {
@@ -17,7 +17,7 @@ public class BattlefieldUpdateCommand implements Command {
     }
 
     @Override
-    public void execute(Controller controller) {
+    public void execute(ClientController clientController) {
         BattlefieldClient.getBattlefieldInstance().setBattlefieldBoard(battlefield);
     }
 }

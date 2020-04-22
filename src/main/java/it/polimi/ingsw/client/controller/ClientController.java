@@ -13,9 +13,9 @@ import it.polimi.ingsw.client.clientModel.basic.Color;
 
 
 /**
- * Controller Class
+ * ClientController Class
  */
-public class Controller{
+public class ClientController {
     private String playerNickname;
     private List<PlayerInterface> players;
     private List<DivinityCard> cards;
@@ -24,9 +24,9 @@ public class Controller{
     private Step turn;
 
     /**
-     * Controller Constructor
+     * ClientController Constructor
      */
-    public Controller(){
+    public ClientController(){
         this.players = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.workersID = new ArrayList<>();

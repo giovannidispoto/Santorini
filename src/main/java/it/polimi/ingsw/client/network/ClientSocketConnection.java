@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -12,15 +12,15 @@ public class ClientSocketConnection {
     private int port;
     private String serverName;
     private Socket clientSocket;
-    private Controller controller;
+    private ClientController clientController;
 
     /**
      * Create new clientSocket
-     * Controller is one instance in all the application, so is created in main class and passed
-     * @param controller controller
+     * ClientController is one instance in all the application, so is created in main class and passed
+     * @param clientController controller
      */
-    public ClientSocketConnection(Controller controller){
-        this.controller = controller;
+    public ClientSocketConnection(ClientController clientController){
+        this.clientController = clientController;
     }
 
     /**
@@ -39,7 +39,7 @@ public class ClientSocketConnection {
 
         System.out.println("Just connected to: " + clientSocket.getRemoteSocketAddress());
         // open input and output streams to read and write
-        Thread thread = new Thread(new ServerThread(clientSocket, controller));
+        Thread thread = new Thread(new ServerThread(clientSocket, clientController));
         thread.start();
         return true;
     }

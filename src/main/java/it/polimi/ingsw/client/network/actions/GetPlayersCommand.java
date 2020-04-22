@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.network.actions;
 
-import it.polimi.ingsw.client.controller.Controller;
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class GetPlayersCommand implements Command {
      * Execute command
      */
     @Override
-    public void execute(Controller controller) {
-        controller.setPlayers(players);
+    public void execute(ClientController clientController) {
+        clientController.setPlayers(players);
     }
 }
