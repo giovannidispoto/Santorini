@@ -21,6 +21,7 @@ public class ClientSocketConnection {
      */
     public ClientSocketConnection(ClientController clientController){
         this.clientController = clientController;
+        clientController.setSocketConnection(this);
     }
 
     /**
@@ -41,7 +42,15 @@ public class ClientSocketConnection {
         // open input and output streams to read and write
         Thread thread = new Thread(new ServerThread(clientSocket, clientController));
         thread.start();
-        return true;
+        return clientSocket.isConnected();
+    }
+
+    /**
+     * Check if the Socket with the server is closed
+     * @return Boolean, true if socket is closed
+     */
+    public Boolean socketClosed(){
+        return clientSocket.isClosed();
     }
 
     //Getter & Setter
