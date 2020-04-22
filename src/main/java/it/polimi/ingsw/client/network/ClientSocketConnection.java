@@ -6,33 +6,28 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Client Class
+ * Client Socket Connection Class
  */
-public class Client {
-
+public class ClientSocketConnection {
     private int port;
     private String serverName;
     private Socket clientSocket;
     private Controller controller;
 
     /**
-     * Create new client at selected port.
+     * Create new clientSocket
      * Controller is one instance in all the application, so is created in main class and passed
-     * @param port port
-     * @param serverName Server IP
      * @param controller controller
      */
-    public Client(int port, String serverName, Controller controller){
-        this.port = port;
-        this.serverName = serverName;
+    public ClientSocketConnection(Controller controller){
         this.controller = controller;
     }
 
     /**
-     * Start Client
-     * @throws IOException
+     * Start Client Connection with socket to the server
+     * @throws IOException error in socket creation
      */
-    public void startClient() throws IOException {
+    public void startConnection() throws IOException {
         System.out.println("Connecting to: " + serverName + " on port " + port);
         //open TCP port
         clientSocket = new Socket(serverName, port);
@@ -41,7 +36,19 @@ public class Client {
         // open input and output streams to read and write
         Thread thread = new Thread(new ServerThread(clientSocket, controller));
         thread.start();
-
     }
 
+    //Getter & Setter
+    public String getServerName() {
+        return serverName;
+    }
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+    public int getPort() {
+        return port;
+    }
+    public void setPort(int port) {
+        this.port = port;
+    }
 }

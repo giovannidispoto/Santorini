@@ -18,7 +18,7 @@ public class ServerThread implements Runnable {
     private PrintWriter out;
 
     /**
-     *
+     *Create new ServerThread to manage clientSocket
      * @param socket socket from Client initialisation
      * @param controller controller from Client initialisation
      */
@@ -29,7 +29,7 @@ public class ServerThread implements Runnable {
     }
 
     /**
-     *
+     *Run clientSocket on this thread, send messages to ServerHandler
      */
     @Override
     public void run() {

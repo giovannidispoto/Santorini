@@ -16,11 +16,12 @@ import it.polimi.ingsw.client.clientModel.basic.Color;
  * Controller Class
  */
 public class Controller{
-    private Step turn;
+    private String playerNickname;
     private List<PlayerInterface> players;
     private List<DivinityCard> cards;
     private List<Integer> workersID;
     private ServerHandler serverHandler;
+    private Step turn;
 
     /**
      * Controller Constructor
@@ -29,6 +30,22 @@ public class Controller{
         this.players = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.workersID = new ArrayList<>();
+    }
+
+    /**
+     * Gets playerNickname
+     * @return playerNickname
+     */
+    public String getPlayerNickname() {
+        return playerNickname;
+    }
+
+    /**
+     * Sets playerNickname
+     * @param playerNickname playerNickname
+     */
+    public void setPlayerNickname(String playerNickname) {
+        this.playerNickname = playerNickname;
     }
 
     /**
@@ -72,8 +89,8 @@ public class Controller{
     }
 
     //Request Messages Area
-    public void addNewPlayerRequest(String playerNickname, String date, Color color, String cardName){
-        PlayerInterface data = new PlayerInterface(playerNickname, date, color, cardName);
+    public void addNewPlayerRequest(String playerNickname, String birthDate, Color color, String cardName){
+        PlayerInterface data = new PlayerInterface(playerNickname, birthDate, color, cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addNewPlayer", data)));
     }
 

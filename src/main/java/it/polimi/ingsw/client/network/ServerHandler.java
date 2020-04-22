@@ -4,11 +4,9 @@ import it.polimi.ingsw.client.controller.Controller;
 import it.polimi.ingsw.client.network.actions.CommandFactory;
 
 /**
- * ServerHandler get server response from socket and send command to server.
- * Every Client has his own ServerHandler
+ * ServerHandler get server response and send command to server
  */
 public class ServerHandler{
-
     private final Controller controller;
     private final ServerThread thread;
 
