@@ -11,10 +11,10 @@ import java.net.UnknownHostException;
  * Client Socket Connection Class
  */
 public class ClientSocketConnection {
-    private int port;
+    private final int serverPort = 1337;
     private String serverName;
     private Socket clientSocket;
-    private ClientController clientController;
+    private final ClientController clientController;
 
     /**
      * Create new clientSocket
@@ -33,7 +33,7 @@ public class ClientSocketConnection {
     public Boolean startConnection(){
         //open TCP port
         try {
-            clientSocket = new Socket(serverName, port);
+            clientSocket = new Socket(serverName, serverPort);
         } catch (IOException e) {
             return false;
         }
@@ -55,34 +55,22 @@ public class ClientSocketConnection {
     public String getServerName() {
         return serverName;
     }
-
+    public int getServerPort() {
+        return serverPort;
+    }
     /**
      * Set serverName and validate
      * @param serverName String that represent hostname
      * @return true if syntax is correct
      */
     public Boolean setServerName(String serverName) {
-        InetAddress inetAddress = null;
         try {
-            inetAddress = InetAddress.getByName(serverName);
+            InetAddress.getByName(serverName);
         } catch (UnknownHostException e) {
             //Problem, unknown host
             return false;
         }
         this.serverName = serverName;
         return true;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    //In Debug
-    public Boolean setPort(int port) {
-        if(port >= 0 && port <= 65535){
-            this.port = port;
-            return true;
-        }
-        return false;
     }
 }
