@@ -1,4 +1,7 @@
-package it.polimi.ingsw.client.clientModel;
+package it.polimi.ingsw.client.network.actions.data;
+
+import it.polimi.ingsw.client.clientModel.basic.Block;
+import it.polimi.ingsw.client.clientModel.basic.Color;
 
 /**
  * CellInterface class represent cell information sent from server

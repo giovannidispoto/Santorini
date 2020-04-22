@@ -9,8 +9,8 @@ import it.polimi.ingsw.client.network.actions.CommandFactory;
  */
 public class ServerHandler{
 
-    private Controller controller;
-    private ServerThread thread;
+    private final Controller controller;
+    private final ServerThread thread;
 
     /**
      * Create ServerHandler
@@ -23,15 +23,15 @@ public class ServerHandler{
     }
 
     /**
-     * Process command received from socket
+     * Process command received from the server
      * @param m message
      */
     public void process(String m){
-        //CommandFactory.from(m).execute(controller, this);
+        CommandFactory.from(m).execute(controller);
     }
 
     /**
-     * Send message to client
+     * Send message to server
      * @param m message
      */
     public void response(String m){

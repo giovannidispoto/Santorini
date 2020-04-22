@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientModel;
 
+import it.polimi.ingsw.client.network.actions.data.CellInterface;
+
 /**
  * Class used to represent battlefield in the client
  */

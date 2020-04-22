@@ -16,7 +16,7 @@ import java.util.List;
 public class GetPlayersCommand implements Command {
     @Override
 
-    /**
+    /*
      * Execute command
      * @param controller context
      * @param handler context

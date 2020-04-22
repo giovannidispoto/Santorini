@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.clientModel;
+package it.polimi.ingsw.client.clientModel.basic;
 
 /**
  * Represents the blocks used to build the towers in the game

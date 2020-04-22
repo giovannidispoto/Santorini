@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.clientModel;
+package it.polimi.ingsw.client.clientModel.basic;
 
 /**
  * Represents the colors assigned to the players and their workers

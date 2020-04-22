@@ -19,8 +19,8 @@ public class ServerThread implements Runnable {
 
     /**
      *
-     * @param socket
-     * @param controller
+     * @param socket socket from Client initialisation
+     * @param controller controller from Client initialisation
      */
     public ServerThread(Socket socket, Controller controller) {
         this.socket = socket;
@@ -58,7 +58,7 @@ public class ServerThread implements Runnable {
 
     /**
      * Send message to server
-     * @param message
+     * @param message to the server
      */
     public void send(String message){
         out.println(message);
