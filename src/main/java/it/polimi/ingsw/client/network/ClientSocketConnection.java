@@ -3,7 +3,9 @@ package it.polimi.ingsw.client.network;
 import it.polimi.ingsw.client.controller.ClientController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * Client Socket Connection Class
@@ -29,16 +31,12 @@ public class ClientSocketConnection {
      * @return Boolean, true if connection is established
      */
     public Boolean startConnection(){
-        System.out.println("Connecting to: " + serverName + " on port " + port);
         //open TCP port
         try {
             clientSocket = new Socket(serverName, port);
         } catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
-
-        System.out.println("Just connected to: " + clientSocket.getRemoteSocketAddress());
         // open input and output streams to read and write
         Thread thread = new Thread(new ServerThread(clientSocket, clientController));
         thread.start();
@@ -49,7 +47,7 @@ public class ClientSocketConnection {
      * Check if the Socket with the server is closed
      * @return Boolean, true if socket is closed
      */
-    public Boolean socketClosed(){
+    public Boolean isSocketClosed(){
         return clientSocket.isClosed();
     }
 
@@ -57,13 +55,34 @@ public class ClientSocketConnection {
     public String getServerName() {
         return serverName;
     }
-    public void setServerName(String serverName) {
+
+    /**
+     * Set serverName and validate
+     * @param serverName String that represent hostname
+     * @return true if syntax is correct
+     */
+    public Boolean setServerName(String serverName) {
+        InetAddress inetAddress = null;
+        try {
+            inetAddress = InetAddress.getByName(serverName);
+        } catch (UnknownHostException e) {
+            //Problem, unknown host
+            return false;
+        }
         this.serverName = serverName;
+        return true;
     }
+
     public int getPort() {
         return port;
     }
-    public void setPort(int port) {
-        this.port = port;
+
+    //In Debug
+    public Boolean setPort(int port) {
+        if(port >= 0 && port <= 65535){
+            this.port = port;
+            return true;
+        }
+        return false;
     }
 }
