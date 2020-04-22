@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.controller.CommandInterface;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,6 +14,7 @@ public class CLIBuilder {
     //Data Objects
     private CLIDataObject[] boardCellsContents; // row ┃   ┃   ┃   ┃   ┃   ┃
     private List<String> playerMoves;
+    private HashMap<String,String> turnPhases;
     private String currentPhase;
     private int numberFullTowers;
 
@@ -23,6 +27,7 @@ public class CLIBuilder {
     private static final String TOWERS_TITLE = "FULL TOWERS";
     private static final String MOVES_TITLE = "PLAYER MOVES";
     private static final String PHASE_TITLE = "CURRENT PHASE";
+    private static final String WAITING_ALERT = "Wait for your turn...";
 
     //Board Matrix
     protected static final String L_T_CORNER = "┏";
@@ -110,8 +115,14 @@ public class CLIBuilder {
     public CLIBuilder() {
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
+        this.turnPhases = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
+        turnPhases.put("PLACEMENT","Placement");
+        turnPhases.put("SELECTION","Worker Selection");
+        turnPhases.put("BUILD","Build");
+        turnPhases.put("MOVE","Movement");
+        turnPhases.put("REMOVE","Remove");
     }
 
 }
