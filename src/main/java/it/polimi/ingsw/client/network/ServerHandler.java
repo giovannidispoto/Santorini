@@ -20,6 +20,7 @@ public class ServerHandler{
     public ServerHandler(Controller controller, ServerThread thread){
        this.controller = controller;
        this.thread = thread;
+       controller.registerHandler(this);
     }
 
     /**
@@ -31,10 +32,10 @@ public class ServerHandler{
     }
 
     /**
-     * Send message to server
+     * Send request message to server
      * @param m message
      */
-    public void response(String m){
+    public void request (String m){
         this.thread.send(m);
     }
 }

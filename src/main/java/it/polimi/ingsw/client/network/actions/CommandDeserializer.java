@@ -35,7 +35,7 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 c = new GetPlayersCommand(deserializePlayers(jsonElement));
                 break;
             case "getWorkersID":
-                //TODO new command
+                c = new GetWorkersIDCommand(deserializeWorkersID(jsonElement));
                 break;
         }
 
@@ -64,7 +64,20 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
 
     private List<PlayerInterface> deserializePlayers (JsonElement jsonElement){
         List<PlayerInterface> players = new ArrayList<>();
-        //TODO Deserialization of players from data
+        //Start Deserialization of jsonElement
+        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonArray();
+        for(JsonElement jsonE : jsonArray) {
+            players.add(new Gson().fromJson(jsonE, PlayerInterface.class));
+        }
         return players;
+    }
+
+    private List<Integer> deserializeWorkersID (JsonElement jsonElement){
+        List<Integer> workersID = new ArrayList<>();
+        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonArray();
+        for(JsonElement jsonE : jsonArray) {
+            workersID.add(jsonE.getAsInt());
+        }
+        return workersID;
     }
 }

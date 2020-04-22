@@ -9,7 +9,7 @@ import java.util.List;
  * GetPlayersCommand represent getPlayers action returned by server
  */
 public class GetPlayersCommand implements Command {
-    List<PlayerInterface> players;
+    private final List<PlayerInterface> players;
 
     /**
      * Create command
@@ -19,10 +19,8 @@ public class GetPlayersCommand implements Command {
         this.players = players;
     }
 
-
     /*
      * Execute command
-     * @param controller context
      */
     @Override
     public void execute(Controller controller) {
