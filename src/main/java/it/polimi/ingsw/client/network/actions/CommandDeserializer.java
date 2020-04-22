@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.network.actions;
 
 import com.google.gson.*;
-import it.polimi.ingsw.client.network.actions.data.CellInterface;
-import it.polimi.ingsw.client.network.actions.data.PlayerInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

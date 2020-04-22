@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.clientModel;
 
-import it.polimi.ingsw.client.network.actions.data.CellInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
 
 /**
  * Class used in update message of worker view

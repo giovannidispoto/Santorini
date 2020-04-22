@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.network.actions;
 
 import it.polimi.ingsw.client.controller.Controller;
-import it.polimi.ingsw.client.network.actions.data.PlayerInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.util.List;
 

@@ -6,7 +6,10 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ServerHandler;
-import it.polimi.ingsw.client.network.actions.data.*;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicActionInterface;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.*;
+import it.polimi.ingsw.client.clientModel.basic.Color;
 
 
 /**
@@ -68,18 +71,47 @@ public class Controller{
         this.workersID = workersID;
     }
 
-    //Request Area
-    public void playStepRequest(int Row, int Col) {
-        PlayStepDataInterface data = new PlayStepDataInterface(Row, Col);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
+    //Request Messages Area
+    public void addNewPlayerRequest(String playerNickname, String date, Color color, String cardName){
+        PlayerInterface data = new PlayerInterface(playerNickname, date, color, cardName);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("addNewPlayer", data)));
+    }
+
+    public void setPlayerReadyRequest(String playerNickname){
+        SendStringInterface data = new SendStringInterface(playerNickname);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerReady", data)));
+    }
+
+    public void getWorkersIDRequest(String playerNickname){
+        SendStringInterface data = new SendStringInterface(playerNickname);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
+    }
+
+    public void getPlayersRequest(){
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
+    }
+
+    public void setInitialWorkerPositionRequest(String playerNickname, int workerID, int row, int col){
+        SetInitialWorkerPositionInterface data = new SetInitialWorkerPositionInterface(playerNickname, workerID, row, col);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkerPosition", data)));
     }
 
     public void selectWorkerRequest(String playerNickname, int workerID) {
-        SelectWorkerDataInterface data = new SelectWorkerDataInterface(playerNickname, workerID);
+        SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
     }
 
-    public void skipActionRequest() {
+    public void playStepRequest(int row, int col) {
+        PlayStepInterface data = new PlayStepInterface(row, col);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
+    }
+
+    public void startTurnRequest(String playerNickname, Boolean basicTurn){
+        StartTurnInterface data = new StartTurnInterface(playerNickname, basicTurn);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("startTurn", data)));
+    }
+
+    public void skipStepRequest() {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
     }
 }
