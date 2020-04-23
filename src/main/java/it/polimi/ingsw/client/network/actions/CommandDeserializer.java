@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client.network.actions;
 
 import com.google.gson.*;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.BattlefieldInterface;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.WorkerViewInterface;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -26,10 +28,10 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
 
         switch(jsonElement.getAsJsonObject().get("action").getAsString()){
             case "battlefieldUpdate":
-                c = new BattlefieldUpdateCommand(deserializeBoards(jsonElement));
+                c = new BattlefieldUpdateCommand(deserializeBattlefield(jsonElement));
                 break;
             case "workerViewUpdate":
-                c = new WorkerViewUpdateCommand(deserializeBoards(jsonElement));
+                c = new WorkerViewUpdateCommand(deserializeWorkerView(jsonElement));
                 break;
             case "getPlayers":
                 c = new GetPlayersCommand(deserializePlayers(jsonElement));
@@ -42,24 +44,14 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         return c;
     }
 
-    private CellInterface[][] deserializeBoards (JsonElement jsonElement){
-        //Needed for boards deserialization
-        int boardRow = 5;
-        int boardCol = 5;
-        CellInterface[][] board = new CellInterface[boardRow][boardCol];
-        int i = 0, j;
-        //Start Deserialization of jsonElement
-        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonArray();
-        for(JsonElement jsonE : jsonArray) {
-            JsonArray jsonArray2 = jsonE.getAsJsonObject().getAsJsonArray();
-            j=0;
-            for(JsonElement jsonEl : jsonArray2) {
-                board[i][j] = new Gson().fromJson(jsonEl, CellInterface.class);
-                j++;
-            }
-            i++;
-        }
-        return board;
+    private CellInterface[][] deserializeBattlefield (JsonElement jsonElement){
+        BattlefieldInterface battlefield = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), BattlefieldInterface.class);
+        return battlefield.getBattlefield();
+    }
+
+    private CellInterface[][] deserializeWorkerView (JsonElement jsonElement){
+        WorkerViewInterface workerView = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), WorkerViewInterface.class);
+        return workerView.getWorkerView();
     }
 
     private List<PlayerInterface> deserializePlayers (JsonElement jsonElement){

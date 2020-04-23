@@ -58,6 +58,9 @@ class ClientSocketConnectionTest {
         clientController.skipStepRequest();
         clientController.startLobbyRequest("Steve Jobs", 3);
 
+        //Only if you send messages from server
+        //while(true) {/*send message & debug*/}
+
         //flush objects
         clientController = null;
         clientSocketConnection = null;
