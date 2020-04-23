@@ -177,6 +177,38 @@ public class CLIBuilder implements UIActions {
      * Renders the not updatable part of the CLI (Players Informations Box)
      */
     public void staticCliRender(ClientController clientController){
+        int maxLength=0;
+        String playerWorkerColor;
+        String playerNickname;
+        String playerCard;
+        List<String> playersInformations = new ArrayList<>();
+        StringBuilder playerInfo = new StringBuilder();
+        System.out.print(ANSI_WHITE+PLAYERS_TITLE+NEW_LINE);
+        clientController.getPlayersRequest();
+        for(PlayerInterface current : clientController.getPlayers()){
+            playerWorkerColor=playerColors.get(current.getColor());
+            playerInfo.append(DOUBLE_V_LINE + BLANK).append(playerWorkerColor);
+            playerNickname = current.getPlayerNickname();
+            playerInfo.append(BLANK).append(ANSI_WHITE).append(playerNickname);
+            playerCard = current.getCard();
+            playerInfo.append(V_THIN_LINE).append(playerCard).append(BLANK+DOUBLE_V_LINE);
+            playersInformations.add(playerInfo.toString());
+        }
+        for(String current : playersInformations){
+            if(current.length()>maxLength)
+                maxLength=current.length();
+        }
+        System.out.print(ANSI_WHITE+DOUBLE_L_T_CORNER);
+        for(int i=0;i<maxLength;i++)
+            System.out.print(DOUBLE_H_LINE);
+        System.out.print(DOUBLE_R_T_CORNER+NEW_LINE);
+        for(String current : playersInformations){
+            System.out.print(current+NEW_LINE);
+        }
+        System.out.print(DOUBLE_L_B_CORNER);
+        for(int i=0;i<maxLength;i++)
+            System.out.print(DOUBLE_H_LINE);
+        System.out.print(DOUBLE_R_B_CORNER+NEW_LINE);
     }
     /**
      * Renders the updatable part of the CLI
