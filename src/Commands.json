@@ -2,32 +2,28 @@
   "action": "addNewPlayer",
   "data": {
     "playerNickname": "Bill Gates",
-    "date": "2019-05-06",
-    "color": "BLUE",
-    "card": "Apollo"
+    "color": "BLUE"
+  }
+},{
+  "action": "setPlayerCard",
+  "data": {
+    "playerNickname": "Bill Gates",
+    "color": "Apollo"
   }
 },
 {
   "action": "addNewPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
-    "date": "2017-05-06",
-    "color": "GREY",
-    "card": "Athena"
+    "color": "GREY"
+  }
+},{
+  "action": "setPlayerCard",
+  "data": {
+    "playerNickname": "Steve Jobs",
+    "color": "Athena"
   }
 },
-  {
-    "action": "setPlayerReady",
-    "data": {
-      "playerNickname": "Steve Jobs"
-    }
-  },
-  {
-    "action": "setPlayerReady",
-    "data": {
-      "playerNickname": "Bill Gates"
-    }
-  },
   {
     "action": "getWorkersID",
     "data": {

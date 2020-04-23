@@ -38,8 +38,6 @@ public class Controller {
     }
 
     public void setLobbySize(String playerNickname, int lobbySize){
-        if(getPlayerFromString(playerNickname) == null)
-            throw new RuntimeException("Player not in game");
         this.lobbySize = lobbySize;
     }
 
@@ -53,6 +51,8 @@ public class Controller {
         Player p = new Player(playerNickname, color);
         players.add(p);
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
+        if(players.size() == lobbySize)
+            startMatch();
     }
 
     /**
@@ -205,21 +205,6 @@ public class Controller {
      */
     public void skipStep(){
         turn.skip();
-    }
-
-    /**
-     *
-     * @param player
-     */
-    public void setPlayerReady(String player){
-        getPlayerFromString(player).setReady(true);
-        boolean start = true;
-        for(Player p : players){
-            if(!p.isReady())
-                start = false;
-        }
-        if(start)
-            startMatch();
     }
 
     /**
