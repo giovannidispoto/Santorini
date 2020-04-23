@@ -32,7 +32,7 @@
    {
       "action":"battlefieldUpdate",
       "data":{
-         "battlefield":[
+         "cellMatrix":[
             [
                {
                   "height":0,
@@ -151,7 +151,7 @@
    {
       "action":"workerViewUpdate",
       "data":{
-         "workerView":[
+         "cellMatrix":[
             [
                null,
                null,

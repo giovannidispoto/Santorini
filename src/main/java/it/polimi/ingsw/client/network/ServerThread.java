@@ -42,12 +42,11 @@ public class ServerThread implements Runnable {
                 if (line.equals("quit")) {
                     break;
                 } else {
+                    //line received
                     serverHandler.process(line);
-                    //DEBUG : System.out.println("Received: "+line);
                 }
             }
             //close streams and socket
-            System.out.println("Closing sockets");
             in.close();
             out.close();
             socket.close();

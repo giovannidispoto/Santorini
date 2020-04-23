@@ -29,10 +29,6 @@ class ClientSocketConnectionTest {
         String serverName4 = "google.it";
         System.out.println(clientSocketConnection.setServerName(serverName4));
         assertTrue(clientSocketConnection.setServerName(serverName4));
-
-        //flush objects
-        clientController = null;
-        clientSocketConnection = null;
     }
 
     @Test
@@ -61,10 +57,6 @@ class ClientSocketConnectionTest {
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}
-
-        //flush objects
-        clientController = null;
-        clientSocketConnection = null;
     }
 
 

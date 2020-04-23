@@ -3,7 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.cli.CLIBuilder;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
-import it.polimi.ingsw.controller.Controller;
 
 public class ClientMain {
     public static void main(String[] args) {
