@@ -259,7 +259,142 @@ public class CLIBuilder implements UIActions {
 
     @Override
     public void setServerInformations(ClientSocketConnection clientSocket, ClientController clientController) {
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        Color generatedColor;
+        int userValue = 0;
+        boolean connectionStatus = false;
+        boolean validUsername = true;
+        printMessageBox(SETUPTITLE);
+        /*  # Initial Client - Server Handshake #
+            Server IP 🌍
+            >
+            Handshaking with 192.168.1.9 on port 1337...
+         */
+        System.out.print(ANSI_WHITE+SERVERIP+NEW_LINE+CLI_INPUT);
+        userInput=consoleScanner.nextLine();
+        clientSocket.setServerName(userInput);
+        System.out.print(String.format(HANDSHAKING,clientSocket.getServerName(),clientSocket.getServerPort())+NEW_LINE);
+        while(!connectionStatus){
+            if(!clientSocket.startConnection()){
+                /*  # Handshake error #
+                    Server IP 🌍
+                    >
+                    Handshaking with 1.2.3.4 on port 1337...
+                    Connection error...retry!
+                    > |
+                */
+                System.out.print(ANSI_RED+"Connection error...retry!"+NEW_LINE+ANSI_WHITE+CLI_INPUT);
+                userInput=consoleScanner.nextLine();
+                clientSocket.setServerName(userInput);
+                System.out.print(String.format(CURSOR_UP,3));
+                System.out.print(CLEAN);
+                System.out.print(String.format(HANDSHAKING,clientSocket.getServerName(),clientSocket.getServerPort())+NEW_LINE);
 
+            }
+            else{
+                /*  # Handshake success #
+                    Server IP 🌍
+                    >
+                    Handshaking with 192.168.1.9 on port 1337...
+                    Connection established!
+                */
+                connectionStatus=true;
+                System.out.print(ANSI_GREEN+"Connection established!"+NEW_LINE);
+            }
+        }
+        /*  # Nickname setup #
+            Server IP 🌍
+            >
+            Handshaking with 192.168.1.9 on port 1337...
+            Connection established!
+            Nickname 👾
+            > |
+        */
+        System.out.print(ANSI_WHITE+NICKNAME+NEW_LINE+CLI_INPUT);
+        userInput=consoleScanner.nextLine();
+        clientController.getPlayersRequest();
+        for(PlayerInterface current : clientController.getPlayers()){
+            if(current.getPlayerNickname().equals(userInput))
+                validUsername=false;
+        }
+        while(!validUsername){
+            /*  # Nickname setup error #
+                Server IP 🌍
+                >
+                Handshaking with 192.168.1.9 on port 1337...
+                Connection established!
+                Nickname 👾
+                >
+                An user with this nickname already exists... retry!
+                >
+            */
+            System.out.print(ANSI_RED+NICKNAMEERROR+NEW_LINE+ANSI_WHITE+CLI_INPUT);
+            userInput=consoleScanner.nextLine();
+            validUsername=true;
+            for(PlayerInterface current : clientController.getPlayers()){
+                if(current.getPlayerNickname().equals(userInput))
+                    validUsername=false;
+            }
+            System.out.print(String.format(CURSOR_UP,2));
+            System.out.print(CLEAN);
+        }
+        clientController.setPlayerNickname(userInput);
+        //Add new player to the server lobby
+        clientController.getPlayersRequest();
+        generatedColor=COLORSMAP.get(clientController.getPlayers().size());
+        clientController.addPlayerRequest(clientController.getPlayerNickname(),generatedColor);
+        //Optional lobby size set
+        clientController.getPlayersRequest();
+        if(clientController.getPlayers().size()==1){
+            /*  # Lobby size setup #
+                Server IP 🌍
+                >
+                Handshaking with 192.168.1.9 on port 1337...
+                Connection established!
+                Nickname 👾
+                >
+                You're the first player in the lobby! Set the number of players for this match 👦🏼
+                >
+                Wait for the match startup... |
+            */
+            System.out.print(ANSI_WHITE+SETPLAYERS+NEW_LINE+CLI_INPUT);
+            userValue=consoleScanner.nextInt();
+            while(userValue!=2 && userValue!=3){
+                /*  # Lobby size setup #
+                    Server IP 🌍
+                    >
+                    Handshaking with 192.168.1.9 on port 1337...
+                    Connection established!
+                    Nickname 👾
+                    >
+                    You're the first player in the lobby! Set the number of players for this match 👦🏼
+                    >
+                    This game is for 2 or 3 players... retry!
+                    >
+                */
+                System.out.print(ANSI_RED+LOBBYSIZEERROR+NEW_LINE+ANSI_WHITE+CLI_INPUT);
+                userValue=consoleScanner.nextInt();
+                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(CLEAN);
+            }
+            clientController.setLobbySizeRequest(clientController.getPlayerNickname(),userValue);
+            System.out.print(WAITSTART);
+            rowCounter = 8;
+        }
+        else{
+             /*
+                Server IP 🌍
+                >
+                Handshaking with 192.168.1.9 on port 1337...
+                Connection established!
+                Nickname 👾
+                >
+                Wait for the match startup... |
+            */
+            System.out.print(WAITSTART);
+            rowCounter = 6;
+        }
     }
 
 
