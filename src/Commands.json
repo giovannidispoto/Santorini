@@ -39,41 +39,41 @@
     "action" : "setInitialWorkerPosition",
     "data" : {
       "playerNickname" : "Bill Gates",
-      "worker" : "0",
-      "x" : "0",
-      "y" : "0"
+      "worker" : 0,
+      "x" : 0,
+      "y" : 0
     }
   },
   {
     "action" : "setInitialWorkerPosition",
     "data" : {
       "playerNickname" : "Bill Gates",
-      "worker" : "1",
-      "x" : "4",
-      "y" : "3"
+      "worker" : 1,
+      "x" : 4,
+      "y" : 3
     }
   },
   {
     "action" : "setInitialWorkerPosition",
     "data" : {
       "playerNickname" : "Steve Jobs",
-      "worker" : "2",
-      "x" : "0",
-      "y" : "4"
+      "worker" : 2,
+      "x" : 0,
+      "y" : 4
     }
   },
   {
     "action" : "setInitialWorkerPosition",
     "data" : {
       "playerNickname" : "Steve Jobs",
-      "worker" : "3",
-      "x" : "4",
-      "y" : "0"
+      "worker" : 3,
+      "x" : 4,
+      "y" : 0
     }
   },
   {"action" : "startTurn",
     "data" :{
-      "basicTurn" : "true",
+      "basicTurn" : true,
       "playerNickname" : "Steve Jobs"
     }
   },
@@ -81,17 +81,20 @@
     "action" : "selectWorker",
     "data" : {
       "playerNickname" : "Steve Jobs",
-      "worker" : "2"
+      "worker" : 2
     }
   },
   {"action" : "playStep",
   "data": {
-    "x" : "1",
-    "y" : "4"
+    "x" : 1,
+    "y" : 4
   }},
   {"action" : "playStep",
     "data": {
-      "x" : "0",
-      "y" : "4"
-    }}
+      "x" : 0,
+      "y" : 4
+    }},
+  {
+    "action":"skipStep"
+  }
 ]

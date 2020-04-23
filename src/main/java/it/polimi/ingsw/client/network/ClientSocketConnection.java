@@ -44,21 +44,6 @@ public class ClientSocketConnection {
     }
 
     /**
-     * Check if the Socket with the server is closed
-     * @return Boolean, true if socket is closed
-     */
-    public Boolean isSocketClosed(){
-        return clientSocket.isClosed();
-    }
-
-    //Getter & Setter
-    public String getServerName() {
-        return serverName;
-    }
-    public int getServerPort() {
-        return serverPort;
-    }
-    /**
      * Set serverName and validate
      * @param serverName String that represent hostname
      * @return true if syntax is correct
@@ -72,5 +57,21 @@ public class ClientSocketConnection {
         }
         this.serverName = serverName;
         return true;
+    }
+
+    /**
+     * Check if the Socket with the server is closed
+     * @return Boolean, true if socket is closed
+     */
+    public Boolean isSocketClosed(){
+        return clientSocket.isClosed();
+    }
+
+    //Getter & Setter
+    public String getServerName() {
+        return serverName;
+    }
+    public int getServerPort() {
+        return serverPort;
     }
 }
