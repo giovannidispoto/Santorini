@@ -1,5 +1,5 @@
 [{
-  "action": "addNewPlayer",
+  "action": "addPlayer",
   "data": {
     "playerNickname": "Bill Gates",
     "color": "BLUE"
@@ -12,7 +12,7 @@
   }
 },
 {
-  "action": "addNewPlayer",
+  "action": "addPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
     "color": "GREY"

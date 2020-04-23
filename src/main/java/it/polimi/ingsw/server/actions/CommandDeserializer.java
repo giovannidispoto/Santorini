@@ -28,8 +28,8 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         Gson gson = new Gson();
 
         switch(jsonElement.getAsJsonObject().get("action").getAsString()){
-            case "addNewPlayer":
-                c = new AddPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), Color.valueOf(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("color").getAsString()));
+            case "addPlayer":
+                c = new AddPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), Color.valueOf(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerColor").getAsString()));
                 break;
             case "getWorkersID":
                 c = new GetWorkersIDCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
