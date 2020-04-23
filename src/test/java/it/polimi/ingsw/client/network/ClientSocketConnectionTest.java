@@ -56,6 +56,7 @@ class ClientSocketConnectionTest {
         clientController.selectWorkerRequest("Steve Jobs", 2);
         clientController.playStepRequest(1,4);
         clientController.skipStepRequest();
+        clientController.startLobbyRequest("Steve Jobs", 3);
 
         //flush objects
         clientController = null;

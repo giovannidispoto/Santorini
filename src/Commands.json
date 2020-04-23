@@ -71,7 +71,8 @@
       "y" : 0
     }
   },
-  {"action" : "startTurn",
+  {
+    "action" : "startTurn",
     "data" :{
       "basicTurn" : true,
       "playerNickname" : "Steve Jobs"
@@ -84,17 +85,28 @@
       "worker" : 2
     }
   },
-  {"action" : "playStep",
-  "data": {
-    "x" : 1,
-    "y" : 4
-  }},
-  {"action" : "playStep",
+  {
+    "action" : "playStep",
+    "data": {
+      "x" : 1,
+      "y" : 4
+    }
+  },
+  {
+    "action" : "playStep",
     "data": {
       "x" : 0,
       "y" : 4
-    }},
+    }
+  },
   {
     "action":"skipStep"
+  },
+  {
+    "action":"startLobby",
+    "data":{
+      "playerNickname":"Steve Jobs",
+      "lobbySize":3
+    }
   }
 ]

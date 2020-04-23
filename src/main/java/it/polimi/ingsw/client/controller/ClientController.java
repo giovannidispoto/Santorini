@@ -42,12 +42,12 @@ public class ClientController {
     }
 
     public void setPlayerReadyRequest(String playerNickname){
-        SendStringInterface data = new SendStringInterface(playerNickname);
+        SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerReady", data)));
     }
 
     public void getWorkersIDRequest(String playerNickname){
-        SendStringInterface data = new SendStringInterface(playerNickname);
+        SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
     }
 
@@ -77,6 +77,11 @@ public class ClientController {
 
     public void skipStepRequest() {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
+    }
+
+    public void startLobbyRequest(String playerNickname, int lobbySize){
+        StartLobbyInterface data = new StartLobbyInterface(playerNickname, lobbySize);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("startLobby", data)));
     }
 
     //Getter & Setter
