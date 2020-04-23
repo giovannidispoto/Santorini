@@ -2,20 +2,20 @@
   "action": "addPlayer",
   "data": {
     "playerNickname": "Bill Gates",
-    "color": "BLUE"
+    "playerColor": "BLUE"
   }
 },{
   "action": "setPlayerCard",
   "data": {
     "playerNickname": "Bill Gates",
-    "color": "Apollo"
+    "playerColor": "Apollo"
   }
 },
 {
   "action": "addPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
-    "color": "GREY"
+    "playerColor": "GREY"
   }
 },{
   "action": "setPlayerCard",

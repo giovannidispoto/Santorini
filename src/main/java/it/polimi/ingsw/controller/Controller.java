@@ -32,7 +32,7 @@ public class Controller {
      * Create controller
      */
     public Controller(){
-        this.players = new ArrayList<>();
+        this.players = new LinkedList<>();
         this.cards = new ArrayList<>();
         this.handlers = new HashMap<>();
     }
@@ -51,8 +51,9 @@ public class Controller {
         Player p = new Player(playerNickname, color);
         players.add(p);
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
-        if(players.size() == lobbySize)
-            startMatch();
+
+        //if(players.size() == lobbySize)
+            //startMatch();
     }
 
     /**
