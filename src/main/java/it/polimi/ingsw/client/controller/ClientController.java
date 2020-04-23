@@ -36,8 +36,8 @@ public class ClientController {
 
 
     //Request Messages Area
-    public void addNewPlayerRequest(String playerNickname, String birthDate, Color color, String cardName){
-        PlayerInterface data = new PlayerInterface(playerNickname, birthDate, color, cardName);
+    public void addNewPlayerRequest(String playerNickname, String birthDate, Color playerColor, String cardName){
+        PlayerInterface data = new PlayerInterface(playerNickname, birthDate, playerColor, cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addNewPlayer", data)));
     }
 
@@ -82,6 +82,11 @@ public class ClientController {
     public void startLobbyRequest(String playerNickname, int lobbySize){
         StartLobbyInterface data = new StartLobbyInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("startLobby", data)));
+    }
+
+    public void addPlayerRequest(String playerNickname, Color playerColor){
+        AddPlayerInterface data = new AddPlayerInterface(playerNickname, playerColor);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
     }
 
     //Getter & Setter

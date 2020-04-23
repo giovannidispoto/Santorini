@@ -57,6 +57,7 @@ class ClientSocketConnectionTest {
         clientController.playStepRequest(1,4);
         clientController.skipStepRequest();
         clientController.startLobbyRequest("Steve Jobs", 3);
+        clientController.addPlayerRequest("Steve Jobs", Color.GREY);
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}

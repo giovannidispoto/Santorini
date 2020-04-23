@@ -108,5 +108,12 @@
       "playerNickname":"Steve Jobs",
       "lobbySize":3
     }
+  },
+  {
+    "action":"addPlayer",
+    "data":{
+      "playerNickname":"Steve Jobs",
+      "playerColor":"GREY"
+    }
   }
 ]
