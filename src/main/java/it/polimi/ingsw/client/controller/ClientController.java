@@ -41,7 +41,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addNewPlayer", data)));
     }
 
-    public void setPlayerReadyRequest(String playerNickname){
+    public void setPlayerNicknameRequest(String playerNickname){
         SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerReady", data)));
     }
@@ -79,7 +79,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
     }
 
-    public void startLobbyRequest(String playerNickname, int lobbySize){
+    public void setLobbySizeRequest(String playerNickname, int lobbySize){
         StartLobbyInterface data = new StartLobbyInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("startLobby", data)));
     }

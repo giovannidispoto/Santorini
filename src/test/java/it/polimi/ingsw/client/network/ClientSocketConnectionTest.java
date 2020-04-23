@@ -48,7 +48,7 @@ class ClientSocketConnectionTest {
         assertTrue(clientSocketConnection.startConnection());
         //On Server: respective JSON messages
         clientController.addNewPlayerRequest("Bill Gates","2019-05-06", Color.BLUE,"Apollo");
-        clientController.setPlayerReadyRequest("Bill Gates");
+        clientController.setPlayerNicknameRequest("Bill Gates");
         clientController.getWorkersIDRequest("Steve Jobs");
         clientController.getPlayersRequest();
         clientController.setInitialWorkerPositionRequest("Bill Gates", 0, 0,0);
@@ -56,7 +56,7 @@ class ClientSocketConnectionTest {
         clientController.selectWorkerRequest("Steve Jobs", 2);
         clientController.playStepRequest(1,4);
         clientController.skipStepRequest();
-        clientController.startLobbyRequest("Steve Jobs", 3);
+        clientController.setLobbySizeRequest("Steve Jobs", 3);
         clientController.addPlayerRequest("Steve Jobs", Color.GREY);
 
         //Only if you send messages from server

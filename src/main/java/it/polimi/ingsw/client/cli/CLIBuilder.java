@@ -1,25 +1,49 @@
 package it.polimi.ingsw.client.cli;
-
-import it.polimi.ingsw.client.controller.CommandInterface;
+import it.polimi.ingsw.client.clientModel.basic.Color;
+import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.UIActions;
+import it.polimi.ingsw.client.network.ClientSocketConnection;
+import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * CLIBuilder contains everything you need to build the CLI and use it
  */
-public class CLIBuilder {
+public class CLIBuilder implements UIActions {
+
+    //ANSI Colors
+    private static final String CODE_BLUE ="33";
+    private static final String CODE_LIGHTBLUE ="75";
+    private static final String CODE_BROWN ="130";
+    private static final String CODE_GRAY ="252";
+    private static final String CODE_WHITE ="255";
+    private static final String CODE_RED = "197";
+    private static final String CODE_PURPLE = "105";
+    private static final String CODE_GREEN = "41";
+    private static final String ANSI_PRFX ="\u001b[38;5;";
+    protected static final String ANSI_RST = "\u001b[0m";
+
+    protected static final String ANSI_BLUE = ANSI_PRFX+CODE_BLUE+"m";
+    protected static final String ANSI_LIGHTBLUE = ANSI_PRFX+CODE_LIGHTBLUE+"m";
+    protected static final String ANSI_BROWN = ANSI_PRFX+CODE_BROWN+"m";
+    protected static final String ANSI_GRAY = ANSI_PRFX+CODE_GRAY+"m";
+    protected static final String ANSI_WHITE = ANSI_PRFX+CODE_WHITE+"m";
+    protected static final String ANSI_PURPLE = ANSI_PRFX+CODE_PURPLE+"m";
+    protected static final String ANSI_RED = ANSI_PRFX+CODE_RED+"m";
+    protected static final String ANSI_GREEN = ANSI_PRFX+CODE_GREEN+"m";
 
     //Data Objects
     private CLIDataObject[] boardCellsContents; // row ┃   ┃   ┃   ┃   ┃   ┃
     private List<String> playerMoves;
-    private HashMap<String,String> turnPhases;
     private String currentPhase;
     private int numberFullTowers;
 
     //UI Objects
-    protected static final String CLI_INPUT = ">";
+    protected static final String CLI_INPUT = "> ";
     protected static final String NEW_LINE = "\n";
     protected static final String BLANK = " ";
     private static final String BOARD_TITLE = "BOARD";
@@ -27,7 +51,9 @@ public class CLIBuilder {
     private static final String TOWERS_TITLE = "FULL TOWERS";
     private static final String MOVES_TITLE = "PLAYER MOVES";
     private static final String PHASE_TITLE = "CURRENT PHASE";
-    private static final String WAITING_ALERT = "Wait for your turn...";
+
+    //UI Messages
+    private static final String WAITING_ALERT = ANSI_WHITE+"Wait for your turn..."+ANSI_RST;
 
     //Board Matrix
     protected static final String L_T_CORNER = "┏";
@@ -42,6 +68,14 @@ public class CLIBuilder {
     protected static final String H_LINE = "━";
     protected static final String V_LINE = "┃";
 
+    //Messages Box
+    protected static final String L_THIN_T_CORNER = "┌";
+    protected static final String R_THIN_T_CORNER = "┐";
+    protected static final String L_THIN_B_CORNER = "└";
+    protected static final String R_THIN_B_CORNER = "┘";
+    protected static final String H_THIN_LINE = "─";
+    protected static final String V_THIN_LINE = "│";
+
     //Players Box
     private static final String DOUBLE_L_T_CORNER = "╔";
     private static final String DOUBLE_R_T_CORNER = "╗";
@@ -53,25 +87,6 @@ public class CLIBuilder {
     //Data Boxes
     protected static final String DOT_H_LINE = "╍";
     protected static final String DOT_V_LINE = "╏";
-
-    //ANSI Colors
-    private static final String CODE_BLUE ="33";
-    private static final String CODE_LIGHTBLUE ="75";
-    private static final String CODE_BROWN ="130";
-    private static final String CODE_GRAY ="252";
-    private static final String CODE_WHITE ="255";
-    private static final String CODE_RED = "197";
-    private static final String CODE_GREEN = "41";
-    private static final String ANSI_PRFX ="\u001b[38;5;";
-    protected static final String ANSI_RST = "\u001b[0m";
-
-    protected static final String ANSI_BLUE = ANSI_PRFX+CODE_BLUE+"m";
-    protected static final String ANSI_LIGHTBLUE = ANSI_PRFX+CODE_LIGHTBLUE+"m";
-    protected static final String ANSI_BROWN = ANSI_PRFX+CODE_BROWN+"m";
-    protected static final String ANSI_GRAY = ANSI_PRFX+CODE_GRAY+"m";
-    protected static final String ANSI_WHITE = ANSI_PRFX+CODE_WHITE+"m";
-    protected static final String ANSI_RED = ANSI_PRFX+CODE_RED+"m";
-    protected static final String ANSI_GREEN = ANSI_PRFX+CODE_GREEN+"m";
 
     //ANSI Cursor Moves
     protected static final String CURSOR_UP = "\u001b[%sA";
@@ -106,8 +121,24 @@ public class CLIBuilder {
     private static final String playerMove = " [%s|%s] "; // [1|2]
 
     //Sizes
+    private int rowCounter;
     private final int refreshable_area_height = 15;
     private final int editable_board_rows = 5;
+
+    //Web utilities
+    private static final String SERVERIP = "Server IP 🌍";
+    private static final String NICKNAME = "Nickname 👾";
+    private static final String SETUPTITLE = "Setup Connection";
+    private static final String HANDSHAKING = "Handshaking with %s on port %s...";
+    private static final String WAITSTART = "Wait for the match startup...";
+    private static final String NICKNAMEERROR = "An user with this nickname already exists... retry!";
+    private static final String LOBBYSIZEERROR = "This game is for 2 or 3 players... retry!";
+    private static final String SETPLAYERS = "You're the first player in the lobby! Set the number of players for this match 👦🏼";
+    private HashMap<Integer,Color> COLORSMAP;
+
+    //Players Informations Box
+    protected static final String WORKER = "ᳵ";
+    private HashMap<Color,String> playerColors;
 
     /**
      * Class Constructor
@@ -115,14 +146,89 @@ public class CLIBuilder {
     public CLIBuilder() {
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
-        this.turnPhases = new HashMap<>();
+        this.COLORSMAP = new HashMap<>();
+        this.playerColors = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
-        turnPhases.put("PLACEMENT","Placement");
-        turnPhases.put("SELECTION","Worker Selection");
-        turnPhases.put("BUILD","Build");
-        turnPhases.put("MOVE","Movement");
-        turnPhases.put("REMOVE","Remove");
+        this.rowCounter = 0;
+        COLORSMAP.put(0,Color.BLUE);
+        COLORSMAP.put(1,Color.GREY);
+        COLORSMAP.put(2,Color.BROWN);
+        playerColors.put(Color.BLUE,ANSI_BLUE+WORKER);
+        playerColors.put(Color.BROWN,ANSI_BROWN+WORKER);
+        playerColors.put(Color.GREY,ANSI_GRAY+WORKER);
     }
+
+    public void printMessageBox(String message){
+        int messageLength = message.length();
+        System.out.print(ANSI_PURPLE+L_THIN_T_CORNER);
+        //+2 to consider blank spaces between the message and the lateral edges
+        for(int i=0;i<messageLength+2;i++)
+            System.out.print(H_THIN_LINE);
+        System.out.println(R_THIN_T_CORNER);
+        System.out.println(V_THIN_LINE+BLANK+message+BLANK+V_THIN_LINE);
+        System.out.print(L_THIN_B_CORNER);
+        for(int i=0;i<messageLength+2;i++)
+            System.out.print(H_THIN_LINE);
+        System.out.println(R_THIN_B_CORNER);
+    }
+
+    /**
+     * Renders the not updatable part of the CLI (Players Informations Box)
+     */
+    public void staticCliRender(ClientController clientController){
+    }
+    /**
+     * Renders the updatable part of the CLI
+     */
+    public void dynamicCliRender(){
+
+    }
+
+    //UI Actions Methods
+    @Override
+    public void moveWorker(ClientController clientController) {
+
+    }
+
+    @Override
+    public void buildBlock(ClientController clientController) {
+
+    }
+
+    @Override
+    public void removeBlock(ClientController clientController) {
+
+    }
+
+    @Override
+    public void selectCard(ClientController clientController) {
+
+    }
+
+    @Override
+    public void selectWorker(ClientController clientController) {
+
+    }
+
+    @Override
+    public void placeWorkers(ClientController clientController) {
+    }
+
+    @Override
+    public void skipAction(ClientController clientController) {
+
+    }
+
+    @Override
+    public void showCards(ClientController clientController) {
+
+    }
+
+    @Override
+    public void setServerInformations(ClientSocketConnection clientSocket, ClientController clientController) {
+
+    }
+
 
 }

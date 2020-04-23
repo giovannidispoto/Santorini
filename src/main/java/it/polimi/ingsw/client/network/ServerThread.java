@@ -43,7 +43,7 @@ public class ServerThread implements Runnable {
                     break;
                 } else {
                     serverHandler.process(line);
-                    System.out.println("Received: "+line);
+                    //DEBUG : System.out.println("Received: "+line);
                 }
             }
             //close streams and socket
