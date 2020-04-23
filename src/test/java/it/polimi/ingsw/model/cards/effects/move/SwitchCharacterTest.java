@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SwitchCharacterTest {
 
-    final Player p1 = new Player("PlayerApollo", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("PlayerDummy", LocalDate.now(), Color.GREY);
+    final Player p1 = new Player("PlayerApollo",Color.BLUE);
+    final Player p2 = new Player("PlayerDummy",Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
     final Worker w3 = new Worker(p2);

@@ -8,16 +8,18 @@ import it.polimi.ingsw.server.ClientHandler;
  */
 public class SelectWorkerCommand implements Command{
     private String playerNickname;
-    private int worker;
+    private int x;
+    private int y;
 
     /**
      * Create SelectWorkerCommand
      * @param playerNickname player
      * @param worker worker
      */
-    public SelectWorkerCommand(String playerNickname, int worker){
+    public SelectWorkerCommand(String playerNickname, int x, int y){
         this.playerNickname = playerNickname;
-        this.worker = worker;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -27,6 +29,6 @@ public class SelectWorkerCommand implements Command{
      */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        controller.selectWorker(playerNickname, worker);
+        controller.selectWorker(playerNickname,x,y);
     }
 }

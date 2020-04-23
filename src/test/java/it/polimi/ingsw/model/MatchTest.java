@@ -13,9 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
-    final Player p1 = new Player("Pippo", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("Pluto", LocalDate.now(), Color.GREY);
-    final Player p3 = new Player("Hello", LocalDate.now(), Color.BROWN);
+    final Player p1 = new Player("Pippo", Color.BLUE);
+    final Player p2 = new Player("Pluto",  Color.GREY);
+    final Player p3 = new Player("Hello",  Color.BROWN);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
     final Worker w3 = new Worker(p1);

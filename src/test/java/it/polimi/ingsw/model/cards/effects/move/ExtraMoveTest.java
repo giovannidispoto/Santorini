@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraMoveTest {
 
-    final Player p1 = new Player("Mark Zuckerberg", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("Player2", LocalDate.now(), Color.GREY);
+    final Player p1 = new Player("Mark Zuckerberg", Color.BLUE);
+    final Player p2 = new Player("Player2",  Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
     final Worker w3 = new Worker(p2);

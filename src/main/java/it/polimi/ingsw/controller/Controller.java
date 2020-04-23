@@ -1,11 +1,15 @@
 package it.polimi.ingsw.controller;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.parser.DeckReader;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.server.actions.data.ActualPlayerResponse;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,9 +26,10 @@ public class Controller {
     private List<Player> players;
     private List<DivinityCard> cards;
     private Map<String, ClientHandler> handlers;
+    private int lobbySize;
 
     /**
-     *
+     * Create controller
      */
     public Controller(){
         this.players = new ArrayList<>();
@@ -32,27 +37,45 @@ public class Controller {
         this.handlers = new HashMap<>();
     }
 
+    public void setLobbySize(String playerNickname, int lobbySize){
+        if(getPlayerFromString(playerNickname) == null)
+            throw new RuntimeException("Player not in game");
+        this.lobbySize = lobbySize;
+    }
+
 
     /**
      * Add new player in the game
      * @param playerNickname unique nickname of the player
-     * @param date date of birth
      * @param color color of the player
-     * @param card divinity card
      */
-    public void addNewPlayer(String playerNickname, LocalDate date, Color color, String card) throws IOException {
-        DeckReader reader = new DeckReader();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        Player p = new Player(playerNickname, date, color);
-        p.setPlayerCard(d.getDivinityCard(card));
+    public void addNewPlayer(String playerNickname, Color color) {
+        Player p = new Player(playerNickname, color);
         players.add(p);
-        cards.add(d.getDivinityCard(card));
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
     }
 
     /**
+     * Set cqrd to player
+     * @param playerNickname player
+     * @param card card
+     * @throws IOException exception
+     */
+    public void setPlayerCard(String playerNickname, String card){
+        try {
+            DeckReader reader = new DeckReader();
+            Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+            Player p = getPlayerFromString(playerNickname);
+            p.setPlayerCard(d.getDivinityCard(card));
+            cards.add(d.getDivinityCard(card));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Gets match's player
-     * @return
+     * @return players
      */
     public List<Player> getPlayers(){
         return players;
@@ -95,8 +118,8 @@ public class Controller {
      */
     public void startMatch(){
         match = new Match(players,cards);
-        setFirstPlayer(players.stream().min(Comparator.comparing(Player::getPlayerBirthday)).orElseThrow(NoSuchElementException::new).getPlayerNickname());
-
+        match.setCurrentPlayer(players.get(new Random().nextInt(players.size())));
+        handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
     }
 
     /**
@@ -118,13 +141,7 @@ public class Controller {
         return this.handlers.get(playerNickname) == handler;
     }
 
-    /**
-     * Set first player
-     * @param firstPlayer first player
-     */
-    public void setFirstPlayer(String firstPlayer){
-        match.setCurrentPlayer(getPlayerFromString(firstPlayer));
-    }
+
 
     /**
      * Start new turn of the player
@@ -140,10 +157,13 @@ public class Controller {
     /**
      * Select worker of the player
      * @param player player
-     * @param worker worker
+     * @param x row
+     * @param y column
      */
-    public void selectWorker(String player, int worker){
-        match.setSelectedWorker(getWorkerFromString(player, worker));
+    public void selectWorker(String player, int x, int y){
+        if(!Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().getOwnerWorker().getPlayerNickname().equalsIgnoreCase(player))
+            throw new RuntimeException("Not Your Worker");
+        match.setSelectedWorker(Battlefield.getBattlefieldInstance().getCell(x,y).getWorker());
         this.turn.updateMovmentMatrix();
     }
 
@@ -166,8 +186,10 @@ public class Controller {
                     turn.remove(match.getSelectedWorker(),x,y);
                 break;
         }
-        if(turn.getCurrentState() == Step.END)
+        if(turn.getCurrentState() == Step.END) {
             turn.passTurn();
+            handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+        }
     }
 
     /**

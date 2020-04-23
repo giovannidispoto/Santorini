@@ -25,8 +25,8 @@ class ControllerBasicTest {
 
 
         //Adding Players
-        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Apollo");
-        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+        c.addNewPlayer("Steve Jobs", Color.GREY);
+        c.addNewPlayer("Bill Gates", Color.BLUE);
 
         //Create Match
         c.startMatch();
@@ -35,8 +35,7 @@ class ControllerBasicTest {
         c.addWorkers("Steve Jobs",new ClientHandler(null, null));
         c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
-        //Set First Player of the match
-        c.setFirstPlayer("Steve Jobs");
+
 
         //Get workers of the players
         List<Integer> workers = c.getWorkersId("Steve Jobs");
@@ -48,7 +47,7 @@ class ControllerBasicTest {
         //Start basic turn
         c.startTurn(true, "Steve Jobs");
         //Select worker
-        c.selectWorker("Steve Jobs", workers.get(0));
+        c.selectWorker("Steve Jobs", 0,0);
         //Move
         c.playStep(0,1);
         //Build
@@ -71,8 +70,8 @@ class ControllerBasicTest {
         Controller c = new Controller();
 
         //Adding Players
-        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Artemis");
-        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+        c.addNewPlayer("Steve Jobs", Color.GREY);
+        c.addNewPlayer("Bill Gates", Color.BLUE);
 
         //Create Match
         c.startMatch();
@@ -82,8 +81,6 @@ class ControllerBasicTest {
         c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
 
-        //Set First Player of the match
-        c.setFirstPlayer("Steve Jobs");
 
 
         //Get workers of the players
@@ -96,7 +93,7 @@ class ControllerBasicTest {
         //Start basic turn
         c.startTurn(false, "Steve Jobs");
         //Select worker
-        c.selectWorker("Steve Jobs", workers.get(0));
+        c.selectWorker("Steve Jobs", 0,0);
         //Move
         c.playStep(0,1);
         //Move
@@ -122,8 +119,8 @@ class ControllerBasicTest {
         Controller c = new Controller();
 
         //Adding Players
-        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Artemis");
-        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Athena");
+        c.addNewPlayer("Steve Jobs", Color.GREY);
+        c.addNewPlayer("Bill Gates", Color.BLUE);
 
         //Create Match
         c.startMatch();
@@ -133,8 +130,7 @@ class ControllerBasicTest {
         c.addWorkers("Bill Gates", new ClientHandler(null,null));
 
 
-        //Set First Player of the match
-        c.setFirstPlayer("Steve Jobs");
+
 
 
         //Get workers of the players
@@ -147,7 +143,7 @@ class ControllerBasicTest {
         //Start Artemis turn
         c.startTurn(false, "Steve Jobs");
         //Select worker
-        c.selectWorker("Steve Jobs", workers.get(0));
+        c.selectWorker("Steve Jobs", 0,0);
         //Move
         c.playStep(0,1);
         //Move

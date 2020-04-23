@@ -23,9 +23,11 @@ public class ControllerCompleteTurn {
         Controller c = new Controller();
 
         //Adding Players
-        c.addNewPlayer("Steve Jobs", LocalDate.now(), Color.GREY, "Athena");
-        c.addNewPlayer("Bill Gates", LocalDate.now(), Color.BLUE, "Prometheus");
+        c.addNewPlayer("Steve Jobs",  Color.GREY);
+        c.addNewPlayer("Bill Gates",  Color.BLUE );
 
+        c.setPlayerCard("Steve Jobs", "Athena");
+        c.setPlayerCard("Bill Gates","Prometheus");
         //Create Match
         c.startMatch();
 
@@ -34,8 +36,6 @@ public class ControllerCompleteTurn {
         c.addWorkers("Bill Gates", new ClientHandler(null, null));
 
 
-        //Set First Player of the match
-        c.setFirstPlayer("Steve Jobs");
 
 
         //Get workers of the players
@@ -53,7 +53,7 @@ public class ControllerCompleteTurn {
         //Start turn with effect
         c.startTurn(false, "Steve Jobs");
         //Select worker
-        c.selectWorker("Steve Jobs", workers.get(0));
+        c.selectWorker("Steve Jobs", 0,0);
         //Move
         c.playStep(0,1);
         //Build
@@ -72,7 +72,7 @@ public class ControllerCompleteTurn {
         //Now testing that second player can't level up
         c.startTurn(false, "Bill Gates");
 
-        c.selectWorker("Bill Gates", workers2.get(0));
+        c.selectWorker("Bill Gates", 2,2);
 
 
         //expecting build

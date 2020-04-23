@@ -16,8 +16,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TowersConditionTest {
-    final Player p1 = new Player("Player1", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("Player2", LocalDate.now(), Color.GREY);
+    final Player p1 = new Player("Player1",  Color.BLUE);
+    final Player p2 = new Player("Player2", Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w3 = new Worker(p2);
     final DeckReader reader = new DeckReader();

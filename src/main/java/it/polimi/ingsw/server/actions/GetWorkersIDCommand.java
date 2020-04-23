@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.server.actions.data.WorkersIDInterface;
+import it.polimi.ingsw.server.actions.data.WorkersIDResponse;
 import it.polimi.ingsw.server.ClientHandler;
 
 import java.util.List;
@@ -29,6 +29,6 @@ public class GetWorkersIDCommand implements Command{
         }
         List<Integer> workers = controller.getWorkersId(player);
         Gson gson = new Gson();
-        handler.response(gson.toJson(new WorkersIDInterface("getWorkersID", workers)));
+        handler.response(gson.toJson(new WorkersIDResponse("getWorkersID", workers)));
     }
 }

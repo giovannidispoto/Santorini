@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraBlockAboveTestFalse {
 
-    final Player p1 = new Player("Steve Wozniak", LocalDate.now(), Color.BLUE);
+    final Player p1 = new Player("Steve Wozniak",Color.BLUE);
     final Worker w1 = new Worker(p1);
     final DeckReader reader = new DeckReader();
     //Testing extra block above set to false : DEMETER

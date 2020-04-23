@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BattlefieldTest {
 
-    final  Player p1 = new Player("Pippo", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("Pluto", LocalDate.now() ,Color.GREY);
+    final  Player p1 = new Player("Pippo", Color.BLUE);
+    final Player p2 = new Player("Pluto",Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
 

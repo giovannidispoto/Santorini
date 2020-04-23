@@ -3,7 +3,7 @@ package it.polimi.ingsw.server;
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.actions.CommandFactory;
-import it.polimi.ingsw.server.actions.data.BasicMessageInterface;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.actions.data.CellMatrixResponse;
 
@@ -51,11 +51,11 @@ public class ClientHandler implements Observer {
     public void update(CellInterface[][] cellInterfaces, Message message) {
         switch (message){
             case WORKERVIEW:
-                response(new Gson().toJson(new BasicMessageInterface("workerViewUpdate", new CellMatrixResponse(cellInterfaces))));
+                response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new CellMatrixResponse(cellInterfaces))));
                 System.out.println("WorkerView Updated!");
                 break;
             case BATTLEFIELD:
-                response(new Gson().toJson(new BasicMessageInterface("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
+                response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
                 System.out.println("Battlefield Updated!");
                 break;
         }

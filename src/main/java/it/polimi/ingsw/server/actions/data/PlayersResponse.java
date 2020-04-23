@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * PlayInterface class represent message response to getPlayer request
  */
-public class PlayersInterface {
+public class PlayersResponse {
     private String action;
     private List<PlayerInterface> data;
 
@@ -14,7 +14,7 @@ public class PlayersInterface {
      * @param action action
      * @param data data
      */
-    public PlayersInterface(String action, List<PlayerInterface> data){
+    public PlayersResponse(String action, List<PlayerInterface> data){
         this.action = action;
         this.data = data;
     }

@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BasicTurnTest {
-    final Player p1 = new Player("Bill Gates", LocalDate.now(), Color.BLUE);
+    final Player p1 = new Player("Bill Gates", Color.BLUE);
     final Worker w1 = new Worker(p1);
     final DeckReader reader = new DeckReader();
 

@@ -10,7 +10,6 @@ import java.util.List;
 * */
 public class Player {
 
-    private final LocalDate playerBirthday;
     private final String playerNickname;
     private DivinityCard playerCard;
     private List<Worker> playerWorkers;
@@ -20,13 +19,10 @@ public class Player {
     /**
      * Class constructor
      * @param playerNickname of the player such as SteveJobs97🍏
-     * @param playerBirthday of the player, used to identify the youngest one
-     *                       A simple integer is not enough because maybe there could be more players with the same age
      * @param playerColor color assigned to the player and his workers
      */
-    public Player(String playerNickname, LocalDate playerBirthday, Color playerColor ){
+    public Player(String playerNickname, Color playerColor ){
         this.playerNickname = playerNickname;
-        this.playerBirthday = playerBirthday;
         this.playerColor = playerColor;
     }
 
@@ -90,14 +86,7 @@ public class Player {
         return stationaryWorker;
     }
 
-    /**
-     *
-     * @return
-     */
-    public LocalDate getPlayerBirthday(){
-        return this.playerBirthday;
-    }
-    /**
+    /*
      *
      * @param ready
      */

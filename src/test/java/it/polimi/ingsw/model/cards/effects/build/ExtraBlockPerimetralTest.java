@@ -14,8 +14,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraBlockPerimetralTest {
-    final Player p1 = new Player("PlayerHestia", LocalDate.now(), Color.BLUE);
-    final Player p2 = new Player("PlayerDummy", LocalDate.now(), Color.BLUE);
+    final Player p1 = new Player("PlayerHestia",  Color.BLUE);
+    final Player p2 = new Player("PlayerDummy",  Color.BLUE);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
     final Worker w3 = new Worker(p2);

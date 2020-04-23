@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DomeEverywhereTest {
-    final Player p1 = new Player("Chester Bennington", LocalDate.now(), Color.BLUE);
+    final Player p1 = new Player("Chester Bennington", Color.BLUE);
     final Worker w1 = new Worker(p1);
     final DeckReader reader = new DeckReader();
 
