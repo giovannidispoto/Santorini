@@ -31,9 +31,6 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
             case "addNewPlayer":
                 c = new AddPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), Color.valueOf(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("color").getAsString()));
                 break;
-            case "setPlayerReady":
-                c = new SetReadyPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
-                break;
             case "getWorkersID":
                 c = new GetWorkersIDCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
                 break;
