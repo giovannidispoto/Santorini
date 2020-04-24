@@ -3,7 +3,7 @@
 #----------- WHITELIST -----------
 # Don't Ignore those folders and files
 
-#src/test/  (rules = 59)
+#src/test/  (rules = 58)
 !.gitignore
 !java/
 !java/it/
@@ -29,7 +29,6 @@
 !java/it/polimi/ingsw/client/gui/*.java
 #client/network
 !java/it/polimi/ingsw/client/network/
-!java/it/polimi/ingsw/client/network/*.zip
 !java/it/polimi/ingsw/client/network/*.java
 !java/it/polimi/ingsw/client/network/actions/
 !java/it/polimi/ingsw/client/network/actions/*.java

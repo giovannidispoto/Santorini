@@ -2,26 +2,26 @@
 
 -------------------------------------------------------------------------------------- MATCH CREATION
 (Do)
-	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobby":2 }}
+	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobby":2}}
 	Added/NickNameExist		<---------------------------------	Response			(Server check nick presence in every lobby)
 (While nick invalid)
 	
 	LobbyReady				<---------------------------------	lobbyReady			(Server start match when a Lobby is Full, notify all client in Lobby by nick)
-	ok						<---------------------------------	getChooseCards		(SelectedPlayer, choose 3 or 2 cards)
-	getChooseCards			--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
+	ok						<---------------------------------	godChooseCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
+	godChooseCardsResponse	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 	
 (For players)
-	ok						<---------------------------------	playerChooseCard	(Player notify by server chose card, send forbidden cardsName, add color serverSide)
-	playerChooseCard		--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards)
+	ok						<---------------------------------	playerChooseCard	(Player chose 1 card, send deck(little))
+	playerChooseCard		--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player)
+	getWorkersID			--------------------------------->	ok
+    WorkersID				<---------------------------------	Response
 (For Workers)
 	getBattlefield			--------------------------------->	ok
 	Battlefield				<---------------------------------	Response
 	setInitialWorkerPosition--------------------------------->	ok
 (end)
-	getWorkersID			--------------------------------->	ok
-	WorkersID				<---------------------------------	Response
-	Battlefield				<---------------------------------	setBattlefield		(notify all (nick+color+card))
-	Players					<---------------------------------	setPlayers			(notify all)
+	Battlefield				<---------------------------------	setBattlefield		(notify all)
+	Players					<---------------------------------	setPlayers			(notify all (nick+color+card))
 (end)
 
 -------------------------------------------------------------------------------------- START MATCH
@@ -32,7 +32,8 @@
 	ok	(check)				<---------------------------------	playStep
 (Do)
 	selectWorker	(check)	--------------------------------->	ok
-	WorkerView				<---------------------------------	setWorkerView (!!!WorkerView NULL no step)
+	getWorkerView           --------------------------------->	ok
+	WorkerView				<---------------------------------	Response (!!!WorkerView NULL no step)
 (While WorkerView NULL)
 	skipStepRequest(opt)	--------------------------------->	ok
 	playStepRequest(opt)	--------------------------------->	ok

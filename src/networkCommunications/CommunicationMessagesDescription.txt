@@ -1,0 +1,74 @@
+   ______                                      _            __  _                __  ___
+  / ____/___  ____ ___  ____ ___  __  ______  (_)________ _/ /_(_)___  ____     /  |/  /__  ______________ _____ ____  _____
+ / /   / __ \/ __ `__ \/ __ `__ \/ / / / __ \/ / ___/ __ `/ __/ / __ \/ __ \   / /|_/ / _ \/ ___/ ___/ __ `/ __ `/ _ \/ ___/
+/ /___/ /_/ / / / / / / / / / / / /_/ / / / / / /__/ /_/ / /_/ / /_/ / / / /  / /  / /  __(__  |__  ) /_/ / /_/ /  __(__  )
+\____/\____/_/ /_/ /_/_/ /_/ /_/\__,_/_/ /_/_/\___/\__,_/\__/_/\____/_/ /_/  /_/  /_/\___/____/____/\__,_/\__, /\___/____/
+                                                                                                         /____/
+------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------   MATCH CREATION
+1
+    {   -addPlayerRequest:   {"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobby":2}}
+
+    communicates to the server the intention to join the game,
+    giving the server the (unique) nickname and the the lobby size
+
+        -ServerResponse:    {"action":"addPlayer","data":{"valid":bool}}
+
+    the server verifies that there is no other player with the same nickname
+    in all lobbies add player in the lobby and send a Boolean response to the client
+    }
+2
+    {   -lobbyReady:    {"action":"lobbyReady","data":{"lobby":2}}
+    not strictly necessary
+    }
+3
+    {   -chooseCards:   {"action":"godChooseCards","data":{"playerNickname":"Steve Jobs","lobby":2}}   BROADCAST MESSAGE
+
+    SelectedPlayer whose nickname will be in the message, choose 3 or 2 cards according to the lobby size,
+    the other players will receive the message will unlock the thread
+    but will not choose the cards because it will not be their nickname
+
+        -ClientResponse:    {"action":"godChooseCards","data":{"deck":["Athena","Apollo"]}}
+    the client's task will be to select the cards from the complete deck based on the number of players allowed
+    (the server can recheck)
+    }
+4
+    {   -playerChooseCard:   {"action":"playerChooseCard","data":{"deck":["Athena","Apollo"]}}
+
+    The player chooses a card from the deck created by the "god" player (that will be the last)
+
+        -ClientResponse:    {"action":"playerChooseCard","data":{"card":"Athena"}}
+
+    the server receives the chosen card, binds it to the player together with a color,
+    removes the card from the deck to be sent to the next player
+    }
+5
+    {   -getWorkersID:  {"action":"getWorkersID","data":{"playerNickname":"Steve Jobs"}}
+    the client asks the server for the ID of each of its workers to be sent to it
+    }
+6
+    {   -getBattlefield:    {"action":"getBattlefield"}
+
+    the client asks the server for the battlefield to be sent to him
+
+        -ServerResponse:    {"action":"battlefieldUpdate","data":{"cellMatrix":CellInterface[][]}}
+    }
+7
+    {   -setInitialWorkerPosition:
+    {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill Gates","worker":0,"x":0,"y":0}}
+
+    the player based on the battlefield received places a worker in an allowed position
+    }
+8
+    {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
+    forces all clients to update the battlefield
+    }
+9
+    {   -setPlayers:    {"action":"setPlayers","data":[PlayerInterface,PlayerInterface]}    BROADCAST MESSAGE
+    forces all clients to update the Players in match
+    PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"Apollo"}
+    }
+-------------------------------------------------------------------------------------------------   START MATCH
+10
+11
+12

@@ -22,12 +22,14 @@
 !DELIVERABLES/
 !DELIVERABLES/*
 
-#src/	(rules = 5)
+#src/	(rules = 7)
 !src/
 !src/*.json
-!src/testJson/
-!src/testJson/*.json
-!src/testJson/*.txt
+!src/networkCommunications/
+!src/networkCommunications/*.txt
+!src/networkCommunications/netJson/
+!src/networkCommunications/netJson/*.json
+!src/networkCommunications/netJson/*.txt
 
 #src/main/	(rules = 2) (this folder has it's own gitignore)
 !src/main/
