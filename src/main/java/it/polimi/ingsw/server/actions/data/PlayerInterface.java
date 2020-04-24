@@ -2,9 +2,6 @@ package it.polimi.ingsw.server.actions.data;
 
 import it.polimi.ingsw.model.Color;
 
-import java.time.LocalDate;
-import java.util.StringTokenizer;
-
 /**
  * PlayerInterface class represent the interface for the player used for communication with the client
  */

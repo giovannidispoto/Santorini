@@ -2,26 +2,26 @@
   "action": "addPlayer",
   "data": {
     "playerNickname": "Bill Gates",
-    "playerColor": "BLUE"
+    "color": "BLUE"
   }
 },{
   "action": "setPlayerCard",
   "data": {
     "playerNickname": "Bill Gates",
-    "playerColor": "Apollo"
+    "card": "Apollo"
   }
 },
 {
   "action": "addPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
-    "playerColor": "GREY"
+    "color": "GREY"
   }
 },{
   "action": "setPlayerCard",
   "data": {
     "playerNickname": "Steve Jobs",
-    "color": "Athena"
+    "card": "Athena"
   }
 },
   {
@@ -103,13 +103,6 @@
     "data":{
       "playerNickname":"Steve Jobs",
       "lobbySize":3
-    }
-  },
-  {
-    "action":"addPlayer",
-    "data":{
-      "playerNickname":"Steve Jobs",
-      "playerColor":"GREY"
     }
   }
 ]

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
@@ -13,7 +12,6 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 

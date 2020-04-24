@@ -11,19 +11,16 @@
       "data":[
          {
             "playerNickname":"Bill Gates",
-            "date":"2019-05-06",
             "color":"BLUE",
             "card":"Apollo"
          },
          {
             "playerNickname":"Steve Jobs",
-            "date":"2017-05-06",
             "color":"GREY",
             "card":"Athena"
          },
          {
             "playerNickname":"Bill Gates",
-            "date":"2019-05-06",
             "color":"BLUE",
             "card":"Apollo"
          }

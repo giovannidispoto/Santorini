@@ -2,25 +2,19 @@ package it.polimi.ingsw.server.actions;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.server.actions.data.PlayerInterface;
 import it.polimi.ingsw.server.ClientHandler;
 
-import java.io.IOException;
-import java.time.LocalDate;
-
 /**
- * AddPlayerCommand class represent addNewPlayer action from the client
+ * AddPlayerCommand class represent addPlayer action from the client
  */
 public class AddPlayerCommand implements Command {
 
     private String playerNickname;
-    private String date;
     private Color color;
 
     /**
      * Create command
      * @param playerNickname player
-     * @param date date of birth
      * @param color color
      */
     public AddPlayerCommand(String playerNickname, Color color) {

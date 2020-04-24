@@ -43,7 +43,7 @@ class ClientSocketConnectionTest {
         //Need Server UP listening on port 1337 with IP 127.0.0.3
         assertTrue(clientSocketConnection.startConnection());
         //On Server: respective JSON messages
-        clientController.addNewPlayerRequest("Bill Gates","2019-05-06", Color.BLUE,"Apollo");
+        clientController.addPlayerRequest("Steve Jobs", Color.GREY);
         clientController.setPlayerNicknameRequest("Bill Gates");
         clientController.getWorkersIDRequest("Steve Jobs");
         clientController.getPlayersRequest();
@@ -53,10 +53,9 @@ class ClientSocketConnectionTest {
         clientController.playStepRequest(1,4);
         clientController.skipStepRequest();
         clientController.setLobbySizeRequest("Steve Jobs", 3);
-        clientController.addPlayerRequest("Steve Jobs", Color.GREY);
 
         //Only if you send messages from server
-        //while(true) {/*send message & debug*/}
+        while(true) {/*send message & debug*/}
     }
 
 

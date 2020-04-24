@@ -1,4 +1,4 @@
-{"action":"addNewPlayer","data":{"playerNickname":"Bill Gates","date":"2019-05-06","color":"BLUE","card":"Apollo"}}
+{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","color":"GREY"}}
 {"action":"setPlayerReady","data":{"playerNickname":"Bill Gates"}}
 {"action":"getWorkersID","data":{"playerNickname":"Steve Jobs"}}
 {"action":"getPlayers"}
@@ -8,4 +8,4 @@
 {"action":"playStep","data":{"x":1,"y":4}}
 {"action":"skipStep"}
 {"action":"startLobby","data":{"playerNickname":"Steve Jobs","lobbySize":3}}
-{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","playerColor":"GREY"}}
+
