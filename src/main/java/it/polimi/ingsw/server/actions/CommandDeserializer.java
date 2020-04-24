@@ -1,9 +1,12 @@
 package it.polimi.ingsw.server.actions;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.model.Color;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -57,6 +60,12 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 break;
             case "setPlayerCard":
                 c = new SetPlayerCardCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("card").getAsString());
+                break;
+            case "getDeck":
+                c = new GetDeckCommand();
+                break;
+            case "setPickedCards":
+                c = new SetPickedCardsCommand(new Gson().fromJson(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("cards"), new TypeToken<ArrayList<String>>(){}.getType()));
                 break;
         }
 

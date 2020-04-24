@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
@@ -10,8 +11,10 @@ import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.ActualPlayerResponse;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,19 +27,43 @@ public class Controller {
     private List<Player> players;
     private List<DivinityCard> cards;
     private Map<String, ClientHandler> handlers;
+    private Deck deck;
+    private List<DivinityCard> pickedCards;
     private int lobbySize;
 
     /**
      * Create controller
      */
-    public Controller(){
+    public Controller() {
         this.players = new LinkedList<>();
         this.cards = new ArrayList<>();
         this.handlers = new HashMap<>();
+        this.pickedCards = new LinkedList<>();
+        try {
+            DeckReader reader = new DeckReader();
+            deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Set lobby size
+     * @param playerNickname
+     * @param lobbySize
+     */
     public void setLobbySize(String playerNickname, int lobbySize){
         this.lobbySize = lobbySize;
+    }
+
+    /**
+     * Set picked cards
+     * @param cards cards
+     */
+    public void setPickedCards(List<String> cards){
+       for(int i = 0; i < cards.size(); i++){
+           pickedCards.add(deck.getDivinityCard(cards.get(i)));
+       }
     }
 
 
@@ -51,7 +78,15 @@ public class Controller {
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
 
         //if(players.size() == lobbySize)
-            //startMatch();
+        //startMatch();
+    }
+
+    /**
+     * Gets deck
+     * @return
+     */
+    public Deck getDeck(){
+        return this.deck;
     }
 
     /**
@@ -61,15 +96,10 @@ public class Controller {
      * @throws IOException exception
      */
     public void setPlayerCard(String playerNickname, String card){
-        try {
-            DeckReader reader = new DeckReader();
-            Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-            Player p = getPlayerFromString(playerNickname);
-            p.setPlayerCard(d.getDivinityCard(card));
-            cards.add(d.getDivinityCard(card));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        Player p = getPlayerFromString(playerNickname);
+        p.setPlayerCard(deck.getDivinityCard(card));
+        cards.add(deck.getDivinityCard(card));
+
     }
 
     /**
@@ -175,14 +205,14 @@ public class Controller {
         switch(turn.getCurrentState()){
             case MOVE:
             case MOVE_SPECIAL:
-                    turn.move(match.getSelectedWorker(),x,y);
+                turn.move(match.getSelectedWorker(),x,y);
                 break;
             case BUILD:
             case BUILD_SPECIAL:
-                    turn.build(match.getSelectedWorker(),x,y);
+                turn.build(match.getSelectedWorker(),x,y);
                 break;
             case REMOVE:
-                    turn.remove(match.getSelectedWorker(),x,y);
+                turn.remove(match.getSelectedWorker(),x,y);
                 break;
         }
         if(turn.getCurrentState() == Step.END) {
