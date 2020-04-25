@@ -25,6 +25,7 @@ public class Controller {
     private Match match;
     private PlayerTurn turn;
     private List<Player> players;
+    private Player firstPlayer;
     private List<DivinityCard> cards;
     private Map<String, ClientHandler> handlers;
     private Deck deck;
@@ -63,7 +64,33 @@ public class Controller {
     public void setPickedCards(List<String> cards){
        for(int i = 0; i < cards.size(); i++){
            pickedCards.add(deck.getDivinityCard(cards.get(i)));
+           requestSelectCard(getNextPlayer(firstPlayer));
        }
+    }
+
+    /**
+     *
+     */
+    private void requestSelectCard(Player player){
+        handlers.get(player.getPlayerNickname()).response(new Gson().toJson(new BasicMessageInterface("requestSelectCard", pickedCards)));
+    }
+
+    private Player getNextPlayer(Player player){
+        return players.get(players.indexOf(player) + 1 % players.size());
+    }
+
+    /**
+     * Set Card
+     * @param player
+     * @param card
+     */
+    public void setPlayerCard(String player, String card){
+        getPlayerFromString(player).setPlayerCard(deck.getDivinityCard(card));
+        pickedCards.remove(deck.getDivinityCard(card));
+        if(getNextPlayer(getPlayerFromString(player)).equals(firstPlayer))
+            firstPlayer.setPlayerCard(pickedCards.get(0));
+        else
+            requestSelectCard(getNextPlayer(getPlayerFromString(player)));
     }
 
 
@@ -77,8 +104,11 @@ public class Controller {
         players.add(p);
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
 
-        //if(players.size() == lobbySize)
-        //startMatch();
+        if(players.size() == lobbySize){
+            //startMatch();
+           this.firstPlayer = players.get(new Random().nextInt(players.size()));
+        }
+
     }
 
     /**
@@ -89,18 +119,6 @@ public class Controller {
         return this.deck;
     }
 
-    /**
-     * Set cqrd to player
-     * @param playerNickname player
-     * @param card card
-     * @throws IOException exception
-     */
-    public void setPlayerCard(String playerNickname, String card){
-        Player p = getPlayerFromString(playerNickname);
-        p.setPlayerCard(deck.getDivinityCard(card));
-        cards.add(deck.getDivinityCard(card));
-
-    }
 
     /**
      * Gets match's player
@@ -147,7 +165,7 @@ public class Controller {
      */
     public void startMatch(){
         match = new Match(players,cards);
-        match.setCurrentPlayer(players.get(new Random().nextInt(players.size())));
+        match.setCurrentPlayer(firstPlayer);
         handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
     }
 
