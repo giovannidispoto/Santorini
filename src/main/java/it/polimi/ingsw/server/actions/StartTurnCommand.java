@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.actions;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -9,6 +10,7 @@ import it.polimi.ingsw.server.ClientHandler;
 public class StartTurnCommand implements Command{
     private boolean basicTurn;
     private String playerNickname;
+    private boolean result;
 
     /**
      * Create StartTurnCommand
@@ -23,5 +25,10 @@ public class StartTurnCommand implements Command{
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.startTurn(basicTurn,playerNickname);
+        result = true;
+    }
+
+    public boolean getResult(){
+        return result;
     }
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server.actions;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Step;
 
 /**
  * PlayStepCommand represent playStp action from the client
@@ -9,6 +11,8 @@ import it.polimi.ingsw.server.ClientHandler;
 public class PlayStepCommand implements Command {
     private int x;
     private int y;
+    private boolean result;
+    private Step nextStep;
 
     /**
      * Create new PlayStep
@@ -27,6 +31,15 @@ public class PlayStepCommand implements Command {
      */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        controller.playStep(x,y);
+        nextStep = controller.playStep(x,y);
+        this.result = true;
+    }
+
+    public boolean getResult(){
+        return result;
+    }
+
+    public Step getNextStep(){
+        return nextStep;
     }
 }

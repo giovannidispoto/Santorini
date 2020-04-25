@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.actions;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.server.ClientHandler;
@@ -11,6 +12,7 @@ public class AddPlayerCommand implements Command {
 
     private String playerNickname;
     private Color color;
+    private boolean result;
 
     /**
      * Create command
@@ -20,6 +22,7 @@ public class AddPlayerCommand implements Command {
     public AddPlayerCommand(String playerNickname, Color color) {
         this.playerNickname = playerNickname;
         this.color = color;
+        this.result = false;
     }
 
     /**
@@ -32,5 +35,22 @@ public class AddPlayerCommand implements Command {
             controller.addNewPlayer(playerNickname, color);
             controller.addWorkers(playerNickname, handler);
             System.out.println("Added new player: " + playerNickname);
+            setResult(true);
+    }
+
+    /**
+     * Set result of operation
+     * @param result result
+     */
+    public void setResult(boolean result){
+        this.result = result;
+    }
+
+    /**
+     * Gets result of operation
+     * @return result
+     */
+    public boolean getResult(){
+        return this.result;
     }
 }

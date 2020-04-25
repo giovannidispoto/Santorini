@@ -201,7 +201,7 @@ public class Controller {
      * @param x row
      * @param y col
      */
-    public void playStep(int x, int y){
+    public Step playStep(int x, int y){
         switch(turn.getCurrentState()){
             case MOVE:
             case MOVE_SPECIAL:
@@ -219,6 +219,8 @@ public class Controller {
             turn.passTurn();
             handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
         }
+
+        return turn.getCurrentState();
     }
 
     /**

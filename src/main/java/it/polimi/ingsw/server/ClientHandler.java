@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.server.actions.Command;
 import it.polimi.ingsw.server.actions.CommandFactory;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
@@ -31,7 +32,10 @@ public class ClientHandler implements Observer {
      * @param m message
      */
     public void process(String m){
-        CommandFactory.from(m).execute(controller, this);
+        Command command = CommandFactory.from(m);
+        command.execute(controller, this);
+        response(new Gson().toJson(command));
+
     }
 
     /**
@@ -41,6 +45,7 @@ public class ClientHandler implements Observer {
     public void response(String m){
         this.thread.send(m);
     }
+
 
     /**
      * Update received from subject observed

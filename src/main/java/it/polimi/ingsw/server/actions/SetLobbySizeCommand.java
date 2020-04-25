@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.actions;
 
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -10,6 +11,7 @@ import it.polimi.ingsw.server.ClientHandler;
 public class SetLobbySizeCommand implements Command {
     private String playerNickname;
     private int lobbySize;
+    private boolean result;
 
     /**
      *
@@ -29,5 +31,10 @@ public class SetLobbySizeCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.setLobbySize(playerNickname,lobbySize);
+        result = true;
+    }
+
+    public boolean getResult(){
+        return result;
     }
 }

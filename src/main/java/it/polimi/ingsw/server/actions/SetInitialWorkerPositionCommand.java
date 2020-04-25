@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.actions;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -11,6 +12,7 @@ public class SetInitialWorkerPositionCommand implements Command{
     private int worker;
     private int x;
     private int y;
+    private boolean result;
 
     /**
      * Create SetInitialWorkerPositionCommand
@@ -34,5 +36,10 @@ public class SetInitialWorkerPositionCommand implements Command{
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.setInitialWorkerPosition(player, worker, x,y);
+        result = true;
+    }
+
+    public boolean getResult(){
+        return result;
     }
 }
