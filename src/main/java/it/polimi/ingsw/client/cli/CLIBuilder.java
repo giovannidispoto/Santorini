@@ -53,7 +53,7 @@ public class CLIBuilder implements UIActions {
     private static final String PHASE_TITLE = "CURRENT PHASE";
 
     //UI Messages
-    private static final String WAITING_ALERT = ANSI_WHITE+"Wait for your turn..."+ANSI_RST;
+    private static final String WAITING_ALERT = "Wait for your turn...";
 
     //Board Matrix
     protected static final String L_T_CORNER = "┏";
@@ -75,18 +75,8 @@ public class CLIBuilder implements UIActions {
     protected static final String R_THIN_B_CORNER = "┘";
     protected static final String H_THIN_LINE = "─";
     protected static final String V_THIN_LINE = "│";
-
-    //Players Box
-    private static final String DOUBLE_L_T_CORNER = "╔";
-    private static final String DOUBLE_R_T_CORNER = "╗";
-    private static final String DOUBLE_L_B_CORNER = "╚";
-    private static final String DOUBLE_R_B_CORNER = "╝";
-    private static final String DOUBLE_H_LINE = "═";
-    private static final String DOUBLE_V_LINE = "║";
-
-    //Data Boxes
-    protected static final String DOT_H_LINE = "╍";
-    protected static final String DOT_V_LINE = "╏";
+    protected static final String DOT_H_LINE = "╌";
+    protected static final String DOT_V_LINE = "┊";
 
     //ANSI Cursor Moves
     protected static final String CURSOR_UP = "\u001b[%sA";
@@ -133,12 +123,15 @@ public class CLIBuilder implements UIActions {
     private static final String WAITSTART = "Wait for the match startup...";
     private static final String NICKNAMEERROR = "An user with this nickname already exists... retry!";
     private static final String LOBBYSIZEERROR = "This game is for 2 or 3 players... retry!";
-    private static final String SETPLAYERS = "You're the first player in the lobby! Set the number of players for this match 👦🏼";
+    private static final String SETPLAYERS = "Number of players 👦🏼";
     private HashMap<Integer,Color> COLORSMAP;
 
-    //Players Informations Box
-    protected static final String WORKER = "ᳵ";
-    private HashMap<Color,String> playerColors;
+    //Players Information Box
+    protected static final String WORKER = "◈";
+    private HashMap<Color,String> coloredWorker;
+
+    //Cards
+    private static final String cardTemplate = "• %s | %s";
 
     /**
      * Class Constructor
@@ -147,22 +140,27 @@ public class CLIBuilder implements UIActions {
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
         this.COLORSMAP = new HashMap<>();
-        this.playerColors = new HashMap<>();
+        this.coloredWorker = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
         this.rowCounter = 0;
         COLORSMAP.put(0,Color.BLUE);
         COLORSMAP.put(1,Color.GREY);
         COLORSMAP.put(2,Color.BROWN);
-        playerColors.put(Color.BLUE,ANSI_BLUE+WORKER);
-        playerColors.put(Color.BROWN,ANSI_BROWN+WORKER);
-        playerColors.put(Color.GREY,ANSI_GRAY+WORKER);
+        coloredWorker.put(Color.BLUE,ANSI_BLUE+WORKER);
+        coloredWorker.put(Color.BROWN,ANSI_BROWN+WORKER);
+        coloredWorker.put(Color.GREY,ANSI_GRAY+WORKER);
     }
 
-    public void printMessageBox(String message){
+    /**
+     * Prints a message in a colored box
+     * @param message is the string that has to be print
+     * @param messageColor is the color of the box and the message
+     */
+    public void renderMessageBox(String messageColor, String message){
         int messageLength = message.length();
-        System.out.print(ANSI_PURPLE+L_THIN_T_CORNER);
-        //+2 to consider blank spaces between the message and the lateral edges
+        System.out.print(messageColor+L_THIN_T_CORNER);
+        //+2 to consider the blank spaces between the message and the lateral edges
         for(int i=0;i<messageLength+2;i++)
             System.out.print(H_THIN_LINE);
         System.out.println(R_THIN_T_CORNER);
@@ -174,50 +172,85 @@ public class CLIBuilder implements UIActions {
     }
 
     /**
-     * Renders the not updatable part of the CLI (Players Informations Box)
+     * Renders the players information box
+     *      PLAYERS
+     *      ┌────────────────────┐
+     *      │ ◈ SteveJobs|Athena │
+     *      │ ...                │
+     *      └────────────────────┘
      */
-    public void staticCliRender(ClientController clientController){
-        int maxLength=0;
-        String playerWorkerColor;
-        String playerNickname;
-        String playerCard;
-        List<String> playersInformations = new ArrayList<>();
-        StringBuilder playerInfo = new StringBuilder();
+    public void renderPlayersInfoBox(ClientController clientController){
+        int maxLength = 0;
+        String pieceOfString;
+        List<String> playerInfo = new ArrayList<>();
+        StringBuilder playerData = new StringBuilder();
         System.out.print(ANSI_WHITE+PLAYERS_TITLE+NEW_LINE);
         clientController.getPlayersRequest();
+        //Build the players info strings
         for(PlayerInterface current : clientController.getPlayers()){
-            playerWorkerColor=playerColors.get(current.getColor());
-            playerInfo.append(DOUBLE_V_LINE + BLANK).append(playerWorkerColor);
-            playerNickname = current.getPlayerNickname();
-            playerInfo.append(BLANK).append(ANSI_WHITE).append(playerNickname);
-            playerCard = current.getCard();
-            playerInfo.append(V_THIN_LINE).append(playerCard).append(BLANK+DOUBLE_V_LINE);
-            playersInformations.add(playerInfo.toString());
-        }
-        for(String current : playersInformations){
+            pieceOfString= coloredWorker.get(current.getColor());
+            playerData.append(V_THIN_LINE + BLANK).append(pieceOfString);
+            pieceOfString = current.getPlayerNickname();
+            playerData.append(BLANK).append(ANSI_WHITE).append(pieceOfString);
+            pieceOfString = current.getCard();
+            playerData.append(BLANK+"•"+BLANK).append(pieceOfString).append(BLANK+V_THIN_LINE);
+            playerInfo.add(playerData.toString());}
+        //Discover the longest string
+        for(String current : playerInfo){
             if(current.length()>maxLength)
-                maxLength=current.length();
-        }
-        System.out.print(ANSI_WHITE+DOUBLE_L_T_CORNER);
+                maxLength=current.length();}
+        //Print the box
+        System.out.print(BLANK+BLANK+BLANK+ANSI_WHITE+PLAYERS_TITLE+NEW_LINE);
+        System.out.print(BLANK+BLANK+BLANK+L_THIN_T_CORNER);
         for(int i=0;i<maxLength;i++)
-            System.out.print(DOUBLE_H_LINE);
-        System.out.print(DOUBLE_R_T_CORNER+NEW_LINE);
-        for(String current : playersInformations){
-            System.out.print(current+NEW_LINE);
+            System.out.print(H_THIN_LINE);
+        System.out.print(R_THIN_T_CORNER+NEW_LINE);
+        for(String current : playerInfo){
+            System.out.print(BLANK+BLANK+BLANK+current+NEW_LINE);
         }
-        System.out.print(DOUBLE_L_B_CORNER);
+        System.out.print(BLANK+BLANK+BLANK+L_THIN_B_CORNER);
         for(int i=0;i<maxLength;i++)
-            System.out.print(DOUBLE_H_LINE);
-        System.out.print(DOUBLE_R_B_CORNER+NEW_LINE);
+            System.out.print(H_THIN_LINE);
+        System.out.print(R_THIN_B_CORNER+NEW_LINE+NEW_LINE);
     }
+
     /**
-     * Renders the updatable part of the CLI
+     * Renders the main part of the CLI
+     *            BOARD                             0
+     *      0   1   2   3   4     FULL TOWERS       1
+     *    ┏━━━┳━━━┳━━━┳━━━┳━━━┓   ┌╌╌╌┐             2
+     *  0 ┃   ┃   ┃   ┃   ┃   ┃   ┊ 4 ┊             3
+     *    ┣━━━╋━━━╋━━━╋━━━╋━━━┫   └╌╌╌┘             4
+     *  1 ┃   ┃   ┃   ┃   ┃   ┃   CURRENT PHASE     5
+     *    ┣━━━╋━━━╋━━━╋━━━╋━━━┫   ┌╌╌╌╌╌╌╌╌╌╌┐      6
+     *  2 ┃   ┃   ┃   ┃   ┃   ┃   ┊ Building ┊      7
+     *    ┣━━━╋━━━╋━━━╋━━━╋━━━┫   └╌╌╌╌╌╌╌╌╌╌┘      8
+     *  3 ┃   ┃   ┃   ┃   ┃   ┃   AVAILABLE MOVES   9
+     *    ┣━━━╋━━━╋━━━╋━━━╋━━━┫   ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐   10
+     *  4 ┃   ┃   ┃   ┃   ┃   ┃   ┊ [2|1] [0|2] ┊   11
+     *    ┗━━━┻━━━┻━━━┻━━━┻━━━┛   └╌╌╌╌╌╌╌╌╌╌╌╌╌┘   12
+     *                                              13
+     * > Type something...                          14 + 1 (press Enter)
      */
-    public void dynamicCliRender(){
+    public void renderCLI(){}
+
+    /**
+     *  Renders the available cards for the initial player choice
+     *  • Chronos | You win if there are five full towers on the board
+     */
+    public void renderAvailableCards(){};
+
+    /**
+     * Renders the entire deck (list of cards)
+     */
+    public void renderDeck(){};
+
+    //UI ACTION METHODS
+    @Override
+    public void chooseCard(ClientController clientController) {
 
     }
 
-    //UI Actions Methods
     @Override
     public void moveWorker(ClientController clientController) {
 
@@ -230,11 +263,6 @@ public class CLIBuilder implements UIActions {
 
     @Override
     public void removeBlock(ClientController clientController) {
-
-    }
-
-    @Override
-    public void selectCard(ClientController clientController) {
 
     }
 
@@ -265,7 +293,7 @@ public class CLIBuilder implements UIActions {
         int userValue = 0;
         boolean connectionStatus = false;
         boolean validUsername = true;
-        printMessageBox(SETUPTITLE);
+        renderMessageBox(ANSI_PURPLE,SETUPTITLE);
         /*  # Initial Client - Server Handshake #
             Server IP 🌍
             >
@@ -346,6 +374,7 @@ public class CLIBuilder implements UIActions {
         clientController.addPlayerRequest(clientController.getPlayerNickname(),generatedColor);
         //Optional lobby size set
         clientController.getPlayersRequest();
+        System.out.println("Numero giocatori sul server: "+clientController.getPlayers().size());
         if(clientController.getPlayers().size()==1){
             /*  # Lobby size setup #
                 Server IP 🌍

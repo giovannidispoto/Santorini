@@ -4,10 +4,10 @@ import it.polimi.ingsw.client.network.ClientSocketConnection;
 
 public interface UIActions {
     //Web Actions
+    void chooseCard(ClientController clientController);
     void moveWorker(ClientController clientController);
     void buildBlock(ClientController clientController);
     void removeBlock(ClientController clientController);
-    void selectCard(ClientController clientController);
     void selectWorker(ClientController clientController);
     void placeWorkers(ClientController clientController);
     void skipAction(ClientController clientController);
