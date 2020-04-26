@@ -13,7 +13,8 @@ public class AddPlayerCommand implements Command {
 
     private String playerNickname;
     private int lobbySize;
-    private boolean result;
+    private boolean lobbyState;
+    private boolean validNick;
 
     /**
      * Create command
@@ -23,7 +24,6 @@ public class AddPlayerCommand implements Command {
     public AddPlayerCommand(String playerNickname, int lobbySize) {
         this.playerNickname = playerNickname;
         this.lobbySize = lobbySize;
-        this.result = false;
     }
 
     /**
@@ -32,29 +32,19 @@ public class AddPlayerCommand implements Command {
      * @param handler context
      */
     public void execute(Controller controller, ClientHandler handler) {
-            boolean result = controller.addNewPlayer(playerNickname, lobbySize);
-            if(result){
+            int result = controller.addNewPlayer(playerNickname, lobbySize);
+            if(result == 0){
                 controller.registerHandler(playerNickname, handler);
                 System.out.println("Added new player: " + playerNickname);
             }
-            setResult(result);
+            if(result == 1) {
+                validNick = false;
+                lobbyState = false;
+            }
+            if(result == 2) {
+                validNick = true;
+                lobbyState = false;
+            }
             handler.response(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
-
-    }
-
-    /**
-     * Set result of operation
-     * @param result result
-     */
-    public void setResult(boolean result){
-        this.result = result;
-    }
-
-    /**
-     * Gets result of operation
-     * @return result
-     */
-    public boolean getResult(){
-        return this.result;
     }
 }

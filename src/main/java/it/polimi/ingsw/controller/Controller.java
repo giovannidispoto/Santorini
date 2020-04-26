@@ -112,16 +112,16 @@ public class Controller {
      * @param playerNickname unique nickname of the player
      * @param lobbySize lobby size
      */
-    public boolean addNewPlayer(String playerNickname, int lobbySize) {
+    public int addNewPlayer(String playerNickname, int lobbySize) {
         if(playersInLobby.contains(playerNickname))
-            return false;
+            return 1;
 
         if(this.lobbySize == 0){
             this.lobbySize = lobbySize;
         }else if(this.lobbySize != lobbySize){
-            return false;
+            return 2;
         }
-        
+
         this.playersInLobby.add(playerNickname);
 
 
@@ -131,7 +131,7 @@ public class Controller {
            handlers.get(firstPlayer).response(new Gson().toJson(new BasicMessageInterface("setPickedCard", null)));
         }
 
-        return true;
+        return 0;
     }
 
 
