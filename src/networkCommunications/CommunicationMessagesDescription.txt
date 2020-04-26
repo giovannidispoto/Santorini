@@ -39,7 +39,7 @@
     (the server can recheck)
     }
 4
-    {   -playerChooseCard:   {"action":"setPlayerCard","data":{"deck":["Athena","Apollo"]}}
+    {   -setPlayerCard:   {"action":"setPlayerCard","data":{"deck":["Athena","Apollo"]}}
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
 
