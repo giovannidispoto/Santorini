@@ -16,8 +16,9 @@ import it.polimi.ingsw.client.clientModel.basic.Deck;
  * ClientController Class
  */
 public class ClientController {
-    //Player Client-Side
+    //This Player Client-Side
     private String playerNickname;
+    private CellInterface[][] workerView;
     //Match
     private List<PlayerInterface> players;
     private List<Integer> workersID;
@@ -34,7 +35,6 @@ public class ClientController {
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
 
-
     /**
      * ClientController Constructor
      */
@@ -44,7 +44,16 @@ public class ClientController {
         this.lockObjects = new LockObjects();
         this.controllerThread = Thread.currentThread();
     }
+
     //Start Network
+
+    /**
+     *  Initialize a new socket on the controller from which it is called,
+     *  the socket is missing the host address of the server to be able to start
+     *
+     *  setIP: clientController.getSocketConnection().setServerName("String")
+     *  startSocket: clientController.getSocketConnection().startConnection()
+     */
     public void startNetwork(){
         this.socketConnection = new ClientSocketConnection(this);
     }
@@ -70,6 +79,7 @@ public class ClientController {
 
     /** Communicates to the server the intention to join the game
      *  N.B: Blocking request until a response is received
+     *
      * @param playerNickname    NickName Choose by the player
      * @param lobbySize Preferred size of the lobby
      * @return  false: if there was an error, true: method performed without errors
@@ -82,11 +92,26 @@ public class ClientController {
         }
     }
 
+    /** Communicates to the server the need to get the deck
+     *  N.B: Only who is the God Player should make this request
+     *  N.B: Blocking request until a response is received
+     *
+     * @return  false: if there was an error, true: method performed without errors
+     */
     public Boolean getDeckRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
         synchronized (lockObjects.lockGetDeck){
             return lockObjects.setWait(lockObjects.lockGetDeck);
         }
+    }
+
+    /** Communicate to the server the cards chosen by the God Player,
+     *  the number of cards chosen must be equal to currentLobbySize
+     *
+     * @param cards list of strings, where each string is the name of the card chosen in cardsDeck
+     */
+    public void setPickedCardsRequest(List<String> cards){
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", cards)));
     }
 
     public void getWorkersIDRequest(String playerNickname){
@@ -127,6 +152,18 @@ public class ClientController {
 
     //----------------------------------------------------------------------------------------------------------------
     //Getter & Setter
+    public CellInterface[][] getWorkerView() {
+        return workerView;
+    }
+
+    public CellInterface getWorkerViewCell(int x, int y){
+        return workerView[x][y];
+    }
+
+    public void setWorkerView(CellInterface[][] workerView) {
+        this.workerView = workerView;
+    }
+
     public Deck getCardsDeck() {
         return cardsDeck;
     }
@@ -167,34 +204,18 @@ public class ClientController {
         this.currentLobbySize = currentLobbySize;
     }
 
-    /**
-     * Gets socketConnection
-     * @return socketConnection
-     */
     public ClientSocketConnection getSocketConnection() {
         return socketConnection;
     }
 
-    /**
-     * Sets socketConnection
-     * @param socketConnection socketConnection
-     */
     public void setSocketConnection(ClientSocketConnection socketConnection) {
         this.socketConnection = socketConnection;
     }
 
-    /**
-     * Gets playerNickname
-     * @return playerNickname
-     */
     public String getPlayerNickname() {
         return playerNickname;
     }
 
-    /**
-     * Sets playerNickname
-     * @param playerNickname playerNickname
-     */
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
     }
@@ -207,34 +228,18 @@ public class ClientController {
         this.serverHandler = serverHandler;
     }
 
-    /**
-     * Gets players in match
-     * @return players
-     */
     public List<PlayerInterface> getPlayers(){
         return players;
     }
 
-    /**
-     * Sets players in match
-     * @param players players in match
-     */
     public void setPlayers(List<PlayerInterface> players){
         this.players = players;
     }
 
-    /**
-     * Gets your workersID
-     * @return workersID
-     */
     public List<Integer> getWorkersID() {
         return workersID;
     }
 
-    /**
-     * Sets your workersID
-     * @param workersID client workersID
-     */
     public void setWorkersID(List<Integer> workersID) {
         this.workersID = workersID;
     }
