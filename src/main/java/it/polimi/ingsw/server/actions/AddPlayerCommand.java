@@ -34,7 +34,7 @@ public class AddPlayerCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
             validNick = controller.isValidNickame(playerNickname);
             lobbyState = controller.isValidLobby(lobbySize);
-            
+
             if(validNick && lobbyState)
                 controller.addNewPlayer(playerNickname, lobbySize);
 
