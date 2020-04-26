@@ -118,7 +118,10 @@ public class Controller {
 
         if(this.lobbySize == 0){
             this.lobbySize = lobbySize;
+        }else if(this.lobbySize != lobbySize){
+            return false;
         }
+        
         this.playersInLobby.add(playerNickname);
 
 
