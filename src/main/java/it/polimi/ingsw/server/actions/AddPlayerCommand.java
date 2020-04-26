@@ -35,8 +35,10 @@ public class AddPlayerCommand implements Command {
             validNick = controller.isValidNickame(playerNickname);
             lobbyState = controller.isValidLobby(lobbySize);
 
-            if(validNick && lobbyState)
+            if(validNick && lobbyState){
+                controller.registerHandler(playerNickname,handler);
                 controller.addNewPlayer(playerNickname, lobbySize);
+            }
 
             handler.response(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
     }
