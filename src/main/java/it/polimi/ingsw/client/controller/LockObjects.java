@@ -1,12 +1,12 @@
 package it.polimi.ingsw.client.controller;
 
 public class LockObjects {
-    public final Object lockGetPlayers, lockAddPlayer, lockLobbyReady;
+    public final Object lockGetPlayers, lockAddPlayer,  lockSetPickedCards;
 
     public LockObjects() {
         this.lockGetPlayers = new Object();
         this.lockAddPlayer = new Object();
-        this.lockLobbyReady = new Object();
+        this.lockSetPickedCards = new Object();
     }
 
     public Boolean setWait(Object object){

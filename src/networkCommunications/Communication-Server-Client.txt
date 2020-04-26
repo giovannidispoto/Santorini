@@ -5,8 +5,7 @@
 	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobbySize":2}}
 	check           		<---------------------------------	Response			(Server check Nick presence & lobby Decision)
 (While Nick or lobbyState invalid)
-	
-	LobbyReady				<---------------------------------	lobbyReady			(Server start match when a Lobby is Full, notify all client in Lobby by nick)
+
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
 	getDeckRequest 			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
     DeckFull				<---------------------------------	Response

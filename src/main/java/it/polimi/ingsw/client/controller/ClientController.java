@@ -23,6 +23,7 @@ public class ClientController {
     private Step turn;
     //Lobby
     private Boolean validNick, lobbyState;
+    private String godPlayer;
     private int currentLobbySize;
     //Utils - Locks for Wait & Notify
     public LockObjects lockObjects;
@@ -54,13 +55,13 @@ public class ClientController {
 
     //Wait Request to Controller
 
-    /** Wait until you receive the LobbyReady message from the server
+    /** Wait until you receive SetPickedCards message from the server
      *
      * @return  false if there was an error, true method performed without errors
      */
-    public Boolean waitLobbyReady(){
-        synchronized (lockObjects.lockLobbyReady){
-            return lockObjects.setWait(lockObjects.lockLobbyReady);
+    public Boolean waitSetPickedCards(){
+        synchronized (lockObjects.lockSetPickedCards){
+            return lockObjects.setWait(lockObjects.lockSetPickedCards);
         }
     }
 
@@ -117,6 +118,14 @@ public class ClientController {
     }
 
     //Getter & Setter
+    public String getGodPlayer() {
+        return godPlayer;
+    }
+
+    public void setGodPlayer(String godPlayer) {
+        this.godPlayer = godPlayer;
+    }
+
     public Boolean getValidNick() {
         return validNick;
     }
