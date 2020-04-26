@@ -44,6 +44,7 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
         //On Server: respective JSON messages
         clientController.addPlayerRequest("Bill Gates", 2);
+        /*
         System.out.println(clientController.waitLobbyReady());
         System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
         clientController.startNetwork();
@@ -52,6 +53,7 @@ class ClientSocketConnectionTest {
         System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
         clientController.addPlayerRequest("Bill", 2);
         clientController.getPlayersRequest();
+         */
 
         /*
         clientController.getWorkersIDRequest("Steve Jobs");

@@ -57,7 +57,7 @@ public class ClientController {
 
     /** Wait until you receive SetPickedCards message from the server
      *
-     * @return  false if there was an error, true method performed without errors
+     * @return  false: if there was an error, true: method performed without errors
      */
     public Boolean waitSetPickedCards(){
         synchronized (lockObjects.lockSetPickedCards){
@@ -71,13 +71,20 @@ public class ClientController {
      *  N.B: Blocking request until a response is received
      * @param playerNickname    NickName Choose by the player
      * @param lobbySize Preferred size of the lobby
-     * @return  false if there was an error, true method performed without errors
+     * @return  false: if there was an error, true: method performed without errors
      */
     public Boolean addPlayerRequest(String playerNickname, int lobbySize){
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
         synchronized (lockObjects.lockAddPlayer){
             return lockObjects.setWait(lockObjects.lockAddPlayer);
+        }
+    }
+
+    public Boolean getDeckRequest(){
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
+        synchronized (lockObjects.lockGetDeck){
+            return lockObjects.setWait(lockObjects.lockGetDeck);
         }
     }
 
@@ -117,6 +124,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
     }
 
+    //----------------------------------------------------------------------------------------------------------------
     //Getter & Setter
     public String getGodPlayer() {
         return godPlayer;
