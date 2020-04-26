@@ -81,16 +81,16 @@ public class Controller {
 
     /**
      * Set Card
-     * @param player
-     * @param card
+     * @param playerNickname player
+     * @param card card
      */
-    public void setPlayerCard(String player, String card){
-        getPlayerFromString(player).setPlayerCard(deck.getDivinityCard(card));
+    public void setPlayerCard(String playerNickname, String card){
+        getPlayerFromString(playerNickname).setPlayerCard(deck.getDivinityCard(card));
         pickedCards.remove(deck.getDivinityCard(card));
-        if(getNextPlayer(getPlayerFromString(player)).equals(firstPlayer))
+        if(getNextPlayer(getPlayerFromString(playerNickname)).equals(firstPlayer))
             firstPlayer.setPlayerCard(pickedCards.get(0));
         else
-            requestSelectCard(getNextPlayer(getPlayerFromString(player)));
+            requestSelectCard(getNextPlayer(getPlayerFromString(playerNickname)));
     }
 
 
