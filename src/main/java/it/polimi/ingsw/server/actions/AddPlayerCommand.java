@@ -36,6 +36,8 @@ public class AddPlayerCommand implements Command {
             if(result == 0){
                 controller.registerHandler(playerNickname, handler);
                 System.out.println("Added new player: " + playerNickname);
+                validNick = true;
+                lobbyState = true;
             }
             if(result == 1) {
                 validNick = false;
