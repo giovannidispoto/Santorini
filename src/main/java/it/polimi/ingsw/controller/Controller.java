@@ -343,9 +343,6 @@ public class Controller {
      * @return
      */
     public boolean isValidLobby(int lobbySize) {
-        if(this.lobbySize == 0 || this.lobbySize == lobbySize)
-            return true;
-
-        return false;
+        return this.lobbySize == 0 || this.lobbySize == lobbySize;
     }
 }
