@@ -30,6 +30,7 @@ public class SetPlayerCardCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.setPlayerCard(playerNickname,card);
+        controller.addWorkers(playerNickname, handler);
         result = true;
     }
 

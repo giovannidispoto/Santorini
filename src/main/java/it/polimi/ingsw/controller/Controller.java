@@ -25,11 +25,13 @@ public class Controller {
     private Match match;
     private PlayerTurn turn;
     private List<Player> players;
-    private Player firstPlayer;
+    private List<String> playersInLobby;
+    private String firstPlayer;
     private List<DivinityCard> cards;
     private Map<String, ClientHandler> handlers;
     private Deck deck;
     private List<DivinityCard> pickedCards;
+    private List<Color> colors;
     private int lobbySize;
 
     /**
@@ -40,6 +42,13 @@ public class Controller {
         this.cards = new ArrayList<>();
         this.handlers = new HashMap<>();
         this.pickedCards = new LinkedList<>();
+        this.playersInLobby = new LinkedList<>();
+        this.colors = new LinkedList<>();
+        this.colors.add(Color.BLUE);
+        this.colors.add(Color.BROWN);
+        this.colors.add(Color.GREY);
+        this.lobbySize = 0;
+
         try {
             DeckReader reader = new DeckReader();
             deck = reader.loadDeck(new FileReader("src/Divinities.json"));
@@ -71,12 +80,12 @@ public class Controller {
     /**
      *
      */
-    private void requestSelectCard(Player player){
-        handlers.get(player.getPlayerNickname()).response(new Gson().toJson(new BasicMessageInterface("requestSelectCard", pickedCards)));
+    private void requestSelectCard(String playerNickname){
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("requestSelectCard", pickedCards)));
     }
 
-    private Player getNextPlayer(Player player){
-        return players.get(players.indexOf(player) + 1 % players.size());
+    private String getNextPlayer(String player){
+        return playersInLobby.get(playersInLobby.indexOf(player) + 1 % playersInLobby.size());
     }
 
     /**
@@ -85,31 +94,45 @@ public class Controller {
      * @param card card
      */
     public void setPlayerCard(String playerNickname, String card){
-        getPlayerFromString(playerNickname).setPlayerCard(deck.getDivinityCard(card));
+
+        Color c = colors.get(new Random().nextInt(playersInLobby.size()));
+        colors.remove(c);
+        Player p = new Player(playerNickname,c) ;
+        Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
+        players.add(p);
+
+        p.setPlayerCard(deck.getDivinityCard(card));
         pickedCards.remove(deck.getDivinityCard(card));
-        if(getNextPlayer(getPlayerFromString(playerNickname)).equals(firstPlayer))
-            firstPlayer.setPlayerCard(pickedCards.get(0));
+        if(getNextPlayer(playerNickname).equals(firstPlayer)){
+            Player player = new Player(firstPlayer, colors.get(0));
+            player.setPlayerCard(pickedCards.get(0));
+            players.add(p);
+            Battlefield.getBattlefieldInstance().attach(handlers.get(firstPlayer));
+        }
         else
-            requestSelectCard(getNextPlayer(getPlayerFromString(playerNickname)));
+            requestSelectCard(getNextPlayer(playerNickname));
     }
 
 
     /**
      * Add new player in the game
      * @param playerNickname unique nickname of the player
-     * @param color color of the player
+     * @param lobbySize lobby size
      */
-    public void addNewPlayer(String playerNickname, Color color) {
-        Player p = new Player(playerNickname, color);
-        players.add(p);
-        Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
+    public void addNewPlayer(String playerNickname, int lobbySize) {
+        if(this.lobbySize == 0){
+            this.lobbySize = lobbySize;
+        }
+        this.playersInLobby.add(playerNickname);
 
-        if(players.size() == lobbySize){
+
+        if(playersInLobby.size() == lobbySize){
             //startMatch();
-           this.firstPlayer = players.get(new Random().nextInt(players.size()));
+           this.firstPlayer = playersInLobby.get(new Random().nextInt(playersInLobby.size()));
         }
 
     }
+
 
     /**
      * Gets deck
@@ -165,7 +188,7 @@ public class Controller {
      */
     public void startMatch(){
         match = new Match(players,cards);
-        match.setCurrentPlayer(firstPlayer);
+        match.setCurrentPlayer(getPlayerFromString(firstPlayer));
         handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
     }
 

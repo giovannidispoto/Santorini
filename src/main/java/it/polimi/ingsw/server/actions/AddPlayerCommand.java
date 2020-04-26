@@ -11,17 +11,17 @@ import it.polimi.ingsw.server.ClientHandler;
 public class AddPlayerCommand implements Command {
 
     private String playerNickname;
-    private Color color;
+    private int lobbySize;
     private boolean result;
 
     /**
      * Create command
      * @param playerNickname player
-     * @param color color
+     * @param lobbySize lobbySize
      */
-    public AddPlayerCommand(String playerNickname, Color color) {
+    public AddPlayerCommand(String playerNickname, int lobbySize) {
         this.playerNickname = playerNickname;
-        this.color = color;
+        this.lobbySize = lobbySize;
         this.result = false;
     }
 
@@ -32,8 +32,7 @@ public class AddPlayerCommand implements Command {
      */
     public void execute(Controller controller, ClientHandler handler) {
             controller.registerHandler(playerNickname, handler);
-            controller.addNewPlayer(playerNickname, color);
-            controller.addWorkers(playerNickname, handler);
+            controller.addNewPlayer(playerNickname, lobbySize);
             System.out.println("Added new player: " + playerNickname);
             setResult(true);
     }
