@@ -30,7 +30,7 @@
             {   -getDeckRequest:    {"action":"getDeck"}
             Only the god player can call this function which requires the deck to select the cards
 
-                -ServerResponse:    {"action":"getDeck","data":{"deck":[CARDS]}}
+                -ServerResponse:    {"action":"getDeckResponse","data":{"deck":[CARDS]}}
             Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size)
             }
 

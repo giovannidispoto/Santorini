@@ -33,6 +33,9 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 c = new SetPickedCardsCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(),
                         jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
                 break;
+            case "getDeckResponse":
+                c = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetDeckCommand.class);
+                break;
             case "battlefieldUpdate":
                 c = new BattlefieldUpdateCommand(deserializeCellMatrix(jsonElement));
                 break;

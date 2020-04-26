@@ -3,27 +3,29 @@ package it.polimi.ingsw.client.controller;
 import java.util.*;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
 import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicActionInterface;
 import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.*;
+import it.polimi.ingsw.client.clientModel.basic.Deck;
 
 
 /**
  * ClientController Class
  */
 public class ClientController {
+    //Player Client-Side
     private String playerNickname;
+    //Match
     private List<PlayerInterface> players;
-    private List<DivinityCard> cards;
     private List<Integer> workersID;
     private Step turn;
     //Lobby
     private Boolean validNick, lobbyState;
     private String godPlayer;
+    private Deck cardsDeck;
     private int currentLobbySize;
     //Utils - Locks for Wait & Notify
     public LockObjects lockObjects;
@@ -38,7 +40,6 @@ public class ClientController {
      */
     public ClientController(){
         this.players = new ArrayList<>();
-        this.cards = new ArrayList<>();
         this.workersID = new ArrayList<>();
         this.lockObjects = new LockObjects();
         this.controllerThread = Thread.currentThread();
@@ -126,6 +127,14 @@ public class ClientController {
 
     //----------------------------------------------------------------------------------------------------------------
     //Getter & Setter
+    public Deck getCardsDeck() {
+        return cardsDeck;
+    }
+
+    public void setCardsDeck(Deck cardsDeck) {
+        this.cardsDeck = cardsDeck;
+    }
+
     public String getGodPlayer() {
         return godPlayer;
     }

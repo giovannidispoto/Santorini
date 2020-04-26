@@ -43,28 +43,8 @@ class ClientSocketConnectionTest {
         //Need Server UP listening on port 1337 with IP 127.0.0.3
         assertTrue(clientController.getSocketConnection().startConnection());
         //On Server: respective JSON messages
-        clientController.addPlayerRequest("Bill Gates", 2);
-        /*
-        System.out.println(clientController.waitLobbyReady());
-        System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
-        clientController.startNetwork();
-        clientController.getSocketConnection().setServerName(serverName1);
-        System.out.println(clientController.getSocketConnection().startConnection());
-        System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
-        clientController.addPlayerRequest("Bill", 2);
-        clientController.getPlayersRequest();
-         */
 
-        /*
-        clientController.getWorkersIDRequest("Steve Jobs");
-        clientController.getPlayersRequest();
-        clientController.setInitialWorkerPositionRequest("Bill Gates", 0, 0,0);
-        clientController.startTurnRequest("Steve Jobs", true);
-        clientController.selectWorkerRequest("Steve Jobs", 2);
-        clientController.playStepRequest(1,4);
-        clientController.skipStepRequest();
-
-         */
+        clientController.getDeckRequest();
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}

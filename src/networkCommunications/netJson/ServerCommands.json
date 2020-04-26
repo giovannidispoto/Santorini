@@ -93,12 +93,5 @@
   },
   {
     "action":"skipStep"
-  },
-  {
-    "action":"startLobby",
-    "data":{
-      "playerNickname":"Steve Jobs",
-      "lobbySize":3
-    }
   }
 ]
