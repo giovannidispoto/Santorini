@@ -44,7 +44,7 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
         //On Server: respective JSON messages
 
-        clientController.getDeckRequest();
+        clientController.addPlayerRequest("dario", 2);
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}

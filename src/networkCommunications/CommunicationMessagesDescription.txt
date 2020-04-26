@@ -12,7 +12,7 @@
     communicates to the server the intention to join the game,
     giving the server the (unique) nickname and the the lobby size
 
-        -ServerResponse:    {"action":"addPlayer","data":{"validNick":bool, "lobbyState":bool, "lobbySize":2}}
+        -ServerResponse:    {"action":"addPlayerResponse","data":{"validNick":bool, "lobbyState":bool, "lobbySize":2}}
 
     the server checks if it has to open a new lobby, if it is opened in size lobbySize,
     if it is already open it checks if lobbySize is the same if it is checked that there is no other nickname,
@@ -34,7 +34,7 @@
             Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size)
             }
 
-        -ClientResponse:    {"action":"setPickedCards","data":{"deck":["Athena","Apollo"]}}
+        -ClientResponse:    {"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
     the client's task will be to select the cards from the complete deck based on the number of players allowed
     (the server can recheck)
     }

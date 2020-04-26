@@ -89,9 +89,16 @@
       },
       "result": true
     }
-  },{"action":"addPlayerResponse","data":{"playerNickname":"Bill Gates","lobbySize":2,"validNick":true, "lobbyState": true}}
-,
-
+  },
+  {
+  "action":"addPlayerResponse",
+  "data":{
+    "playerNickname":"Bill Gates",
+    "lobbySize":2,
+    "validNick":true,
+    "lobbyState":true
+    }
+  },
   {
     "action": "getWorkersID",
     "data": [
