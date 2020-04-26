@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.server.ClientHandler;
@@ -31,10 +32,14 @@ public class AddPlayerCommand implements Command {
      * @param handler context
      */
     public void execute(Controller controller, ClientHandler handler) {
-            controller.registerHandler(playerNickname, handler);
-            controller.addNewPlayer(playerNickname, lobbySize);
-            System.out.println("Added new player: " + playerNickname);
-            setResult(true);
+            boolean result = controller.addNewPlayer(playerNickname, lobbySize);
+            if(result){
+                controller.registerHandler(playerNickname, handler);
+                System.out.println("Added new player: " + playerNickname);
+            }
+            setResult(result);
+            handler.response(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
+
     }
 
     /**

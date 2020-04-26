@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -34,6 +35,7 @@ public class SelectWorkerCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
         controller.selectWorker(playerNickname,x,y);
         result = true;
+        handler.response(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
     }
 
     public boolean getResult(){

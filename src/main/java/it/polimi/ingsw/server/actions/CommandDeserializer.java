@@ -55,9 +55,6 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
             case "skipStep":
                 c = new SkipStepCommand();
                 break;
-            case "setLobbySize":
-                c = new SetLobbySizeCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
-                break;
             case "setPlayerCard":
                 c = new SetPlayerCardCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(), jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("card").getAsString());
                 break;

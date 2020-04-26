@@ -32,10 +32,7 @@ public class ClientHandler implements Observer {
      * @param m message
      */
     public void process(String m){
-        Command command = CommandFactory.from(m);
-        command.execute(controller, this);
-        response(new Gson().toJson(command));
-
+        CommandFactory.from(m).execute(controller, this);
     }
 
     /**

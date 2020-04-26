@@ -2,7 +2,7 @@
   "action": "addPlayer",
   "data": {
     "playerNickname": "Bill Gates",
-    "color": "BLUE"
+    "lobbySize": 2
   }
 },{
   "action": "setPlayerCard",
@@ -15,15 +15,11 @@
   "action": "addPlayer",
   "data": {
     "playerNickname": "Steve Jobs",
-    "color": "GREY"
+    "lobbySize": 2
   }
-},{
-  "action": "setPlayerCard",
-  "data": {
-    "playerNickname": "Steve Jobs",
-    "card": "Athena"
-  }
-},
+}, {"action":"setPickedCards", "data":{"cards":["Apollo", "Athena"]}}
+,
+  {"action":"setPlayerCard", "data": {"playerNickname":  "nick", "card": "card"}},
   {
     "action": "getWorkersID",
     "data": {

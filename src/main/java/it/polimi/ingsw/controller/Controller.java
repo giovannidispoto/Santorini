@@ -57,14 +57,6 @@ public class Controller {
         }
     }
 
-    /**
-     * Set lobby size
-     * @param playerNickname
-     * @param lobbySize
-     */
-    public void setLobbySize(String playerNickname, int lobbySize){
-        this.lobbySize = lobbySize;
-    }
 
     /**
      * Set picked cards
@@ -73,8 +65,9 @@ public class Controller {
     public void setPickedCards(List<String> cards){
        for(int i = 0; i < cards.size(); i++){
            pickedCards.add(deck.getDivinityCard(cards.get(i)));
-           requestSelectCard(getNextPlayer(firstPlayer));
        }
+
+        requestSelectCard(getNextPlayer(firstPlayer));
     }
 
     /**
@@ -85,7 +78,7 @@ public class Controller {
     }
 
     private String getNextPlayer(String player){
-        return playersInLobby.get(playersInLobby.indexOf(player) + 1 % playersInLobby.size());
+        return playersInLobby.get(((playersInLobby.indexOf(player) + 1) % playersInLobby.size()));
     }
 
     /**
@@ -106,7 +99,7 @@ public class Controller {
         if(getNextPlayer(playerNickname).equals(firstPlayer)){
             Player player = new Player(firstPlayer, colors.get(0));
             player.setPlayerCard(pickedCards.get(0));
-            players.add(p);
+            players.add(player);
             Battlefield.getBattlefieldInstance().attach(handlers.get(firstPlayer));
         }
         else
@@ -119,7 +112,10 @@ public class Controller {
      * @param playerNickname unique nickname of the player
      * @param lobbySize lobby size
      */
-    public void addNewPlayer(String playerNickname, int lobbySize) {
+    public boolean addNewPlayer(String playerNickname, int lobbySize) {
+        if(playersInLobby.contains(playerNickname))
+            return false;
+
         if(this.lobbySize == 0){
             this.lobbySize = lobbySize;
         }
@@ -128,9 +124,11 @@ public class Controller {
 
         if(playersInLobby.size() == lobbySize){
             //startMatch();
-           this.firstPlayer = playersInLobby.get(new Random().nextInt(playersInLobby.size()));
+           this.firstPlayer = playersInLobby.get(0);
+           handlers.get(firstPlayer).response(new Gson().toJson(new BasicMessageInterface("setPickedCard", null)));
         }
 
+        return true;
     }
 
 
@@ -139,7 +137,8 @@ public class Controller {
      * @return
      */
     public Deck getDeck(){
-        return this.deck;
+        deck = deck.getDeckAllowed(lobbySize);
+        return deck;
     }
 
 

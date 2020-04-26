@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Deck class model the effective deck composed by DivinityCards
@@ -31,4 +32,12 @@ public class Deck {
         return div;
     }
 
+    /**
+     * Gets cards allowed for lobby size
+     * @param size size of lobby
+     * @return deck
+     */
+    public Deck getDeckAllowed(int size){
+       return new Deck(listOfCards.stream().filter(el->el.getNumberOfPlayersAllowed() >= size).collect(Collectors.toUnmodifiableList()));
+    }
 }

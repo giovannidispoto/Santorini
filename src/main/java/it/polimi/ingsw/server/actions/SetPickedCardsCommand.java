@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.actions;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -18,6 +19,7 @@ public class SetPickedCardsCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         controller.setPickedCards(cards);
         result = true;
+        handler.response(new Gson().toJson(new BasicMessageInterface("setPickedCardsResponse", this)));
     }
 
     public boolean getResult(){
