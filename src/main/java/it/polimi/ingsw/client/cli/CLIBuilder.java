@@ -371,7 +371,7 @@ public class CLIBuilder implements UIActions {
         //Add new player to the server lobby
         clientController.getPlayersRequest();
         generatedColor=COLORSMAP.get(clientController.getPlayers().size());
-        clientController.addPlayerRequest(clientController.getPlayerNickname(),generatedColor);
+        //clientController.addPlayerRequest(clientController.getPlayerNickname(),generatedColor);
         //Optional lobby size set
         clientController.getPlayersRequest();
         System.out.println("Numero giocatori sul server: "+clientController.getPlayers().size());
@@ -407,7 +407,7 @@ public class CLIBuilder implements UIActions {
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
             }
-            clientController.setLobbySizeRequest(clientController.getPlayerNickname(),userValue);
+            //clientController.setLobbySizeRequest(clientController.getPlayerNickname(),userValue);
             System.out.print(WAITSTART);
             rowCounter = 8;
         }

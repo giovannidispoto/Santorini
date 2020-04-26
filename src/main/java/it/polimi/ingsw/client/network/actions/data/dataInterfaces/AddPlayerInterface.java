@@ -1,19 +1,18 @@
 package it.polimi.ingsw.client.network.actions.data.dataInterfaces;
 
-import it.polimi.ingsw.client.clientModel.basic.Color;
 
 public class AddPlayerInterface {
         private String playerNickname;
-        private Color color;
+        private int lobbySize;
 
         /**
          * Create command
          *
-         * @param playerNickname player
-         * @param color          color
+         * @param playerNickname player NickName
+         * @param lobbySize lobby type es:(2-3 players)
          */
-        public AddPlayerInterface(String playerNickname, Color color) {
+        public AddPlayerInterface(String playerNickname, int lobbySize) {
             this.playerNickname = playerNickname;
-            this.color = color;
+            this.lobbySize = lobbySize;
         }
 }

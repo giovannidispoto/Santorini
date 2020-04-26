@@ -24,6 +24,14 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         Command c = null;
 
         switch(jsonElement.getAsJsonObject().get("action").getAsString()){
+            case "addPlayer":
+                c = new AddPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("validNick").getAsBoolean(),
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbyState").getAsBoolean(),
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
+                break;
+            case "lobbyReady":
+                c = new LobbyReadyCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
+                break;
             case "battlefieldUpdate":
                 c = new BattlefieldUpdateCommand(deserializeCellMatrix(jsonElement));
                 break;

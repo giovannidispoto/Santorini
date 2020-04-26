@@ -31,20 +31,29 @@ class ClientSocketConnectionTest {
         assertTrue(clientSocketConnection.setServerName(serverName4));
     }
 
-    @Test
+    //@Test
     //Test correct messages and connection with server (need a listener server)
     void connectionServerTest(){
         ClientController clientController = new ClientController();
-        ClientSocketConnection clientSocketConnection = new ClientSocketConnection( clientController);
+        clientController.startNetwork();
 
         String serverName1 = "127.0.0.3";
         //check syntax
-        assertTrue(clientSocketConnection.setServerName(serverName1));
+        assertTrue(clientController.getSocketConnection().setServerName(serverName1));
         //Need Server UP listening on port 1337 with IP 127.0.0.3
-        assertTrue(clientSocketConnection.startConnection());
+        assertTrue(clientController.getSocketConnection().startConnection());
         //On Server: respective JSON messages
-        clientController.addPlayerRequest("Steve Jobs", Color.GREY);
-        clientController.setPlayerNicknameRequest("Bill Gates");
+        clientController.addPlayerRequest("Bill Gates", 2);
+        System.out.println(clientController.waitLobbyReady());
+        System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
+        clientController.startNetwork();
+        clientController.getSocketConnection().setServerName(serverName1);
+        System.out.println(clientController.getSocketConnection().startConnection());
+        System.out.println("socket is closed:" + clientController.getSocketConnection().isSocketClosed());
+        clientController.addPlayerRequest("Bill", 2);
+        clientController.getPlayersRequest();
+
+        /*
         clientController.getWorkersIDRequest("Steve Jobs");
         clientController.getPlayersRequest();
         clientController.setInitialWorkerPositionRequest("Bill Gates", 0, 0,0);
@@ -52,10 +61,11 @@ class ClientSocketConnectionTest {
         clientController.selectWorkerRequest("Steve Jobs", 2);
         clientController.playStepRequest(1,4);
         clientController.skipStepRequest();
-        clientController.setLobbySizeRequest("Steve Jobs", 3);
+
+         */
 
         //Only if you send messages from server
-        while(true) {/*send message & debug*/}
+        //while(true) {/*send message & debug*/}
     }
 
 

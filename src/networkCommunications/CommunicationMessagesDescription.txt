@@ -19,7 +19,7 @@
     then sends the response
     }
 2
-    {   -lobbyReady:    {"action":"lobbyReady","data":{"lobby":2}}  BROADCAST MESSAGE
+    {   -lobbyReady:    {"action":"lobbyReady","data":{"lobbySize":2}}  BROADCAST MESSAGE
     <not strictly necessary>
     Confirms to the clients that the lobby is ready and the game will continue with the random choice of the god player
     }

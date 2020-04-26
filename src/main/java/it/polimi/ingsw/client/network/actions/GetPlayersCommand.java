@@ -24,6 +24,10 @@ public class GetPlayersCommand implements Command {
      */
     @Override
     public void execute(ClientController clientController) {
-        clientController.setPlayers(players);
+        clientController.setPlayers(this.players);
+        //Awakens who was waiting Server Response
+        synchronized (clientController.lockObjects.lockGetPlayers){
+            clientController.lockObjects.lockGetPlayers.notify();
+        }
     }
 }

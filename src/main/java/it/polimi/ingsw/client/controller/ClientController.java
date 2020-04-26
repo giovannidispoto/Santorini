@@ -10,7 +10,6 @@ import it.polimi.ingsw.client.network.ServerHandler;
 import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicActionInterface;
 import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.*;
-import it.polimi.ingsw.client.clientModel.basic.Color;
 
 
 /**
@@ -21,9 +20,17 @@ public class ClientController {
     private List<PlayerInterface> players;
     private List<DivinityCard> cards;
     private List<Integer> workersID;
+    private Step turn;
+    //Lobby
+    private Boolean validNick, lobbyState;
+    private int currentLobbySize;
+    //Utils - Locks for Wait & Notify
+    public LockObjects lockObjects;
+    public Thread controllerThread;
+    //connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
-    private Step turn;
+
 
     /**
      * ClientController Constructor
@@ -32,23 +39,45 @@ public class ClientController {
         this.players = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.workersID = new ArrayList<>();
+        this.lockObjects = new LockObjects();
+        this.controllerThread = Thread.currentThread();
+    }
+    //Start Network
+    public void startNetwork(){
+        this.socketConnection = new ClientSocketConnection(this);
     }
 
+    //Launch Interrupt for Controller Thread
+    public void interruptController(){
+        this.controllerThread.interrupt();
+    }
+
+    //Wait Request to Controller
+
+    /** Wait until you receive the LobbyReady message from the server
+     *
+     * @return  false if there was an error, true method performed without errors
+     */
+    public Boolean waitLobbyReady(){
+        synchronized (lockObjects.lockLobbyReady){
+            return lockObjects.setWait(lockObjects.lockLobbyReady);
+        }
+    }
 
     //Request Messages Area
-    public void setLobbySizeRequest(String playerNickname, int lobbySize){
-        StartLobbyInterface data = new StartLobbyInterface(playerNickname, lobbySize);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("startLobby", data)));
-    }
 
-    public void addPlayerRequest(String playerNickname, Color color){
-        AddPlayerInterface data = new AddPlayerInterface(playerNickname, color);
+    /** Communicates to the server the intention to join the game
+     *  N.B: Blocking request until a response is received
+     * @param playerNickname    NickName Choose by the player
+     * @param lobbySize Preferred size of the lobby
+     * @return  false if there was an error, true method performed without errors
+     */
+    public Boolean addPlayerRequest(String playerNickname, int lobbySize){
+        AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
-    }
-
-    public void setPlayerNicknameRequest(String playerNickname){
-        SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerReady", data)));
+        synchronized (lockObjects.lockAddPlayer){
+            return lockObjects.setWait(lockObjects.lockAddPlayer);
+        }
     }
 
     public void getWorkersIDRequest(String playerNickname){
@@ -56,8 +85,11 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
     }
 
-    public void getPlayersRequest(){
+    public Boolean getPlayersRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
+        synchronized (lockObjects.lockGetPlayers){
+            return lockObjects.setWait(lockObjects.lockGetPlayers);
+        }
     }
 
     public void setInitialWorkerPositionRequest(String playerNickname, int workerID, int row, int col){
@@ -85,6 +117,29 @@ public class ClientController {
     }
 
     //Getter & Setter
+    public Boolean getValidNick() {
+        return validNick;
+    }
+
+    public void setValidNick(Boolean validNick) {
+        this.validNick = validNick;
+    }
+
+    public Boolean getLobbyState() {
+        return lobbyState;
+    }
+
+    public void setLobbyState(Boolean lobbyState) {
+        this.lobbyState = lobbyState;
+    }
+
+    public int getCurrentLobbySize() {
+        return currentLobbySize;
+    }
+
+    public void setCurrentLobbySize(int currentLobbySize) {
+        this.currentLobbySize = currentLobbySize;
+    }
 
     /**
      * Gets socketConnection

@@ -8,11 +8,11 @@ public class ClientMain {
     public static void main(String[] args) {
         //Create client objects
         ClientController clientController = new ClientController();
-        ClientSocketConnection socket = new ClientSocketConnection(clientController);
+        clientController.startNetwork();
 
         //CLI
         CLIBuilder cli = new CLIBuilder();
-        cli.setServerInformations(socket,clientController);
+        cli.setServerInformations(clientController.getSocketConnection(),clientController);
 
         /*
             if(args[0].equals("cli")){
