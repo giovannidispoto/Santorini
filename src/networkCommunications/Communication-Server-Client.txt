@@ -2,17 +2,19 @@
 
 -------------------------------------------------------------------------------------- MATCH CREATION
 (Do)
-	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobby":2}}
-	Added/NickNameExist		<---------------------------------	Response			(Server check nick presence in every lobby)
-(While nick invalid)
+	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobbySize":2}}
+	check           		<---------------------------------	Response			(Server check Nick presence & lobby Decision)
+(While Nick or lobbyState invalid)
 	
 	LobbyReady				<---------------------------------	lobbyReady			(Server start match when a Lobby is Full, notify all client in Lobby by nick)
-	ok						<---------------------------------	godChooseCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
-	godChooseCardsResponse	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
+	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
+	getDeckRequest 			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
+    DeckFull				<---------------------------------	Response
+	setPickedCardsResponse	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 	
 (For players)
-	ok						<---------------------------------	playerChooseCard	(Player chose 1 card, send deck(little))
-	playerChooseCard		--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player)
+	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
+	setPlayerCardResponse	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
 	getWorkersID			--------------------------------->	ok
     WorkersID				<---------------------------------	Response
 (For Workers)

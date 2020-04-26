@@ -7,37 +7,46 @@
 ------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------   MATCH CREATION
 1
-    {   -addPlayerRequest:   {"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobby":2}}
+    {   -addPlayerRequest:   {"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobbySize":2}}
 
     communicates to the server the intention to join the game,
     giving the server the (unique) nickname and the the lobby size
 
-        -ServerResponse:    {"action":"addPlayer","data":{"valid":bool}}
+        -ServerResponse:    {"action":"addPlayer","data":{"validNick":bool, "lobbyState":bool, "lobbySize":2}}
 
-    the server verifies that there is no other player with the same nickname
-    in all lobbies add player in the lobby and send a Boolean response to the client
+    the server checks if it has to open a new lobby, if it is opened in size lobbySize,
+    if it is already open it checks if lobbySize is the same if it is checked that there is no other nickname,
+    then sends the response
     }
 2
-    {   -lobbyReady:    {"action":"lobbyReady","data":{"lobby":2}}
-    not strictly necessary
+    {   -lobbyReady:    {"action":"lobbyReady","data":{"lobby":2}}  BROADCAST MESSAGE
+    <not strictly necessary>
+    Confirms to the clients that the lobby is ready and the game will continue with the random choice of the god player
     }
 3
-    {   -chooseCards:   {"action":"godChooseCards","data":{"playerNickname":"Steve Jobs","lobby":2}}   BROADCAST MESSAGE
+    {   -chooseCards:   {"action":"setPickedCards","data":{"playerNickname":"Steve Jobs","lobby":2}}   BROADCAST MESSAGE
 
-    SelectedPlayer whose nickname will be in the message, choose 3 or 2 cards according to the lobby size,
+    God Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size,
     the other players will receive the message will unlock the thread
     but will not choose the cards because it will not be their nickname
 
-        -ClientResponse:    {"action":"godChooseCards","data":{"deck":["Athena","Apollo"]}}
+            {   -getDeckRequest:    {"action":"getDeck"}
+            Only the god player can call this function which requires the deck to select the cards
+
+                -ServerResponse:    {"action":"getDeck","data":{"deck":[CARDS]}}
+            Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size)
+            }
+
+        -ClientResponse:    {"action":"setPickedCards","data":{"deck":["Athena","Apollo"]}}
     the client's task will be to select the cards from the complete deck based on the number of players allowed
     (the server can recheck)
     }
 4
-    {   -playerChooseCard:   {"action":"playerChooseCard","data":{"deck":["Athena","Apollo"]}}
+    {   -playerChooseCard:   {"action":"setPlayerCard","data":{"deck":["Athena","Apollo"]}}
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
 
-        -ClientResponse:    {"action":"playerChooseCard","data":{"card":"Athena"}}
+        -ClientResponse:    {"action":"setPlayerCard","data":{"card":"Athena"}}
 
     the server receives the chosen card, binds it to the player together with a color,
     removes the card from the deck to be sent to the next player
