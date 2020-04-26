@@ -32,21 +32,12 @@ public class AddPlayerCommand implements Command {
      * @param handler context
      */
     public void execute(Controller controller, ClientHandler handler) {
-            int result = controller.addNewPlayer(playerNickname, lobbySize);
-            if(result == 0){
-                controller.registerHandler(playerNickname, handler);
-                System.out.println("Added new player: " + playerNickname);
-                validNick = true;
-                lobbyState = true;
-            }
-            if(result == 1) {
-                validNick = false;
-                lobbyState = false;
-            }
-            if(result == 2) {
-                validNick = true;
-                lobbyState = false;
-            }
+            validNick = controller.isValidNickame(playerNickname);
+            lobbyState = controller.isValidLobby(lobbySize);
+            
+            if(validNick && lobbyState)
+                controller.addNewPlayer(playerNickname, lobbySize);
+
             handler.response(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
     }
 }

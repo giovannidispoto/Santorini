@@ -106,6 +106,15 @@ public class Controller {
             requestSelectCard(getNextPlayer(playerNickname));
     }
 
+    /**
+     *
+     * @param playerNickname
+     * @return
+     */
+    public boolean isPlayerNicknameInLobby(String playerNickname){
+        return playersInLobby.contains(playerNickname);
+    }
+
 
     /**
      * Add new player in the game
@@ -324,5 +333,24 @@ public class Controller {
         return w.get();
     }
 
+    /**
+     * Check if nickname is valid
+     * @param playerNickname
+     * @return
+     */
+    public boolean isValidNickame(String playerNickname) {
+        return !playersInLobby.contains(playerNickname);
+    }
 
+    /**
+     * Check if lobbySize is valid
+     * @param lobbySize
+     * @return
+     */
+    public boolean isValidLobby(int lobbySize) {
+        if(this.lobbySize == 0 || this.lobbySize == lobbySize)
+            return true;
+
+        return false;
+    }
 }
