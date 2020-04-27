@@ -15,12 +15,12 @@ public class ClientMain {
         String cliColor=""; //remove "dark"
         CLIBuilder commandLine = new CLIBuilder(cliColor);
         commandLine.setupConnection(clientController);
-
+        clientController.waitSetPickedCards();
+        commandLine.pickCards(clientController);
+        /*
             //Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
             if(args[0].equals("cli")){
                 String colorScheme;
-                /*  Read the requested color scheme from the terminal (if the user has entered one)
-                    Otherwise use the default one (dark) */
                 if(args[1]!=null)
                     colorScheme=args[1];
                 else
@@ -31,5 +31,7 @@ public class ClientMain {
             else{
                 GUIBuilder gui = new GUIBuilder();
             }
+
+         */
     }
 }

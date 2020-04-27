@@ -70,7 +70,8 @@ public class CLIBuilder implements UIActions {
 
     private static final String HANDSHAKING_ERROR = "Invalid IP...retry! • ";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
-    private static final String UNAVAILABLE_LOBBY = "The selected lobby is unavailable";
+    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full... there is no place for you\n" +
+            "Don't be sad, we still love you... 🧸❤️";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
 
 
@@ -421,8 +422,12 @@ public class CLIBuilder implements UIActions {
         clientController.addPlayerRequest(clientController.getPlayerNickname(),userValue);
         System.out.print(LOBBY_JOIN+NEW_LINE);
         //Troubles with the lobby...
-        while(!clientController.getValidNick() || !clientController.getLobbyState()){
-
+        //# Full Lobby # -> we close the client
+        if(!clientController.getLobbyState()){
+            System.out.print(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+"Closing the program...");
+            System.exit(0);
+        }
+        while(!clientController.getValidNick()){
             /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
                 Server IP 🌍
                 >
@@ -436,42 +441,13 @@ public class CLIBuilder implements UIActions {
                 There is already a player with this nickname in the lobby...retry!
                 > |
             */
-            if(!clientController.getValidNick()){
                 System.out.print(ANSI_RED+NICKNAME_ERROR+NEW_LINE+ANSI_WHITE+CLI_INPUT);
                 userInput=consoleScanner.nextLine();
                 clientController.setPlayerNickname(userInput);
                 clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobby);
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-            }
-            /*  # Lobby Unavailable # -> There are troubles with the selected lobby
-                Server IP 🌍
-                >
-                Handshaking with 192.168.1.9 on port 1337...
-                Connection established!
-                Nickname 👾
-                >
-                Lobby Size 📦
-                >
-                Joining the lobby...⛩
-                The selected lobby is unavailable
-                > Migrating to the other one...|
-            */
-            else{
-                System.out.print(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+CLI_INPUT+CLIENT_MIGRATION);
-                if(chosenLobby==2){
-                    clientController.addPlayerRequest(chosenNickname,3);
-                    System.out.print(String.format(CURSOR_UP,2));
-                    System.out.print(CLEAN);
-                }
-                else{
-                    clientController.addPlayerRequest(chosenNickname,2);
-                    System.out.print(String.format(CURSOR_UP,2));
-                    System.out.print(CLEAN);
-                }
-            }
         }
-
         /*  # Setup Done! #
             Server IP 🌍
             >
