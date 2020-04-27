@@ -345,4 +345,12 @@ public class Controller {
     public boolean isValidLobby(int lobbySize) {
         return this.lobbySize == 0 || this.lobbySize == lobbySize;
     }
+
+    /**
+     * Check if lobby is full
+     * @return
+     */
+    public boolean isFullLobby(){
+        return lobbySize != 0 && lobbySize == playersInLobby.size();
+    }
 }

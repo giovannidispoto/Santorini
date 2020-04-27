@@ -15,6 +15,7 @@ public class AddPlayerCommand implements Command {
     private int lobbySize;
     private boolean lobbyState;
     private boolean validNick;
+    private boolean fullLobby;
 
     /**
      * Create command
@@ -34,8 +35,9 @@ public class AddPlayerCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
             validNick = controller.isValidNickame(playerNickname);
             lobbyState = controller.isValidLobby(lobbySize);
+            fullLobby = controller.isFullLobby();
 
-            if(validNick && lobbyState){
+            if(validNick && lobbyState && !fullLobby){
                 controller.registerHandler(playerNickname,handler);
                 controller.addNewPlayer(playerNickname, lobbySize);
             }
