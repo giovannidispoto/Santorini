@@ -1,5 +1,21 @@
 [
   {
+    "action":"addPlayerResponse",
+    "data":{
+      "playerNickname":"Bill Gates",
+      "lobbySize":2,
+      "validNick":true,
+      "lobbyState":true
+    }
+  },
+  {
+    "action":"setPickedCards",
+    "data":{
+      "playerNickname":"Steve Jobs",
+      "lobbySize":2
+    }
+  },
+  {
     "action": "getDeckResponse",
     "data": {
       "deck": {
@@ -91,23 +107,261 @@
     }
   },
   {
-  "action":"addPlayerResponse",
-  "data":{
-    "playerNickname":"Bill Gates",
-    "lobbySize":2,
-    "validNick":true,
-    "lobbyState":true
+    "action":"setPlayerCard",
+    "data":{
+      "cards":[
+        "Athena",
+        "Apollo"
+      ]
     }
   },
   {
-    "action": "getWorkersID",
+    "action": "getWorkersIDResponse",
     "data": [
       2,
       3
     ]
   },
   {
-    "action": "getPlayers",
+    "action":"getBattlefieldResponse",
+    "data":{
+      "cellMatrix":[
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "player":"Steve Jobs",
+            "workerColor":"GREY",
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "action":"setBattlefield",
+    "data":{
+      "cellMatrix":[
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "player":"Steve Jobs",
+            "workerColor":"GREY",
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ],
+        [
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          },
+          {
+            "height":0,
+            "lastBlock":"GROUND"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "action": "setPlayers",
     "data": [
       {
         "playerNickname": "Bill Gates",
@@ -126,125 +380,12 @@
       }
     ]
   },
-  {
-    "action": "battlefieldUpdate",
-    "data": {
-      "cellMatrix": [
-        [
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "player": "Steve Jobs",
-            "workerColor": "GREY",
-            "height": 0,
-            "lastBlock": "GROUND"
-          }
-        ],
-        [
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          }
-        ],
-        [
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          }
-        ],
-        [
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          }
-        ],
-        [
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          },
-          {
-            "height": 0,
-            "lastBlock": "GROUND"
-          }
-        ]
-      ]
-    }
-  },
+
+
+
+
+
+
   {
     "action": "workerViewUpdate",
     "data": {

@@ -43,12 +43,32 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().setServerName(serverName1));
         //Need Server UP listening on port 1337 with IP 127.0.0.3
         assertTrue(clientController.getSocketConnection().startConnection());
-        //On Server: respective JSON messages
 
+        //On Server: respective JSON messages (Attention blockingRequest)
+
+        //-------------------------------------------------------------------------------------- MATCH CREATION
+        //1
+        clientController.addPlayerRequest("Bill",2);
+        //2
+        clientController.getDeckRequest();
+        //3
         List<String> cards = new ArrayList<>();
         cards.add("Athena");
-        cards.add("Chrono");
+        cards.add("Apollo");
         clientController.setPickedCardsRequest(cards);
+        //4
+        clientController.setPlayerCardRequest("Athena");
+        //5
+        clientController.getWorkersIDRequest("Bill");
+        //6
+        //clientController.getBattlefieldRequest();
+        //7
+        clientController.setInitialWorkerPositionRequest("Bill",0,4,4);
+        //-------------------------------------------------------------------------------------- START MATCH
+
+
+
+        clientController.waitSetPlayerCard();
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}

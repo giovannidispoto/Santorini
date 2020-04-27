@@ -2,37 +2,37 @@
 
 -------------------------------------------------------------------------------------- MATCH CREATION
 (Do)
-	addPlayerRequest		--------------------------------->	ok					{"action":"addPlayer","data":{"playerNickname":"Steve Jobs","lobbySize":2}}
-	check           		<---------------------------------	Response			(Server check Nick presence & lobby Decision)
+	addPlayer       		--------------------------------->	ok					(Communicates to the server the intention to join the game)
+	check           		<---------------------------------	addPlayerResponse	(Server check Nick presence & lobby Decision)
 (While Nick or lobbyState invalid)
 
     waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
 
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
-	getDeckRequest 			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
-    DeckFull				<---------------------------------	Response
-	setPickedCardsResponse	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
+	getDeck      			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
+    ok          			<---------------------------------	getDeckResponse
+	setPickedCards        	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 
 	waitSetPlayerCard   (Unlock the player when asked to choose the card)
 
 (For players)
 	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
-	setPlayerCardResponse	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
+	setPlayerCard         	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
 	getWorkersID			--------------------------------->	ok
-    WorkersID				<---------------------------------	Response
+    ok      				<---------------------------------	getWorkersIDResponse
 (For Workers)
 	getBattlefield			--------------------------------->	ok
-	Battlefield				<---------------------------------	Response
+	ok      				<---------------------------------	getBattlefieldResponse
 	setInitialWorkerPosition--------------------------------->	ok
 (end)
 
     waitSetBattlefield
 
-	Battlefield				<---------------------------------	setBattlefield		(notify all)
+	ok(Battlefield)			<---------------------------------	setBattlefield		(notify all)
 
 	waitSetPlayers
 
-	Players					<---------------------------------	setPlayers			(notify all (nick+color+card))
+	ok(Players)				<---------------------------------	setPlayers			(notify all (nick+color+card))
 (end)
 
 -------------------------------------------------------------------------------------- START MATCH

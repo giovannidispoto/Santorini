@@ -39,6 +39,12 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
             case "getDeckResponse":
                 c = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetDeckCommand.class);
                 break;
+            case "setPlayerCard":
+                c = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetPlayerCardCommand.class);
+                break;
+            case "getWorkersIDResponse":
+                c = new GetWorkersIDCommand(deserializeWorkersID(jsonElement));
+                break;
             case "battlefieldUpdate":
                 c = new BattlefieldUpdateCommand(deserializeCellMatrix(jsonElement));
                 break;
@@ -47,9 +53,6 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 break;
             case "getPlayers":
                 c = new GetPlayersCommand(deserializePlayers(jsonElement));
-                break;
-            case "getWorkersID":
-                c = new GetWorkersIDCommand(deserializeWorkersID(jsonElement));
                 break;
             default:
                 c = new NotExistCommand();

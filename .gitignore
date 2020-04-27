@@ -28,8 +28,12 @@
 !src/networkCommunications/
 !src/networkCommunications/*.txt
 !src/networkCommunications/netJson/
-!src/networkCommunications/netJson/*.json
-!src/networkCommunications/netJson/*.txt
+!src/networkCommunications/netJson/msgtoClient/
+!src/networkCommunications/netJson/msgtoClient/*.json
+!src/networkCommunications/netJson/msgtoClient/*.txt
+!src/networkCommunications/netJson/msgToServer/
+!src/networkCommunications/netJson/msgToServer/*.json
+!src/networkCommunications/netJson/msgToServer/*.txt
 
 #src/main/	(rules = 2) (this folder has it's own gitignore)
 !src/main/

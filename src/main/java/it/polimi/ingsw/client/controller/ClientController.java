@@ -24,11 +24,12 @@ public class ClientController {
     private List<Integer> workersID;
     private Step turn;
     //Lobby
-    private boolean validNick;
-    private boolean lobbyState;
-    private boolean fullLobby;
-    private String godPlayer;
-    private Deck cardsDeck;
+    private boolean validNick;  //Indicates if your nickname is valid
+    private boolean lobbyState; //Indicates if you are registered with a lobby
+    private boolean fullLobby;  //Indicates if the server is already busy with a game
+    private String godPlayer;   //Player choosing godCards from cardsDeck
+    private List<String> godCards;  //Cards chosen by GodPlayer
+    private Deck cardsDeck; //Deck sent by the server containing the playable cards in this lobby
     private int currentLobbySize;
     //Utils - Locks for Wait & Notify
     public LockObjects lockObjects;
@@ -123,8 +124,18 @@ public class ClientController {
      * @param cards list of strings, where each string is the name of the card chosen in cardsDeck
      */
     public void setPickedCardsRequest(List<String> cards){
-        PickedCardsInterface pickedCards = new PickedCardsInterface(cards);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", pickedCards)));
+        PickedCardsInterface data = new PickedCardsInterface(cards);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", data)));
+    }
+
+    /** Communicate to the server the card chosen by the Player
+     *  (choice between possible cards sent by the server with the mirror command)
+     *
+     * @param cardName  name of the chosen card
+     */
+    public void setPlayerCardRequest(String cardName){
+        SetPlayerCardInterface data = new SetPlayerCardInterface(cardName);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
 
     public void getWorkersIDRequest(String playerNickname){
@@ -165,6 +176,14 @@ public class ClientController {
 
     //----------------------------------------------------------------------------------------------------------------
     //Getter & Setter
+    public List<String> getGodCards() {
+        return godCards;
+    }
+
+    public void setGodCards(List<String> godCards) {
+        this.godCards = godCards;
+    }
+
     public boolean isFullLobby() {
         return fullLobby;
     }
