@@ -24,7 +24,9 @@ public class ClientController {
     private List<Integer> workersID;
     private Step turn;
     //Lobby
-    private Boolean validNick, lobbyState;
+    private boolean validNick;
+    private boolean lobbyState;
+    private boolean fullLobby;
     private String godPlayer;
     private Deck cardsDeck;
     private int currentLobbySize;
@@ -69,7 +71,7 @@ public class ClientController {
      *
      * @return  false: if there was an error, true: method performed without errors
      */
-    public Boolean waitSetPickedCards(){
+    public boolean waitSetPickedCards(){
         synchronized (lockObjects.lockSetPickedCards){
             return lockObjects.setWait(lockObjects.lockSetPickedCards);
         }
@@ -84,7 +86,7 @@ public class ClientController {
      * @param lobbySize Preferred size of the lobby
      * @return  false: if there was an error, true: method performed without errors
      */
-    public Boolean addPlayerRequest(String playerNickname, int lobbySize){
+    public boolean addPlayerRequest(String playerNickname, int lobbySize){
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
         synchronized (lockObjects.lockAddPlayer){
@@ -98,7 +100,7 @@ public class ClientController {
      *
      * @return  false: if there was an error, true: method performed without errors
      */
-    public Boolean getDeckRequest(){
+    public boolean getDeckRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
         synchronized (lockObjects.lockGetDeck){
             return lockObjects.setWait(lockObjects.lockGetDeck);
@@ -111,7 +113,8 @@ public class ClientController {
      * @param cards list of strings, where each string is the name of the card chosen in cardsDeck
      */
     public void setPickedCardsRequest(List<String> cards){
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", cards)));
+        PickedCardsInterface pickedCards = new PickedCardsInterface(cards);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", pickedCards)));
     }
 
     public void getWorkersIDRequest(String playerNickname){
@@ -119,7 +122,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
     }
 
-    public Boolean getPlayersRequest(){
+    public boolean getPlayersRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
         synchronized (lockObjects.lockGetPlayers){
             return lockObjects.setWait(lockObjects.lockGetPlayers);
@@ -141,7 +144,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
     }
 
-    public void startTurnRequest(String playerNickname, Boolean basicTurn){
+    public void startTurnRequest(String playerNickname, boolean basicTurn){
         StartTurnInterface data = new StartTurnInterface(playerNickname, basicTurn);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("startTurn", data)));
     }
@@ -152,6 +155,14 @@ public class ClientController {
 
     //----------------------------------------------------------------------------------------------------------------
     //Getter & Setter
+    public boolean isFullLobby() {
+        return fullLobby;
+    }
+
+    public void setFullLobby(boolean fullLobby) {
+        this.fullLobby = fullLobby;
+    }
+
     public CellInterface[][] getWorkerView() {
         return workerView;
     }
@@ -180,19 +191,19 @@ public class ClientController {
         this.godPlayer = godPlayer;
     }
 
-    public Boolean getValidNick() {
+    public boolean getValidNick() {
         return validNick;
     }
 
-    public void setValidNick(Boolean validNick) {
+    public void setValidNick(boolean validNick) {
         this.validNick = validNick;
     }
 
-    public Boolean getLobbyState() {
+    public boolean getLobbyState() {
         return lobbyState;
     }
 
-    public void setLobbyState(Boolean lobbyState) {
+    public void setLobbyState(boolean lobbyState) {
         this.lobbyState = lobbyState;
     }
 
@@ -206,10 +217,6 @@ public class ClientController {
 
     public ClientSocketConnection getSocketConnection() {
         return socketConnection;
-    }
-
-    public void setSocketConnection(ClientSocketConnection socketConnection) {
-        this.socketConnection = socketConnection;
     }
 
     public String getPlayerNickname() {

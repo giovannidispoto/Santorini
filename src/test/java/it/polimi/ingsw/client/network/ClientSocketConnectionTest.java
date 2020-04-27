@@ -1,9 +1,10 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.controller.ClientController;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientSocketConnectionTest {
@@ -44,7 +45,10 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
         //On Server: respective JSON messages
 
-        clientController.addPlayerRequest("dario", 2);
+        List<String> cards = new ArrayList<>();
+        cards.add("Athena");
+        cards.add("Chrono");
+        clientController.setPickedCardsRequest(cards);
 
         //Only if you send messages from server
         //while(true) {/*send message & debug*/}

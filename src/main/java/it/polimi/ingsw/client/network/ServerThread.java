@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class ServerThread implements Runnable {
 
     private final Socket socket;
-    private ServerHandler serverHandler;
+    private final ServerHandler serverHandler;
     private ClientController clientController;
     private PrintWriter out;
 
@@ -48,10 +49,12 @@ public class ServerThread implements Runnable {
             }
             //close streams and socket
             in.close();
-            out.close();
-            socket.close();
-        }catch (IOException e){
+            this.out.close();
+            this.socket.close();
+        }catch (IOException  | NoSuchElementException e){
             e.printStackTrace();
+            System.out.println("Input Scanner Exception");
+            //TODO: debug
         }
     }
 
@@ -60,7 +63,7 @@ public class ServerThread implements Runnable {
      * @param message to the server
      */
     public void send(String message){
-        out.println(message);
-        out.flush();
+        this.out.println(message);
+        this.out.flush();
     }
 }

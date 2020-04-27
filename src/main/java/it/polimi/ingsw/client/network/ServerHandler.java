@@ -26,7 +26,7 @@ public class ServerHandler{
      * @param m message
      */
     public void process(String m){
-        CommandFactory.from(m).execute(clientController);
+        CommandFactory.from(m).execute(this.clientController);
     }
 
     /**

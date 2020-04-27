@@ -21,16 +21,19 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
      */
     @Override
     public Command deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Command c = null;
+        Command c;
 
         switch(jsonElement.getAsJsonObject().get("action").getAsString()){
             case "addPlayerResponse":
-                c = new AddPlayerCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("validNick").getAsBoolean(),
+                c = new AddPlayerCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("validNick").getAsBoolean(),
                         jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbyState").getAsBoolean(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt(),
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("fullLobby").getAsBoolean());
                 break;
             case "setPickedCards":
-                c = new SetPickedCardsCommand(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(),
+                c = new SetPickedCardsCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(),
                         jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt());
                 break;
             case "getDeckResponse":
@@ -47,6 +50,10 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 break;
             case "getWorkersID":
                 c = new GetWorkersIDCommand(deserializeWorkersID(jsonElement));
+                break;
+            default:
+                c = new NotExistCommand();
+                //TODO: debug
                 break;
         }
 

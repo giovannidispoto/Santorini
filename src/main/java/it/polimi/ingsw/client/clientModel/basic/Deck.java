@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Deck {
 
-    private List<DivinityCard> listOfCards;
+    private final List<DivinityCard> listOfCards;
 
     /**
      * Create new Deck from cards
@@ -19,13 +19,14 @@ public class Deck {
 
     /**
      * Gets divinity card from name
+     * N.B: No case sensitive
      * @param cardName name
      * @return divinity card
      */
     public DivinityCard getDivinityCard(String cardName){
         DivinityCard div = null;
         for(DivinityCard card : listOfCards){
-            if(card.getCardName().equals(cardName))
+            if(card.getCardName().equalsIgnoreCase(cardName))
                 div = card;
         }
         return div;

@@ -23,14 +23,13 @@ public class ClientSocketConnection {
      */
     public ClientSocketConnection(ClientController clientController){
         this.clientController = clientController;
-        clientController.setSocketConnection(this);
     }
 
     /**
      * Start Client Connection with socket to the server
      * @return Boolean, true if connection is established
      */
-    public Boolean startConnection(){
+    public boolean startConnection(){
         //open TCP port
         try {
             clientSocket = new Socket(serverName, serverPort);
@@ -48,7 +47,7 @@ public class ClientSocketConnection {
      * @param serverName String that represent hostname
      * @return true if syntax is correct
      */
-    public Boolean setServerName(String serverName) {
+    public boolean setServerName(String serverName) {
         try {
             InetAddress.getByName(serverName);
         } catch (UnknownHostException e) {
@@ -63,7 +62,7 @@ public class ClientSocketConnection {
      * Check if the Socket with the server is closed
      * @return Boolean, true if socket is closed
      */
-    public Boolean isSocketClosed(){
+    public boolean isSocketClosed(){
         return clientSocket.isClosed();
     }
 
