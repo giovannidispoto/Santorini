@@ -26,7 +26,7 @@ public class Deck {
     public DivinityCard getDivinityCard(String cardName){
         DivinityCard div = null;
         for(DivinityCard card : listOfCards){
-            if(card.getCardName().equals(cardName))
+            if(card.getCardName().equalsIgnoreCase(cardName))
                 div = card;
         }
         return div;
