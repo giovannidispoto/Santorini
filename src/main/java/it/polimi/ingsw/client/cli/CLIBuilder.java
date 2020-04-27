@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.clientModel.basic.Color;
+import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
@@ -84,6 +85,8 @@ public class CLIBuilder implements UIActions {
     private HashMap<Color,String> WorkerColorsMap;
 
     //Cards
+    private static final String PICK_CARDS = "Choose %s cards for this match 🤔";
+    private static final String INVALID_CARD = "Invalid card choice...retry! • ";
     private static final String cardTemplate = "• %s | %s";
 
     //Board Matrix
@@ -266,14 +269,92 @@ public class CLIBuilder implements UIActions {
     /**
      * Renders the entire deck (list of cards)
      */
-    public void renderDeck(){
+    public void renderDeck(ClientController clientController){
+        clientController.getDeckRequest();
+        System.out.print(ANSI_WHITE);
+        for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
+        }
+        rowCounter=clientController.getCardsDeck().getAllCards().size()+1;
     };
 
 
     //UI ACTION METHODS
+
+    /**
+     * Allows the GodPlayer (the game's master) to pick the cards for this match
+     * @param clientController is the controller of the client
+     */
     @Override
     public void pickCards(ClientController clientController) {
+        //Local Variables
+        boolean validInput = false;
+        int numberOfPlayers=clientController.getCurrentLobbySize();
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        List<String> chosenCards = new ArrayList<>();
+        DivinityCard pickedCard;
+        //Clean the CLI from the last phase elements
+        System.out.print(String.format(CURSOR_UP,rowCounter));
+        System.out.print(CLEAN);
+        /*  # Cards Extraction #
+            • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            • ZEUS | Your Build: Your Worker may build a block under itself
+            Choose 3 cards for this match 🤔
+            >
 
+         */
+        renderDeck(clientController);
+        System.out.print(String.format(PICK_CARDS,numberOfPlayers)+NEW_LINE);
+        //Multiple extraction
+        while (numberOfPlayers>0){
+            System.out.print(CLI_INPUT);
+            userInput=consoleScanner.nextLine();
+            pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
+            validInput=true;
+            if(pickedCard==null)
+                validInput=false;
+            else{
+                if(!chosenCards.isEmpty()){
+                    for(String current : chosenCards){
+                        if(pickedCard.getCardName().equals(current)){
+                            validInput=false;}}}}
+
+            while (!validInput){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+                userInput=consoleScanner.nextLine();
+                pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
+                validInput=true;
+                if(pickedCard==null)
+                    validInput=false;
+                else{
+                    if(!chosenCards.isEmpty()){
+                        for(String current : chosenCards){
+                            if(pickedCard.getCardName().equals(current)){
+                                validInput=false;}}}}
+            }
+            chosenCards.add(pickedCard.getCardName());
+            numberOfPlayers--;
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+        }
+        clientController.setPickedCardsRequest(chosenCards);
     }
 
     @Override
@@ -423,7 +504,7 @@ public class CLIBuilder implements UIActions {
         System.out.print(LOBBY_JOIN+NEW_LINE);
         //Troubles with the lobby...
         //# Full Lobby # -> we close the client
-        if(!clientController.getLobbyState()){
+        if(clientController.isFullLobby()){
             System.out.print(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+"Closing the program...");
             System.exit(0);
         }

@@ -16,7 +16,9 @@ public class ClientMain {
         CLIBuilder commandLine = new CLIBuilder(cliColor);
         commandLine.setupConnection(clientController);
         clientController.waitSetPickedCards();
-        commandLine.pickCards(clientController);
+        if(clientController.getGodPlayer().equals(clientController.getPlayerNickname())){
+            commandLine.pickCards(clientController);
+        }
         /*
             //Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
             if(args[0].equals("cli")){

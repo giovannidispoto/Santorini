@@ -31,5 +31,6 @@ public class Deck {
         }
         return div;
     }
+    public List<DivinityCard> getAllCards(){return listOfCards;}
 
 }
