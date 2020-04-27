@@ -77,6 +77,16 @@ public class ClientController {
         }
     }
 
+    /** Wait until you receive SetPlayerCard message from the server
+     *
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean waitSetPlayerCard(){
+        synchronized (lockObjects.lockSetPlayerCard){
+            return lockObjects.setWait(lockObjects.lockSetPlayerCard);
+        }
+    }
+
     //Request Messages Area
 
     /** Communicates to the server the intention to join the game
