@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Deck {
 
-    private final List<DivinityCard> listOfCards;
+    private List<DivinityCard> listOfCards;
 
     /**
      * Create new Deck from cards
@@ -20,7 +20,7 @@ public class Deck {
     /**
      * Gets divinity card from name
      * N.B: No case sensitive
-     * @param cardName name
+     * @param cardName Card Name (English)
      * @return divinity card
      */
     public DivinityCard getDivinityCard(String cardName){
@@ -31,6 +31,16 @@ public class Deck {
         }
         return div;
     }
+
+    //TODO: improve pickCards() in CLIBuilder
+    /** Remove the matching card from the deck by its name
+     *  N:B: No case sensitive
+     * @param cardName  Card Name (English)
+     */
+    public void removeDivinityCard(String cardName){
+        listOfCards.removeIf(card -> card.getCardName().equalsIgnoreCase(cardName));
+    }
+
     public List<DivinityCard> getAllCards(){return listOfCards;}
 
 }
