@@ -33,6 +33,7 @@
             }
 
         -ClientResponse:    {"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
+
     the client's task will be to select the cards from the complete deck based on the number of players allowed
     (the server can recheck)
     }
@@ -40,6 +41,13 @@
     {   -setPlayerCard:   {"action":"setPlayerCard","data":{"cards":["Athena","Apollo"]}}
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
+
+                {   -getCardsInGame:    {"action":"getCardsInGame"}
+                The player asks the server for the deck of cards chosen by GodPlayer
+
+                    -ServerResponse:    {"action":"getCardsInGameResponse","data":{"deck":[DECK.class]}}
+                Server sends to the player, the deck which will contain 2-3 (equals to lobbySize) cards chosen by GodPlayer
+                }
 
         -ClientResponse:    {"action":"setPlayerCard","data":{"card":"Athena"}}
 

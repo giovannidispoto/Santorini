@@ -29,7 +29,11 @@ public class ClientController {
     private boolean fullLobby;  //Indicates if the server is already busy with a game
     private String godPlayer;   //Player choosing godCards from cardsDeck
     private List<String> godCards;  //Cards chosen by GodPlayer
-    private Deck cardsDeck; //Deck sent by the server containing the playable cards in this lobby
+    /** Deck sent by the server
+     *  1)  containing the playable cards in this lobby (from which GodPlayer choose the cards)
+     *  2)  and later the cards chosen by GodPlayer (available for each player)
+     */
+    private Deck cardsDeck;
     private int currentLobbySize;
     //Utils - Locks for Wait & Notify
     public LockObjects lockObjects;

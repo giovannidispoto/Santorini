@@ -14,7 +14,7 @@ public class Deck {
      * @param listOfCards cards
      */
     public Deck(List<DivinityCard> listOfCards){
-       this.listOfCards = List.copyOf(listOfCards);
+       this.listOfCards = listOfCards;
     }
 
     /**
@@ -41,6 +41,7 @@ public class Deck {
         listOfCards.removeIf(card -> card.getCardName().equalsIgnoreCase(cardName));
     }
 
-    public List<DivinityCard> getAllCards(){return listOfCards;}
-
+    public List<DivinityCard> getAllCards(){
+        return listOfCards;
+    }
 }
