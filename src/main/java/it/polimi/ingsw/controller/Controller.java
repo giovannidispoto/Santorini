@@ -133,7 +133,7 @@ public class Controller {
            this.firstPlayer = playersInLobby.get(0);
            //notify all player who is the first
            for(String p : playersInLobby)
-                handlers.get(p).response(new Gson().toJson(new BasicMessageInterface("setPickedCardRequest", new SetPickedCardRequest(firstPlayer))));
+                handlers.get(p).response(new Gson().toJson(new BasicMessageInterface("setPickedCards", new SetPickedCardRequest(firstPlayer))));
         }
 
     }
