@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.ActualPlayerResponse;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.SetPickedCardRequest;
+import it.polimi.ingsw.server.actions.data.SetPlayerCardRequest;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -75,9 +76,14 @@ public class Controller {
      *
      */
     private void requestSelectCard(String playerNickname){
-        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCardRequest", pickedCards)));
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCardRequest", new SetPlayerCardRequest(pickedCards))));
     }
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     private String getNextPlayer(String player){
         return playersInLobby.get(((playersInLobby.indexOf(player) + 1) % playersInLobby.size()));
     }
