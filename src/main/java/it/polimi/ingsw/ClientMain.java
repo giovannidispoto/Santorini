@@ -12,12 +12,18 @@ public class ClientMain {
 
         //Stuff for tests
         String cliColor=""; //remove "dark"
-        CLIBuilder commandLine = new CLIBuilder(cliColor);
+        CLIBuilder commandLine = new CLIBuilder(cliColor,clientController);
         commandLine.setupConnection(clientController);
         clientController.waitSetPickedCards();
+        System.out.print("SONO USCITO DALLA WAIT\n");
         if(clientController.getGodPlayer().equals(clientController.getPlayerNickname())){
             commandLine.pickCards(clientController);
         }
+        else{
+            commandLine.purposeCall("godchoice");
+        }
+        clientController.waitSetPlayerCard();
+        commandLine.chooseCard(clientController);
         /*
             //Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
             if(args[0].equals("cli")){
