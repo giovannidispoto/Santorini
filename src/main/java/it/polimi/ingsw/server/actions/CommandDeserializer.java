@@ -64,6 +64,9 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
             case "setPickedCards":
                 c = new SetPickedCardsCommand(new Gson().fromJson(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("cards"), new TypeToken<ArrayList<String>>(){}.getType()));
                 break;
+            case "getCardsInGame":
+                c = new GetCardsInGameCommand();
+                break;
         }
 
         return c;

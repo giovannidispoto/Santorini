@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.ActualPlayerResponse;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
+import it.polimi.ingsw.server.actions.data.SetPickedCardRequest;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -74,7 +75,7 @@ public class Controller {
      *
      */
     private void requestSelectCard(String playerNickname){
-        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("requestSelectCard", pickedCards)));
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCardRequest", pickedCards)));
     }
 
     private String getNextPlayer(String player){
@@ -88,7 +89,7 @@ public class Controller {
      */
     public void setPlayerCard(String playerNickname, String card){
 
-        Color c = colors.get(new Random().nextInt(playersInLobby.size()));
+        Color c = colors.get(new Random().nextInt(colors.size()));
         colors.remove(c);
         Player p = new Player(playerNickname,c) ;
         Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
@@ -96,24 +97,11 @@ public class Controller {
 
         p.setPlayerCard(deck.getDivinityCard(card));
         pickedCards.remove(deck.getDivinityCard(card));
-        if(getNextPlayer(playerNickname).equals(firstPlayer)){
-            Player player = new Player(firstPlayer, colors.get(0));
-            player.setPlayerCard(pickedCards.get(0));
-            players.add(player);
-            Battlefield.getBattlefieldInstance().attach(handlers.get(firstPlayer));
-        }
-        else
+
+        if(!playerNickname.equals(firstPlayer))
             requestSelectCard(getNextPlayer(playerNickname));
     }
 
-    /**
-     *
-     * @param playerNickname
-     * @return
-     */
-    public boolean isPlayerNicknameInLobby(String playerNickname){
-        return playersInLobby.contains(playerNickname);
-    }
 
 
     /**
@@ -133,7 +121,9 @@ public class Controller {
         if(playersInLobby.size() == lobbySize){
             //startMatch();
            this.firstPlayer = playersInLobby.get(0);
-           handlers.get(firstPlayer).response(new Gson().toJson(new BasicMessageInterface("setPickedCard", null)));
+           //notify all player who is the first
+           for(String p : playersInLobby)
+                handlers.get(p).response(new Gson().toJson(new BasicMessageInterface("setPickedCardRequest", new SetPickedCardRequest(firstPlayer))));
         }
 
     }
@@ -352,5 +342,15 @@ public class Controller {
      */
     public boolean isFullLobby(){
         return lobbySize != 0 && lobbySize == playersInLobby.size();
+    }
+
+    /**
+     *
+     */
+    public List<String> getCardsInGame() {
+        List<String> cards = new ArrayList<>();
+        for(Player p : players)
+            cards.add(p.getPlayerCard().getCardName());
+        return cards;
     }
 }

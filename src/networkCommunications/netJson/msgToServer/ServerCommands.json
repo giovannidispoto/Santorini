@@ -21,9 +21,14 @@
   {
     "action":"setPlayerCard",
     "data":{
+      "playerNickname": "Bill Gates",
       "card":"Athena"
     }
   },
+  {"action":"setPickedCards", "data": {"cards": ["Apollo", "Ares", "Athena"]}},
+  {"action":"setPlayerCard", "data":{"playerNickname":"Dario","card":"Apollo"}}
+
+  ,
   {
     "action":"getWorkersID",
     "data":{

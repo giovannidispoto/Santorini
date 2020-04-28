@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.actions.data.CellMatrixResponse;
 
+import java.util.Stack;
+
 /**
  * ClientHandler execute commands from socket and send response to client.
  * Every Thread has his own ClientHandler, such as a Virtual Client
@@ -42,6 +44,7 @@ public class ClientHandler implements Observer {
     public void response(String m){
         this.thread.send(m);
     }
+    
 
 
     /**
