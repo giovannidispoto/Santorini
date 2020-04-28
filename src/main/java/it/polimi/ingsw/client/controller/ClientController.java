@@ -36,7 +36,7 @@ public class ClientController {
     private Deck cardsDeck;
     private int currentLobbySize;
     //Utils - Locks for Wait & Notify
-    public LockObjects lockObjects;
+    public LockManager lockManager;
     public Thread controllerThread;
     //connection & handler
     private ClientSocketConnection socketConnection;
@@ -48,7 +48,7 @@ public class ClientController {
     public ClientController(){
         this.players = new ArrayList<>();
         this.workersID = new ArrayList<>();
-        this.lockObjects = new LockObjects();
+        this.lockManager = new LockManager();
         this.controllerThread = Thread.currentThread();
     }
 
@@ -73,22 +73,22 @@ public class ClientController {
     //Wait Request to Controller
 
     /** Wait until you receive SetPickedCards message from the server
-     *
+     *  N.B: Blocking request until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPickedCards(){
-        synchronized (lockObjects.lockSetPickedCards){
-            return lockObjects.setWait(lockObjects.lockSetPickedCards);
+        synchronized (lockManager.lockSetPickedCards){
+            return lockManager.setWait(lockManager.lockSetPickedCards);
         }
     }
 
     /** Wait until you receive SetPlayerCard message from the server
-     *
+     *  N.B: Blocking request until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPlayerCard(){
-        synchronized (lockObjects.lockSetPlayerCard){
-            return lockObjects.setWait(lockObjects.lockSetPlayerCard);
+        synchronized (lockManager.lockSetPlayerCard){
+            return lockManager.setWait(lockManager.lockSetPlayerCard);
         }
     }
 
@@ -104,8 +104,8 @@ public class ClientController {
     public boolean addPlayerRequest(String playerNickname, int lobbySize){
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
-        synchronized (lockObjects.lockAddPlayer){
-            return lockObjects.setWait(lockObjects.lockAddPlayer);
+        synchronized (lockManager.lockAddPlayer){
+            return lockManager.setWait(lockManager.lockAddPlayer);
         }
     }
 
@@ -117,8 +117,8 @@ public class ClientController {
      */
     public boolean getDeckRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
-        synchronized (lockObjects.lockGetDeck){
-            return lockObjects.setWait(lockObjects.lockGetDeck);
+        synchronized (lockManager.lockGetDeck){
+            return lockManager.setWait(lockManager.lockGetDeck);
         }
     }
 
@@ -149,8 +149,8 @@ public class ClientController {
 
     public boolean getPlayersRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
-        synchronized (lockObjects.lockGetPlayers){
-            return lockObjects.setWait(lockObjects.lockGetPlayers);
+        synchronized (lockManager.lockGetPlayers){
+            return lockManager.setWait(lockManager.lockGetPlayers);
         }
     }
 
