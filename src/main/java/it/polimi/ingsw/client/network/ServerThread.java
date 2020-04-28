@@ -38,8 +38,8 @@ public class ServerThread implements Runnable {
             Scanner in = new Scanner(socket.getInputStream());
             this.out = new PrintWriter(socket.getOutputStream());
             //read from and write to the connection until I receive "quit"
-            while (true) {
-                String line = in.nextLine();
+            String line;
+            while ( !(null == (line = in.nextLine())) ) {
                 if (line.equals("quit")) {
                     break;
                 } else {
@@ -51,9 +51,10 @@ public class ServerThread implements Runnable {
             in.close();
             this.out.close();
             this.socket.close();
+            System.out.println("Socket Connection Closed");  //debug
         }catch (IOException  | NoSuchElementException e){
             e.printStackTrace();
-            System.out.println("Input Scanner Exception");
+            System.out.println("Input Scanner Exception");  //debug
             //TODO: debug
         }
     }

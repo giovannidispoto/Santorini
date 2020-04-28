@@ -30,6 +30,8 @@
 #client/network
 !java/it/polimi/ingsw/client/network/
 !java/it/polimi/ingsw/client/network/*.java
+!java/it/polimi/ingsw/client/network/commandDeserializer/
+!java/it/polimi/ingsw/client/network/commandDeserializer/*.java
 !java/it/polimi/ingsw/client/network/actions/
 !java/it/polimi/ingsw/client/network/actions/*.java
 !java/it/polimi/ingsw/client/network/actions/data/

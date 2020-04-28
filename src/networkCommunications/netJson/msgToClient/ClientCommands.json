@@ -2,17 +2,16 @@
   {
     "action":"addPlayerResponse",
     "data":{
-      "playerNickname":"Bill Gates",
-      "lobbySize":2,
       "validNick":true,
-      "lobbyState":true
+      "lobbyState":true,
+      "lobbySize":2,
+      "fullLobby":false
     }
   },
   {
     "action":"setPickedCards",
     "data":{
-      "playerNickname":"Steve Jobs",
-      "lobbySize":2
+      "playerNickname":"Steve Jobs"
     }
   },
   {

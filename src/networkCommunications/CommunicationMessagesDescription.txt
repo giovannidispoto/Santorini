@@ -19,7 +19,7 @@
     then sends the response
     }
 2
-    {   -setPickedCards:   {"action":"setPickedCards","data":{"playerNickname":"Steve Jobs","lobbySize":2}}   BROADCAST MESSAGE
+    {   -setPickedCards:   {"action":"setPickedCards","data":{"playerNickname":"Steve Jobs"}}   BROADCAST MESSAGE
 
     God Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size,
     the other players will receive the message will unlock the thread

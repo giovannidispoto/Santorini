@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.network.actions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.client.network.commandDeserializer.CommandDeserializer;
 
 /**
  * Factory class for Command
