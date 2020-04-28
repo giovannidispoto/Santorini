@@ -76,7 +76,7 @@ public class Controller {
      *
      */
     private void requestSelectCard(String playerNickname){
-        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCardRequest", new SetPlayerCardRequest(pickedCards))));
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCard", new SetPlayerCardRequest(pickedCards))));
     }
 
     /**
