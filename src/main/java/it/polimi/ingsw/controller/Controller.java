@@ -76,7 +76,11 @@ public class Controller {
      *
      */
     private void requestSelectCard(String playerNickname){
-        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCard", new SetPlayerCardRequest(pickedCards))));
+        List<String> pickedCardsName = new ArrayList<>();
+        for(DivinityCard d : pickedCards)
+            pickedCardsName.add(d.getCardName());
+
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCard", new SetPlayerCardRequest(pickedCardsName))));
     }
 
     /**
