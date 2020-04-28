@@ -28,7 +28,7 @@
             {   -getDeck:    {"action":"getDeck"}
             Only the god player can call this function which requires the deck to select the cards
 
-                -ServerResponse:    {"action":"getDeckResponse","data":{"deck":[DECK.class]}}
+                -ServerResponse:    {"action":"getDeckResponse","data":{"deck":[DivinityCard.class]}}
             Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size)
             }
 
@@ -45,7 +45,7 @@
                 {   -getCardsInGame:    {"action":"getCardsInGame"}
                 The player asks the server for the deck of cards chosen by GodPlayer
 
-                    -ServerResponse:    {"action":"getCardsInGameResponse","data":{"deck":[DECK.class]}}
+                    -ServerResponse:    {"action":"getCardsInGameResponse","data":{"deck":[DivinityCard.class]}}
                 Server sends to the player, the deck which will contain 2-3 (equals to lobbySize) cards chosen by GodPlayer
                 }
 
