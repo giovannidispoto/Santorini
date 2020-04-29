@@ -11,8 +11,9 @@ public class SetPlayerCardCommand implements Command {
     public void execute(ClientController clientController) {
         clientController.setGodCards(cards);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockObjects.lockSetPlayerCard){
-            clientController.lockObjects.lockSetPlayerCard.notify();
+        synchronized (clientController.lockManager.lockSetPlayerCard){
+            clientController.lockManager.lockSetPlayerCard.notify();
+            clientController.lockManager.lockSetPlayerCard.setUsed();
         }
     }
 }

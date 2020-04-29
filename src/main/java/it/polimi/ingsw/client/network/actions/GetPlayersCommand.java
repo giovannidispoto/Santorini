@@ -26,8 +26,9 @@ public class GetPlayersCommand implements Command {
     public void execute(ClientController clientController) {
         clientController.setPlayers(this.players);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockObjects.lockGetPlayers){
-            clientController.lockObjects.lockGetPlayers.notify();
+        synchronized (clientController.lockManager.lockGetPlayers){
+            clientController.lockManager.lockGetPlayers.notify();
+            clientController.lockManager.lockGetPlayers.setUsed();
         }
     }
 }

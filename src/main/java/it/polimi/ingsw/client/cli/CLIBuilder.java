@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
+import javax.xml.transform.Templates;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +87,7 @@ public class CLIBuilder implements UIActions {
 
     //Cards
     private static final String PICK_CARDS = "Choose %s cards for this match 🤔";
+    private static final String CHOOSE_CARD = "Choose your card for this match 🕹";
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
     private static final String cardTemplate = "• %s | %s";
 
@@ -149,15 +151,20 @@ public class CLIBuilder implements UIActions {
     private final int refreshable_area_height = 15;
     private final int editable_board_rows = 5;
 
+    //General Purpose Commands
+    private HashMap<String,Runnable> purposeCommands;
+    private HashMap<String,String> defaultConsoleMessages;
+    private static final String GOD_MESSAGE = "%s is picking up the cards for this match...";
 
     /**
      * Class Constructor
      */
-    public CLIBuilder(String colorMode) {
+    public CLIBuilder(String colorMode, ClientController clientController) {
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
         this.ColorsSetupMap = new HashMap<>();
         this.WorkerColorsMap = new HashMap<>();
+        this.purposeCommands = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
         this.rowCounter = 0;
@@ -176,6 +183,21 @@ public class CLIBuilder implements UIActions {
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
         WorkerColorsMap.put(Color.GREY,ANSI_GRAY+WORKER);
+        //General purpose methods map
+        purposeCommands.put("godchoice",()->printGodPlayerActivity(clientController));
+        purposeCommands.put("cards",()->printMatchCards(clientController));
+    }
+
+    public void purposeCall(String key){
+        purposeCommands.get(key);
+    }
+
+    public void printGodPlayerActivity(ClientController clientController){
+        System.out.print(ANSI_WHITE+String.format(GOD_MESSAGE,clientController.getGodPlayer()));
+    }
+
+    public void printMatchCards(ClientController clientController){
+
     }
 
     /**
@@ -264,14 +286,20 @@ public class CLIBuilder implements UIActions {
      *  Renders the available cards for the initial player choice
      *  • Chronos | Owner win if there are five full towers on the board
      */
-    public void renderAvailableCards(){};
+    public void renderAvailableCards(ClientController clientController){
+        clientController.getDeckRequest();
+        for(String current : clientController.getGodCards()){
+            DivinityCard currentCard = clientController.getCardsDeck().getDivinityCard(current);
+            System.out.print(String.format(cardTemplate,ANSI_LIGHTBLUE+currentCard.getCardName()+ANSI_WHITE,currentCard.getCardEffect()));
+        }
+        rowCounter=clientController.getGodCards().size()+1;
+    };
 
     /**
      * Renders the entire deck (list of cards)
      */
     public void renderDeck(ClientController clientController){
         clientController.getDeckRequest();
-        System.out.print(ANSI_WHITE);
         for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
         }
@@ -325,14 +353,7 @@ public class CLIBuilder implements UIActions {
             System.out.print(CLI_INPUT);
             userInput=consoleScanner.nextLine();
             pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
-            validInput=true;
-            if(pickedCard==null)
-                validInput=false;
-            else{
-                if(!chosenCards.isEmpty()){
-                    for(String current : chosenCards){
-                        if(pickedCard.getCardName().equals(current)){
-                            validInput=false;}}}}
+            validInput= pickedCard != null;
 
             while (!validInput){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -340,16 +361,10 @@ public class CLIBuilder implements UIActions {
                 System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
                 userInput=consoleScanner.nextLine();
                 pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
-                validInput=true;
-                if(pickedCard==null)
-                    validInput=false;
-                else{
-                    if(!chosenCards.isEmpty()){
-                        for(String current : chosenCards){
-                            if(pickedCard.getCardName().equals(current)){
-                                validInput=false;}}}}
+                validInput= pickedCard != null;
             }
             chosenCards.add(pickedCard.getCardName());
+            clientController.getCardsDeck().removeDivinityCard(userInput);
             numberOfPlayers--;
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
@@ -359,7 +374,45 @@ public class CLIBuilder implements UIActions {
 
     @Override
     public void chooseCard(ClientController clientController) {
-
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        List<String> availableCards = clientController.getGodCards();
+        boolean validInput = false;
+        //Clean the CLI from the last phase elements
+        System.out.print(String.format(CURSOR_UP,rowCounter));
+        System.out.print(CLEAN);
+        /*  # Card Selection #
+            •
+            •
+            • ZEUS | Your Build: Your Worker may build a block under itself
+            Choose your card for this match 🕹
+            >
+         */
+        renderAvailableCards(clientController);
+        System.out.print(ANSI_WHITE+CHOOSE_CARD+NEW_LINE+CLI_INPUT);
+        userInput=consoleScanner.nextLine();
+        for(String current : availableCards){
+            if(current.equalsIgnoreCase(userInput)){
+                validInput=true;
+                break;}}
+        while(!validInput){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            /*  # Card Selection #
+                •
+                •
+                • ZEUS | Your Build: Your Worker may build a block under itself
+                Choose your card for this match 🕹
+                Invalid card choice...retry! • >
+            */
+            System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+            userInput=consoleScanner.nextLine();
+            for(String current : availableCards){
+                if(current.equalsIgnoreCase(userInput)){
+                    validInput=true;
+                    break;}}
+        }
+        clientController.setPlayerCardRequest(clientController.getCardsDeck().getDivinityCard(userInput).getCardName());
     }
 
     @Override
