@@ -35,7 +35,8 @@ public class SelectWorkerCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
         controller.selectWorker(playerNickname,x,y);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

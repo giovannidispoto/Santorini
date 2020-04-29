@@ -27,7 +27,8 @@ public class StartTurnCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
         controller.startTurn(basicTurn,playerNickname);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("startTurnResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("startTurnResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

@@ -33,7 +33,8 @@ public class SetPlayerCardCommand implements Command {
         controller.setPlayerCard(playerNickname,card);
         controller.addWorkers(playerNickname, handler);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("setPlayerCardResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setPlayerCardResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

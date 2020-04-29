@@ -25,6 +25,7 @@ public class GetCardsInGameCommand implements Command{
     @Override
     public void execute(Controller controller, ClientHandler handler) {
        cards = controller.getCardsInGame();
-       handler.response(new Gson().toJson(new BasicMessageInterface("getCardsInGameResponse", this)));
+       handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getCardsInGameResponse", this)));
+       handler.sendMessageQueue();
     }
 }

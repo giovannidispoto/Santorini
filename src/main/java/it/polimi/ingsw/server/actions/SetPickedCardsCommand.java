@@ -19,7 +19,8 @@ public class SetPickedCardsCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         controller.setPickedCards(cards);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("setPickedCardsResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setPickedCardsResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

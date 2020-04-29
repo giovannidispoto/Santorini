@@ -20,7 +20,8 @@ public class SkipStepCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
         controller.skipStep();
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("skipStepResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("skipStepResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

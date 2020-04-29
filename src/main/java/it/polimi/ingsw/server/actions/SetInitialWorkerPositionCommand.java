@@ -38,7 +38,8 @@ public class SetInitialWorkerPositionCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
         controller.setInitialWorkerPosition(player, worker, x,y);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("setInitialWorkerResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setInitialWorkerResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

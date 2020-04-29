@@ -33,7 +33,8 @@ public class GetPlayersCommand implements Command {
         for(Player p : playersList)
             players.add(new PlayerInterface(p.getPlayerNickname(),p.getPlayerColor(), p.getPlayerCard()));
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("getPlayersResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getPlayersResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

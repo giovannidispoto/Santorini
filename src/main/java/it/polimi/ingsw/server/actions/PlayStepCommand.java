@@ -34,7 +34,8 @@ public class PlayStepCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         nextStep = controller.playStep(x,y);
         this.result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("playStepResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("playStepResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getResult(){

@@ -110,6 +110,9 @@ public class Controller {
 
         if(!playerNickname.equals(firstPlayer))
             requestSelectCard(getNextPlayer(playerNickname));
+        else
+            startMatch();
+
     }
 
 
@@ -132,8 +135,13 @@ public class Controller {
             //startMatch();
            this.firstPlayer = playersInLobby.get(0);
            //notify all player who is the first
-           for(String p : playersInLobby)
-                handlers.get(p).response(new Gson().toJson(new BasicMessageInterface("setPickedCardRequest", new SetPickedCardRequest(firstPlayer))));
+            String message = new Gson().toJson(new BasicMessageInterface("setPickedCardRequest", new SetPickedCardRequest(firstPlayer)));
+           for(String p : playersInLobby) {
+               if(p.equals(playerNickname))
+                   handlers.get(p).responseQueue(message);
+               else
+                 handlers.get(p).response(message);
+           }
         }
 
     }
@@ -195,7 +203,12 @@ public class Controller {
     public void startMatch(){
         match = new Match(players,cards);
         match.setCurrentPlayer(getPlayerFromString(firstPlayer));
-        handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+        for(Player p : players) {
+            if (p.getPlayerNickname().equals(firstPlayer))
+                handlers.get(firstPlayer).responseQueue(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+            else
+                handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+        }
     }
 
     /**

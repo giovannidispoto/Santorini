@@ -21,7 +21,8 @@ public class GetDeckCommand implements Command{
     public void execute(Controller controller, ClientHandler handler) {
        this.deck =  controller.getDeck();
        this.result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("getDeckResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getDeckResponse", this)));
+        handler.sendMessageQueue();
     }
 
     /**

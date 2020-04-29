@@ -32,7 +32,8 @@ public class GetWorkersIDCommand implements Command{
 
         workers = controller.getWorkersId(player);
         result = true;
-        handler.response(new Gson().toJson(new BasicMessageInterface("getWorkersIDResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getWorkersIDResponse", this)));
+        handler.sendMessageQueue();
     }
 
     public boolean getStatus(){

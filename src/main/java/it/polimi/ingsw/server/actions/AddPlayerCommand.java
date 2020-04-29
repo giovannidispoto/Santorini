@@ -42,6 +42,7 @@ public class AddPlayerCommand implements Command {
                 controller.addNewPlayer(playerNickname, lobbySize);
             }
 
-            handler.response(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
+            handler.responseQueue(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
+            handler.sendMessageQueue();
     }
 }

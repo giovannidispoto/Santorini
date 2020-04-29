@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.actions.data.CellMatrixResponse;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -18,6 +20,7 @@ public class ClientHandler implements Observer {
 
     private Controller controller;
     private ClientThread thread;
+    private Stack<String> messageQueue;
 
     /**
      * Create ClientHandler
@@ -27,6 +30,7 @@ public class ClientHandler implements Observer {
     public ClientHandler(Controller controller, ClientThread thread){
        this.controller = controller;
        this.thread = thread;
+       messageQueue = new Stack<>();
     }
 
     /**
@@ -43,6 +47,14 @@ public class ClientHandler implements Observer {
      */
     public void response(String m){
         this.thread.send(m);
+    }
+
+    /**
+     * Send all message in queue
+     */
+    public void sendMessageQueue(){
+       while(!messageQueue.empty())
+           this.response(messageQueue.pop());
     }
     
 
@@ -65,5 +77,13 @@ public class ClientHandler implements Observer {
                 break;
         }
 
+    }
+
+    /**
+     * Add message to queue
+     * @param message
+     */
+    public void responseQueue(String message) {
+        this.messageQueue.add(message);
     }
 }
