@@ -63,17 +63,27 @@ class ClientSocketConnectionTest {
         //6
         clientController.getWorkersIDRequest("Bill");
         //7
-        //clientController.getBattlefieldRequest();
+        clientController.getBattlefieldRequest();
         //8
         clientController.setInitialWorkerPositionRequest("Bill",0,4,4);
         //-------------------------------------------------------------------------------------- START MATCH
 
 
+    }
 
-        clientController.waitSetPlayerCard();
+    //@Test
+    void clientAlwaysWait(){
+        ClientController clientController = new ClientController();
+        clientController.startNetwork();
+
+        String serverName1 = "127.0.0.3";
+        //check syntax
+        assertTrue(clientController.getSocketConnection().setServerName(serverName1));
+        //Need Server UP listening on port 1337 with IP 127.0.0.3
+        assertTrue(clientController.getSocketConnection().startConnection());
 
         //Only if you send messages from server
-        //while(true) {/*send message & debug*/}
+        while(true) {/*send message & debug*/}
     }
 
 

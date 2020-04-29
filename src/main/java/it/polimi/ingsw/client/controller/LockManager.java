@@ -17,6 +17,7 @@ public class LockManager {
     public final LockObject lockSetPlayerCard;
     public final LockObject lockGetWorkersID;
     public final LockObject lockGetBattlefield;
+    public final LockObject lockSetBattlefield;
 
     public LockManager() {
         this.lockGetPlayers =   new LockObject();
@@ -27,6 +28,7 @@ public class LockManager {
         this.lockSetPlayerCard  =   new LockObject();
         this.lockGetWorkersID  =   new LockObject();
         this.lockGetBattlefield  =   new LockObject();
+        this.lockSetBattlefield  =   new LockObject();
     }
 
     /** Takes care of waiting on a specific request / operation,

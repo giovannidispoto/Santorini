@@ -64,21 +64,20 @@
     {   -getBattlefield:    {"action":"getBattlefield"}
 
     the client asks the server for the battlefield to be sent to him
-    ----(Gorlenah)
 
         -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
     }
-6
+6----(Gorlenah)
     {   -setInitialWorkerPosition:
     {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill","worker":0,"x":4,"y":4}}
 
-    the player based on the battlefield received places a worker in an allowed position
+    the player based on the battlefield received places a worker in an allowed position and send to the server this message
     }
 7
     {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
     forces all clients to update the battlefield
     }
-8
+8----(Gorlenah)
     {   -setPlayers:    {"action":"setPlayers","data":[PlayerInterface,PlayerInterface]}    BROADCAST MESSAGE
     forces all clients to update the Players in match
     PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"Apollo"}

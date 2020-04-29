@@ -50,7 +50,8 @@ public class  DeserializerHashMap  {
         loadGetCardsInGameResponse();
         loadSetPlayerCard();
         loadGetWorkersIDResponse();
-        loadBattlefieldUpdate();
+        loadGetBattlefieldResponse();
+        loadSetBattlefield();
         loadWorkerViewUpdate();
         loadGetPlayers();
     }
@@ -117,15 +118,24 @@ public class  DeserializerHashMap  {
     }
 
     //7
-    private void loadBattlefieldUpdate(){
-        this.commandMap.put("battlefieldUpdate", new ProcessingCommand() {
+    private void loadGetBattlefieldResponse(){
+        this.commandMap.put("getBattlefieldResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new BattlefieldUpdateCommand(deserializeCellMatrix(jsonElement));
+                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "getBattlefieldResponse");
             }
         });
     }
 
     //8
+    private void loadSetBattlefield(){
+        this.commandMap.put("setBattlefield", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "setBattlefield");
+            }
+        });
+    }
+
+    //9
     private void loadWorkerViewUpdate(){
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -134,7 +144,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //9
+    //10
     private void loadGetPlayers(){
         this.commandMap.put("getPlayers", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {

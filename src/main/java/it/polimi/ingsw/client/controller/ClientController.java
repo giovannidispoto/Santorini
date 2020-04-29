@@ -92,6 +92,16 @@ public class ClientController {
         }
     }
 
+    /** Wait until you receive SetBattlefield message from the server
+     *  N.B: Blocking method until a response is received
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean waitSetBattlefield(){
+        synchronized (lockManager.lockSetBattlefield){
+            return lockManager.setWait(lockManager.lockSetBattlefield);
+        }
+    }
+
     //Request Messages Area
 
     /** Communicates to the server the intention to join the game
