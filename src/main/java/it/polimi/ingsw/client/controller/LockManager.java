@@ -9,7 +9,6 @@ package it.polimi.ingsw.client.controller;
  *  which will take care of the synchronization only on the functions where it is necessary.
  */
 public class LockManager {
-    public final LockObject lockGetPlayers;
     public final LockObject lockAddPlayer;
     public final LockObject lockSetPickedCards;
     public final LockObject lockGetDeck;
@@ -18,9 +17,9 @@ public class LockManager {
     public final LockObject lockGetWorkersID;
     public final LockObject lockGetBattlefield;
     public final LockObject lockSetBattlefield;
+    public final LockObject lockSetPlayers;
 
     public LockManager() {
-        this.lockGetPlayers =   new LockObject();
         this.lockAddPlayer  =   new LockObject();
         this.lockSetPickedCards =   new LockObject();
         this.lockGetDeck    =   new LockObject();
@@ -29,6 +28,7 @@ public class LockManager {
         this.lockGetWorkersID  =   new LockObject();
         this.lockGetBattlefield  =   new LockObject();
         this.lockSetBattlefield  =   new LockObject();
+        this.lockSetPlayers =   new LockObject();
     }
 
     /** Takes care of waiting on a specific request / operation,

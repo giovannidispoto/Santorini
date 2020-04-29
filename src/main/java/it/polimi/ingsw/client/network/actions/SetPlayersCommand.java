@@ -6,16 +6,16 @@ import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterfac
 import java.util.List;
 
 /**
- * GetPlayersCommand represent getPlayers action returned by server
+ * SetPlayersCommand represent setPlayers action returned by server
  */
-public class GetPlayersCommand implements Command {
+public class SetPlayersCommand implements Command {
     private final List<PlayerInterface> players;
 
     /**
      * Create command
      * @param players players in game
      */
-    public GetPlayersCommand(List<PlayerInterface> players) {
+    public SetPlayersCommand(List<PlayerInterface> players) {
         this.players = players;
     }
 
@@ -26,9 +26,9 @@ public class GetPlayersCommand implements Command {
     public void execute(ClientController clientController) {
         clientController.setPlayers(this.players);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockGetPlayers){
-            clientController.lockManager.lockGetPlayers.setUsed();
-            clientController.lockManager.lockGetPlayers.notify();
+        synchronized (clientController.lockManager.lockSetPlayers){
+            clientController.lockManager.lockSetPlayers.setUsed();
+            clientController.lockManager.lockSetPlayers.notify();
         }
     }
 }

@@ -77,12 +77,12 @@
     {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
     forces all clients to update the battlefield
     }
-8----(Gorlenah)
+8
     {   -setPlayers:    {"action":"setPlayers","data":[PlayerInterface,PlayerInterface]}    BROADCAST MESSAGE
     forces all clients to update the Players in match
     PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"Apollo"}
     }
 -------------------------------------------------------------------------------------------------   START MATCH
-9
+9----(Gorlenah)
 10
 11

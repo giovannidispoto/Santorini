@@ -52,8 +52,8 @@ public class  DeserializerHashMap  {
         loadGetWorkersIDResponse();
         loadGetBattlefieldResponse();
         loadSetBattlefield();
+        loadSetPlayers();
         loadWorkerViewUpdate();
-        loadGetPlayers();
     }
 
     //Specific Deserialization Methods
@@ -136,19 +136,19 @@ public class  DeserializerHashMap  {
     }
 
     //9
-    private void loadWorkerViewUpdate(){
-        this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
+    private void loadSetPlayers(){
+        this.commandMap.put("setPlayers", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new WorkerViewUpdateCommand(deserializeCellMatrix(jsonElement));
+                return  new SetPlayersCommand(deserializePlayers(jsonElement));
             }
         });
     }
 
     //10
-    private void loadGetPlayers(){
-        this.commandMap.put("getPlayers", new ProcessingCommand() {
+    private void loadWorkerViewUpdate(){
+        this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new GetPlayersCommand(deserializePlayers(jsonElement));
+                return  new WorkerViewUpdateCommand(deserializeCellMatrix(jsonElement));
             }
         });
     }

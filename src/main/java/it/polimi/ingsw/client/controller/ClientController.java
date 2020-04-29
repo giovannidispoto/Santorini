@@ -102,6 +102,16 @@ public class ClientController {
         }
     }
 
+    /** Wait until you receive SetPlayers message from the server
+     *  N.B: Blocking method until a response is received
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean waitSetPlayers(){
+        synchronized (lockManager.lockSetPlayers){
+            return lockManager.setWait(lockManager.lockSetPlayers);
+        }
+    }
+
     //Request Messages Area
 
     /** Communicates to the server the intention to join the game
@@ -190,18 +200,11 @@ public class ClientController {
         }
     }
 
-    public boolean getPlayersRequest(){
-        serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
-        synchronized (lockManager.lockGetPlayers){
-            return lockManager.setWait(lockManager.lockGetPlayers);
-        }
-    }
-
     public void setInitialWorkerPositionRequest(String playerNickname, int workerID, int row, int col){
         SetInitialWorkerPositionInterface data = new SetInitialWorkerPositionInterface(playerNickname, workerID, row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkerPosition", data)));
     }
-
+//----------------------------------------------MATCH
     public void selectWorkerRequest(String playerNickname, int workerID) {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));

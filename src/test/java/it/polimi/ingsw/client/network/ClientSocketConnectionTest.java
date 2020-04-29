@@ -83,7 +83,7 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
 
         //Only if you send messages from server
-        while(true) {/*send message & debug*/}
+        clientController.waitSetPlayers();
     }
 
 
