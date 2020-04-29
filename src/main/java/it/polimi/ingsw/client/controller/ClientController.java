@@ -168,6 +168,18 @@ public class ClientController {
         }
     }
 
+    /** Client asks the server for Battlefield Update
+     *  N.B: Blocking request until a response is received
+     *
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean getBattlefieldRequest(){
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("getBattlefield")));
+        synchronized (lockManager.lockGetBattlefield){
+            return lockManager.setWait(lockManager.lockGetBattlefield);
+        }
+    }
+
     public boolean getPlayersRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
         synchronized (lockManager.lockGetPlayers){

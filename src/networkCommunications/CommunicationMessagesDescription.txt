@@ -60,10 +60,11 @@
 
         -ServerResponse:    {"action":"getWorkersIDResponse","data":{"workersID":[2,3]}}
     }
-5   (Gorlenah)
+5
     {   -getBattlefield:    {"action":"getBattlefield"}
 
     the client asks the server for the battlefield to be sent to him
+    ----(Gorlenah)
 
         -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
     }
