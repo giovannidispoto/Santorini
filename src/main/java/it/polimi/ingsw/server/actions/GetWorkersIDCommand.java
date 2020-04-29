@@ -13,7 +13,7 @@ import java.util.List;
 public class GetWorkersIDCommand implements Command{
     private String player;
     private boolean result;
-    private List<Integer> workers;
+    private List<Integer> workersID;
 
     public GetWorkersIDCommand(String player){
         this.player = player;
@@ -30,7 +30,7 @@ public class GetWorkersIDCommand implements Command{
             throw new RuntimeException("Trying to operate like another player!");
         }
 
-        workers = controller.getWorkersId(player);
+        workersID = controller.getWorkersId(player);
         result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getWorkersIDResponse", this)));
         handler.sendMessageQueue();
@@ -41,6 +41,6 @@ public class GetWorkersIDCommand implements Command{
     }
 
     public List<Integer> getWorkers(){
-        return List.copyOf(workers);
+        return List.copyOf(workersID);
     }
 }

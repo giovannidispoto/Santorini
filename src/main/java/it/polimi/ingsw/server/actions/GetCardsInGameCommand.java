@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GetCardsInGameCommand implements Command{
 
-    private List<String> cards;
+    private List<DivinityCard> cards;
 
     public GetCardsInGameCommand(){
         this.cards = new ArrayList<>();

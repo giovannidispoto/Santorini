@@ -370,10 +370,10 @@ public class Controller {
     /**
      *
      */
-    public List<String> getCardsInGame() {
-        List<String> cards = new ArrayList<>();
+    public List<DivinityCard> getCardsInGame() {
+        List<DivinityCard> cards = new ArrayList<>();
         for(Player p : players)
-            cards.add(p.getPlayerCard().getCardName());
+            cards.add(p.getPlayerCard());
         return cards;
     }
 }
