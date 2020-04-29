@@ -135,7 +135,7 @@ public class Controller {
             //startMatch();
            this.firstPlayer = playersInLobby.get(0);
            //notify all player who is the first
-            String message = new Gson().toJson(new BasicMessageInterface("setPickedCardRequest", new SetPickedCardRequest(firstPlayer)));
+            String message = new Gson().toJson(new BasicMessageInterface("setPickedCards", new SetPickedCardRequest(firstPlayer)));
            for(String p : playersInLobby) {
                if(p.equals(playerNickname))
                    handlers.get(p).responseQueue(message);
