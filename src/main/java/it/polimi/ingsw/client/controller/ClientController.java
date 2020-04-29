@@ -73,7 +73,7 @@ public class ClientController {
     //Wait Request to Controller
 
     /** Wait until you receive SetPickedCards message from the server
-     *  N.B: Blocking request until a response is received
+     *  N.B: Blocking method until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPickedCards(){
@@ -83,7 +83,7 @@ public class ClientController {
     }
 
     /** Wait until you receive SetPlayerCard message from the server
-     *  N.B: Blocking request until a response is received
+     *  N.B: Blocking method until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPlayerCard(){

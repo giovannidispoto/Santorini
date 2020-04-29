@@ -24,8 +24,8 @@ public class AddPlayerCommand implements Command {
 
         //Awakens who was waiting Server Response
         synchronized (clientController.lockManager.lockAddPlayer){
-            clientController.lockManager.lockAddPlayer.notify();
             clientController.lockManager.lockAddPlayer.setUsed();
+            clientController.lockManager.lockAddPlayer.notify();
         }
     }
 }

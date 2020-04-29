@@ -29,7 +29,7 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         //Pick correct Deserialization  & Return Specific Command
         if(null == deserializerHashMap.getMapCommand(action))
         {
-            c = new NotExistCommand();
+            c = new NotExistCommand(action);
             //TODO: debug
         }else {
             c = deserializerHashMap.getMapCommand(action).command(jsonElement);

@@ -16,8 +16,8 @@ public class SetPickedCardsCommand implements Command{
         clientController.setGodPlayer(this.playerNickname);
         //Awakens who was waiting Server Response
         synchronized (clientController.lockManager.lockSetPickedCards){
-            clientController.lockManager.lockSetPickedCards.notify();
             clientController.lockManager.lockSetPickedCards.setUsed();
+            clientController.lockManager.lockSetPickedCards.notify();
         }
     }
 }

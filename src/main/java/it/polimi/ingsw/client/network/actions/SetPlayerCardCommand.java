@@ -12,8 +12,8 @@ public class SetPlayerCardCommand implements Command {
         clientController.setGodCards(cards);
         //Awakens who was waiting Server Response
         synchronized (clientController.lockManager.lockSetPlayerCard){
-            clientController.lockManager.lockSetPlayerCard.notify();
             clientController.lockManager.lockSetPlayerCard.setUsed();
+            clientController.lockManager.lockSetPlayerCard.notify();
         }
     }
 }
