@@ -13,14 +13,18 @@ public class LockManager {
     public final LockObject lockAddPlayer;
     public final LockObject lockSetPickedCards;
     public final LockObject lockGetDeck;
+    public final LockObject lockGetCardsInGame;
     public final LockObject lockSetPlayerCard;
+    public final LockObject lockGetWorkersID;
 
     public LockManager() {
         this.lockGetPlayers =   new LockObject();
         this.lockAddPlayer  =   new LockObject();
         this.lockSetPickedCards =   new LockObject();
         this.lockGetDeck    =   new LockObject();
+        this.lockGetCardsInGame = new LockObject();
         this.lockSetPlayerCard  =   new LockObject();
+        this.lockGetWorkersID  =   new LockObject();
     }
 
     /** Takes care of waiting on a specific request / operation,

@@ -47,6 +47,7 @@ public class  DeserializerHashMap  {
         loadAddPlayerResponse();
         loadSetPickedCards();
         loadGetDeckResponse();
+        loadGetCardsInGameResponse();
         loadSetPlayerCard();
         loadGetWorkersIDResponse();
         loadBattlefieldUpdate();
@@ -89,6 +90,15 @@ public class  DeserializerHashMap  {
     }
 
     //4
+    private void loadGetCardsInGameResponse(){
+        this.commandMap.put("getCardsInGameResponse", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetCardsInGameCommand.class);
+            }
+        });
+    }
+
+    //5
     private void loadSetPlayerCard(){
         this.commandMap.put("setPlayerCard", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -97,16 +107,16 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //5
+    //6
     private void loadGetWorkersIDResponse(){
         this.commandMap.put("getWorkersIDResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new GetWorkersIDCommand(deserializeWorkersID(jsonElement));
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetWorkersIDCommand.class);
             }
         });
     }
 
-    //6
+    //7
     private void loadBattlefieldUpdate(){
         this.commandMap.put("battlefieldUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -115,7 +125,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //7
+    //8
     private void loadWorkerViewUpdate(){
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -124,7 +134,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //8
+    //9
     private void loadGetPlayers(){
         this.commandMap.put("getPlayers", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -147,14 +157,6 @@ public class  DeserializerHashMap  {
             players.add(new Gson().fromJson(jsonE, PlayerInterface.class));
         }
         return players;
-    }
-    private List<Integer> deserializeWorkersID (JsonElement jsonElement){
-        List<Integer> workersID = new ArrayList<>();
-        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonArray();
-        for(JsonElement jsonE : jsonArray) {
-            workersID.add(jsonE.getAsInt());
-        }
-        return workersID;
     }
 
 }

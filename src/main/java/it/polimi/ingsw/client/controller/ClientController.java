@@ -132,6 +132,18 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", data)));
     }
 
+    /** Communicates to the server the need to get the deck of cards in play in the lobby chosen by GodPlayer
+     *  N.B: Blocking request until a response is received
+     *
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean getCardsInGameRequest(){
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("getCardsInGame")));
+        synchronized (lockManager.lockGetCardsInGame){
+            return lockManager.setWait(lockManager.lockGetCardsInGame);
+        }
+    }
+
     /** Communicate to the server the card chosen by the Player
      *  (choice between possible cards sent by the server with the mirror command)
      *
@@ -142,9 +154,18 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
 
-    public void getWorkersIDRequest(String playerNickname){
+    /** Client asks the server for the ID of each of its workers
+     *  N.B: Blocking request until a response is received
+     *
+     * @param playerNickname    NickName Choose by the player
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean getWorkersIDRequest(String playerNickname){
         SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
+        synchronized (lockManager.lockGetWorkersID){
+            return lockManager.setWait(lockManager.lockGetWorkersID);
+        }
     }
 
     public boolean getPlayersRequest(){

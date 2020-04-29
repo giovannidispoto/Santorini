@@ -8,21 +8,15 @@ import java.util.List;
  * GetWorkersIDCommand represent getWorkersID action returned by server
  */
 public class GetWorkersIDCommand implements Command{
-    private final List<Integer> workersID;
+    List<Integer> workersID;
 
-    /**
-     * Create command
-     * @param workersID client workersID
-     */
-    public GetWorkersIDCommand(List<Integer> workersID) {
-        this.workersID = workersID;
-    }
-
-    /*
-     * Execute command
-     */
     @Override
     public void execute(ClientController clientController) {
         clientController.setWorkersID(workersID);
+        //Awakens who was waiting Server Response
+        synchronized (clientController.lockManager.lockGetWorkersID){
+            clientController.lockManager.lockGetWorkersID.setUsed();
+            clientController.lockManager.lockGetWorkersID.notify();
+        }
     }
 }

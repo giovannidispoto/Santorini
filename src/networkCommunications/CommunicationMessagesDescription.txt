@@ -54,13 +54,13 @@
     the server receives the chosen card, binds it to the player together with a color,
     removes the card from the deck to be sent to the next player
     }
-4   (Gorlenah)
+4
     {   -getWorkersID:  {"action":"getWorkersID","data":{"playerNickname":"Bill"}}
     the client asks the server for the ID of each of its workers to be sent to it
 
-        -ServerResponse:    {"action":"getWorkersIDResponse","data":[2,3]}
+        -ServerResponse:    {"action":"getWorkersIDResponse","data":{"workersID":[2,3]}}
     }
-5
+5   (Gorlenah)
     {   -getBattlefield:    {"action":"getBattlefield"}
 
     the client asks the server for the battlefield to be sent to him

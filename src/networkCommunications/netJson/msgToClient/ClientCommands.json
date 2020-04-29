@@ -115,11 +115,13 @@
     }
   },
   {
-    "action": "getWorkersIDResponse",
-    "data": [
-      2,
-      3
-    ]
+    "action":"getWorkersIDResponse",
+    "data":{
+      "workersID":[
+        2,
+        3
+      ]
+    }
   },
   {
     "action":"getBattlefieldResponse",
