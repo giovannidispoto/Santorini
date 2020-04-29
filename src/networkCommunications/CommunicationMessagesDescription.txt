@@ -67,7 +67,7 @@
 
         -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
     }
-6----(Gorlenah)
+6
     {   -setInitialWorkerPosition:
     {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill","worker":0,"x":4,"y":4}}
 

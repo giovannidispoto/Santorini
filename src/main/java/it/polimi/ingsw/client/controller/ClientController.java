@@ -200,11 +200,22 @@ public class ClientController {
         }
     }
 
+    /** After requesting the battlefield,
+     *  with this method the client chooses where to put the workers on the board (one at a time)
+     *  checking not to put it on another player
+     *
+     * @param playerNickname    NickName Choose by the player
+     * @param workerID  WorkerID assigned by the server to each worker
+     * @param row   battlefield row (0-4)
+     * @param col   battlefield column  (0-4)
+     */
     public void setInitialWorkerPositionRequest(String playerNickname, int workerID, int row, int col){
         SetInitialWorkerPositionInterface data = new SetInitialWorkerPositionInterface(playerNickname, workerID, row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkerPosition", data)));
     }
-//----------------------------------------------MATCH
+
+    //--------------------------------------------------------------------------------------------------------  MATCH
+
     public void selectWorkerRequest(String playerNickname, int workerID) {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
@@ -224,8 +235,8 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
     }
 
-    //----------------------------------------------------------------------------------------------------------------
-    //Getter & Setter
+    //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
+
     public List<String> getGodCards() {
         return godCards;
     }
