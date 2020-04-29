@@ -72,7 +72,7 @@ public class CLIBuilder implements UIActions {
 
     private static final String HANDSHAKING_ERROR = "Invalid IP...retry! • ";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
-    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full... there is no place for you\n" +
+    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... there is no place for you\n" +
             "Don't be sad, we still love you... 🧸❤️";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
 
@@ -87,6 +87,7 @@ public class CLIBuilder implements UIActions {
 
     //Cards
     private static final String PICK_CARDS = "Choose %s cards for this match 🤔";
+    private static final String PICK_TITLE = "Cards Pick Up";
     private static final String CHOOSE_CARD = "Choose your card for this match 🕹";
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
     private static final String cardTemplate = "• %s | %s";
@@ -152,8 +153,6 @@ public class CLIBuilder implements UIActions {
     private final int editable_board_rows = 5;
 
     //General Purpose Commands
-    private HashMap<String,Runnable> purposeCommands;
-    private HashMap<String,String> defaultConsoleMessages;
     private static final String GOD_MESSAGE = "%s is picking up the cards for this match...";
 
     /**
@@ -164,7 +163,6 @@ public class CLIBuilder implements UIActions {
         this.playerMoves = new ArrayList<>();
         this.ColorsSetupMap = new HashMap<>();
         this.WorkerColorsMap = new HashMap<>();
-        this.purposeCommands = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
         this.rowCounter = 0;
@@ -183,21 +181,10 @@ public class CLIBuilder implements UIActions {
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
         WorkerColorsMap.put(Color.GREY,ANSI_GRAY+WORKER);
-        //General purpose methods map
-        purposeCommands.put("godchoice",()->printGodPlayerActivity(clientController));
-        purposeCommands.put("cards",()->printMatchCards(clientController));
-    }
-
-    public void purposeCall(String key){
-        purposeCommands.get(key);
     }
 
     public void printGodPlayerActivity(ClientController clientController){
-        System.out.print(ANSI_WHITE+String.format(GOD_MESSAGE,clientController.getGodPlayer()));
-    }
-
-    public void printMatchCards(ClientController clientController){
-
+        System.out.println(ANSI_WHITE+String.format(GOD_MESSAGE,clientController.getGodPlayer()));
     }
 
     /**
@@ -284,13 +271,13 @@ public class CLIBuilder implements UIActions {
 
     /**
      *  Renders the available cards for the initial player choice
-     *  • Chronos | Owner win if there are five full towers on the board
+     *  • Chronus | Owner win if there are five full towers on the board
      */
     public void renderAvailableCards(ClientController clientController){
         clientController.getDeckRequest();
         for(String current : clientController.getGodCards()){
             DivinityCard currentCard = clientController.getCardsDeck().getDivinityCard(current);
-            System.out.print(String.format(cardTemplate,ANSI_LIGHTBLUE+currentCard.getCardName()+ANSI_WHITE,currentCard.getCardEffect()));
+            System.out.print(String.format(cardTemplate,ANSI_LIGHTBLUE+currentCard.getCardName()+ANSI_WHITE,currentCard.getCardEffect()+NEW_LINE));
         }
         rowCounter=clientController.getGodCards().size()+1;
     };
@@ -325,6 +312,7 @@ public class CLIBuilder implements UIActions {
         //Clean the CLI from the last phase elements
         System.out.print(String.format(CURSOR_UP,rowCounter));
         System.out.print(CLEAN);
+        renderMessageBox(ANSI_PURPLE,PICK_TITLE);
         /*  # Cards Extraction #
             • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
             •
@@ -476,7 +464,7 @@ public class CLIBuilder implements UIActions {
                     Invalid IP...retry! • Server IP 🌍
                     > |
                 */
-                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(String.format(CURSOR_UP,3));
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+HANDSHAKING_ERROR+COLORMODE+SERVER_IP+NEW_LINE+CLI_INPUT);
                 userInput=consoleScanner.nextLine();
@@ -524,6 +512,7 @@ public class CLIBuilder implements UIActions {
         */
         System.out.print(LOBBY_SIZE+NEW_LINE+CLI_INPUT);
         userValue=consoleScanner.nextInt();
+        userInput=consoleScanner.nextLine();
         //The only valid choices are 2 or 3
         if(userValue!=2 && userValue!=3)
             validOperation=false;
@@ -553,12 +542,12 @@ public class CLIBuilder implements UIActions {
         chosenLobby=userValue;
         chosenNickname=clientController.getPlayerNickname();
         //Adds the player to the lobby
-        clientController.addPlayerRequest(clientController.getPlayerNickname(),userValue);
-        System.out.print(LOBBY_JOIN+NEW_LINE);
+        clientController.addPlayerRequest(chosenNickname,userValue);
+        System.out.println(LOBBY_JOIN);
         //Troubles with the lobby...
         //# Full Lobby # -> we close the client
         if(clientController.isFullLobby()){
-            System.out.print(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+"Closing the program...");
+            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+"Closing the program...");
             System.exit(0);
         }
         while(!clientController.getValidNick()){
@@ -575,7 +564,8 @@ public class CLIBuilder implements UIActions {
                 There is already a player with this nickname in the lobby...retry!
                 > |
             */
-                System.out.print(ANSI_RED+NICKNAME_ERROR+NEW_LINE+ANSI_WHITE+CLI_INPUT);
+                System.out.println(ANSI_RED+NICKNAME_ERROR);
+                System.out.print(ANSI_WHITE+CLI_INPUT);
                 userInput=consoleScanner.nextLine();
                 clientController.setPlayerNickname(userInput);
                 clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobby);
@@ -597,7 +587,7 @@ public class CLIBuilder implements UIActions {
         */
         System.out.print(ANSI_GREEN+SUCCESS_LOBBY_ACCESS+NEW_LINE);
         System.out.print(COLORMODE+CLI_INPUT+WAITSTART+NEW_LINE);
-        rowCounter=11;
+        rowCounter=11+3;
     }
 
 }
