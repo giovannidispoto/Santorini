@@ -172,10 +172,11 @@ public class ClientController {
     /** Communicate to the server the card chosen by the Player
      *  (choice between possible cards sent by the server with the mirror command)
      *
+     * @param playerNickname    NickName Choose by the player
      * @param cardName  name of the chosen card
      */
-    public void setPlayerCardRequest(String cardName){
-        SetPlayerCardInterface data = new SetPlayerCardInterface(cardName);
+    public void setPlayerCardRequest(String playerNickname, String cardName){
+        SetPlayerCardInterface data = new SetPlayerCardInterface(playerNickname, cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
 

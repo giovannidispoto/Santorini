@@ -42,7 +42,7 @@
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
 
-        -ClientResponse:    {"action":"setPlayerCard","data":{"card":"ATHENA"}}
+        -ClientResponse:    {"action":"setPlayerCard","data":{"playerNickname":"Bill","card":"ATHENA"}}
 
     the server receives the chosen card, binds it to the player together with a color,
     removes the card from the deck to be sent to the next player

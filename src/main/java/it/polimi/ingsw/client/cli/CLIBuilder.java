@@ -395,7 +395,7 @@ public class CLIBuilder implements UIActions {
             if(!availableCards.contains(userInput))
                 validInput=false;
         }
-        clientController.setPlayerCardRequest(userInput);
+        clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
         printedLinesCounter+=2;
     }
 
