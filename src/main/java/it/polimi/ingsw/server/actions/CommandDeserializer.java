@@ -1,15 +1,9 @@
 package it.polimi.ingsw.server.actions;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.server.actions.commands.Command;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * Deserializer for Command
@@ -27,7 +21,18 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
 
     @Override
     public Command deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Command c = null;
+        Command c;
+
+        String action = jsonElement.getAsJsonObject().get("action").getAsString();
+        //Load DeserializationMap
+
+        //Pick correct Deserialization  & Return Specific Command
+        c = CommandMap.getCommandMapInstance().getMapCommand(action).command(jsonElement);
+
+
+        return c;
+
+       /* Command c = null;
         Gson gson = new Gson();
 
         switch(jsonElement.getAsJsonObject().get("action").getAsString()){
@@ -69,6 +74,6 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
                 break;
         }
 
-        return c;
+        return c;*/
     }
 }

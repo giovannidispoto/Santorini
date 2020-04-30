@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.actions;
+package it.polimi.ingsw.server.actions.commands;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;

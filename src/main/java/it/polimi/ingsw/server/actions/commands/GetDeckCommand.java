@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.actions;
+package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
