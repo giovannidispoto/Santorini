@@ -32,17 +32,17 @@
             Server sends to the players, the deck from which he can choose the cards (skimmed according to the lobby size)
             }
 
-        -ClientResponse:    {"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
+        -ClientResponse:    {"action":"setPickedCards","data":{"cards":["ATHENA","APOLLO"]}}
 
     the client's task will be to select the cards from the complete deck based on the number of players allowed
     (the server can recheck)
     }
 3
-    {   -setPlayerCard:   {"action":"setPlayerCard","data":{"cards":["Athena","Apollo"]}}
+    {   -setPlayerCard:   {"action":"setPlayerCard","data":{"cards":["ATHENA","APOLLO"]}}
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
 
-        -ClientResponse:    {"action":"setPlayerCard","data":{"card":"Athena"}}
+        -ClientResponse:    {"action":"setPlayerCard","data":{"card":"ATHENA"}}
 
     the server receives the chosen card, binds it to the player together with a color,
     removes the card from the deck to be sent to the next player
@@ -72,7 +72,7 @@
 8
     {   -setPlayers:    {"action":"setPlayers","data":[PlayerInterface,PlayerInterface]}    BROADCAST MESSAGE
     forces all clients to update the Players in match
-    PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"Apollo"}
+    PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"APOLLO"}
     }
 -------------------------------------------------------------------------------------------------   START MATCH
 9----(Gorlenah)

@@ -26,8 +26,8 @@ class MatchTest {
     void playGameTurnWithoutCard() throws IOException {
         Battlefield b = Battlefield.getBattlefieldInstance();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -83,8 +83,8 @@ class MatchTest {
         Battlefield b = Battlefield.getBattlefieldInstance();
 
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -141,8 +141,8 @@ class MatchTest {
         Battlefield b = Battlefield.getBattlefieldInstance();
 
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
 
         List<Player> players = new ArrayList<>();
         Match m = new Match(players,new ArrayList<>());

@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraBlockPerimetralTest {
-    final Player p1 = new Player("PlayerHestia",  Color.BLUE);
+    final Player p1 = new Player("PlayerHESTIA",  Color.BLUE);
     final Player p2 = new Player("PlayerDummy",  Color.BLUE);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
@@ -27,7 +27,7 @@ class ExtraBlockPerimetralTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Hestia"));
+        p1.setPlayerCard(d.getDivinityCard("HESTIA"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -36,7 +36,7 @@ class ExtraBlockPerimetralTest {
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
-        //Simulation : CURRENT PLAYER - PlayerHestia
+        //Simulation : CURRENT PLAYER - PlayerHESTIA
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -75,8 +75,8 @@ class ExtraBlockPerimetralTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Hestia"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("HESTIA"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -117,7 +117,7 @@ class ExtraBlockPerimetralTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerHestia
+        //Simulation : CURRENT PLAYER - PlayerHESTIA
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -187,12 +187,12 @@ class ExtraBlockPerimetralTest {
         //w2 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with hestia isn't the winner
+        assertNull(m.winner);//Check if p1 with HESTIA isn't the winner
         assertEquals(w2, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerHestia
+        //Simulation : CURRENT PLAYER - PlayerHESTIA
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -263,7 +263,7 @@ class ExtraBlockPerimetralTest {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with hestia is the winner
+        assertEquals(p1, m.winner);//Check if p1 with HESTIA is the winner
         assertEquals(w1, battlefield.getCell(1, 3).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position
         assertEquals(3, battlefield.getCell(1, 3).getTower().getHeight());  //check tower

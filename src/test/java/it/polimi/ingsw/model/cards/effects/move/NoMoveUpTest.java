@@ -21,15 +21,15 @@ class NoMoveUpTest {
     final Worker w3 = new Worker(p2);
     final DeckReader reader = new DeckReader();
 
-    //Athena Blocks movements && generate exception
+    //ATHENA Blocks movements && generate exception
     @Test
     void moveWorkerUp() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Athena"));
-        p2.setPlayerCard(d.getDivinityCard("Athena"));
+        p1.setPlayerCard(d.getDivinityCard("ATHENA"));
+        p2.setPlayerCard(d.getDivinityCard("ATHENA"));
 
         players.add(p1);
         players.add(p2);
@@ -84,15 +84,15 @@ class NoMoveUpTest {
         battlefield.cleanField();
     }
 
-    //First Turn Athena Blocks movement, second turn not
+    //First Turn ATHENA Blocks movement, second turn not
     @Test
-    void moveWorkerUpAndNot() throws IOException {
+    void moveWorkerUPANdNot() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Athena"));
-        p2.setPlayerCard(d.getDivinityCard("Athena"));
+        p1.setPlayerCard(d.getDivinityCard("ATHENA"));
+        p2.setPlayerCard(d.getDivinityCard("ATHENA"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();

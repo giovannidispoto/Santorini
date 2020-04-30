@@ -13,9 +13,9 @@
     "action":"setPickedCards",
     "data":{
       "cards":[
-        "Athena",
-        "Apollo",
-        "Ares"
+        "ATHENA",
+        "APOLLO",
+        "ARES"
       ]
     }
   },
@@ -23,16 +23,16 @@
     "action":"setPlayerCard",
     "data":{
       "playerNickname": "Bill Gates",
-      "card":"Athena"
+      "card":"ATHENA"
     }
   },
   {
     "action":"setPickedCards",
     "data":{
       "cards":[
-        "Apollo",
-        "Ares",
-        "Athena"
+        "APOLLO",
+        "ARES",
+        "ATHENA"
       ]
     }
   },
@@ -40,7 +40,7 @@
     "action":"setPlayerCard",
     "data":{
       "playerNickname":"Dario",
-      "card":"Apollo"
+      "card":"APOLLO"
     }
   },
   {

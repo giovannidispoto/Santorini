@@ -1,6 +1,6 @@
 {"action":"addPlayer","data":{"playerNickname":"Bill","lobbySize":2}}
 {"action":"getDeck"}
-{"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
-{"action":"setPlayerCard","data":{"card":"Athena"}}
+{"action":"setPickedCards","data":{"cards":["ATHENA","APOLLO"]}}
+{"action":"setPlayerCard","data":{"card":"ATHENA"}}
 {"action":"getBattlefield"}
 {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill","worker":0,"x":4,"y":4}}

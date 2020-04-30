@@ -28,8 +28,8 @@ class TowersConditionTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Atlas"));
-        p2.setPlayerCard(d.getDivinityCard("Chronus"));
+        p1.setPlayerCard(d.getDivinityCard("ATLAS"));
+        p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -67,7 +67,7 @@ class TowersConditionTest {
         Battlefield.getBattlefieldInstance().getCell(0,4).getTower().addBlock(Block.LEVEL_3);
 
 
-        //Before Simulation Player2 choose Chronus
+        //Before Simulation Player2 choose CHRONUS
         List<GlobalWinCondition> globalWinConditions = new ArrayList<>();
         globalWinConditions.add(new TowersCondition(p2, m,5));
 

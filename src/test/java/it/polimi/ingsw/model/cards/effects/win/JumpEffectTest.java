@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JumpEffectTest {
-    final Player p1 = new Player("PlayerPan", Color.BLUE);
+    final Player p1 = new Player("PlayerPAN", Color.BLUE);
     final Player p2 = new Player("PlayerDummy", Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
@@ -27,8 +27,8 @@ class JumpEffectTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Pan"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("PAN"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -69,7 +69,7 @@ class JumpEffectTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerPan
+        //Simulation : CURRENT PLAYER - PlayerPAN
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -103,7 +103,7 @@ class JumpEffectTest {
 
 
         //FirstAssertion
-        assertEquals(p1, m.winner);//Check if p1 with pan it's the winner
+        assertEquals(p1, m.winner);//Check if p1 with PAN it's the winner
         m.winner=null;//reset
         assertEquals(w1, battlefield.getCell(1, 1).getWorker());    //check position
         assertEquals(1, battlefield.getCell(0, 0).getTower().getHeight());  //check build
@@ -123,7 +123,7 @@ class JumpEffectTest {
         //Simulation : CURRENT PLAYER - PlayerDummy
         //12. PassTurn
         t.passTurn();
-        //Simulation : CURRENT PLAYER - PlayerPan
+        //Simulation : CURRENT PLAYER - PlayerPAN
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -151,7 +151,7 @@ class JumpEffectTest {
          */
 
         //Second Assertion
-        assertEquals(p1, m.winner);//Check if p1 with pan it's the winner
+        assertEquals(p1, m.winner);//Check if p1 with PAN it's the winner
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
         //Check Towers
         assertEquals(1, battlefield.getCell(0, 0).getTower().getHeight());
@@ -201,8 +201,8 @@ class JumpEffectTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Pan"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("PAN"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -243,7 +243,7 @@ class JumpEffectTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerPan
+        //Simulation : CURRENT PLAYER - PlayerPAN
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -277,7 +277,7 @@ class JumpEffectTest {
         ╚══╩═══╩══════╩═══╩════╝
          */
         //FirstAssertion
-        assertEquals(p1, m.winner);//Check if p1 with pan it's the winner
+        assertEquals(p1, m.winner);//Check if p1 with PAN it's the winner
         assertEquals(w1, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(1, battlefield.getCell(0, 1).getTower().getHeight());  //check build
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check build

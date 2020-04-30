@@ -99,7 +99,7 @@ public class Match {
     }
 
     /**
-     * Declares the match winner
+     * DeclARES the match winner
      * @param winner is the winner player
      */
     public void declareWinner(Player winner){

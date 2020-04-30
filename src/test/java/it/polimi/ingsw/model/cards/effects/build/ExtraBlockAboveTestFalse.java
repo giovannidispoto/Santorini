@@ -25,7 +25,7 @@ class ExtraBlockAboveTestFalse {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Demeter"));
+        p1.setPlayerCard(d.getDivinityCard("DEMETER"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -59,7 +59,7 @@ class ExtraBlockAboveTestFalse {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Demeter"));
+        p1.setPlayerCard(d.getDivinityCard("DEMETER"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);

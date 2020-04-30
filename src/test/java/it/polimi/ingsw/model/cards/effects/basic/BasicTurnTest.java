@@ -25,7 +25,7 @@ class BasicTurnTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -61,7 +61,7 @@ class BasicTurnTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -92,7 +92,7 @@ class BasicTurnTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);

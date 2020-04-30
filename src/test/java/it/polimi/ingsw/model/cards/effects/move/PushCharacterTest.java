@@ -29,8 +29,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -69,8 +69,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -119,8 +119,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -164,8 +164,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -203,8 +203,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -244,8 +244,8 @@ class PushCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Minotaur"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -286,7 +286,7 @@ class PushCharacterTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerMinotaur
+        //Simulation : CURRENT PLAYER - PlayerMINOTAUR
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -347,12 +347,12 @@ class PushCharacterTest {
         //w2 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with minotaur isn't the winner
+        assertNull(m.winner);//Check if p1 with MINOTAUR isn't the winner
         assertEquals(w2, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerMinotaur
+        //Simulation : CURRENT PLAYER - PlayerMINOTAUR
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -411,7 +411,7 @@ class PushCharacterTest {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with minotaur is the winner
+        assertEquals(p1, m.winner);//Check if p1 with MINOTAUR is the winner
         assertEquals(w1, battlefield.getCell(1, 3).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position
         assertEquals(3, battlefield.getCell(1, 3).getTower().getHeight());  //check tower
@@ -429,15 +429,15 @@ class PushCharacterTest {
         battlefield.cleanField();
     }
 
-    //general purpose test with minotaur effect
+    //general purpose test with MINOTAUR effect
     @Test
-    void minotaurTurnTest() throws IOException {
+    void MINOTAURTurnTest() throws IOException {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Chronus"));
-        p2.setPlayerCard(d.getDivinityCard("Minotaur"));
+        p1.setPlayerCard(d.getDivinityCard("CHRONUS"));
+        p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -481,7 +481,7 @@ class PushCharacterTest {
         ╚══╩══╩══════╩══════╩══════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerChronus
+        //Simulation : CURRENT PLAYER - PlayerCHRONUS
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -543,7 +543,7 @@ class PushCharacterTest {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with Chronus is the winner
+        assertEquals(p1, m.winner);//Check if p1 with CHRONUS is the winner
         assertEquals(w1, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check tower
         assertEquals(3, battlefield.getCell(1, 2).getTower().getHeight());  //check tower
@@ -553,7 +553,7 @@ class PushCharacterTest {
         assertTrue(battlefield.getCell(1, 3).isWorkerPresent());  //check worker w2
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerMinotaur
+        //Simulation : CURRENT PLAYER - PlayerMINOTAUR
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -609,7 +609,7 @@ class PushCharacterTest {
         //w3 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p2, m.winner);//Check if p2 with minotaur is the winner
+        assertEquals(p2, m.winner);//Check if p2 with MINOTAUR is the winner
         assertEquals(w1, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(w2, battlefield.getCell(1, 2).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 3).getWorker());    //check position

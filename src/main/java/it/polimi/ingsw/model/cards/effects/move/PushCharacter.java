@@ -26,7 +26,7 @@ public class PushCharacter extends MoveEffect {
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //filter cells with: workers of the same player of selectedWorker, higher than one than the worker, Domes
-        Cell[][] minotaurMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isFriendWorkerPresent(selectedWorker)
+        Cell[][] MINOTAURMatrix = battlefield.getWorkerView(selectedWorker, (cell)->!cell.isFriendWorkerPresent(selectedWorker)
                 && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
                 && !(cell.getTower().getLastBlock() == Block.DOME));
 
@@ -34,9 +34,9 @@ public class PushCharacter extends MoveEffect {
         for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++) {
             for (int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++) {
                 //check only possibles valid movements (by selected worker)
-                if (minotaurMatrix[i][j] != null){
+                if (MINOTAURMatrix[i][j] != null){
                     //check worker presence (enemy: due to getWorkerView)
-                    if(minotaurMatrix[i][j].isWorkerPresent()){
+                    if(MINOTAURMatrix[i][j].isWorkerPresent()){
                         //check possible player direction
                         int directionRow = i- selectedWorker.getRowWorker();
                         int directionCol = j - selectedWorker.getColWorker();
@@ -47,23 +47,23 @@ public class PushCharacter extends MoveEffect {
 
                             //check another worker presence
                             if (forcedMoveCell.isWorkerPresent()) {
-                                minotaurMatrix[i][j] = null;
+                                MINOTAURMatrix[i][j] = null;
                             }
                             //check dome presence
                             if (forcedMoveCell.getTower().getLastBlock() == Block.DOME) {
-                                minotaurMatrix[i][j] = null;
+                                MINOTAURMatrix[i][j] = null;
                             }
                         }
                         else {
                             //can't push enemy outside battlefield
-                            minotaurMatrix[i][j] = null;
+                            MINOTAURMatrix[i][j] = null;
                         }
                     }
                 }
             }
         }
 
-        return minotaurMatrix;
+        return MINOTAURMatrix;
     }
 
 

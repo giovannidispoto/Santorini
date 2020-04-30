@@ -9,7 +9,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckReaderTest {
-    String effectApollo ="Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated";
+    String effectAPOLLO ="Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated";
 
     @Test
     void readerTest() throws IOException {
@@ -18,15 +18,15 @@ class DeckReaderTest {
         //load from *.json
         Deck deck = deckReader.loadDeck(new FileReader("src/Divinities.json"));
 
-        assertNotNull(deck.getDivinityCard("Apollo"));
-        assertSame(deck.getDivinityCard("Apollo").getCardType(), Type.MOVEMENT);
-        assertSame(deck.getDivinityCard("Apollo").getNumberOfPlayersAllowed(), 3);
-        assertEquals(deck.getDivinityCard("Apollo").getCardEffect(), effectApollo);
-        assertNotNull(deck.getDivinityCard("Demeter"));
-        assertSame(deck.getDivinityCard("Demeter").getCardType(), Type.BUILD);
-        assertSame(deck.getDivinityCard("Demeter").getNumberOfPlayersAllowed(), 3);
-        assertNotNull(deck.getDivinityCard("Chronus"));
-        assertSame(deck.getDivinityCard("Chronus").getCardType(), Type.WIN);
-        assertSame(deck.getDivinityCard("Chronus").getNumberOfPlayersAllowed(), 2);
+        assertNotNull(deck.getDivinityCard("APOLLO"));
+        assertSame(deck.getDivinityCard("APOLLO").getCardType(), Type.MOVEMENT);
+        assertSame(deck.getDivinityCard("APOLLO").getNumberOfPlayersAllowed(), 3);
+        assertEquals(deck.getDivinityCard("APOLLO").getCardEffect(), effectAPOLLO);
+        assertNotNull(deck.getDivinityCard("DEMETER"));
+        assertSame(deck.getDivinityCard("DEMETER").getCardType(), Type.BUILD);
+        assertSame(deck.getDivinityCard("DEMETER").getNumberOfPlayersAllowed(), 3);
+        assertNotNull(deck.getDivinityCard("CHRONUS"));
+        assertSame(deck.getDivinityCard("CHRONUS").getCardType(), Type.WIN);
+        assertSame(deck.getDivinityCard("CHRONUS").getNumberOfPlayersAllowed(), 2);
     }
 }

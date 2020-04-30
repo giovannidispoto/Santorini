@@ -1,44 +1,44 @@
 {"cardsEffects":[
-	{ 	"cardName":"Apollo", 
+	{ 	"cardName":"APOLLO",
 		"Effect":{"effectName":"SwitchCharacter", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Artemis", 
+	{ 	"cardName":"ARTEMIS",
 		"Effect":{"effectName":"ExtraMove", "numberOfExtraMoves":2, "turnStructure": ["MOVE", "MOVE_SPECIAL", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Athena", 
+	{ 	"cardName":"ATHENA",
 		"Effect":{"effectName":"NoMoveUp", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Atlas", 
+	{ 	"cardName":"ATLAS",
 		"Effect":{"effectName":"DomeEverywhere", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Demeter", 
+	{ 	"cardName":"DEMETER",
 		"Effect":{"effectName":"ExtraBlockAbove", "blocksLeft":2, "buildInSameCell":false, "turnStructure": ["MOVE", "BUILD", "BUILD_SPECIAL", "END"]}
 	},
-	{ 	"cardName":"Hephaestus", 
+	{ 	"cardName":"HEPHAESTUS",
 		"Effect":{"effectName":"ExtraBlockAbove", "blocksLeft":2, "buildInSameCell":true, "turnStructure": ["MOVE", "BUILD", "BUILD_SPECIAL", "END"]}
 	},
-	{ 	"cardName":"Minotaur", 
+	{ 	"cardName":"MINOTAUR",
 		"Effect":{"effectName":"PushCharacter", "pushOutBattlefield":false, "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Pan", 
+	{ 	"cardName":"PAN",
 		"Effect":{"effectName":"JumpEffect", "minJumpHeight":2, "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{ 	"cardName":"Prometheus", 
+	{ 	"cardName":"PROMETHEUS",
 		"Effect":{"effectName":"CantLevelUp", "buildBeforeMove":true, "buildAfterMove":true, "turnStructure": ["BUILD_SPECIAL","MOVE", "BUILD", "END"]}
 	},
-	{	"cardName" : "Zeus",
+	{	"cardName" : "ZEUS",
 		"Effect": {"effectName": "BlockUnder", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{	"cardName" : "Chronus",
+	{	"cardName" : "CHRONUS",
 		"Effect": {"effectName": "BasicTurn", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
-	{	"cardName" : "Triton",
+	{	"cardName" : "TRITON",
 		"Effect": {"effectName": "ExtraMovePerimeter", "turnStructure": ["MOVE_UNTIL", "BUILD", "END"]}
 	},
-	{	"cardName" : "Hestia",
+	{	"cardName" : "HESTIA",
 		"Effect": {"effectName": "ExtraBlockPerimetral", "blocksLeft":2, "turnStructure": ["MOVE", "BUILD", "BUILD_SPECIAL", "END"]}
 	},
-	{	"cardName" : "Ares",
+	{	"cardName" : "ARES",
 		"Effect": {"effectName": "RemoveBlock", "turnStructure": ["MOVE", "BUILD", "REMOVE", "END"]}
 	}
 ]}

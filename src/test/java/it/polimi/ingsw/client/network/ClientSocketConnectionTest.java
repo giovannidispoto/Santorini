@@ -53,11 +53,11 @@ class ClientSocketConnectionTest {
         clientController.getDeckRequest();
         //3
         List<String> cards = new ArrayList<>();
-        cards.add("Athena");
-        cards.add("Apollo");
+        cards.add("ATHENA");
+        cards.add("APOLLO");
         clientController.setPickedCardsRequest(cards);
         //4
-        clientController.setPlayerCardRequest("Athena");
+        clientController.setPlayerCardRequest("ATHENA");
         //5
         clientController.getBattlefieldRequest();
         //6

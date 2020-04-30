@@ -28,7 +28,7 @@ class ExtraMoveTest {
         DeckReader reader = new DeckReader();
         Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        p1.setPlayerCard(deck.getDivinityCard("Artemis"));
+        p1.setPlayerCard(deck.getDivinityCard("ARTEMIS"));
         List<Player> players = new ArrayList<>();
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -64,7 +64,7 @@ class ExtraMoveTest {
 
         Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        p1.setPlayerCard(deck.getDivinityCard("Artemis"));
+        p1.setPlayerCard(deck.getDivinityCard("ARTEMIS"));
 
         List<Player> players = new ArrayList<>();
         players.add(p1);
@@ -101,8 +101,8 @@ class ExtraMoveTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Artemis"));
-        p2.setPlayerCard(d.getDivinityCard("Chronus"));
+        p1.setPlayerCard(d.getDivinityCard("ARTEMIS"));
+        p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -143,7 +143,7 @@ class ExtraMoveTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerArtemis
+        //Simulation : CURRENT PLAYER - PlayerARTEMIS
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -212,12 +212,12 @@ class ExtraMoveTest {
         //w2 has moved but not special move
         assertEquals(1, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with artemis isn't the winner
+        assertNull(m.winner);//Check if p1 with ARTEMIS isn't the winner
         assertEquals(w2, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(3, battlefield.getCell(0, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerArtemis
+        //Simulation : CURRENT PLAYER - PlayerARTEMIS
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -286,7 +286,7 @@ class ExtraMoveTest {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with minotaur is the winner
+        assertEquals(p1, m.winner);//Check if p1 with MINOTAUR is the winner
         assertEquals(w1, battlefield.getCell(0, 3).getWorker());    //check position
         assertEquals(w2, battlefield.getCell(0, 2).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraMovePerimeterTest  {
 
-    final Player p1 = new Player("PlayerTriton", Color.BLUE);
+    final Player p1 = new Player("PlayerTRITON", Color.BLUE);
     final Player p2 = new Player("PlayerDummy", Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
@@ -28,7 +28,7 @@ class ExtraMovePerimeterTest  {
         DeckReader reader = new DeckReader();
         Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        p1.setPlayerCard(deck.getDivinityCard("Triton"));
+        p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -62,7 +62,7 @@ class ExtraMovePerimeterTest  {
         DeckReader reader = new DeckReader();
         Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        p1.setPlayerCard(deck.getDivinityCard("Triton"));
+        p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -94,7 +94,7 @@ class ExtraMovePerimeterTest  {
         DeckReader reader = new DeckReader();
         Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        p1.setPlayerCard(deck.getDivinityCard("Triton"));
+        p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -127,8 +127,8 @@ class ExtraMovePerimeterTest  {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Triton"));
-        p2.setPlayerCard(d.getDivinityCard("Chronus"));
+        p1.setPlayerCard(d.getDivinityCard("TRITON"));
+        p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -169,7 +169,7 @@ class ExtraMovePerimeterTest  {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerTriton
+        //Simulation : CURRENT PLAYER - PlayerTRITON
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -253,7 +253,7 @@ class ExtraMovePerimeterTest  {
         //w2 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with triton isn't the winner
+        assertNull(m.winner);//Check if p1 with TRITON isn't the winner
         assertEquals(w2, battlefield.getCell(1, 1).getWorker());    //check position
         assertEquals(w1, battlefield.getCell(1, 2).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position
@@ -265,7 +265,7 @@ class ExtraMovePerimeterTest  {
         assertEquals(1, battlefield.getCell(2, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerTriton
+        //Simulation : CURRENT PLAYER - PlayerTRITON
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -324,7 +324,7 @@ class ExtraMovePerimeterTest  {
         //w1 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertEquals(p1, m.winner);//Check if p1 with triton is the winner
+        assertEquals(p1, m.winner);//Check if p1 with TRITON is the winner
         assertEquals(w1, battlefield.getCell(1, 3).getWorker());    //check position
         assertEquals(w2, battlefield.getCell(1, 1).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 4).getWorker());    //check position
@@ -339,7 +339,7 @@ class ExtraMovePerimeterTest  {
         Turn finalT2 = t;
         assertThrows(RuntimeException.class, ()-> finalT2.moveWorker(m.getSelectedWorker(),1,4));
 
-        //Simulation : CURRENT PLAYER - PlayerTriton
+        //Simulation : CURRENT PLAYER - PlayerTRITON
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase

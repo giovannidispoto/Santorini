@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 /**
  * CLIBuilder contains everything you need to build the CLI and use it
@@ -70,7 +71,8 @@ public class CLIBuilder implements UIActions {
     private static final String SUCCESS_HANDSHAKING = "Connection established!";
     private static final String SUCCESS_LOBBY_ACCESS = "You have correctly joined the lobby!";
 
-    private static final String HANDSHAKING_ERROR = "Invalid IP...retry! • ";
+    private static final String INVALID_IP = "Invalid IP...retry! • ";
+    private static final String FAILED_CONNECTION = "Troubles with the connection...retry!";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
     private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... try later 😭";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
@@ -196,7 +198,7 @@ public class CLIBuilder implements UIActions {
         //clientController.getCardsInGameRequest();
         for(DivinityCard current : clientController.getCardsDeck().getAllCards() ){
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase(),ANSI_WHITE+current.getCardEffect()));
-            printedLinesCounter=+1;
+            printedLinesCounter+=1;
         }
     };
 
@@ -210,7 +212,7 @@ public class CLIBuilder implements UIActions {
         clientController.getDeckRequest();
         for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
-            printedLinesCounter=+1;
+            printedLinesCounter+=1;
         }
     };
 
@@ -232,7 +234,7 @@ public class CLIBuilder implements UIActions {
             System.out.print(H_THIN_LINE);
         System.out.println(R_THIN_B_CORNER);
         System.out.print(ANSI_WHITE);
-        printedLinesCounter=+3;
+        printedLinesCounter+=3;
     }
 
     /**
@@ -269,7 +271,7 @@ public class CLIBuilder implements UIActions {
      */
     public void printGodPlayerActivity(ClientController clientController){
         System.out.println(ANSI_WHITE+String.format(GOD_MESSAGE,clientController.getGodPlayer()));
-        printedLinesCounter=+1;
+        printedLinesCounter+=1;
     }
 
     //UIActions METHODS
@@ -339,7 +341,7 @@ public class CLIBuilder implements UIActions {
             pickedCounter++;
         }
         clientController.setPickedCardsRequest(chosenCards);
-        printedLinesCounter=+1;
+        printedLinesCounter+=1;
     }
 
     /**
@@ -392,7 +394,7 @@ public class CLIBuilder implements UIActions {
             validInput= chosenCard != null;
         }
         clientController.setPlayerCardRequest(clientController.getCardsDeck().getDivinityCard(userInput).getCardName());
-        printedLinesCounter=+2;
+        printedLinesCounter+=2;
     }
 
     /**
@@ -401,95 +403,99 @@ public class CLIBuilder implements UIActions {
      */
     @Override
     public void setupConnection(ClientController clientController) {
+        //Local Variables
         Scanner consoleScanner = new Scanner(System.in);
-        String userInput;
+        String userInputString;
+        int userInputValue = 0;
+        boolean isOperationValid = false;
+        //Lobby Parameters
         String chosenNickname;
-        int userValue = 0;
-        int chosenLobby;
-        boolean validOperation = false;
+        int chosenLobbySize;
+        /*  # TITLE BOX #
+            ┌──────────────────┐
+            │ Setup Connection │
+            └──────────────────┘
+        */
         renderTitleBox(ANSI_PURPLE,SETUPTITLE);
-        /*  # Port Setup #
-            Socket Port ⛩
-            We suggest you the port 1337 • >
-            |
-         */
-        System.out.print(COLORMODE+SOCKET_PORT+NEW_LINE+PORT_SUGGESTION+CLI_INPUT);
-        userInput=consoleScanner.next();
-        //clientController.
-        printedLinesCounter=+2;
-        /*  # Server Handshake #
-            Socket Port ⛩
-            We suggest you the port 1337 • >
-            Server IP 🌍
-            >
-            🦖 Handshaking with 192.168.1.9 on port 1337...
-            |
-         */
-        System.out.print(COLORMODE+SERVER_IP+NEW_LINE+CLI_INPUT);
-        userInput=consoleScanner.next();
-        clientController.getSocketConnection().setServerName(userInput);
-        System.out.print(String.format(HANDSHAKING,clientController.getSocketConnection().getServerName(),clientController.getSocketConnection().getServerPort())+NEW_LINE);
-        printedLinesCounter=+3;
-        while(!validOperation){
-            if(!clientController.getSocketConnection().startConnection()){
-                /*  # Handshake error #
-                    Socket Port ⛩
-                    We suggest you the port 1337 • >
-                    Invalid IP...retry! • Server IP 🌍
-                    > |
-                */
-                System.out.print(String.format(CURSOR_UP,3));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_RED+HANDSHAKING_ERROR+COLORMODE+SERVER_IP+NEW_LINE+CLI_INPUT);
-                userInput=consoleScanner.next();
-                clientController.getSocketConnection().setServerName(userInput);
-                System.out.print(String.format(HANDSHAKING,clientController.getSocketConnection().getServerName(),clientController.getSocketConnection().getServerPort())+NEW_LINE);
-                /*  # Handshake Retry #
-                    Socket Port ⛩
-                    We suggest you the port 1337 • >
-                    Invalid IP...retry! • Server IP 🌍
+        while (!isOperationValid){
+            /*  # Setup Server IP #
+                Server IP 🌍
+                >
+                |
+            */
+            System.out.print(COLORMODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+            userInputString=consoleScanner.next();
+            printedLinesCounter+=2;
+            while (!clientController.getSocketConnection().setServerName(userInputString)){
+                /*  # Setup Server IP #
+                    Invalid IP...retry • Server IP 🌍
                     >
-                    🦖 Handshaking with 192.168.1.9 on port 1337...
                     |
                 */
-
+                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_IP+COLORMODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+                userInputString=consoleScanner.next();
             }
-            else{
-                /*  # Handshake success #
-                    Socket Port ⛩
-                    We suggest you the port 1337 • >
+            /*  # Setup Socket Port #
+                Server IP 🌍
+                >
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
+                |
+            */
+            System.out.print(COLORMODE+SOCKET_PORT+NEW_LINE+ANSI_GRAY+PORT_SUGGESTION+ANSI_WHITE+CLI_INPUT);
+            userInputValue=consoleScanner.nextInt();
+            printedLinesCounter+=3;
+            clientController.getSocketConnection().setServerPort(userInputValue);
+            System.out.print(String.format(HANDSHAKING,clientController.getSocketConnection().getServerName(),clientController.getSocketConnection().getServerPort())+NEW_LINE);
+            if(clientController.getSocketConnection().startConnection()){
+                /*  # Connection Success #
                     Server IP 🌍
                     >
-                    🦖 Handshaking with 192.168.1.9 on port 1337...
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
+                    Handshaking with 192.168.1.9 on port 1337...🦖
                     Connection established!
-                    |
                 */
-                validOperation=true;
-                System.out.print(ANSI_GREEN+SUCCESS_HANDSHAKING+NEW_LINE);
-                printedLinesCounter=+1;
+                isOperationValid=true;
+                System.out.print(ANSI_GREEN+SUCCESS_HANDSHAKING+ANSI_WHITE+NEW_LINE);
+                printedLinesCounter+=1;
+            }
+            else{
+                /*  # Failed Connection #
+                    Failed Connection...retry!
+                    Server IP 🌍
+                    >
+                */
+                System.out.print(String.format(CURSOR_UP,printedLinesCounter-3));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+FAILED_CONNECTION+NEW_LINE+ANSI_WHITE);
+                printedLinesCounter=4;
             }
         }
-         /*  # Nickname setup #
-            Socket Port ⛩
-            We suggest you the port 1337 • >
+        /*  # Nickname Setup #
             Server IP 🌍
             >
-            🦖 Handshaking with 192.168.1.9 on port 1337...
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
             Nickname 👾
             >
             |
         */
         System.out.print(COLORMODE+NICKNAME+NEW_LINE+CLI_INPUT);
-        userInput=consoleScanner.next();
-        clientController.setPlayerNickname(userInput);
-        printedLinesCounter=+2;
-        /*  # Lobby choice #
-            Socket Port ⛩
-            We suggest you the port 1337 • >
+        userInputString=consoleScanner.next();
+        clientController.setPlayerNickname(userInputString);
+        printedLinesCounter+=2;
+        /*  # Nickname Setup #
             Server IP 🌍
             >
-            Handshaking with 192.168.1.9 on port 1337...
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
             Nickname 👾
             >
@@ -498,17 +504,19 @@ public class CLIBuilder implements UIActions {
             |
         */
         System.out.print(LOBBY_SIZE+NEW_LINE+CLI_INPUT);
-        userValue=consoleScanner.nextInt();
-        printedLinesCounter=+2;
-        //The only valid choices are 2 or 3
-        validOperation= userValue == 2 || userValue == 3;
-        while(!validOperation){
-            /*  # Wrong Lobby Size #
-                Socket Port ⛩
-                We suggest you the port 1337 • >
+        userInputValue=consoleScanner.nextInt();
+        printedLinesCounter+=2;
+        //Only two valid choices...
+        isOperationValid=false;
+        if(userInputValue==2 || userInputValue == 3)
+            isOperationValid=true;
+        while (!isOperationValid){
+            /*  # Nickname Setup #
                 Server IP 🌍
                 >
-                Handshaking with 192.168.1.9 on port 1337...
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
                 Connection established!
                 Nickname 👾
                 >
@@ -519,16 +527,18 @@ public class CLIBuilder implements UIActions {
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
             System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLORMODE+LOBBY_SIZE+NEW_LINE+CLI_INPUT);
-            userValue=consoleScanner.nextInt();
-            validOperation= userValue == 2 || userValue == 3;
+            userInputValue=consoleScanner.nextInt();
+            isOperationValid=false;
+            if(userInputValue==2 || userInputValue == 3)
+                isOperationValid=true;
         }
         //Save user preferences
-        chosenLobby=userValue;
+        chosenLobbySize=userInputValue;
         chosenNickname=clientController.getPlayerNickname();
         //Adds the player to the lobby
-        clientController.addPlayerRequest(chosenNickname,userValue);
+        clientController.addPlayerRequest(chosenNickname,userInputValue);
         System.out.print(LOBBY_JOIN+NEW_LINE);
-        printedLinesCounter=+1;
+        printedLinesCounter+=1;
         //Troubles with the lobby...
         //# Full Lobby # -> we close the client
         if(clientController.isFullLobby()){
@@ -537,11 +547,11 @@ public class CLIBuilder implements UIActions {
         }
         while(!clientController.getValidNick()){
             /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
-                Socket Port ⛩
-                We suggest you the port 1337 • >
                 Server IP 🌍
                 >
-                Handshaking with 192.168.1.9 on port 1337...
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
                 Connection established!
                 Nickname 👾
                 >
@@ -553,18 +563,18 @@ public class CLIBuilder implements UIActions {
             */
             System.out.println(ANSI_RED+NICKNAME_ERROR);
             System.out.print(ANSI_WHITE+CLI_INPUT);
-            userInput=consoleScanner.next();
-            clientController.setPlayerNickname(userInput);
-            clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobby);
+            userInputString=consoleScanner.next();
+            clientController.setPlayerNickname(userInputString);
+            clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobbySize);
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
         }
         /*  # Setup Done! #
-            Socket Port ⛩
-            We suggest you the port 1337 • >
             Server IP 🌍
             >
-            Handshaking with 192.168.1.9 on port 1337...
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
             Nickname 👾
             >
@@ -577,7 +587,7 @@ public class CLIBuilder implements UIActions {
         */
         System.out.print(ANSI_GREEN+SUCCESS_LOBBY_ACCESS+NEW_LINE);
         System.out.print(COLORMODE+CLI_INPUT+WAITSTART+NEW_LINE);
-        printedLinesCounter=+3;
+        printedLinesCounter+=3;
     }
 
     //TODO: Polish the code below this todo
@@ -586,7 +596,7 @@ public class CLIBuilder implements UIActions {
      * Renders the players information box
      *      PLAYERS
      *      ┌────────────────────┐
-     *      │ ◈ SteveJobs|Athena │
+     *      │ ◈ SteveJobs|ATHENA │
      *      │ ...                │
      *      └────────────────────┘
      */
@@ -739,16 +749,6 @@ public class CLIBuilder implements UIActions {
 
     @Override
     public void removeBlock(ClientController clientController) {
-
-    }
-
-    @Override
-    public void skipAction(ClientController clientController) {
-
-    }
-
-    @Override
-    public void showCards(ClientController clientController) {
 
     }
 }

@@ -16,13 +16,13 @@ class DivinityEffectReaderTest {
 
     final StringReader reader = new StringReader("{\n" +
             "\t\"cardsEffects\": [{\n" +
-            "\t\t\t\"cardName\": \"Zeus\",\n" +
+            "\t\t\t\"cardName\": \"ZEUS\",\n" +
             "\t\t\t\"Effect\": {\n" +
             "\t\t\t\t\"effectName\": \"BlockUnder\"\n" +
             "\t\t\t}\n" +
             "\t\t},\n" +
             "\t\t{\n" +
-            "\t\t\t\"cardName\": \"Artemis\",\n" +
+            "\t\t\t\"cardName\": \"ARTEMIS\",\n" +
             "\t\t\t\"Effect\": {\n" +
             "\t\t\t\t\"effectName\": \"ExtraMove\",\n" +
             "\t\t\t\t\"numberOfExtraMoves\": 1\n" +
@@ -36,10 +36,10 @@ class DivinityEffectReaderTest {
         DivinityEffectReader der = new DivinityEffectReader();
         Map<String, Turn> map = der.load(new FileReader("src/CardsEffect.json"));
 
-        assertTrue(map.containsKey("Zeus"));
-        assertTrue(map.get("Zeus") instanceof BlockUnder);
-        assertTrue(map.containsKey("Artemis"));
-        assertTrue(map.get("Artemis") instanceof ExtraMove);
+        assertTrue(map.containsKey("ZEUS"));
+        assertTrue(map.get("ZEUS") instanceof BlockUnder);
+        assertTrue(map.containsKey("ARTEMIS"));
+        assertTrue(map.get("ARTEMIS") instanceof ExtraMove);
 
     }
 }

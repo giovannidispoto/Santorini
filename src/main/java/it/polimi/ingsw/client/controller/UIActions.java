@@ -11,8 +11,6 @@ public interface UIActions {
     void moveWorker(ClientController clientController);
     void buildBlock(ClientController clientController);
     void removeBlock(ClientController clientController);
-    void skipAction(ClientController clientController);
-    void showCards(ClientController clientController);
     void setupConnection(ClientController clientController);
 
 }

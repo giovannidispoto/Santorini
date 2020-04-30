@@ -29,7 +29,7 @@ public class ExtraBlockAbove extends BuildEffect{
             throw new RuntimeException("Unexpected Error!");
 
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        //Hephaestus
+        //HEPHAESTUS
         if(buildInSameCell){
             if(blocksLeft > 1){
                 //Regular Build
@@ -44,7 +44,7 @@ public class ExtraBlockAbove extends BuildEffect{
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
             }
         }
-        //Demeter
+        //DEMETER
         else{
             if(blocksLeft > 1){
                 //Regular Build

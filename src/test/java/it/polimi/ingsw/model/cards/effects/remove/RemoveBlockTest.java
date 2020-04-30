@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RemoveBlockTest {
-    final Player p1 = new Player("PlayerAres",  Color.BLUE);
+    final Player p1 = new Player("PlayerARES",  Color.BLUE);
     final Player p2 = new Player("PlayerDummy", Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
@@ -27,8 +27,8 @@ class RemoveBlockTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Ares"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("ARES"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -72,7 +72,7 @@ class RemoveBlockTest {
         ╚══╩════╩═══╩══════╩═══╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerAres
+        //Simulation : CURRENT PLAYER - PlayerARES
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -88,7 +88,7 @@ class RemoveBlockTest {
         //7. Build()
         t.buildBlock(m.getSelectedWorker(),0,0);
         //8. CheckGlobalWin...
-        //Special Effect Ares
+        //Special Effect ARES
         //9. Change Worker
         m.setSelectedWorker(t.changeWorkerPlayer(m.getSelectedWorker()));
         //10. Generate Remove Matrix
@@ -170,8 +170,8 @@ class RemoveBlockTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Ares"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("ARES"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -220,7 +220,7 @@ class RemoveBlockTest {
         ╚══╩════╩═══╩══════╩═══╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerAres
+        //Simulation : CURRENT PLAYER - PlayerARES
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -248,7 +248,7 @@ class RemoveBlockTest {
         ╚══╩════╩═══╩════╩══════╝
          */
         //FirstAssertion
-        assertEquals(p1, m.winner);//Check if p1 with pan it's the winner
+        assertEquals(p1, m.winner);//Check if p1 with PAN it's the winner
         assertEquals(w2, battlefield.getCell(2, 4).getWorker());    //check position
         assertEquals(3, battlefield.getCell(2, 4).getTower().getHeight());  //check build
         //Control correct Turn NotCompleted

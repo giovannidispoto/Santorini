@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraBlockAboveTestTrue {
 
-    final Player p1 = new Player("PlayerHephaestus",  Color.BLUE);
+    final Player p1 = new Player("PlayerHEPHAESTUS",  Color.BLUE);
     final Player p2 = new Player("PlayerDummy",  Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p2);
@@ -27,8 +27,8 @@ class ExtraBlockAboveTestTrue {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Hephaestus"));
-        p2.setPlayerCard(d.getDivinityCard("Atlas"));
+        p1.setPlayerCard(d.getDivinityCard("HEPHAESTUS"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -44,7 +44,7 @@ class ExtraBlockAboveTestTrue {
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
-        //Simulation : CURRENT PLAYER - PlayerHephaestus
+        //Simulation : CURRENT PLAYER - PlayerHEPHAESTUS
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -59,7 +59,7 @@ class ExtraBlockAboveTestTrue {
         t.passTurn();
         //CURRENT PLAYER - PlayerDummy
         t.passTurn();
-        //CURRENT PLAYER - PlayerHephaestus
+        //CURRENT PLAYER - PlayerHEPHAESTUS
         //0. Generate Turn
         m.generateTurn(false);
         //1. Worker Selection Phase
@@ -94,7 +94,7 @@ class ExtraBlockAboveTestTrue {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Hephaestus"));
+        p1.setPlayerCard(d.getDivinityCard("HEPHAESTUS"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
@@ -103,7 +103,7 @@ class ExtraBlockAboveTestTrue {
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
-        //Simulation : CURRENT PLAYER - PlayerHephaestus
+        //Simulation : CURRENT PLAYER - PlayerHEPHAESTUS
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase

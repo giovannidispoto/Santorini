@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SwitchCharacterTest {
 
-    final Player p1 = new Player("PlayerApollo",Color.BLUE);
+    final Player p1 = new Player("PlayerAPOLLO",Color.BLUE);
     final Player p2 = new Player("PlayerDummy",Color.GREY);
     final Worker w1 = new Worker(p1);
     final Worker w2 = new Worker(p1);
@@ -28,8 +28,8 @@ class SwitchCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -67,8 +67,8 @@ class SwitchCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -106,8 +106,8 @@ class SwitchCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Apollo"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -143,8 +143,8 @@ class SwitchCharacterTest {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
-        p1.setPlayerCard(d.getDivinityCard("Apollo"));
-        p2.setPlayerCard(d.getDivinityCard("Chronus"));
+        p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();
@@ -185,7 +185,7 @@ class SwitchCharacterTest {
         ╚══╩══╩══════╩══════╩════╝
          */
 
-        //Simulation : CURRENT PLAYER - PlayerApollo
+        //Simulation : CURRENT PLAYER - PlayerAPOLLO
         //0. Generate Turn
         Turn t = m.generateTurn(false);
         //1. Worker Selection Phase
@@ -247,7 +247,7 @@ class SwitchCharacterTest {
         //w2 has moved
         assertEquals(0, t.getMovesLeft());
 
-        assertNull(m.winner);//Check if p1 with apollo isn't the winner
+        assertNull(m.winner);//Check if p1 with APOLLO isn't the winner
         assertFalse(battlefield.getCell(0,2).isWorkerPresent());
         assertEquals(w2, battlefield.getCell(1, 4).getWorker());    //check position
         assertEquals(w3, battlefield.getCell(1, 3).getWorker());    //check position
@@ -260,7 +260,7 @@ class SwitchCharacterTest {
         assertEquals(1, battlefield.getCell(2, 2).getTower().getHeight());  //check tower
         assertEquals(p1, m.getSelectedWorker().getOwnerWorker());
 
-        //Simulation : CURRENT PLAYER - PlayerChronus
+        //Simulation : CURRENT PLAYER - PlayerCHRONUS
         //0. Generate Turn
         t = m.generateTurn(true);
         //1. Worker Selection Phase
@@ -330,7 +330,7 @@ class SwitchCharacterTest {
         assertEquals(0, battlefield.getCell(1, 4).getTower().getHeight());  //check tower
         assertEquals(1, battlefield.getCell(2, 2).getTower().getHeight());  //check tower
 
-        //Simulation : CURRENT PLAYER - PlayerApollo
+        //Simulation : CURRENT PLAYER - PlayerAPOLLO
         //0. Generate Turn
         t = m.generateTurn(false);
         //1. Worker Selection Phase
