@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
  * Client Socket Connection Class
  */
 public class ClientSocketConnection {
-    private final int serverPort = 1337;
+    private int serverPort = 1337;  //default server port
     private String serverName;
     private Socket clientSocket;
     private final ClientController clientController;
@@ -70,7 +70,19 @@ public class ClientSocketConnection {
     public String getServerName() {
         return serverName;
     }
+
     public int getServerPort() {
         return serverPort;
+    }
+
+    /** Set the server port, if 0 or invalid TCP port, the default port is chosen (is found in variables)
+     *
+     * @param serverPort    integer representing the port
+     */
+    public void setServerPort(int serverPort) {
+        if(serverPort > 0 && serverPort <= 65535)
+        {
+            this.serverPort = serverPort;
+        }
     }
 }

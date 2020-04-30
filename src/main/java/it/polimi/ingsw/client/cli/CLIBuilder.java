@@ -197,7 +197,7 @@ public class CLIBuilder implements UIActions {
      *  • CHRONUS | Owner win if there are five full towers on the board
      */
     public void renderAvailableCards(ClientController clientController){
-        clientController.getCardsInGameRequest();
+        //clientController.getCardsInGameRequest();
         for(DivinityCard current : clientController.getCardsDeck().getAllCards() ){
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase(),ANSI_WHITE+current.getCardEffect()));
             printedLinesCounter=+1;

@@ -16,8 +16,14 @@ public class ClientMain {
                     if(args[1].equals("light"))
                         cliColor="light";
                 CLIBuilder commandLine = new CLIBuilder(cliColor,clientController);
+
                 commandLine.setupConnection(clientController);
+                //Connection with server is UP
                 clientController.waitSetPickedCards();
+                //Woke up by: setPickedCards
+                clientController.getDeckRequest();
+                //Woke up by: getDeckResponse
+
                 if(clientController.getGodPlayer().equals(clientController.getPlayerNickname())){
                     commandLine.pickCards(clientController);
                 }
@@ -25,6 +31,8 @@ public class ClientMain {
                     commandLine.printGodPlayerActivity(clientController);
                 }
                 clientController.waitSetPlayerCard();
+                //Woke up by: setPlayerCard
+                //Player choose his card used in game
                 commandLine.chooseCard(clientController);
             }
             //Launch GUI -> Santorini.jar gui
