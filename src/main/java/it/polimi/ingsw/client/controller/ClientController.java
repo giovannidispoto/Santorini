@@ -16,29 +16,25 @@ import it.polimi.ingsw.client.clientModel.basic.Deck;
  * ClientController Class
  */
 public class ClientController {
-    //This Player Client-Side
+    //--    This Player Client-Side
     private String playerNickname;
     private CellInterface[][] workerView;
-    //Match
+    //--    Match
     private List<PlayerInterface> players;
     private List<Integer> workersID;
     private Step turn;
-    //Lobby
-    private boolean validNick;  //Indicates if your nickname is valid
-    private boolean lobbyState; //Indicates if you are registered with a lobby
-    private boolean fullLobby;  //Indicates if the server is already busy with a game
-    private String godPlayer;   //Player choosing godCards from cardsDeck
-    private List<String> godCards;  //Cards chosen by GodPlayer
-    /** Deck sent by the server
-     *  1)  containing the playable cards in this lobby (from which GodPlayer choose the cards)
-     *  2)  and later the cards chosen by GodPlayer (available for each player)
-     */
-    private Deck cardsDeck;
+    //--    Lobby
+    private boolean validNick;          //Indicates if your nickname is valid
+    private boolean lobbyState;         //Indicates if you are registered with a lobby
+    private boolean fullLobby;          //Indicates if the server is already busy with a game
+    private String godPlayer;           //Player choosing godCards from cardsDeck
+    private List<String> godCards;      //Contains Cards chosen by GodPlayer, from which you can choose your card
+    private Deck cardsDeck;             //Deck sent by the server, containing the playable cards in this lobby
     private int currentLobbySize;
-    //Utils - Locks for Wait & Notify
+    //--    Utils - Locks for Wait & Notify
     public LockManager lockManager;
     public Thread controllerThread;
-    //connection & handler
+    //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
 
@@ -52,7 +48,7 @@ public class ClientController {
         this.controllerThread = Thread.currentThread();
     }
 
-    //Start Network
+    //------    START NETWORK
 
     /**
      *  Initialize a new socket on the controller from which it is called,
@@ -65,12 +61,21 @@ public class ClientController {
         this.socketConnection = new ClientSocketConnection(this);
     }
 
+    /**
+     * Associate controller to server handler
+     * @param serverHandler server handler
+     */
+    public void registerHandler(ServerHandler serverHandler){
+        this.serverHandler = serverHandler;
+    }
+
+    //TODO: Think about interrupt
     //Launch Interrupt for Controller Thread
     public void interruptController(){
         this.controllerThread.interrupt();
     }
 
-    //Wait Request to Controller
+    //------    WAIT REQUESTS to Controller
 
     /** Wait until you receive SetPickedCards message from the server
      *  N.B: Blocking method until a response is received
@@ -122,7 +127,9 @@ public class ClientController {
         }
     }
 
-    //Request Messages Area
+    //------    REQUEST MESSAGES to Server
+
+        //--  REQUESTS IN LOBBY
 
     /** Communicates to the server the intention to join the game
      *  N.B: Blocking request until a response is received
@@ -198,7 +205,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkerPosition", data)));
     }
 
-    //--------------------------------------------------------------------------------------------------------  MATCH
+        //--  REQUESTS IN MATCH
 
     public void selectWorkerRequest(String playerNickname, int workerID) {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
@@ -221,72 +228,33 @@ public class ClientController {
 
     //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
 
+    //------    USED BY UI:
     public List<String> getGodCards() {
         return godCards;
-    }
-
-    public void setGodCards(List<String> godCards) {
-        this.godCards = godCards;
     }
 
     public boolean isFullLobby() {
         return fullLobby;
     }
 
-    public void setFullLobby(boolean fullLobby) {
-        this.fullLobby = fullLobby;
-    }
-
-    public CellInterface[][] getWorkerView() {
-        return workerView;
-    }
-
-    public CellInterface getWorkerViewCell(int x, int y){
-        return workerView[x][y];
-    }
-
-    public void setWorkerView(CellInterface[][] workerView) {
-        this.workerView = workerView;
-    }
-
     public Deck getCardsDeck() {
         return cardsDeck;
-    }
-
-    public void setCardsDeck(Deck cardsDeck) {
-        this.cardsDeck = cardsDeck;
     }
 
     public String getGodPlayer() {
         return godPlayer;
     }
 
-    public void setGodPlayer(String godPlayer) {
-        this.godPlayer = godPlayer;
-    }
-
     public boolean getValidNick() {
         return validNick;
-    }
-
-    public void setValidNick(boolean validNick) {
-        this.validNick = validNick;
     }
 
     public boolean getLobbyState() {
         return lobbyState;
     }
 
-    public void setLobbyState(boolean lobbyState) {
-        this.lobbyState = lobbyState;
-    }
-
     public int getCurrentLobbySize() {
         return currentLobbySize;
-    }
-
-    public void setCurrentLobbySize(int currentLobbySize) {
-        this.currentLobbySize = currentLobbySize;
     }
 
     public ClientSocketConnection getSocketConnection() {
@@ -297,28 +265,64 @@ public class ClientController {
         return playerNickname;
     }
 
-    public void setPlayerNickname(String playerNickname) {
-        this.playerNickname = playerNickname;
-    }
-
-    /**
-     * Associate controller to server handler
-     * @param serverHandler server handler
-     */
-    public void registerHandler(ServerHandler serverHandler){
-        this.serverHandler = serverHandler;
-    }
-
     public List<PlayerInterface> getPlayers(){
         return players;
     }
 
-    public void setPlayers(List<PlayerInterface> players){
-        this.players = players;
-    }
-
     public List<Integer> getWorkersID() {
         return workersID;
+    }
+
+        //--    WORKER-VIEW
+
+    public CellInterface[][] getWorkerView() {
+        return workerView;
+    }
+
+    public CellInterface getWorkerViewCell(int x, int y){
+        return workerView[x][y];
+    }
+
+    //------    USED BY COMMAND PATTERN:
+
+    public void setGodCards(List<String> godCards) {
+        this.godCards = godCards;
+    }
+
+    public void setFullLobby(boolean fullLobby) {
+        this.fullLobby = fullLobby;
+    }
+
+    public void setWorkerView(CellInterface[][] workerView) {
+        this.workerView = workerView;
+    }
+
+    public void setCardsDeck(Deck cardsDeck) {
+        this.cardsDeck = cardsDeck;
+    }
+
+    public void setGodPlayer(String godPlayer) {
+        this.godPlayer = godPlayer;
+    }
+
+    public void setValidNick(boolean validNick) {
+        this.validNick = validNick;
+    }
+
+    public void setLobbyState(boolean lobbyState) {
+        this.lobbyState = lobbyState;
+    }
+
+    public void setCurrentLobbySize(int currentLobbySize) {
+        this.currentLobbySize = currentLobbySize;
+    }
+
+    public void setPlayerNickname(String playerNickname) {
+        this.playerNickname = playerNickname;
+    }
+
+    public void setPlayers(List<PlayerInterface> players){
+        this.players = players;
     }
 
     public void setWorkersID(List<Integer> workersID) {

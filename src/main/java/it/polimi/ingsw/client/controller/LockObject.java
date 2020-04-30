@@ -6,18 +6,18 @@ package it.polimi.ingsw.client.controller;
  *
  */
 public class LockObject {
-    private boolean state = false;
+    private boolean used = false;
 
     //Getter
-    public boolean isState() {
-        return state;
+    public boolean isUsed() {
+        return used;
     }
 
     /** Set Status = true
      *  status after notify = true (Lock unlocked)
      */
     public void setUsed() {
-        this.state = true;
+        this.used = true;
     }
 
     /** Set Status = false
@@ -25,6 +25,6 @@ public class LockObject {
      *  (Lock reset because the caller has been awakened)
      */
     public void resetState() {
-        this.state = false;
+        this.used = false;
     }
 }

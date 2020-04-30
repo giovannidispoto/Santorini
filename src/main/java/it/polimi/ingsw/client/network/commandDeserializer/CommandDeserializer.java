@@ -30,12 +30,12 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         if(null == deserializerHashMap.getMapCommand(action))
         {
             c = new NotExistCommand(action);
-            //TODO: debug
+            //TODO: only for debug??
         }else {
             c = deserializerHashMap.getMapCommand(action).command(jsonElement);
         }
 
-        //TODO: Remove NotExistCommand after debug & move return at commandMap line (now 36)
+        //TODO: Remove NotExistCommand after debug & move return at commandMap line (now 35)
         return c;
     }
 }

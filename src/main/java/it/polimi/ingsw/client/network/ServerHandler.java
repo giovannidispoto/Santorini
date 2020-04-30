@@ -15,7 +15,7 @@ public class ServerHandler{
      * @param clientController controller
      * @param thread thread
      */
-    public ServerHandler(ClientController clientController, ServerThread thread){
+    public ServerHandler(ClientController clientController, ServerThread thread) {
        this.clientController = clientController;
        this.thread = thread;
        clientController.registerHandler(this);

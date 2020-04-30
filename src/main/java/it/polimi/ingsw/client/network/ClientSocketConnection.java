@@ -29,7 +29,7 @@ public class ClientSocketConnection {
      * Start Client Connection with socket to the server
      * @return Boolean, true if connection is established
      */
-    public boolean startConnection(){
+    public boolean startConnection() {
         //open TCP port
         try {
             clientSocket = new Socket(serverName, serverPort);
@@ -43,22 +43,6 @@ public class ClientSocketConnection {
     }
 
     /**
-     * Set serverName and validate
-     * @param serverName String that represent hostname
-     * @return true if syntax is correct
-     */
-    public boolean setServerName(String serverName) {
-        try {
-            InetAddress.getByName(serverName);
-        } catch (UnknownHostException e) {
-            //Problem, unknown host
-            return false;
-        }
-        this.serverName = serverName;
-        return true;
-    }
-
-    /**
      * Check if the Socket with the server is closed
      * @return Boolean, true if socket is closed
      */
@@ -66,7 +50,7 @@ public class ClientSocketConnection {
         return clientSocket.isClosed();
     }
 
-    //Getter & Setter
+    //----  Getters & Setters
     public String getServerName() {
         return serverName;
     }
@@ -75,7 +59,24 @@ public class ClientSocketConnection {
         return serverPort;
     }
 
-    /** Set the server port, if 0 or invalid TCP port, the default port is chosen (is found in variables)
+    /**
+     * Set serverName and validate
+     * @param serverName String that represent hostname
+     * @return true if syntax is correct
+     */
+    public boolean setServerName(String serverName) {
+        InetAddress serverAddress;
+        try {
+            serverAddress = InetAddress.getByName(serverName);
+        } catch (UnknownHostException | SecurityException e) {
+            //Problem, unknown host or error
+            return false;
+        }
+        this.serverName = serverAddress.getHostAddress();
+        return true;
+    }
+
+    /** Set the server port, if 0 or invalid TCP port: the default port is chosen (is in variables)
      *
      * @param serverPort    integer representing the port
      */

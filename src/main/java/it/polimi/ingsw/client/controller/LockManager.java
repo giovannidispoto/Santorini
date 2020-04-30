@@ -19,25 +19,35 @@ public class LockManager {
     public final LockObject lockSetPlayers;
 
     public LockManager() {
-        this.lockAddPlayer  =   new LockObject();
+        this.lockAddPlayer      =   new LockObject();
         this.lockSetPickedCards =   new LockObject();
-        this.lockGetDeck    =   new LockObject();
+        this.lockGetDeck        =   new LockObject();
         this.lockSetPlayerCard  =   new LockObject();
-        this.lockSetWorkersID =   new LockObject();
-        this.lockGetBattlefield  =   new LockObject();
-        this.lockSetBattlefield  =   new LockObject();
-        this.lockSetPlayers =   new LockObject();
+        this.lockSetWorkersID   =   new LockObject();
+        this.lockGetBattlefield =   new LockObject();
+        this.lockSetBattlefield =   new LockObject();
+        this.lockSetPlayers     =   new LockObject();
     }
 
     /** Takes care of waiting on a specific request / operation,
      *  based on the Lock Object passed as a parameter.
+     *
+     *  1)  This function check if the lock has already been used,
+     *  this means that the data is already available and there is no need to wait,
+     *  therefore the lock status is reset and the function ends.
+     *
+     *  2)  If the lock has not already been used,
+     *  this means that the data has not yet arrived and the calling thread must be put on hold with wait.
+     *  When the data arrives it will be unlocked and the lock reset.
+     *
+     *  N.B:    This function can generate an error only if the thread flag (Interrupted) is set true.
      *
      * @param object    LockObject based on the activity you are waiting for
      * @return  false: if there was an error (InterruptedException), true: method performed without errors
      */
     public boolean setWait(LockObject object){
         //If the unlocking operation has already been performed
-        if(object.isState()){
+        if(object.isUsed()){
             object.resetState();
             return true;
         }
@@ -45,9 +55,10 @@ public class LockManager {
         try {
             object.wait();
         } catch (InterruptedException e) {
+            //TODO: Manage Well Interruption
             return false;
         }
-        //TODO: Thinking about resetState (only in LockManager): (Gorlenah)
+
         object.resetState();
         return true;
     }
