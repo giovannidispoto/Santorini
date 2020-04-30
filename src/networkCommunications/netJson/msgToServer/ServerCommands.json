@@ -44,12 +44,6 @@
     }
   },
   {
-    "action":"getWorkersID",
-    "data":{
-      "playerNickname":"Bill"
-    }
-  },
-  {
     "action":"getBattlefield"
   },
   {
@@ -67,9 +61,7 @@
 
 
 
-  {
-    "action":"getPlayers"
-  },
+
   {
     "action" : "startTurn",
     "data" :{

@@ -13,7 +13,7 @@ public class LockManager {
     public final LockObject lockSetPickedCards;
     public final LockObject lockGetDeck;
     public final LockObject lockSetPlayerCard;
-    public final LockObject lockGetWorkersID;
+    public final LockObject lockSetWorkersID;
     public final LockObject lockGetBattlefield;
     public final LockObject lockSetBattlefield;
     public final LockObject lockSetPlayers;
@@ -23,7 +23,7 @@ public class LockManager {
         this.lockSetPickedCards =   new LockObject();
         this.lockGetDeck    =   new LockObject();
         this.lockSetPlayerCard  =   new LockObject();
-        this.lockGetWorkersID  =   new LockObject();
+        this.lockSetWorkersID =   new LockObject();
         this.lockGetBattlefield  =   new LockObject();
         this.lockSetBattlefield  =   new LockObject();
         this.lockSetPlayers =   new LockObject();

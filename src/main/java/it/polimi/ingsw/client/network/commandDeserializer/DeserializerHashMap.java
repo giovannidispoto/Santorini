@@ -48,7 +48,7 @@ public class  DeserializerHashMap  {
         loadSetPickedCards();
         loadGetDeckResponse();
         loadSetPlayerCard();
-        loadGetWorkersIDResponse();
+        loadSetWorkersID();
         loadGetBattlefieldResponse();
         loadSetBattlefield();
         loadSetPlayers();
@@ -99,10 +99,10 @@ public class  DeserializerHashMap  {
     }
 
     //5
-    private void loadGetWorkersIDResponse(){
-        this.commandMap.put("getWorkersIDResponse", new ProcessingCommand() {
+    private void loadSetWorkersID(){
+        this.commandMap.put("setWorkersID", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetWorkersIDCommand.class);
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetWorkersIDCommand.class);
             }
         });
     }

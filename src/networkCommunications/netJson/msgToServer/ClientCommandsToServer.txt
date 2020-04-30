@@ -2,6 +2,5 @@
 {"action":"getDeck"}
 {"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
 {"action":"setPlayerCard","data":{"card":"Athena"}}
-{"action":"getWorkersID","data":{"playerNickname":"Bill"}}
 {"action":"getBattlefield"}
 {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill","worker":0,"x":4,"y":4}}

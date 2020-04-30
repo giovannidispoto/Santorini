@@ -59,10 +59,8 @@ class ClientSocketConnectionTest {
         //4
         clientController.setPlayerCardRequest("Athena");
         //5
-        clientController.getWorkersIDRequest("Bill");
-        //6
         clientController.getBattlefieldRequest();
-        //7
+        //6
         clientController.setInitialWorkerPositionRequest("Bill",0,4,4);
         //-------------------------------------------------------------------------------------- START MATCH
 

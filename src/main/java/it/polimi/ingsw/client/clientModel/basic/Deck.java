@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.clientModel.basic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  */
 public class Deck {
 
-    private List<DivinityCard> listOfCards;
+    private final List<DivinityCard> listOfCards;
 
     /**
      * Create new Deck from cards
@@ -32,7 +33,18 @@ public class Deck {
         return div;
     }
 
-    //TODO: improve pickCards() in CLIBuilder
+    /** Function that returns all the names of the cards in the deck
+     *
+     * @return  list containing cards names
+     */
+    public List<String> getCardsNames(){
+        List<String> cardsNames = new ArrayList<>();
+        for(DivinityCard card : listOfCards){
+            cardsNames.add(card.getCardName());
+        }
+        return cardsNames;
+    }
+
     /** Remove the matching card from the deck by its name
      *  N:B: No case sensitive
      * @param cardName  Card Name (English)

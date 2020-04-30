@@ -115,7 +115,7 @@
     }
   },
   {
-    "action":"getWorkersIDResponse",
+    "action":"setWorkersID",
     "data":{
       "workersID":[
         2,

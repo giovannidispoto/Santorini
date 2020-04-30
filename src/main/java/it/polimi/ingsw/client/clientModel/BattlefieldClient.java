@@ -26,4 +26,14 @@ public class BattlefieldClient {
     public CellInterface getCell(int x, int y){
         return battlefieldBoard[x][y];
     }
+
+    /** Check that cell (x, y) is not already occupied
+     *
+     * @param x battlefield row
+     * @param y battlefield column
+     * @return  true = occupied, false = NOT occupied
+     */
+    public boolean isCellOccupied(int x, int y){
+        return (null != battlefieldBoard[x][y].getPlayer());
+    }
 }

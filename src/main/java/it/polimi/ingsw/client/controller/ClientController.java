@@ -92,6 +92,16 @@ public class ClientController {
         }
     }
 
+    /** Wait until you receive SetWorkersID message from the server
+     *  N.B: Blocking method until a response is received
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean waitSetWorkersID(){
+        synchronized (lockManager.lockSetWorkersID){
+            return lockManager.setWait(lockManager.lockSetWorkersID);
+        }
+    }
+
     /** Wait until you receive SetBattlefield message from the server
      *  N.B: Blocking method until a response is received
      * @return  false: if there was an error, true: method performed without errors
@@ -160,20 +170,6 @@ public class ClientController {
     public void setPlayerCardRequest(String cardName){
         SetPlayerCardInterface data = new SetPlayerCardInterface(cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
-    }
-
-    /** Client asks the server for the ID of each of its workers
-     *  N.B: Blocking request until a response is received
-     *
-     * @param playerNickname    NickName Choose by the player
-     * @return  false: if there was an error, true: method performed without errors
-     */
-    public boolean getWorkersIDRequest(String playerNickname){
-        SendPlayerNicknameInterface data = new SendPlayerNicknameInterface(playerNickname);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("getWorkersID", data)));
-        synchronized (lockManager.lockGetWorkersID){
-            return lockManager.setWait(lockManager.lockGetWorkersID);
-        }
     }
 
     /** Client asks the server for Battlefield Update

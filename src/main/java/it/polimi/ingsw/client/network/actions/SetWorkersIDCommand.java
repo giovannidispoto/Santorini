@@ -7,16 +7,16 @@ import java.util.List;
 /**
  * GetWorkersIDCommand represent getWorkersID action returned by server
  */
-public class GetWorkersIDCommand implements Command{
+public class SetWorkersIDCommand implements Command{
     List<Integer> workersID;
 
     @Override
     public void execute(ClientController clientController) {
         clientController.setWorkersID(workersID);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockGetWorkersID){
-            clientController.lockManager.lockGetWorkersID.setUsed();
-            clientController.lockManager.lockGetWorkersID.notify();
+        synchronized (clientController.lockManager.lockSetWorkersID){
+            clientController.lockManager.lockSetWorkersID.setUsed();
+            clientController.lockManager.lockSetWorkersID.notify();
         }
     }
 }
