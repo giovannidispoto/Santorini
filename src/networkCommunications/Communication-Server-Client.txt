@@ -18,8 +18,11 @@
 (For players)
 	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
 	setPlayerCard         	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
-	getWorkersID			--------------------------------->	ok
-    ok      				<---------------------------------	getWorkersIDResponse
+
+    waitSetWorkersID   (Unlock the player when asked to choose the Initial Workers Positions)
+
+(For players)
+    ok						<---------------------------------	setWorkersID
 (For Workers)
 	getBattlefield			--------------------------------->	ok
 	ok      				<---------------------------------	getBattlefieldResponse

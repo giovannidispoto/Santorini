@@ -48,10 +48,9 @@
     removes the card from the deck to be sent to the next player
     }
 4
-    {   -getWorkersID:  {"action":"getWorkersID","data":{"playerNickname":"Bill"}}
-    the client asks the server for the ID of each of its workers to be sent to it
+    {   -setWorkersID:  {"action":"setWorkersID","data":{"workersID":[2,3]}}
+    the server sent to the player his workersID
 
-        -ServerResponse:    {"action":"getWorkersIDResponse","data":{"workersID":[2,3]}}
     }
 5
     {   -getBattlefield:    {"action":"getBattlefield"}
