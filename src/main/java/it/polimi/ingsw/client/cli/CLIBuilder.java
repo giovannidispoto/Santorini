@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
 
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 /**
  * CLIBuilder contains everything you need to build the CLI and use it
@@ -72,8 +71,10 @@ public class CLIBuilder implements UIActions {
     private static final String SUCCESS_LOBBY_ACCESS = "You have correctly joined the lobby!";
 
     private static final String INVALID_IP = "Invalid IP...retry! • ";
+    private static final String PORT_SUGGESTION_ERROR = "This is not a number! We suggest you the port 1337 • ";
     private static final String FAILED_CONNECTION = "Troubles with the connection...retry!";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
+    private static final String INVALID_LOBBY_SIZE = "This is not a number...retry! • ";
     private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... try later 😭";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
 
@@ -282,7 +283,7 @@ public class CLIBuilder implements UIActions {
     @Override
     public void pickCards(ClientController clientController) {
         //Local Variables
-        boolean validInput = false;
+        boolean isValidInput = false;
         int numberOfPlayers=clientController.getCurrentLobbySize();
         int pickedCounter=0;
         Scanner consoleScanner = new Scanner(System.in);
@@ -323,21 +324,12 @@ public class CLIBuilder implements UIActions {
         //Multiple extraction
         while (pickedCounter<numberOfPlayers){
             System.out.print(String.format(pickChoiceTemplate,pickedCounter+1)+CLI_INPUT);
-            userInput=consoleScanner.next();
-            pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
-            validInput= pickedCard != null;
-            while (!validInput){
-                System.out.print(String.format(CURSOR_UP,1));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
-                userInput=consoleScanner.next();
-                pickedCard=clientController.getCardsDeck().getDivinityCard(userInput);
-                validInput= pickedCard != null;
+            userInput=consoleScanner.next().toUpperCase();
+            isValidInput=true;
+            if(chosenCards.contains(userInput)){
+                isValidInput=false;
+
             }
-            chosenCards.add(pickedCard.getCardName());
-            clientController.getCardsDeck().removeDivinityCard(userInput);
-            System.out.print(String.format(CURSOR_UP,1));
-            System.out.print(CLEAN);
             pickedCounter++;
         }
         clientController.setPickedCardsRequest(chosenCards);
@@ -445,7 +437,14 @@ public class CLIBuilder implements UIActions {
                 Handshaking with 192.168.1.9 on port 1337...🦖
                 |
             */
-            System.out.print(COLORMODE+SOCKET_PORT+NEW_LINE+ANSI_GRAY+PORT_SUGGESTION+ANSI_WHITE+CLI_INPUT);
+            System.out.print(COLORMODE+SOCKET_PORT+NEW_LINE+ANSI_GRAY);
+            System.out.print(PORT_SUGGESTION+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+PORT_SUGGESTION_ERROR+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
             userInputValue=consoleScanner.nextInt();
             printedLinesCounter+=3;
             clientController.getSocketConnection().setServerPort(userInputValue);
@@ -504,6 +503,12 @@ public class CLIBuilder implements UIActions {
             |
         */
         System.out.print(LOBBY_SIZE+NEW_LINE+CLI_INPUT);
+        while(!consoleScanner.hasNextInt()){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_RED+INVALID_LOBBY_SIZE+ANSI_WHITE+CLI_INPUT);
+            consoleScanner.next();
+        }
         userInputValue=consoleScanner.nextInt();
         printedLinesCounter+=2;
         //Only two valid choices...
