@@ -21,6 +21,7 @@ public class CLIBuilder implements UIActions {
     private static final String CODE_RED = "197";
     private static final String CODE_PURPLE = "105";
     private static final String CODE_GREEN = "41";
+    private static final String CODE_LIME = "83";
     private static final String CODE_BLACK = "232";
     private static final String ANSI_PRFX ="\u001b[38;5;";
     protected static final String ANSI_RST = "\u001b[0m";
@@ -34,6 +35,7 @@ public class CLIBuilder implements UIActions {
     protected static final String ANSI_RED = ANSI_PRFX+CODE_RED+"m";
     protected static final String ANSI_GREEN = ANSI_PRFX+CODE_GREEN+"m";
     protected static final String ANSI_BLACK = ANSI_PRFX+CODE_BLACK+"m";
+    protected static final String ANSI_LIME = ANSI_PRFX+CODE_LIME+"m";
     private static String COLORMODE;
 
     //Game data
@@ -47,20 +49,21 @@ public class CLIBuilder implements UIActions {
     protected static final String NEW_LINE = "\n";
     protected static final String BLANK = " ";
     private static final String BOARD_TITLE = "BOARD";
-    private static final String HORIZONTAL_ROW_NUMBER = " 0 "+" 1 "+" 2 "+" 3 "+" 4 ";
-    private static final String PLAYERS_TITLE = "PLAYERS";
-    private static final String TOWERS_TITLE = "FULL TOWERS";
-    private static final String MOVES_TITLE = "PLAYER MOVES";
-    private static final String PHASE_TITLE = "CURRENT PHASE";
+    private static final String HORIZONTAL_ROW_NUMBER = "  0 "+"  1  "+" 2  "+" 3  "+" 4  ";
+    private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
+    private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
+    private static final String MOVES_TITLE = "PLAYER MOVES 🕹";
+    private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
 
     //Web utilities
     private static final String SETUPTITLE = "Setup Connection";
 
+    private static final String SOCKET_PORT = "Socket Port ⛩";
+    private static final String PORT_SUGGESTION = "We suggest you the port 1337 • ";
     private static final String SERVER_IP = "Server IP 🌍";
     private static final String NICKNAME = "Nickname 👾";
-    private static final String SETPLAYERS = "Number of players 👦🏼";
     private static final String LOBBY_SIZE = "Lobby Size 📦";
-    private static final String LOBBY_JOIN = "Joining the lobby...⛩";
+    private static final String LOBBY_JOIN = "Joining the lobby...";
     private static final String CONNECTION_HUNT = "Connection lost! Looking for connection...🦖";
     private static final String HANDSHAKING = "Handshaking with %s on port %s...🦖 ";
 
@@ -69,26 +72,21 @@ public class CLIBuilder implements UIActions {
 
     private static final String HANDSHAKING_ERROR = "Invalid IP...retry! • ";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
-    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... there is no place for you\n" +
-            "Don't be sad, we still love you... 🧸❤️";
+    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... try later 😭";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
 
 
     private static final String WAITSTART = "Wait for the match startup...";
-    private static final String CLIENT_MIGRATION = "Migrating to the other one...";
-    private HashMap<Integer,Color> ColorsSetupMap;
 
     //Players Information Box
     protected static final String WORKER = "◈";
     private HashMap<Color,String> WorkerColorsMap;
 
     //Cards
-    private static final String PICK_CARDS = "Choose %s cards for this match 🤔";
     private static final String PICK_TITLE = "Cards Pick Up";
     private static final String CHOICE_TITLE = "Card Choice";
     private static final String CHOOSE_CARD = "Choose your card for this match 🕹";
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
-    private static final String cardTemplate = "• %s | %s";
 
     //Board Matrix
     protected static final String L_T_CORNER = "┏";
@@ -110,8 +108,6 @@ public class CLIBuilder implements UIActions {
     protected static final String R_THIN_B_CORNER = "┘";
     protected static final String H_THIN_LINE = "─";
     protected static final String V_THIN_LINE = "│";
-    protected static final String DOT_H_LINE = "╌";
-    protected static final String DOT_V_LINE = "┊";
 
     //ANSI Cursor Moves
     protected static final String CURSOR_UP = "\u001b[%sA";
@@ -122,7 +118,8 @@ public class CLIBuilder implements UIActions {
     //ANSI Special Sequences
     protected static final String CLEAN = "\u001b[0J";
 
-    //Templates
+    // # STRING TEMPLATES #
+    //Board templates
     private static final String upperEdgeBoard =
             L_T_CORNER+H_LINE+H_LINE+H_LINE+U_LAT_SEPARATOR+
             H_LINE+H_LINE+H_LINE+U_LAT_SEPARATOR+
@@ -141,19 +138,24 @@ public class CLIBuilder implements UIActions {
             H_LINE+H_LINE+H_LINE+LO_LAT_SEPARATOR+
             H_LINE+H_LINE+H_LINE+LO_LAT_SEPARATOR+
             H_LINE+H_LINE+H_LINE+R_B_CORNER;
-    private static final String upperEdgeTowers = "┌╌╌╌┐";
-    private static final String intermediateEdgeTowers = "┊ %s ┊";
-    private static final String lowerEdgeTowers = "└╌╌╌┘";
     private static final String edge_distance = BLANK+BLANK+BLANK;
-    private static final String playerDataTemplate = " %s %s|%s "; // ᳵ SteveJobs|Athena
-    private static final String playerMoveTemplate = " [%s|%s] "; // [1|2]
+
+    //Full Towers Box templates
+    private static final String upperEdgeTowers = L_THIN_T_CORNER+H_THIN_LINE+H_THIN_LINE+H_THIN_LINE+R_THIN_T_CORNER;
+    private static final String intermediateEdgeTowers = V_THIN_LINE+BLANK+"%s"+BLANK+V_THIN_LINE;
+    private static final String lowerEdgeTowers = L_THIN_B_CORNER+H_THIN_LINE+H_THIN_LINE+H_THIN_LINE+R_THIN_B_CORNER;
+
+    //General purpose templates
+    private static final String playerDataTemplate = " %s %s|%s ";
+    private static final String playerMoveTemplate = " [%s|%s] ";
     private static final String pickChoiceTemplate = "Your %s choice • ";
+    private static final String cardTemplate = "• %s | %s";
+    private static final String PICK_CARDS = "You're the player chosen by the gods! Choose %s cards for this match 👑";
 
     //CLI Sizes and Counters
     private int printedLinesCounter;
-    private int currentLine;
     private final int boardTitleEdgeDistance = 12;
-    private final int horizontalRowNumberDistance = 6;
+    private final int horizontalRowNumberDistance = 4;
     private final int edgeDistance = 4;
     private final int refreshable_area_height = 14;
     private final int editable_board_rows = 5;
@@ -167,12 +169,10 @@ public class CLIBuilder implements UIActions {
     public CLIBuilder(String colorMode, ClientController clientController) {
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
-        this.ColorsSetupMap = new HashMap<>();
         this.WorkerColorsMap = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
         this.printedLinesCounter = 0;
-        this.currentLine = 0;
         //Initial color scheme setup
         if(colorMode.equals("light")){
             COLORMODE=ANSI_BLACK;
@@ -180,10 +180,6 @@ public class CLIBuilder implements UIActions {
         else{
             COLORMODE=ANSI_WHITE;
         }
-        //Colors for the setup connection phase <NumbersOfPlayersInTheLobby, AssociatedColor>
-        ColorsSetupMap.put(0,Color.BLUE);
-        ColorsSetupMap.put(1,Color.GREY);
-        ColorsSetupMap.put(2,Color.BROWN);
         //Generate colored workers based on the player color
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
@@ -249,7 +245,7 @@ public class CLIBuilder implements UIActions {
         System.out.print(messageColor+L_THIN_T_CORNER);
         //+2 to consider the blank spaces between the message and the lateral edges
         for(int i=0;i<messageLength+2;i++)
-            System.out.print(DOT_H_LINE);
+            System.out.print(H_THIN_LINE);
         System.out.println(R_THIN_T_CORNER);
 
     }
@@ -263,7 +259,7 @@ public class CLIBuilder implements UIActions {
         int messageLength = message.length();
         System.out.print(messageColor+L_THIN_B_CORNER);
         for(int i=0;i<messageLength+2;i++)
-            System.out.print(DOT_H_LINE);
+            System.out.print(H_THIN_LINE);
         System.out.println(R_THIN_B_CORNER);
         System.out.print(ANSI_WHITE);
     }
@@ -412,7 +408,18 @@ public class CLIBuilder implements UIActions {
         int chosenLobby;
         boolean validOperation = false;
         renderTitleBox(ANSI_PURPLE,SETUPTITLE);
+        /*  # Port Setup #
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            |
+         */
+        System.out.print(COLORMODE+SOCKET_PORT+NEW_LINE+PORT_SUGGESTION+CLI_INPUT);
+        userInput=consoleScanner.next();
+        //clientController.
+        printedLinesCounter=+2;
         /*  # Server Handshake #
+            Socket Port ⛩
+            We suggest you the port 1337 • >
             Server IP 🌍
             >
             🦖 Handshaking with 192.168.1.9 on port 1337...
@@ -426,6 +433,8 @@ public class CLIBuilder implements UIActions {
         while(!validOperation){
             if(!clientController.getSocketConnection().startConnection()){
                 /*  # Handshake error #
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
                     Invalid IP...retry! • Server IP 🌍
                     > |
                 */
@@ -436,6 +445,8 @@ public class CLIBuilder implements UIActions {
                 clientController.getSocketConnection().setServerName(userInput);
                 System.out.print(String.format(HANDSHAKING,clientController.getSocketConnection().getServerName(),clientController.getSocketConnection().getServerPort())+NEW_LINE);
                 /*  # Handshake Retry #
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
                     Invalid IP...retry! • Server IP 🌍
                     >
                     🦖 Handshaking with 192.168.1.9 on port 1337...
@@ -445,6 +456,8 @@ public class CLIBuilder implements UIActions {
             }
             else{
                 /*  # Handshake success #
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
                     Server IP 🌍
                     >
                     🦖 Handshaking with 192.168.1.9 on port 1337...
@@ -457,6 +470,8 @@ public class CLIBuilder implements UIActions {
             }
         }
          /*  # Nickname setup #
+            Socket Port ⛩
+            We suggest you the port 1337 • >
             Server IP 🌍
             >
             🦖 Handshaking with 192.168.1.9 on port 1337...
@@ -470,6 +485,8 @@ public class CLIBuilder implements UIActions {
         clientController.setPlayerNickname(userInput);
         printedLinesCounter=+2;
         /*  # Lobby choice #
+            Socket Port ⛩
+            We suggest you the port 1337 • >
             Server IP 🌍
             >
             Handshaking with 192.168.1.9 on port 1337...
@@ -487,6 +504,8 @@ public class CLIBuilder implements UIActions {
         validOperation= userValue == 2 || userValue == 3;
         while(!validOperation){
             /*  # Wrong Lobby Size #
+                Socket Port ⛩
+                We suggest you the port 1337 • >
                 Server IP 🌍
                 >
                 Handshaking with 192.168.1.9 on port 1337...
@@ -518,6 +537,8 @@ public class CLIBuilder implements UIActions {
         }
         while(!clientController.getValidNick()){
             /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
+                Socket Port ⛩
+                We suggest you the port 1337 • >
                 Server IP 🌍
                 >
                 Handshaking with 192.168.1.9 on port 1337...
@@ -526,7 +547,7 @@ public class CLIBuilder implements UIActions {
                 >
                 Lobby Size 📦
                 >
-                Joining the lobby...⛩
+                Joining the lobby...
                 There is already a player with this nickname in the lobby...retry!
                 > |
             */
@@ -539,6 +560,8 @@ public class CLIBuilder implements UIActions {
             System.out.print(CLEAN);
         }
         /*  # Setup Done! #
+            Socket Port ⛩
+            We suggest you the port 1337 • >
             Server IP 🌍
             >
             Handshaking with 192.168.1.9 on port 1337...
@@ -547,7 +570,7 @@ public class CLIBuilder implements UIActions {
             >
             Lobby Size 📦
             >
-            Joining the lobby...⛩
+            Joining the lobby...
             You have correctly joined the lobby!
             > Wait for the match startup...
             |
@@ -633,7 +656,7 @@ public class CLIBuilder implements UIActions {
         System.out.print(HORIZONTAL_ROW_NUMBER);
         for(int i=0;i<horizontalRowNumberDistance;i++)
             System.out.print(BLANK);
-        System.out.print(ANSI_LIGHTBLUE+TOWERS_TITLE+NEW_LINE+ANSI_WHITE+NEW_LINE);
+        System.out.print(ANSI_LIGHTBLUE+TOWERS_TITLE+NEW_LINE+ANSI_WHITE);
         //Print line 2
         for(int i=0;i<edgeDistance;i++)
             System.out.print(BLANK);
