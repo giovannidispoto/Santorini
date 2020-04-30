@@ -6,36 +6,31 @@
 	check           		<---------------------------------	addPlayerResponse	(Server check Nick presence & lobby Decision)
 (While Nick or lobbyState invalid)
 
-    waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
+        -waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
 
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
 	getDeck      			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
     ok          			<---------------------------------	getDeckResponse
 	setPickedCards        	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 
-	waitSetPlayerCard   (Unlock the player when asked to choose the card)
+	    -waitSetPlayerCard   (Unlock the player when asked to choose the card)
 
 (For players)
 	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
 	setPlayerCard         	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
+(end)
 
-    waitSetWorkersID   (Unlock the player when asked to choose the Initial Workers Positions)
+        -waitSetPlayers
+
+	ok(Players)				<---------------------------------	setPlayers			(notify all (nick+color+card))
+
+        -waitSetWorkersID   (Unlock the player when asked to choose the Initial Workers Positions)
 
 (For players)
     ok						<---------------------------------	setWorkersID
 (For Workers)
-	getBattlefield			--------------------------------->	ok
-	ok      				<---------------------------------	getBattlefieldResponse
 	setInitialWorkerPosition--------------------------------->	ok
-(end)
-
-    waitSetBattlefield
-
-	ok(Battlefield)			<---------------------------------	setBattlefield		(notify all)
-
-	waitSetPlayers
-
-	ok(Players)				<---------------------------------	setPlayers			(notify all (nick+color+card))
+	ok						<---------------------------------	notifyUpdate    (notify all)
 (end)
 
 -------------------------------------------------------------------------------------- START MATCH
@@ -51,10 +46,15 @@
 (While WorkerView NULL)
 	skipStepRequest(opt)	--------------------------------->	ok
 	playStepRequest(opt)	--------------------------------->	ok
-	Battlefield				<---------------------------------	setBattlefield		(notify all)
+	ok						<---------------------------------	notifyUpdate		(notify all)
 (end)
 
 (ASYNCHRONOUS)
     ok						<---------------------------------	notifyWinner/Loser  (notify all)
+
+------------------------------------------------------------------------------------------------------------------
+    ok						<---------------------------------	notifyUpdate
+
+    {"action":"notifyUpdate","data":{"movePlayer":{"data":[2,3]}}}
 
 
