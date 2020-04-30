@@ -12,7 +12,7 @@ public class ClientMain {
         clientController.startNetwork();
         //Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
             if(args[0].equals("cli")){
-                if(args[1]!=null)
+                if(args.length==2)
                     if(args[1].equals("light"))
                         cliColor="light";
                 CLIBuilder commandLine = new CLIBuilder(cliColor,clientController);
