@@ -326,11 +326,23 @@ public class CLIBuilder implements UIActions {
             System.out.print(String.format(pickChoiceTemplate,pickedCounter+1)+CLI_INPUT);
             userInput=consoleScanner.next().toUpperCase();
             isValidInput=true;
-            if(chosenCards.contains(userInput)){
+            if(!clientController.getCardsDeck().getCardsNames().contains(userInput))
                 isValidInput=false;
-
+            if(!chosenCards.isEmpty()){
+                if(chosenCards.contains(userInput))
+                    isValidInput=false;}
+            while (!isValidInput){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+                userInput=consoleScanner.next().toUpperCase();
+                isValidInput=true;
+                if(!chosenCards.isEmpty()){
+                    if(chosenCards.contains(userInput))
+                        isValidInput=false;}
             }
             pickedCounter++;
+            chosenCards.add(userInput);
         }
         clientController.setPickedCardsRequest(chosenCards);
         printedLinesCounter+=1;
@@ -592,7 +604,7 @@ public class CLIBuilder implements UIActions {
         */
         System.out.print(ANSI_GREEN+SUCCESS_LOBBY_ACCESS+NEW_LINE);
         System.out.print(COLORMODE+CLI_INPUT+WAITSTART+NEW_LINE);
-        printedLinesCounter+=3;
+        printedLinesCounter+=2;
     }
 
     //TODO: Polish the code below this todo
