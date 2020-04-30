@@ -66,6 +66,7 @@ public class CLIBuilder implements UIActions {
     private static final String LOBBY_JOIN = "Joining the lobby...";
     private static final String CONNECTION_HUNT = "Connection lost! Looking for connection...🦖";
     private static final String HANDSHAKING = "Handshaking with %s on port %s...🦖 ";
+    private static final String WAIT_PLAYERS = "Wait that the others players make their choice...";
 
     private static final String SUCCESS_HANDSHAKING = "Connection established!";
     private static final String SUCCESS_LOBBY_ACCESS = "You have correctly joined the lobby!";
@@ -156,6 +157,7 @@ public class CLIBuilder implements UIActions {
     private static final String PICK_CARDS = "You're the player chosen by the gods! Choose %s cards for this match 👑";
 
     //CLI Sizes and Counters
+    private int godPlayerRefreshHeight;
     private int printedLinesCounter;
     private final int boardTitleEdgeDistance = 12;
     private final int horizontalRowNumberDistance = 4;
@@ -175,6 +177,7 @@ public class CLIBuilder implements UIActions {
         this.WorkerColorsMap = new HashMap<>();
         this.currentPhase = null;
         this.numberFullTowers = 0;
+        this.godPlayerRefreshHeight=0;
         this.printedLinesCounter = 0;
         //Initial color scheme setup
         if(colorMode.equals("light")){
@@ -270,7 +273,7 @@ public class CLIBuilder implements UIActions {
      * Prints notification about God player activity
      */
     public void printGodPlayerActivity(ClientController clientController){
-        System.out.println(ANSI_WHITE+String.format(GOD_MESSAGE,clientController.getGodPlayer()));
+        System.out.println(ANSI_LIME+String.format(GOD_MESSAGE,clientController.getGodPlayer())+ANSI_WHITE);
         printedLinesCounter+=1;
     }
 
@@ -340,11 +343,15 @@ public class CLIBuilder implements UIActions {
                     if(chosenCards.contains(userInput))
                         isValidInput=false;}
             }
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
             pickedCounter++;
             chosenCards.add(userInput);
         }
         clientController.setPickedCardsRequest(chosenCards);
-        printedLinesCounter+=1;
+        System.out.print(ANSI_LIME+WAIT_PLAYERS+NEW_LINE);
+        printedLinesCounter+=2;
+        godPlayerRefreshHeight=printedLinesCounter;
     }
 
     /**
@@ -359,8 +366,14 @@ public class CLIBuilder implements UIActions {
         String userInput;
         List<String> availableCards = clientController.getGodCards();
         //Clean the CLI from the last phase elements
-        System.out.print(String.format(CURSOR_UP,printedLinesCounter));
-        System.out.print(CLEAN);
+        if(clientController.getGodPlayer().equals(clientController.getPlayerNickname())){
+            System.out.print(String.format(CURSOR_UP,godPlayerRefreshHeight));
+            System.out.print(CLEAN);
+        }
+        else{
+            System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+            System.out.print(CLEAN);
+        }
         //Render the graphic elements
         /*   # Card Selection #
             ┌─────────────┐
@@ -396,7 +409,8 @@ public class CLIBuilder implements UIActions {
                 validInput=false;
         }
         clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
-        printedLinesCounter+=2;
+        System.out.print(ANSI_LIME+WAIT_PLAYERS+NEW_LINE);
+        printedLinesCounter+=3;
     }
 
     /**

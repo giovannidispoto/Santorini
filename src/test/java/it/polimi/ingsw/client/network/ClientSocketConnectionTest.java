@@ -57,7 +57,7 @@ class ClientSocketConnectionTest {
         cards.add("APOLLO");
         clientController.setPickedCardsRequest(cards);
         //4
-        clientController.setPlayerCardRequest("ATHENA");
+        clientController.setPlayerCardRequest("ATHENA","Josh");
         //5
         clientController.getBattlefieldRequest();
         //6

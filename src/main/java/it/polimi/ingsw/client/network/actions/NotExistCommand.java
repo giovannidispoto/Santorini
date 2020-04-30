@@ -11,7 +11,7 @@ public class NotExistCommand implements Command {
 
     @Override
     public void execute(ClientController clientController) {
-        System.out.println("ServerMessage generate Error - ClientCommand does not exist -  Server Sent:  "+this.message);
+        //System.out.println("ServerMessage generate Error - ClientCommand does not exist -  Server Sent:  "+this.message);
         //TODO: debug
     }
 }
