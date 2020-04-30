@@ -196,9 +196,8 @@ public class CLIBuilder implements UIActions {
      *  • CHRONUS | Owner win if there are five full towers on the board
      */
     public void renderAvailableCards(ClientController clientController){
-        //clientController.getCardsInGameRequest();
-        for(DivinityCard current : clientController.getCardsDeck().getAllCards() ){
-            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase(),ANSI_WHITE+current.getCardEffect()));
+        for(String card : clientController.getGodCards()){
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+clientController.getCardsDeck().getDivinityCard(card).getCardName().toUpperCase(),ANSI_WHITE+clientController.getCardsDeck().getDivinityCard(card).getCardEffect()));
             printedLinesCounter+=1;
         }
     };
@@ -358,7 +357,7 @@ public class CLIBuilder implements UIActions {
         boolean validInput = true;
         Scanner consoleScanner = new Scanner(System.in);
         String userInput;
-        DivinityCard chosenCard;
+        List<String> availableCards = clientController.getGodCards();
         //Clean the CLI from the last phase elements
         System.out.print(String.format(CURSOR_UP,printedLinesCounter));
         System.out.print(CLEAN);
@@ -377,11 +376,9 @@ public class CLIBuilder implements UIActions {
         renderTitleBox(ANSI_PURPLE,CHOICE_TITLE);
         renderAvailableCards(clientController);
         System.out.print(ANSI_WHITE+CHOOSE_CARD+NEW_LINE+CLI_INPUT);
-        userInput=consoleScanner.next();
-        chosenCard=clientController.getCardsDeck().getDivinityCard(userInput);
-        if(chosenCard==null)
+        userInput=consoleScanner.next().toUpperCase();
+        if(!availableCards.contains(userInput))
             validInput=false;
-
         while(!validInput){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
@@ -393,11 +390,12 @@ public class CLIBuilder implements UIActions {
                 Invalid card choice...retry! • >
             */
             System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
-            userInput=consoleScanner.next();
-            chosenCard=clientController.getCardsDeck().getDivinityCard(userInput);
-            validInput= chosenCard != null;
+            userInput=consoleScanner.next().toUpperCase();
+            validInput=true;
+            if(!availableCards.contains(userInput))
+                validInput=false;
         }
-        clientController.setPlayerCardRequest(clientController.getCardsDeck().getDivinityCard(userInput).getCardName());
+        clientController.setPlayerCardRequest(userInput);
         printedLinesCounter+=2;
     }
 
