@@ -152,18 +152,6 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", data)));
     }
 
-    /** Communicates to the server the need to get the deck of cards in play in the lobby chosen by GodPlayer
-     *  N.B: Blocking request until a response is received
-     *
-     * @return  false: if there was an error, true: method performed without errors
-     */
-    public boolean getCardsInGameRequest(){
-        serverHandler.request(new Gson().toJson(new BasicActionInterface("getCardsInGame")));
-        synchronized (lockManager.lockGetCardsInGame){
-            return lockManager.setWait(lockManager.lockGetCardsInGame);
-        }
-    }
-
     /** Communicate to the server the card chosen by the Player
      *  (choice between possible cards sent by the server with the mirror command)
      *

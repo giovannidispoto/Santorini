@@ -47,7 +47,6 @@ public class  DeserializerHashMap  {
         loadAddPlayerResponse();
         loadSetPickedCards();
         loadGetDeckResponse();
-        loadGetCardsInGameResponse();
         loadSetPlayerCard();
         loadGetWorkersIDResponse();
         loadGetBattlefieldResponse();
@@ -91,15 +90,6 @@ public class  DeserializerHashMap  {
     }
 
     //4
-    private void loadGetCardsInGameResponse(){
-        this.commandMap.put("getCardsInGameResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetCardsInGameCommand.class);
-            }
-        });
-    }
-
-    //5
     private void loadSetPlayerCard(){
         this.commandMap.put("setPlayerCard", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -108,7 +98,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //6
+    //5
     private void loadGetWorkersIDResponse(){
         this.commandMap.put("getWorkersIDResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -117,7 +107,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //7
+    //6
     private void loadGetBattlefieldResponse(){
         this.commandMap.put("getBattlefieldResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -126,7 +116,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //8
+    //7
     private void loadSetBattlefield(){
         this.commandMap.put("setBattlefield", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -135,7 +125,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //9
+    //8
     private void loadSetPlayers(){
         this.commandMap.put("setPlayers", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -144,7 +134,7 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //10
+    //9
     private void loadWorkerViewUpdate(){
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {

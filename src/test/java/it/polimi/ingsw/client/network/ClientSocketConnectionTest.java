@@ -57,14 +57,12 @@ class ClientSocketConnectionTest {
         cards.add("Apollo");
         clientController.setPickedCardsRequest(cards);
         //4
-        clientController.getCardsInGameRequest();
-        //5
         clientController.setPlayerCardRequest("Athena");
-        //6
+        //5
         clientController.getWorkersIDRequest("Bill");
-        //7
+        //6
         clientController.getBattlefieldRequest();
-        //8
+        //7
         clientController.setInitialWorkerPositionRequest("Bill",0,4,4);
         //-------------------------------------------------------------------------------------- START MATCH
 

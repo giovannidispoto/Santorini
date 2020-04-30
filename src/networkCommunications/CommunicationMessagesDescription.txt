@@ -26,10 +26,10 @@
     but will not choose the cards because it will not be their nickname
 
             {   -getDeck:    {"action":"getDeck"}
-            Only the god player can call this function which requires the deck to select the cards
+            All players call this function which requires the deck to the server
 
                 -ServerResponse:    {"action":"getDeckResponse","data":{"deck":[DivinityCard.class]}}
-            Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size)
+            Server sends to the players, the deck from which he can choose the cards (skimmed according to the lobby size)
             }
 
         -ClientResponse:    {"action":"setPickedCards","data":{"cards":["Athena","Apollo"]}}
@@ -41,13 +41,6 @@
     {   -setPlayerCard:   {"action":"setPlayerCard","data":{"cards":["Athena","Apollo"]}}
 
     The player chooses a card from the deck created by the "god" player (that will be the last)
-
-                {   -getCardsInGame:    {"action":"getCardsInGame"}
-                The player asks the server for the deck of cards chosen by GodPlayer
-
-                    -ServerResponse:    {"action":"getCardsInGameResponse","data":{"deck":[DivinityCard.class]}}
-                Server sends to the player, the deck which will contain 2-3 (equals to lobbySize) cards chosen by GodPlayer
-                }
 
         -ClientResponse:    {"action":"setPlayerCard","data":{"card":"Athena"}}
 

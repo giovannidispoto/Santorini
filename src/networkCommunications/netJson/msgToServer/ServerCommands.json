@@ -37,9 +37,6 @@
     }
   },
   {
-    "action":"getCardsInGame"
-  },
-  {
     "action":"setPlayerCard",
     "data":{
       "playerNickname":"Dario",
