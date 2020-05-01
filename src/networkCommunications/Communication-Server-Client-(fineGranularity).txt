@@ -24,7 +24,7 @@
 
 	ok(Players)				<---------------------------------	setPlayers			(notify all (nick+color+card))
 
-        -waitSetWorkersID   (Unlock the player when asked to choose the Initial Workers Positions)
+        -waitSetWorkersID   (Unlock the player when asked to choose the Initial Workers Position)
 
 (For players)
     ok						<---------------------------------	setWorkersID

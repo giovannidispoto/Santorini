@@ -48,31 +48,36 @@
     removes the card from the deck to be sent to the next player
     }
 4
-    {   -setWorkersID:  {"action":"setWorkersID","data":{"workersID":[2,3]}}
+    {   -setWorkersPosition:  {"action":"setWorkersPosition","data":{"workersID":[2,3]}}
     the server sent to the player his workersID
 
-    }
-5
-    {   -getBattlefield:    {"action":"getBattlefield"}
+           4a   {   -getPlayers:    {"action":"getPlayers"}
 
-    the client asks the server for the battlefield to be sent to him
+                the client asks the server for the PlayersList to be sent to him    (nick+color+card)
 
-        -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
-    }
-6
-    {   -setInitialWorkersPosition:
-    {"action":"setInitialWorkersPosition","data":{"playerNickname":"Bill","workersPosition":[{"workerID":0,"x":4,"y":4},{"workerID":1,"x":2,"y":3}]}}
+                    -ServerResponse:    {"action":"getPlayersResponse","data":[PlayerInterface,PlayerInterface]}
+                forces all clients to update the Players in match
+
+                PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"APOLLO"}
+                }
+
+           4b   {   -getBattlefield:    {"action":"getBattlefield"}
+
+                the client asks the server for the battlefield to be sent to him
+
+                    -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
+                }
+
+
+        -ClientResponse:
+    {"action":"setWorkersPosition","data":{"playerNickname":"Bill","workersPosition":[{"workerID":0,"x":4,"y":4},{"workerID":1,"x":2,"y":3}]}}
 
     the player based on the battlefield received, places workers in an allowed position and send to the server this message
     }
-7
+
+5
     {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
     forces all clients to update the battlefield
-    }
-8
-    {   -setPlayers:    {"action":"setPlayers","data":[PlayerInterface,PlayerInterface]}    BROADCAST MESSAGE
-    forces all clients to update the Players in match
-    PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"APOLLO"}
     }
 -------------------------------------------------------------------------------------------------   START MATCH
 9----(Gorlenah)
