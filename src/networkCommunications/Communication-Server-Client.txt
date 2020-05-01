@@ -11,6 +11,7 @@
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
 	getDeck      			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
     ok          			<---------------------------------	getDeckResponse
+    (only the GodPlayer)
 	setPickedCards        	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 
 	waitSetPlayerCard   (Unlock the player when asked to choose the card)
