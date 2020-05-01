@@ -103,9 +103,9 @@ public class ClientController {
      *  N.B: Blocking method until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
-    public boolean waitSetWorkersID(){
-        synchronized (lockManager.lockSetWorkersID){
-            return lockManager.setWait(lockManager.lockSetWorkersID);
+    public boolean waitSetWorkersPosition(){
+        synchronized (lockManager.lockSetWorkersPosition){
+            return lockManager.setWait(lockManager.lockSetWorkersPosition);
         }
     }
 
@@ -116,16 +116,6 @@ public class ClientController {
     public boolean waitSetBattlefield(){
         synchronized (lockManager.lockSetBattlefield){
             return lockManager.setWait(lockManager.lockSetBattlefield);
-        }
-    }
-
-    /** Wait until you receive SetPlayers message from the server
-     *  N.B: Blocking method until a response is received
-     * @return  false: if there was an error, true: method performed without errors
-     */
-    public boolean waitSetPlayers(){
-        synchronized (lockManager.lockSetPlayers){
-            return lockManager.setWait(lockManager.lockSetPlayers);
         }
     }
 
@@ -182,6 +172,18 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
 
+    /** Client asks the server for PlayersList Update
+     *  N.B: Blocking request until a response is received
+     *
+     * @return  false: if there was an error, true: method performed without errors
+     */
+    public boolean getPlayersRequest(){
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
+        synchronized (lockManager.lockGetPlayers){
+            return lockManager.setWait(lockManager.lockGetPlayers);
+        }
+    }
+
     /** Client asks the server for Battlefield Update
      *  N.B: Blocking request until a response is received
      *
@@ -201,9 +203,9 @@ public class ClientController {
      * @param playerNickname    NickName Choose by the player
      * @param workersPosition   List containing the ID and position of each worker
      */
-    public void setInitialWorkersPositionRequest(String playerNickname, List<WorkerPositionInterface> workersPosition){
-        SetInitialWorkersPositionInterface data = new SetInitialWorkersPositionInterface(playerNickname, workersPosition);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkersPosition", data)));
+    public void setWorkersPositionRequest(String playerNickname, List<WorkerPositionInterface> workersPosition){
+        SetWorkersPositionInterface data = new SetWorkersPositionInterface(playerNickname, workersPosition);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setWorkersPosition", data)));
     }
 
         //--  REQUESTS IN MATCH

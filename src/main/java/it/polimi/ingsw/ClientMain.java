@@ -37,25 +37,26 @@ public class ClientMain {
                 }
                 clientController.waitSetPlayerCard();
                 //Woke up by: setPlayerCard
+
                 //Player choose his card used in game
                 commandLine.chooseCard(clientController);
 
-                clientController.waitSetWorkersID();
-                //Woke up by: SetWorkersID
-                List<WorkerPositionInterface> workersPosition= new ArrayList<>();
-
+                clientController.waitSetWorkersPosition();
+                //Woke up by: SetWorkersPosition
+                clientController.getPlayersRequest();
                 clientController.getBattlefieldRequest();
+
+                List<WorkerPositionInterface> workersPosition= new ArrayList<>();
 
                 for(int i : clientController.getWorkersID()){
                     //commandLine.stampBattlefield;
                     //workersPosition.add(placeWorker(clientController, clientController.getWorkersID().get(i)));
                 }
                 //commandLine.stampBattlefield;
-                clientController.setInitialWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
+                clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
 
                 clientController.waitSetBattlefield();
-                clientController.waitSetPlayers();
-                //Woke up by: SetBattlefield & SetPlayers
+                //Woke up by: SetBattlefield
             }
             //Launch GUI -> Santorini.jar gui
             else{
