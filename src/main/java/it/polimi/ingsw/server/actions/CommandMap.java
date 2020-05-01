@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.server.actions.commands.*;
+import it.polimi.ingsw.server.actions.data.WorkerPosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,12 +47,13 @@ public class CommandMap {
         loadSetPlayerCard();
         loadGetWorkersID();
         loadGetPlayers();
-        loadSetInitialWorkerPosition();
         loadSelectWorker();
         loadPlayStep();
         loadStartTurn();
         loadSkipStep();
         loadGetCardsInGame();
+        loadSetWorkersPosition();
+        loadGetBattlefield();
     }
 
 
@@ -100,7 +102,7 @@ public class CommandMap {
             }
         });
     }
-
+    //5
     private void loadGetWorkersID(){
         this.commandMap.put("getWorkersID", new ProcessingCommand() {
             @Override
@@ -111,7 +113,7 @@ public class CommandMap {
             }
         });
     }
-
+    //6
     private void loadGetPlayers(){
         this.commandMap.put("getPlayers", new ProcessingCommand() {
             @Override
@@ -120,21 +122,19 @@ public class CommandMap {
             }
         });
     }
-
-    private void loadSetInitialWorkerPosition(){
-        this.commandMap.put("setInitialWorkerPosition", new ProcessingCommand() {
+    //7
+    private void loadSetWorkersPosition(){
+        this.commandMap.put("setWorkersPosition", new ProcessingCommand() {
             @Override
             public Command command(JsonElement jsonElement) {
-               return new SetInitialWorkerPositionCommand(
+               return new SetWorkersPosition(
                         jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("worker").getAsInt(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("x").getAsInt(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("y").getAsInt()
+                        new Gson().fromJson(jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("workersPosition"),new TypeToken<ArrayList<WorkerPosition>>(){}.getType())
                 );
             }
         });
     }
-
+    //8
     private void loadSelectWorker(){
         this.commandMap.put("selectWorker", new ProcessingCommand() {
             @Override
@@ -147,7 +147,7 @@ public class CommandMap {
             }
         });
     }
-
+    //9
     private void loadPlayStep(){
         this.commandMap.put("playStep", new ProcessingCommand() {
             @Override
@@ -159,7 +159,7 @@ public class CommandMap {
             }
         });
     }
-
+    //10
     private void loadStartTurn(){
         this.commandMap.put("startTurn", new ProcessingCommand() {
             @Override
@@ -171,7 +171,7 @@ public class CommandMap {
             }
         });
     }
-
+    //11
     private void loadSkipStep(){
         this.commandMap.put("skipStep", new ProcessingCommand() {
             @Override
@@ -180,7 +180,7 @@ public class CommandMap {
             }
         });
     }
-
+    //12
     private void loadGetCardsInGame(){
         this.commandMap.put("getCardsInGame", new ProcessingCommand() {
             @Override
@@ -189,5 +189,16 @@ public class CommandMap {
             }
         });
     }
+
+    //13
+    private void loadGetBattlefield() {
+        this.commandMap.put("getBattlefield", new ProcessingCommand() {
+            @Override
+            public Command command(JsonElement jsonElement) {
+                return new GetBattlefield();
+            }
+        });
+    }
+
 
 }

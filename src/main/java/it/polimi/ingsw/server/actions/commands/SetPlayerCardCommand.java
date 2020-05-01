@@ -21,6 +21,7 @@ public class SetPlayerCardCommand implements Command {
     public SetPlayerCardCommand(String playerNickname, String card){
         this.playerNickname = playerNickname;
         this.card = card;
+        this.result = false;
     }
 
     /**
@@ -30,9 +31,12 @@ public class SetPlayerCardCommand implements Command {
      */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        controller.setPlayerCard(playerNickname,card);
-        controller.addWorkers(playerNickname, handler);
-        result = true;
+        if(controller.checkHandler(playerNickname, handler)) {
+            controller.setPlayerCard(playerNickname, card);
+            result = true;
+        }else{
+            result = false;
+        }
         handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setPlayerCardResponse", this)));
         handler.sendMessageQueue();
     }

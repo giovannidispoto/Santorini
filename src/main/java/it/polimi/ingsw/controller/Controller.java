@@ -8,10 +8,7 @@ import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.parser.DeckReader;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
-import it.polimi.ingsw.server.actions.data.ActualPlayerResponse;
-import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
-import it.polimi.ingsw.server.actions.data.SetPickedCardRequest;
-import it.polimi.ingsw.server.actions.data.SetPlayerCardRequest;
+import it.polimi.ingsw.server.actions.data.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -110,11 +107,21 @@ public class Controller {
 
         if(!playerNickname.equals(firstPlayer))
             requestSelectCard(getNextPlayer(playerNickname));
-        else
-            startMatch();
+        else {
+            setWorkerPositionActualRequest(playerNickname);
+        }
 
     }
 
+    private void setWorkerPositionRequest(String playerNickname) {
+        addWorkers(playerNickname, handlers.get(playerNickname));
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageResponse("setWorkersPosition", new SetWorkerPositionRequest(getWorkersId(playerNickname)))));
+    }
+
+    private void setWorkerPositionActualRequest(String playerNickname) {
+        addWorkers(playerNickname, handlers.get(playerNickname));
+        handlers.get(playerNickname).responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkersPosition", new SetWorkerPositionRequest(getWorkersId(playerNickname)))));
+    }
 
 
     /**
@@ -188,26 +195,34 @@ public class Controller {
 
     /**
      * Set initial worker position for the player
-     * @param player player
+     * @param playerNickname player
      * @param worker worker
      * @param x row position
      * @param y col position
      */
-    public void setInitialWorkerPosition(String player, int worker, int x, int y){
-        getWorkerFromString(player,worker).setWorkerPosition(x,y);
+    public void setInitialWorkerPosition(String playerNickname, int worker, int x, int y, int worker2, int x2, int y2){
+        getWorkerFromString(playerNickname,worker).setWorkerPosition(x,y);
+        getWorkerFromString(playerNickname,worker2).setWorkerPosition(x2,y2);
+        if(!getNextPlayer(playerNickname).equals(firstPlayer))
+             setWorkerPositionRequest(getNextPlayer(playerNickname));
+        else
+            startMatch(playerNickname);
     }
 
     /**
      * Start Match
+     * @param callingPlayer player who call the method, used for choosing if the message should be inserted in the stack or sent
      */
-    public void startMatch(){
+    public void startMatch(String callingPlayer){
         match = new Match(players,cards);
         match.setCurrentPlayer(getPlayerFromString(firstPlayer));
         for(Player p : players) {
-            if (p.getPlayerNickname().equals(firstPlayer))
-                handlers.get(firstPlayer).responseQueue(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
-            else
+            if (p.getPlayerNickname().equals(callingPlayer)) {
+                handlers.get(callingPlayer).responseQueue(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+            }
+            else {
                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+            }
         }
     }
 
@@ -368,12 +383,31 @@ public class Controller {
     }
 
     /**
-     *
+     * get cards in gamee
      */
     public List<DivinityCard> getCardsInGame() {
         List<DivinityCard> cards = new ArrayList<>();
         for(Player p : players)
             cards.add(p.getPlayerCard());
         return cards;
+    }
+
+    /**
+     * Create interface copy of the battlefield
+     * @return
+     */
+    public CellInterface[][] getBattlefield() {
+        CellInterface[][] battlefieldInterface = new CellInterface[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
+        String player;
+        Color workerColor;
+
+        for(int i = 0; i < Battlefield.N_ROWS; i++){
+            for(int j = 0; j < Battlefield.N_COLUMNS; j++){
+                player = Battlefield.getBattlefieldInstance().getCell(i,j).getWorker() != null ? Battlefield.getBattlefieldInstance().getCell(i,j).getWorker().getOwnerWorker().getPlayerNickname():null;
+                workerColor = player != null ? Battlefield.getBattlefieldInstance().getCell(i,j).getWorker().getOwnerWorker().getPlayerColor(): null;
+                battlefieldInterface[i][j] = new CellInterface(player,workerColor, Battlefield.getBattlefieldInstance().getCell(i,j).getTower().getHeight(), Battlefield.getBattlefieldInstance().getCell(i,j).getTower().getLastBlock());
+            }
+        }
+        return battlefieldInterface;
     }
 }

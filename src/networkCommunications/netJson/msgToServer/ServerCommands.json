@@ -43,6 +43,16 @@
       "card":"APOLLO"
     }
   },
+  {"action":"setWorkersPosition",
+    "data":{
+      "playerNickname":"Bill",
+      "workersPosition":[
+        {"workerID":0,"x":4,"y":4},
+        {"workerID":1,"x":2,"y":3}
+      ]
+    }
+  }
+,
   {
     "action":"getBattlefield"
   },
