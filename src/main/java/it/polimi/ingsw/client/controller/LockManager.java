@@ -56,6 +56,7 @@ public class LockManager {
             object.wait();
         } catch (InterruptedException e) {
             //TODO: Manage Well Interruption
+            Thread.currentThread().interrupt();
             return false;
         }
 

@@ -61,6 +61,7 @@ public class ServerThread implements Runnable {
             //TODO: debug
         }catch (NoSuchElementException e2){
             System.out.println("Most likely the server went offline | ｡ﾟ･（>﹏<）･ﾟ｡ | Damn it");  //debug
+            clientController.launchError();
         }
     }
 

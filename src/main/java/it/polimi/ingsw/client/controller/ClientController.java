@@ -35,7 +35,7 @@ public class ClientController {
     private int currentLobbySize;
     //--    Utils - Locks for Wait & Notify
     public LockManager lockManager;
-    public Thread controllerThread;
+    public Thread mainThread;
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
@@ -47,7 +47,7 @@ public class ClientController {
         this.players = new ArrayList<>();
         this.workersID = new ArrayList<>();
         this.lockManager = new LockManager();
-        this.controllerThread = Thread.currentThread();
+        this.mainThread = Thread.currentThread();
     }
 
     //------    START NETWORK
@@ -73,8 +73,8 @@ public class ClientController {
 
     //TODO: Think about interrupt
     //Launch Interrupt for Controller Thread
-    public void interruptController(){
-        this.controllerThread.interrupt();
+    public void launchError(){
+        mainThread.interrupt();
     }
 
     //------    WAIT REQUESTS to Controller
