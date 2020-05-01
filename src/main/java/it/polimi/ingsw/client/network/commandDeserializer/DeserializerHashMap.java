@@ -48,10 +48,10 @@ public class  DeserializerHashMap  {
         loadSetPickedCards();
         loadGetDeckResponse();
         loadSetPlayerCard();
-        loadSetWorkersID();
+        loadSetWorkersPosition();
+        loadGetPlayersResponse();
         loadGetBattlefieldResponse();
         loadSetBattlefield();
-        loadSetPlayers();
         loadWorkerViewUpdate();
     }
 
@@ -99,15 +99,24 @@ public class  DeserializerHashMap  {
     }
 
     //5
-    private void loadSetWorkersID(){
-        this.commandMap.put("setWorkersID", new ProcessingCommand() {
+    private void loadSetWorkersPosition(){
+        this.commandMap.put("setWorkersPosition", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetWorkersIDCommand.class);
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetWorkersPositionCommand.class);
             }
         });
     }
 
     //6
+    private void loadGetPlayersResponse(){
+        this.commandMap.put("getPlayerResponse", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new GetPlayersCommand(deserializePlayers(jsonElement));
+            }
+        });
+    }
+
+    //7
     private void loadGetBattlefieldResponse(){
         this.commandMap.put("getBattlefieldResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
@@ -116,20 +125,11 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //7
+    //8
     private void loadSetBattlefield(){
         this.commandMap.put("setBattlefield", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
                 return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "setBattlefield");
-            }
-        });
-    }
-
-    //8
-    private void loadSetPlayers(){
-        this.commandMap.put("setPlayers", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new SetPlayersCommand(deserializePlayers(jsonElement));
             }
         });
     }

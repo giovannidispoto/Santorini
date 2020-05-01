@@ -13,20 +13,20 @@ public class LockManager {
     public final LockObject lockSetPickedCards;
     public final LockObject lockGetDeck;
     public final LockObject lockSetPlayerCard;
-    public final LockObject lockSetWorkersID;
+    public final LockObject lockSetWorkersPosition;
+    public final LockObject lockGetPlayers;
     public final LockObject lockGetBattlefield;
     public final LockObject lockSetBattlefield;
-    public final LockObject lockSetPlayers;
 
     public LockManager() {
         this.lockAddPlayer      =   new LockObject();
         this.lockSetPickedCards =   new LockObject();
         this.lockGetDeck        =   new LockObject();
         this.lockSetPlayerCard  =   new LockObject();
-        this.lockSetWorkersID   =   new LockObject();
+        this.lockSetWorkersPosition =   new LockObject();
+        this.lockGetPlayers     =   new LockObject();
         this.lockGetBattlefield =   new LockObject();
         this.lockSetBattlefield =   new LockObject();
-        this.lockSetPlayers     =   new LockObject();
     }
 
     /** Takes care of waiting on a specific request / operation,

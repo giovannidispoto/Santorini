@@ -49,23 +49,23 @@ class ClientSocketConnectionTest {
 
         //-------------------------------------------------------------------------------------- MATCH CREATION
         //1
-        //clientController.addPlayerRequest("Bill",2);
+        clientController.addPlayerRequest("Bill",2);
         //2
-        //clientController.getDeckRequest();
+        clientController.getDeckRequest();
         //3
         List<String> cards = new ArrayList<>();
         cards.add("ATHENA");
         cards.add("APOLLO");
-        //clientController.setPickedCardsRequest(cards);
+        clientController.setPickedCardsRequest(cards);
         //4
-        //clientController.setPlayerCardRequest("ATHENA","Josh");
+        clientController.setPlayerCardRequest("ATHENA","Josh");
         //5
-        //clientController.getBattlefieldRequest();
+        clientController.getBattlefieldRequest();
         //6
         List<WorkerPositionInterface> workersPosition= new ArrayList<>();
         workersPosition.add(new WorkerPositionInterface(0,4,4));
         workersPosition.add(new WorkerPositionInterface(1,2,3));
-        clientController.setInitialWorkersPositionRequest("Bill",workersPosition);
+        clientController.setWorkersPositionRequest("Bill",workersPosition);
         //-------------------------------------------------------------------------------------- START MATCH
 
 
@@ -83,7 +83,7 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
 
         //Only if you send messages from server
-        clientController.waitSetPlayers();
+        clientController.getPlayersRequest();
     }
 
 
