@@ -27,7 +27,7 @@ public class BattlefieldClient {
         return battlefieldBoard[x][y];
     }
 
-    /** Check that cell (x, y) is not already occupied
+    /** Check if cell (x, y) is already occupied
      *
      * @param x battlefield row
      * @param y battlefield column

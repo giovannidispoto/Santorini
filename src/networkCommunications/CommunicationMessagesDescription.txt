@@ -60,10 +60,10 @@
         -ServerResponse:    {"action":"getBattlefieldResponse","data":{"cellMatrix":CellInterface[][]}}
     }
 6
-    {   -setInitialWorkerPosition:
-    {"action":"setInitialWorkerPosition","data":{"playerNickname":"Bill","worker":0,"x":4,"y":4}}
+    {   -setInitialWorkersPosition:
+    {"action":"setInitialWorkersPosition","data":{"playerNickname":"Bill","workersPosition":[{"workerID":0,"x":4,"y":4},{"workerID":1,"x":2,"y":3}]}}
 
-    the player based on the battlefield received places a worker in an allowed position and send to the server this message
+    the player based on the battlefield received, places workers in an allowed position and send to the server this message
     }
 7
     {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE

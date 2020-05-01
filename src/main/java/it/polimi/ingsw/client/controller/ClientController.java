@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.controller;
 import java.util.*;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.client.clientModel.basic.Deck;
 public class ClientController {
     //--    This Player Client-Side
     private String playerNickname;
+    private Color playerColor;
     private CellInterface[][] workerView;
     //--    Match
     private List<PlayerInterface> players;
@@ -197,13 +199,11 @@ public class ClientController {
      *  checking not to put it on another player
      *
      * @param playerNickname    NickName Choose by the player
-     * @param workerID  WorkerID assigned by the server to each worker
-     * @param row   battlefield row (0-4)
-     * @param col   battlefield column  (0-4)
+     * @param workersPosition   List containing the ID and position of each worker
      */
-    public void setInitialWorkerPositionRequest(String playerNickname, int workerID, int row, int col){
-        SetInitialWorkerPositionInterface data = new SetInitialWorkerPositionInterface(playerNickname, workerID, row, col);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkerPosition", data)));
+    public void setInitialWorkersPositionRequest(String playerNickname, List<WorkerPositionInterface> workersPosition){
+        SetInitialWorkersPositionInterface data = new SetInitialWorkersPositionInterface(playerNickname, workersPosition);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setInitialWorkersPosition", data)));
     }
 
         //--  REQUESTS IN MATCH
@@ -274,6 +274,10 @@ public class ClientController {
         return workersID;
     }
 
+    public Color getPlayerColor() {
+        return playerColor;
+    }
+
         //--    WORKER-VIEW
 
     public CellInterface[][] getWorkerView() {
@@ -328,5 +332,9 @@ public class ClientController {
 
     public void setWorkersID(List<Integer> workersID) {
         this.workersID = workersID;
+    }
+
+    public void setPlayerColor(Color playerColor) {
+        this.playerColor = playerColor;
     }
 }
