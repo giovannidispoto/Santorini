@@ -25,6 +25,14 @@ public class SetPlayersCommand implements Command {
     @Override
     public void execute(ClientController clientController) {
         clientController.setPlayers(this.players);
+
+        for(PlayerInterface player : this.players){
+            //Find player nickname same as that of this client
+            if(player.getPlayerNickname().equals(clientController.getPlayerNickname())){
+                //set the color assigned by the server
+                clientController.setPlayerColor(player.getColor());
+            }
+        }
         //Awakens who was waiting Server Response
         synchronized (clientController.lockManager.lockSetPlayers){
             clientController.lockManager.lockSetPlayers.setUsed();
