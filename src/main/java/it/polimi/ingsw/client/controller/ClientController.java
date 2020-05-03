@@ -39,6 +39,8 @@ public class ClientController {
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
+    //TODO:debug
+    public boolean debug = true;
 
     /**
      * ClientController Constructor

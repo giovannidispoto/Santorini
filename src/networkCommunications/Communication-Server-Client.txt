@@ -27,7 +27,7 @@
 (For players)
     ok						<---------------------------------	setWorkersPosition
     getPlayers              --------------------------------->  ok
-    ok						<---------------------------------	getPlayerResponse   (nick+color+card)
+    ok						<---------------------------------	getPlayersResponse   (nick+color+card)
     getBattlefield			--------------------------------->	ok
     ok      				<---------------------------------	getBattlefieldResponse
 	setWorkersPosition      --------------------------------->	ok

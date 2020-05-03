@@ -17,8 +17,6 @@ public class ServerThread implements Runnable {
     private final ServerHandler serverHandler;
     private ClientController clientController;
     private PrintWriter out;
-    //TODO:debug
-    private boolean debug = false;
 
     /**
      *Create new ServerThread to manage clientSocket
@@ -48,7 +46,7 @@ public class ServerThread implements Runnable {
                     //line received
                     serverHandler.process(line);
                     //TODO: debug
-                    if(debug){System.out.println(clientController.getPlayerNickname()+"Received: "+line);}
+                    if(clientController.debug){System.out.println(clientController.getPlayerNickname()+"Received: "+line);}
                 }
             }
             //close streams and socket

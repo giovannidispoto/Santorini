@@ -109,7 +109,7 @@ public class  DeserializerHashMap  {
 
     //6
     private void loadGetPlayersResponse(){
-        this.commandMap.put("getPlayerResponse", new ProcessingCommand() {
+        this.commandMap.put("getPlayersResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
                 return  new GetPlayersCommand(deserializePlayers(jsonElement));
             }
