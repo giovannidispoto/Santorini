@@ -31,6 +31,7 @@ public class Controller {
     private Deck deck;
     private List<DivinityCard> pickedCards;
     private List<Color> colors;
+    private GameState gameState;
     private int lobbySize;
 
     /**
@@ -47,6 +48,7 @@ public class Controller {
         this.colors.add(Color.BROWN);
         this.colors.add(Color.GREY);
         this.lobbySize = 0;
+        this.gameState = new GameState();
 
         try {
             DeckReader reader = new DeckReader();
@@ -62,11 +64,17 @@ public class Controller {
      * @param cards cards
      */
     public void setPickedCards(List<String> cards){
-       for(int i = 0; i < cards.size(); i++){
-           pickedCards.add(deck.getDivinityCard(cards.get(i)));
-       }
+        if(gameState.getState() != GameStep.PICKING_CARDS) {
+            System.out.println("Not waiting this message");
+        }
+        else {
+            for (int i = 0; i < cards.size(); i++) {
+                pickedCards.add(deck.getDivinityCard(cards.get(i)));
+            }
 
-        requestSelectCard(getNextPlayer(firstPlayer));
+            requestSelectCard(getNextPlayer(firstPlayer));
+            gameState.nextState();
+        }
     }
 
     /**
@@ -95,20 +103,27 @@ public class Controller {
      * @param card card
      */
     public void setPlayerCard(String playerNickname, String card){
-
-        Color c = colors.get(new Random().nextInt(colors.size()));
-        colors.remove(c);
-        Player p = new Player(playerNickname,c) ;
-        Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
-        players.add(p);
-
-        p.setPlayerCard(deck.getDivinityCard(card));
-        pickedCards.remove(deck.getDivinityCard(card));
-
-        if(!playerNickname.equals(firstPlayer))
-            requestSelectCard(getNextPlayer(playerNickname));
+        if(gameState.getState() != GameStep.SETTING_CARDS) {
+            System.out.println("Not waiting this message");
+        }
         else {
-            setWorkerPositionActualRequest(playerNickname);
+
+            Color c = colors.get(new Random().nextInt(colors.size()));
+            colors.remove(c);
+            Player p = new Player(playerNickname, c);
+            Battlefield.getBattlefieldInstance().attach(handlers.get(playerNickname));
+            players.add(p);
+
+            p.setPlayerCard(deck.getDivinityCard(card));
+            pickedCards.remove(deck.getDivinityCard(card));
+
+            if (!playerNickname.equals(firstPlayer))
+                requestSelectCard(getNextPlayer(playerNickname));
+            else {
+                setWorkerPositionActualRequest(playerNickname);
+                gameState.nextState();
+
+            }
         }
 
     }
@@ -128,27 +143,36 @@ public class Controller {
      * Add new player in the game
      * @param playerNickname unique nickname of the player
      * @param lobbySize lobby size
+     * @return true if player was add, false if there was an error with phase
      */
-    public void addNewPlayer(String playerNickname, int lobbySize) {
+    public synchronized boolean addNewPlayer(String playerNickname, int lobbySize) {
+        if(gameState.getState() != GameStep.CREATE_LOBBY){
+                System.out.print("Not waiting this message");
+                return false;
+        }else {
 
-        if(this.lobbySize == 0){
-            this.lobbySize = lobbySize;
-        }
+            if (this.lobbySize == 0) {
+                this.lobbySize = lobbySize;
+            }
 
-        this.playersInLobby.add(playerNickname);
+            this.playersInLobby.add(playerNickname);
 
 
-        if(playersInLobby.size() == lobbySize){
-            //startMatch();
-           this.firstPlayer = playersInLobby.get(0);
-           //notify all player who is the first
-            String message = new Gson().toJson(new BasicMessageInterface("setPickedCards", new SetPickedCardRequest(firstPlayer)));
-           for(String p : playersInLobby) {
-               if(p.equals(playerNickname))
-                   handlers.get(p).responseQueue(message);
-               else
-                 handlers.get(p).response(message);
-           }
+            if (playersInLobby.size() == lobbySize) {
+                //startMatch();
+                this.firstPlayer = playersInLobby.get(0);
+                //notify all player who is the first
+                String message = new Gson().toJson(new BasicMessageInterface("setPickedCards", new SetPickedCardRequest(firstPlayer)));
+                for (String p : playersInLobby) {
+                    if (p.equals(playerNickname))
+                        handlers.get(p).responseQueue(message);
+                    else
+                        handlers.get(p).response(message);
+                }
+                //go to next game state
+                gameState.nextState();
+            }
+            return true;
         }
 
     }
@@ -201,12 +225,19 @@ public class Controller {
      * @param y col position
      */
     public void setInitialWorkerPosition(String playerNickname, int worker, int x, int y, int worker2, int x2, int y2){
-        getWorkerFromString(playerNickname,worker).setWorkerPosition(x,y);
-        getWorkerFromString(playerNickname,worker2).setWorkerPosition(x2,y2);
-        if(!getNextPlayer(playerNickname).equals(firstPlayer))
-             setWorkerPositionRequest(getNextPlayer(playerNickname));
-        else
-            startMatch(playerNickname);
+        if(gameState.getState() != GameStep.ADDING_WORKER){
+            System.out.println("Not waiting this message");
+        }else {
+            getWorkerFromString(playerNickname, worker).setWorkerPosition(x, y);
+            getWorkerFromString(playerNickname, worker2).setWorkerPosition(x2, y2);
+            if (!getNextPlayer(playerNickname).equals(firstPlayer)) {
+                setWorkerPositionRequest(getNextPlayer(playerNickname));
+            }
+            else {
+                startMatch(playerNickname);
+                gameState.nextState();
+            }
+        }
     }
 
     /**
@@ -386,6 +417,11 @@ public class Controller {
      * get cards in gamee
      */
     public List<DivinityCard> getCardsInGame() {
+        if(gameState.getState() == GameStep.CREATE_LOBBY || gameState.getState() == GameStep.PICKING_CARDS){
+            System.out.println("No waiting this message");
+            return null;
+        }
+
         List<DivinityCard> cards = new ArrayList<>();
         for(Player p : players)
             cards.add(p.getPlayerCard());

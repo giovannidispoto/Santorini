@@ -9,17 +9,17 @@ import it.polimi.ingsw.model.cards.DivinityCard;
 public class PlayerInterface {
     private String playerNickname;
     private Color color;
-    private DivinityCard card;
+    private String card;
 
     /**
      * Create new Player
      * @param playerNickname player nickname
      * @param color color
      */
-    public PlayerInterface(String playerNickname, Color color, DivinityCard card) {
+    public PlayerInterface(String playerNickname, Color color, String card) {
         this.playerNickname = playerNickname;
         this.color = color;
-        this.card = card;
+        this.card = card.toUpperCase();
     }
 
     public String getPlayerNickname() {
@@ -30,7 +30,7 @@ public class PlayerInterface {
         return color;
     }
 
-    public DivinityCard getCard(){
+    public String getCard(){
         return card;
     }
 

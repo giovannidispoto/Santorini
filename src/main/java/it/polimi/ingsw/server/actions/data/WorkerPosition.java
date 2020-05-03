@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.actions.data;
-
+/*
+* Data sent by client for 
+* */
 public class WorkerPosition {
     private int workerID;
     private int x;

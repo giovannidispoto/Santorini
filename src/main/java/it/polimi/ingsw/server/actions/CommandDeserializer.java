@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.actions;
 
 import com.google.gson.*;
 import it.polimi.ingsw.server.actions.commands.Command;
+import it.polimi.ingsw.server.actions.commands.NotExistCommand;
 
 import java.lang.reflect.Type;
 
@@ -27,7 +28,11 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         //Load DeserializationMap
 
         //Pick correct Deserialization  & Return Specific Command
-        c = CommandMap.getCommandMapInstance().getMapCommand(action).command(jsonElement);
+        if(CommandMap.getCommandMapInstance().getMapCommand(action) != null)
+                 c = CommandMap.getCommandMapInstance().getMapCommand(action).command(jsonElement);
+        else{
+            c = new NotExistCommand("");
+        }
 
 
         return c;

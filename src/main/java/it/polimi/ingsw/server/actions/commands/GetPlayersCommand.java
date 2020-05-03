@@ -31,7 +31,7 @@ public class GetPlayersCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         List<Player> playersList = controller.getPlayers();
         for(Player p : playersList)
-            players.add(new PlayerInterface(p.getPlayerNickname(),p.getPlayerColor(), p.getPlayerCard()));
+            players.add(new PlayerInterface(p.getPlayerNickname(),p.getPlayerColor(), p.getPlayerCard().getCardName()));
         result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getPlayersResponse", this)));
         handler.sendMessageQueue();
