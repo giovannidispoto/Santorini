@@ -54,7 +54,7 @@ public class CliController implements View {
         //commandLine.stampBattlefield;
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
 
-        clientController.waitSetBattlefield();
+        clientController.waitBattlefieldUpdate();
         //Woke up by: SetBattlefield
     }
 

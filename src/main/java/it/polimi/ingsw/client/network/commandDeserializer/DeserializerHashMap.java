@@ -51,7 +51,7 @@ public class  DeserializerHashMap  {
         loadSetWorkersPosition();
         loadGetPlayersResponse();
         loadGetBattlefieldResponse();
-        loadSetBattlefield();
+        loadBattlefieldUpdate();
         loadWorkerViewUpdate();
     }
 
@@ -126,10 +126,10 @@ public class  DeserializerHashMap  {
     }
 
     //8
-    private void loadSetBattlefield(){
-        this.commandMap.put("setBattlefield", new ProcessingCommand() {
+    private void loadBattlefieldUpdate(){
+        this.commandMap.put("battlefieldUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "setBattlefield");
+                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "battlefieldUpdate");
             }
         });
     }

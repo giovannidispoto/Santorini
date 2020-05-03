@@ -76,7 +76,7 @@
     }
 
 5
-    {   -setBattlefield:    {"action":"setBattlefield","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
+    {   -battlefieldUpdate:    {"action":"battlefieldUpdate","data":{"cellMatrix":CellInterface[][]}}  BROADCAST MESSAGE
     forces all clients to update the battlefield
     }
 -------------------------------------------------------------------------------------------------   START MATCH

@@ -112,13 +112,13 @@ public class ClientController {
         }
     }
 
-    /** Wait until you receive SetBattlefield message from the server
+    /** Wait until you receive BattlefieldUpdate message from the server
      *  N.B: Blocking method until a response is received
      * @return  false: if there was an error, true: method performed without errors
      */
-    public boolean waitSetBattlefield(){
-        synchronized (waitManager.waitSetBattlefield){
-            return waitManager.setWait(waitManager.waitSetBattlefield);
+    public boolean waitBattlefieldUpdate(){
+        synchronized (waitManager.waitBattlefieldUpdate){
+            return waitManager.setWait(waitManager.waitBattlefieldUpdate);
         }
     }
 

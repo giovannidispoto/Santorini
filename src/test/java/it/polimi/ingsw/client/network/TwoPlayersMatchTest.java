@@ -52,7 +52,7 @@ class TwoPlayersMatchTest {
         workersPosition.add(new WorkerPositionInterface(clientController.getWorkersID().get(1),4,3));
         clientController.setWorkersPositionRequest(player1, workersPosition);
         //Player1
-        clientController.waitSetBattlefield();
+        clientController.waitBattlefieldUpdate();
 
     }
 
@@ -99,7 +99,7 @@ class TwoPlayersMatchTest {
         workersPosition.add(new WorkerPositionInterface(clientController.getWorkersID().get(1),1,0));
         clientController.setWorkersPositionRequest(player2, workersPosition);
         //Player2
-        clientController.waitSetBattlefield();
+        clientController.waitBattlefieldUpdate();
     }
 
 }

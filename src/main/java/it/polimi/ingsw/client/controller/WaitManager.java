@@ -16,7 +16,7 @@ public class WaitManager {
     public final WaitObject waitSetWorkersPosition;
     public final WaitObject waitGetPlayers;
     public final WaitObject waitGetBattlefield;
-    public final WaitObject waitSetBattlefield;
+    public final WaitObject waitBattlefieldUpdate;
 
     public WaitManager() {
         this.waitAddPlayer      =   new WaitObject();
@@ -26,7 +26,7 @@ public class WaitManager {
         this.waitSetWorkersPosition =   new WaitObject();
         this.waitGetPlayers     =   new WaitObject();
         this.waitGetBattlefield =   new WaitObject();
-        this.waitSetBattlefield =   new WaitObject();
+        this.waitBattlefieldUpdate =   new WaitObject();
     }
 
     /** Takes care of waiting on a specific request / operation,
