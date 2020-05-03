@@ -152,7 +152,7 @@ public class  DeserializerHashMap  {
     private List<PlayerInterface> deserializePlayers (JsonElement jsonElement){
         List<PlayerInterface> players = new ArrayList<>();
         //Start Deserialization of jsonElement
-        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonArray();
+        JsonArray jsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("players").getAsJsonArray();
         for(JsonElement jsonE : jsonArray) {
             players.add(new Gson().fromJson(jsonE, PlayerInterface.class));
         }

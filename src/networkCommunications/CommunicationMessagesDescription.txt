@@ -55,7 +55,7 @@
 
                 the client asks the server for the PlayersList to be sent to him    (nick+color+card)
 
-                    -ServerResponse:    {"action":"getPlayersResponse","data":[PlayerInterface,PlayerInterface]}
+                    -ServerResponse:    {"action":"getPlayersResponse","data":{"players":[PlayerInterface,PlayerInterface]}}
                 forces all clients to update the Players in match
 
                 PlayerInterface = {"playerNickname":"Bill Gates","color":"BLUE","card":"APOLLO"}
