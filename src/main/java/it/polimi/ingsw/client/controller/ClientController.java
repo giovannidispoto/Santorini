@@ -54,12 +54,13 @@ public class ClientController {
 
     /**
      *  Initialize a new socket on the controller from which it is called,
-     *  the socket is missing the host address of the server to be able to start
+     *  the socket is missing the host address of the server to be able to start, have a default port that can be changed.
      *
-     *  setIP: clientController.getSocketConnection().setServerName("String")
-     *  startSocket: clientController.getSocketConnection().startConnection()
+     *  setIP:          clientController.getSocketConnection().setServerName("String")
+     *  setPort:        clientController.getSocketConnection().setServerPort("int")
+     *  startSocket:    clientController.getSocketConnection().startConnection()
      */
-    public void startNetwork(){
+    public void initializeNetwork(){
         this.socketConnection = new ClientSocketConnection(this);
     }
 

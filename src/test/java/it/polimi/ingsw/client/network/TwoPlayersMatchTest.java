@@ -12,7 +12,7 @@ class TwoPlayersMatchTest {
     @Test
     void Player1Test(){
         ClientController clientController = new ClientController();
-        clientController.startNetwork();
+        clientController.initializeNetwork();
 
         String serverName1 = "127.0.0.3";
         String player1 = "Bill";
@@ -59,7 +59,7 @@ class TwoPlayersMatchTest {
     @Test
     void Player2Test(){
         ClientController clientController = new ClientController();
-        clientController.startNetwork();
+        clientController.initializeNetwork();
 
         String serverName1 = "127.0.0.3";
         String player2 = "Marcus";

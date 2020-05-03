@@ -37,7 +37,7 @@ class ClientSocketConnectionTest {
     //Test correct messages and connection with server (need a listener server)
     void connectionServerTest(){
         ClientController clientController = new ClientController();
-        clientController.startNetwork();
+        clientController.initializeNetwork();
 
         String serverName1 = "127.0.0.3";
         //check syntax
@@ -74,7 +74,7 @@ class ClientSocketConnectionTest {
     //@Test
     void clientAlwaysWait(){
         ClientController clientController = new ClientController();
-        clientController.startNetwork();
+        clientController.initializeNetwork();
 
         String serverName1 = "127.0.0.3";
         //check syntax
