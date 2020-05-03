@@ -11,9 +11,9 @@ public class SetWorkersPositionCommand implements Command{
     public void execute(ClientController clientController) {
         clientController.setWorkersID(workersID);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockSetWorkersPosition){
-            clientController.lockManager.lockSetWorkersPosition.setUsed();
-            clientController.lockManager.lockSetWorkersPosition.notify();
+        synchronized (clientController.waitManager.waitSetWorkersPosition){
+            clientController.waitManager.waitSetWorkersPosition.setUsed();
+            clientController.waitManager.waitSetWorkersPosition.notify();
         }
     }
 }

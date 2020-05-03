@@ -76,12 +76,12 @@ public class ClientSocketConnection {
         return true;
     }
 
-    /** Set the server port, if 0 or invalid TCP port: the default port is chosen (is in variables)
+    /** Set the server port, if 0-1023 or invalid TCP port: the default port is chosen (is in variables)
      *
      * @param serverPort    integer representing the port
      */
     public void setServerPort(int serverPort) {
-        if(serverPort > 0 && serverPort <= 65535)
+        if(serverPort >= 1024 && serverPort <= 65535)
         {
             this.serverPort = serverPort;
         }

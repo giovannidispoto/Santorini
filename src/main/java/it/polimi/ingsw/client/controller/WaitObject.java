@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.controller;
 
-/** Objects used by LockManager
- *  -default state = false (Lock not yet unlocked)
- *  -status after notify = true (Lock unlocked)
+/** Objects used by WaitManager
+ *  -default state = false (Wait not yet unlocked)
+ *  -status after notify = true (Wait unlocked)
  *
  */
-public class LockObject {
+public class WaitObject {
     private boolean used = false;
 
     //Getter
@@ -14,7 +14,7 @@ public class LockObject {
     }
 
     /** Set Status = true
-     *  status after notify = true (Lock unlocked)
+     *  status after notify = true (Wait unlocked)
      */
     public void setUsed() {
         this.used = true;
@@ -22,7 +22,7 @@ public class LockObject {
 
     /** Set Status = false
      *  status after wait = false
-     *  (Lock reset because the caller has been awakened)
+     *  (Wait reset because the caller has been awakened)
      */
     public void resetState() {
         this.used = false;

@@ -23,9 +23,9 @@ public class AddPlayerCommand implements Command {
         clientController.setFullLobby(this.fullLobby);
 
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockAddPlayer){
-            clientController.lockManager.lockAddPlayer.setUsed();
-            clientController.lockManager.lockAddPlayer.notify();
+        synchronized (clientController.waitManager.waitAddPlayer){
+            clientController.waitManager.waitAddPlayer.setUsed();
+            clientController.waitManager.waitAddPlayer.notify();
         }
     }
 }

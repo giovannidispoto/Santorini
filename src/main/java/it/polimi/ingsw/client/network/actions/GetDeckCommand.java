@@ -11,9 +11,9 @@ public class GetDeckCommand implements Command {
     public void execute(ClientController clientController) {
         clientController.setCardsDeck(this.deck);
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockGetDeck){
-            clientController.lockManager.lockGetDeck.setUsed();
-            clientController.lockManager.lockGetDeck.notify();
+        synchronized (clientController.waitManager.waitGetDeck){
+            clientController.waitManager.waitGetDeck.setUsed();
+            clientController.waitManager.waitGetDeck.notify();
         }
     }
 }

@@ -23,16 +23,16 @@ public class BattlefieldCommands implements Command {
         BattlefieldClient.getBattlefieldInstance().setBattlefieldBoard(battlefield);
         if(action.equals("setBattlefield")){
             //Awakens who was waiting Server Response
-            synchronized (clientController.lockManager.lockSetBattlefield){
-                clientController.lockManager.lockSetBattlefield.setUsed();
-                clientController.lockManager.lockSetBattlefield.notify();
+            synchronized (clientController.waitManager.waitSetBattlefield){
+                clientController.waitManager.waitSetBattlefield.setUsed();
+                clientController.waitManager.waitSetBattlefield.notify();
             }
         }
         else if (action.equals("getBattlefieldResponse")){
             //Awakens who was waiting Server Response
-            synchronized (clientController.lockManager.lockGetBattlefield){
-                clientController.lockManager.lockGetBattlefield.setUsed();
-                clientController.lockManager.lockGetBattlefield.notify();
+            synchronized (clientController.waitManager.waitGetBattlefield){
+                clientController.waitManager.waitGetBattlefield.setUsed();
+                clientController.waitManager.waitGetBattlefield.notify();
             }
         }
     }

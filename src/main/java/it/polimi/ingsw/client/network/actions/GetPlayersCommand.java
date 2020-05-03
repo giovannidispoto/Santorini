@@ -34,9 +34,9 @@ public class GetPlayersCommand implements Command {
             }
         }
         //Awakens who was waiting Server Response
-        synchronized (clientController.lockManager.lockGetPlayers){
-            clientController.lockManager.lockGetPlayers.setUsed();
-            clientController.lockManager.lockGetPlayers.notify();
+        synchronized (clientController.waitManager.waitGetPlayers){
+            clientController.waitManager.waitGetPlayers.setUsed();
+            clientController.waitManager.waitGetPlayers.notify();
         }
     }
 }

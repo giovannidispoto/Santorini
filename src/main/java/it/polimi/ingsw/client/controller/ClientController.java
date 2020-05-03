@@ -34,7 +34,7 @@ public class ClientController {
     private Deck cardsDeck;             //Deck sent by the server, containing the playable cards in this lobby
     private int currentLobbySize;
     //--    Utils - Locks for Wait & Notify
-    public LockManager lockManager;
+    public WaitManager waitManager;
     public Thread mainThread;
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
@@ -46,7 +46,7 @@ public class ClientController {
     public ClientController(){
         this.players = new ArrayList<>();
         this.workersID = new ArrayList<>();
-        this.lockManager = new LockManager();
+        this.waitManager = new WaitManager();
         this.mainThread = Thread.currentThread();
     }
 
@@ -85,8 +85,8 @@ public class ClientController {
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPickedCards(){
-        synchronized (lockManager.lockSetPickedCards){
-            return lockManager.setWait(lockManager.lockSetPickedCards);
+        synchronized (waitManager.waitSetPickedCards){
+            return waitManager.setWait(waitManager.waitSetPickedCards);
         }
     }
 
@@ -95,8 +95,8 @@ public class ClientController {
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetPlayerCard(){
-        synchronized (lockManager.lockSetPlayerCard){
-            return lockManager.setWait(lockManager.lockSetPlayerCard);
+        synchronized (waitManager.waitSetPlayerCard){
+            return waitManager.setWait(waitManager.waitSetPlayerCard);
         }
     }
 
@@ -105,8 +105,8 @@ public class ClientController {
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetWorkersPosition(){
-        synchronized (lockManager.lockSetWorkersPosition){
-            return lockManager.setWait(lockManager.lockSetWorkersPosition);
+        synchronized (waitManager.waitSetWorkersPosition){
+            return waitManager.setWait(waitManager.waitSetWorkersPosition);
         }
     }
 
@@ -115,8 +115,8 @@ public class ClientController {
      * @return  false: if there was an error, true: method performed without errors
      */
     public boolean waitSetBattlefield(){
-        synchronized (lockManager.lockSetBattlefield){
-            return lockManager.setWait(lockManager.lockSetBattlefield);
+        synchronized (waitManager.waitSetBattlefield){
+            return waitManager.setWait(waitManager.waitSetBattlefield);
         }
     }
 
@@ -134,8 +134,8 @@ public class ClientController {
     public boolean addPlayerRequest(String playerNickname, int lobbySize){
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
-        synchronized (lockManager.lockAddPlayer){
-            return lockManager.setWait(lockManager.lockAddPlayer);
+        synchronized (waitManager.waitAddPlayer){
+            return waitManager.setWait(waitManager.waitAddPlayer);
         }
     }
 
@@ -147,8 +147,8 @@ public class ClientController {
      */
     public boolean getDeckRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
-        synchronized (lockManager.lockGetDeck){
-            return lockManager.setWait(lockManager.lockGetDeck);
+        synchronized (waitManager.waitGetDeck){
+            return waitManager.setWait(waitManager.waitGetDeck);
         }
     }
 
@@ -180,8 +180,8 @@ public class ClientController {
      */
     public boolean getPlayersRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
-        synchronized (lockManager.lockGetPlayers){
-            return lockManager.setWait(lockManager.lockGetPlayers);
+        synchronized (waitManager.waitGetPlayers){
+            return waitManager.setWait(waitManager.waitGetPlayers);
         }
     }
 
@@ -192,8 +192,8 @@ public class ClientController {
      */
     public boolean getBattlefieldRequest(){
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getBattlefield")));
-        synchronized (lockManager.lockGetBattlefield){
-            return lockManager.setWait(lockManager.lockGetBattlefield);
+        synchronized (waitManager.waitGetBattlefield){
+            return waitManager.setWait(waitManager.waitGetBattlefield);
         }
     }
 
