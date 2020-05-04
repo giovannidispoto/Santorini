@@ -228,14 +228,16 @@ public class Controller {
         if(gameState.getState() != GameStep.ADDING_WORKER){
             System.out.println("Not waiting this message");
         }else {
-            getWorkerFromString(playerNickname, worker).setWorkerPosition(x, y);
-            getWorkerFromString(playerNickname, worker2).setWorkerPosition(x2, y2);
-            if (!getNextPlayer(playerNickname).equals(firstPlayer)) {
-                setWorkerPositionRequest(getNextPlayer(playerNickname));
-            }
-            else {
-                startMatch(playerNickname);
-                gameState.nextState();
+            if (getWorkerFromString(playerNickname, worker) != null && getWorkerFromString(playerNickname, worker2) != null) {
+
+                getWorkerFromString(playerNickname, worker).setWorkerPosition(x, y);
+                getWorkerFromString(playerNickname, worker2).setWorkerPosition(x2, y2);
+                if (!getNextPlayer(playerNickname).equals(firstPlayer)) {
+                    setWorkerPositionRequest(getNextPlayer(playerNickname));
+                } else {
+                    startMatch(playerNickname);
+                    gameState.nextState();
+                }
             }
         }
     }
@@ -280,12 +282,12 @@ public class Controller {
 
     /**
      * Start new turn of the player
-     * @param basic basic turn if true, with effect if false
-     * @param player player
+     * @param playerNickname player
+     * @param basicTurn basic turn if true, with effect if false
      */
-    public void startTurn(boolean basic, String player){
-        Player p = getPlayerFromString(player);
-        this.turn = new PlayerTurn(match.generateTurn(basic), match);
+    public void startTurn(String playerNickname, boolean basicTurn){
+        Player p = getPlayerFromString(playerNickname);
+        this.turn = new PlayerTurn(match.generateTurn(basicTurn), match);
         match.setCurrentPlayer(p);
     }
 
@@ -295,11 +297,21 @@ public class Controller {
      * @param x row
      * @param y column
      */
-    public void selectWorker(String player, int x, int y){
+    public boolean[][] selectWorker(String player, int x, int y){
         if(!Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().getOwnerWorker().getPlayerNickname().equalsIgnoreCase(player))
             throw new RuntimeException("Not Your Worker");
         match.setSelectedWorker(Battlefield.getBattlefieldInstance().getCell(x,y).getWorker());
         this.turn.updateMovmentMatrix();
+        boolean[][] workerView = new boolean[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
+
+        for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
+            for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
+                workerView[i][j] = match.getSelectedWorker().getWorkerView()[i][j] != null;
+            }
+        }
+
+
+        return workerView;
     }
 
     /**
@@ -381,8 +393,10 @@ public class Controller {
      */
     private Worker getWorkerFromString(String player,int worker){
         Optional<Worker> w = getPlayerFromString(player).getPlayerWorkers().stream().filter(workr-> workr.getId() == worker).findFirst();
-        if(w.isEmpty())
-            throw new RuntimeException("Worker Not Found");
+        if(w.isEmpty()) {
+            System.out.println("Worker Not Found");
+            return null;
+        }
 
         return w.get();
     }

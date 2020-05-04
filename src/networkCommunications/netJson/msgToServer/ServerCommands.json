@@ -67,29 +67,25 @@
   },
 
 
-
-
-
-
-
   {
-    "action" : "startTurn",
+    "action" : "setStartTurn",
     "data" :{
-      "basicTurn" : true,
-      "playerNickname" : "Steve Jobs"
+      "playerNickname" : "Bill",
+      "basicTurn" : true
     }
   },
   {
     "action" : "selectWorker",
     "data" : {
-      "playerNickname" : "Steve Jobs",
-      "worker" : 2
+      "playerNickname" : "Bill",
+      "x" : 4,
+      "y" : 4
     }
   },
   {
     "action" : "playStep",
     "data": {
-      "x" : 0,
+      "x" : 3,
       "y" : 4
     }
   },

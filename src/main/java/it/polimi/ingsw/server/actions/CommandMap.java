@@ -161,12 +161,12 @@ public class CommandMap {
     }
     //10
     private void loadStartTurn(){
-        this.commandMap.put("startTurn", new ProcessingCommand() {
+        this.commandMap.put("setStartTurn", new ProcessingCommand() {
             @Override
             public Command command(JsonElement jsonElement) {
-                return new StartTurnCommand(
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("basicTurn").getAsBoolean(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString()
+                return new SetStartTurnCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString(),
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("basicTurn").getAsBoolean()
                 );
             }
         });

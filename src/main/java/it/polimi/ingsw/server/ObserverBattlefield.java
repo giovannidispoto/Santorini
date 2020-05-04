@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.actions.data.CellInterface;
 /**
  * Interface used in Observer Pattern
  */
-public interface Observer {
+public interface ObserverBattlefield {
     /**
      * Update from Battlefield or workerView, both represented by array of CellInterface
      * @param cellInterfaces matrix

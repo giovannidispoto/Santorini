@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.server.ObserverWorkerView;
+import it.polimi.ingsw.server.SubjectWorkerView;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.Message;
-import it.polimi.ingsw.server.Observer;
-import it.polimi.ingsw.server.Subject;
+import it.polimi.ingsw.server.ObserverBattlefield;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Worker class represents a pawn of the game
  */
-public class Worker implements Subject {
+public class Worker implements SubjectWorkerView {
     private final Player ownerWorker;
     private static int count = 0;
     private int id;
@@ -19,7 +20,7 @@ public class Worker implements Subject {
     private int rowWorker;
     private int colWorker;
     private Cell[][] workerView;
-    private List<Observer> observers;
+    private List<ObserverWorkerView> observers;
 
     /**
      * Class Constructor
@@ -102,7 +103,7 @@ public class Worker implements Subject {
      * @param o Observer
      */
     @Override
-    public void attach(Observer o) {
+    public void attach(ObserverWorkerView o) {
         observers.add(o);
     }
 
@@ -111,7 +112,7 @@ public class Worker implements Subject {
      * @param o
      */
     @Override
-    public void detach(Observer o) {
+    public void detach(ObserverWorkerView o) {
         observers.remove(o);
     }
 
@@ -120,21 +121,17 @@ public class Worker implements Subject {
      */
     @Override
     public void notifyUpdate() {
-        CellInterface[][] workerView = new CellInterface[Battlefield.N_ROWS_VIEW][Battlefield.N_COLUMNS_VIEW];
+        boolean[][] workerView = new boolean [Battlefield.N_ROWS_VIEW][Battlefield.N_COLUMNS_VIEW];
         String player;
         Color workerColor;
        // Battlefield instance = Battlefield.getBattlefieldInstance();
         for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
             for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
-                if(this.workerView[i][j] != null) {
-                    player = this.workerView[i][j].getWorker() != null ? this.workerView[i][j].getWorker().getOwnerWorker().getPlayerNickname():null;
-                    workerColor = player != null ? this.workerView[i][j].getWorker().getOwnerWorker().getPlayerColor(): null;
-                    workerView[i][j] = new CellInterface(player, workerColor, this.workerView[i][j].getTower().getHeight(),this.workerView[i][j].getTower().getLastBlock());
-                }
+                workerView[i][j] = this.workerView == null;
             }
         }
-        for(Observer o: observers)
-            o.update(workerView, Message.WORKERVIEW);
+        for(ObserverWorkerView o: observers)
+            o.update(workerView);
     }
 
     /**

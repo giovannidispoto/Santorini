@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.server.SubjectBattlefield;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.Message;
-import it.polimi.ingsw.server.Observer;
-import it.polimi.ingsw.server.Subject;
+import it.polimi.ingsw.server.ObserverBattlefield;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Battlefield Class represents the board where the game is played
  */
-public class Battlefield implements Subject {
+public class Battlefield implements SubjectBattlefield {
     private Cell[][] boardCells;
     public static final int N_ROWS = 5;
     public static final int N_COLUMNS= 5;
@@ -22,7 +22,7 @@ public class Battlefield implements Subject {
     public static final int N_COLUMNS_VIEW= 5;
     private List<Worker> workersInGame;
     private static Battlefield instance = null;
-    private List<Observer> observers;
+    private List<ObserverBattlefield> observers;
 
     /**
      * Class constructor
@@ -201,7 +201,7 @@ public class Battlefield implements Subject {
      * @param o Observer
      */
     @Override
-    public void attach(Observer o) {
+    public void attach(ObserverBattlefield o) {
         observers.add(o);
     }
 
@@ -210,7 +210,7 @@ public class Battlefield implements Subject {
      * @param o
      */
     @Override
-    public void detach(Observer o) {
+    public void detach(ObserverBattlefield o) {
         observers.remove(o);
     }
 
@@ -232,7 +232,7 @@ public class Battlefield implements Subject {
             }
         }
         
-            for (Observer o : observers) {
+            for (ObserverBattlefield o : observers) {
                 if(o != null)
                      o.update(battlefield, Message.BATTLEFIELD);
             }

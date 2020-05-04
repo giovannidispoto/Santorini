@@ -13,6 +13,7 @@ public class GameState {
         this.steps.add(GameStep.PICKING_CARDS);
         this.steps.add(GameStep.SETTING_CARDS);
         this.steps.add(GameStep.ADDING_WORKER);
+        this.steps.add(GameStep.START_TURN);
     }
 
     /**

@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.actions.CommandFactory;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 import it.polimi.ingsw.server.actions.data.CellMatrixResponse;
+import it.polimi.ingsw.server.actions.data.WorkerViewResponse;
 
 import java.util.Stack;
 
@@ -13,7 +14,7 @@ import java.util.Stack;
  * ClientHandler execute commands from socket and send response to client.
  * Every Thread has his own ClientHandler, such as a Virtual Client
  */
-public class ClientHandler implements Observer {
+public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     private Controller controller;
     private ClientThread thread;
@@ -63,17 +64,15 @@ public class ClientHandler implements Observer {
      */
     @Override
     public void update(CellInterface[][] cellInterfaces, Message message) {
-        switch (message){
-            case WORKERVIEW:
-                response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new CellMatrixResponse(cellInterfaces))));
-                System.out.println("WorkerView Updated!");
-                break;
-            case BATTLEFIELD:
-                response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
-                System.out.println("Battlefield Updated!");
-                break;
-        }
+        response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
+        System.out.println("Battlefield Updated!");
 
+    }
+
+    @Override
+    public void update(boolean[][] workerView) {
+        response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
+        System.out.println("WorkerView Updated!");
     }
 
     /**
@@ -83,4 +82,6 @@ public class ClientHandler implements Observer {
     public void responseQueue(String message) {
         this.messageQueue.add(message);
     }
+
+
 }
