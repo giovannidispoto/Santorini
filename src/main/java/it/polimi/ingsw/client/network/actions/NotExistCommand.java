@@ -12,7 +12,7 @@ public class NotExistCommand implements Command {
     @Override
     public void execute(ClientController clientController) {
         if(clientController.debug) {
-            System.out.println("ServerMessage generate Error - ClientCommand does not exist -  Server Sent:  " + this.message);
+            System.out.println("\u001B[31m"+"ServerMessage generate Error - ClientCommand does not exist -  Server Sent:  " + this.message+"\u001B[0m");
         }
         //TODO: debug
     }

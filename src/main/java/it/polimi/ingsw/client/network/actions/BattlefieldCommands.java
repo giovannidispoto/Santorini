@@ -21,11 +21,11 @@ public class BattlefieldCommands implements Command {
     @Override
     public void execute(ClientController clientController) {
         BattlefieldClient.getBattlefieldInstance().setBattlefieldBoard(battlefield);
-        if(action.equals("setBattlefield")){
+        if(action.equals("battlefieldUpdate")){
             //Awakens who was waiting Server Response
-            synchronized (clientController.waitManager.waitSetBattlefield){
-                clientController.waitManager.waitSetBattlefield.setUsed();
-                clientController.waitManager.waitSetBattlefield.notify();
+            synchronized (clientController.waitManager.waitBattlefieldUpdate){
+                clientController.waitManager.waitBattlefieldUpdate.setUsed();
+                clientController.waitManager.waitBattlefieldUpdate.notify();
             }
         }
         else if (action.equals("getBattlefieldResponse")){

@@ -33,9 +33,9 @@
 	setWorkersPosition      --------------------------------->	ok
 (end)
 
-    waitSetBattlefield
+    waitBattlefieldUpdate
 
-	ok(Battlefield)			<---------------------------------	setBattlefield		(notify all)
+	ok(Battlefield)			<---------------------------------	battlefieldUpdate		(notify all)
 
 (end)
 
@@ -52,7 +52,7 @@
 (While WorkerView NULL)
 	skipStepRequest(opt)	--------------------------------->	ok
 	playStepRequest(opt)	--------------------------------->	ok
-	Battlefield				<---------------------------------	setBattlefield		(notify all)
+	Battlefield				<---------------------------------	battlefieldUpdate		(notify all)
 (end)
 
 (ASYNCHRONOUS)
