@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 
 public class GetBattlefield implements Command{
-    private CellInterface[][] battlefield;
+    private CellInterface[][] cellMatrix;
     private boolean result;
 
     public GetBattlefield(){
@@ -16,7 +16,7 @@ public class GetBattlefield implements Command{
 
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        battlefield = controller.getBattlefield();
+        cellMatrix = controller.getBattlefield();
         result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getBattlefieldResponse", this)));
         handler.sendMessageQueue();

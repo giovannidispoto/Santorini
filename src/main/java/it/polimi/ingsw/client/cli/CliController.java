@@ -48,9 +48,10 @@ public class CliController implements View {
 
         List<WorkerPositionInterface> workersPosition= new ArrayList<>();
 
-        for(int i : clientController.getWorkersID()){
+        for(int worker : clientController.getWorkersID()){
             //commandLine.stampBattlefield;
-            workersPosition.add(placeWorker(clientController, clientController.getWorkersID().get(i)));
+            System.out.println("Choose position for your worker: " + worker);
+            workersPosition.add(placeWorker(clientController, worker));
         }
         //commandLine.stampBattlefield;
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
@@ -61,6 +62,7 @@ public class CliController implements View {
 
     public WorkerPositionInterface placeWorker(ClientController clientController, int workerID){
         Scanner sc = new Scanner(System.in);
+        boolean redoCondition;
         int x,y;
         do {
             System.out.print("Enter x: ");
@@ -69,8 +71,16 @@ public class CliController implements View {
             System.out.print("Enter y: ");
             while (!sc.hasNextInt()) sc.next();
             y = sc.nextInt();
-            //Prendi dall'utente x e y
-        }while(BattlefieldClient.getBattlefieldInstance().isCellOccupied(x,y));
+            if(BattlefieldClient.getBattlefieldInstance().isCellOccupied(x,y)){
+                redoCondition = true;
+                System.out.println("--Error Position already occupied--");
+            }
+            else {
+                redoCondition = false;
+                System.out.println("--position ok--");
+            }
+        }while(redoCondition);
+
         BattlefieldClient.getBattlefieldInstance().getCell(x,y).setPlayer(clientController.getPlayerNickname());
         BattlefieldClient.getBattlefieldInstance().getCell(x,y).setWorkerColor(clientController.getPlayerColor());
         return new WorkerPositionInterface(workerID, x, y);
