@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.network.actions.data.dataInterfaces.WorkerPosition
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CliController implements View {
     private final String cliColor;
@@ -59,8 +60,15 @@ public class CliController implements View {
     }
 
     public WorkerPositionInterface placeWorker(ClientController clientController, int workerID){
-        int x=0,y=0;
+        Scanner sc = new Scanner(System.in);
+        int x,y;
         do {
+            System.out.print("Enter x: ");
+            while (!sc.hasNextInt()) sc.next();
+            x = sc.nextInt();
+            System.out.print("Enter y: ");
+            while (!sc.hasNextInt()) sc.next();
+            y = sc.nextInt();
             //Prendi dall'utente x e y
         }while(BattlefieldClient.getBattlefieldInstance().isCellOccupied(x,y));
         BattlefieldClient.getBattlefieldInstance().getCell(x,y).setPlayer(clientController.getPlayerNickname());

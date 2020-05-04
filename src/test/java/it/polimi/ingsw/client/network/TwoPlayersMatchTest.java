@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.network;
 
+import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.actions.data.dataInterfaces.WorkerPositionInterface;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ class TwoPlayersMatchTest {
     void Player1Test(){
         ClientController clientController = new ClientController();
         clientController.initializeNetwork();
+        BattlefieldClient battlefieldClient = BattlefieldClient.getBattlefieldInstance();
 
         String serverName1 = "127.0.0.3";
         String player1 = "Bill";
@@ -60,6 +62,7 @@ class TwoPlayersMatchTest {
     void Player2Test(){
         ClientController clientController = new ClientController();
         clientController.initializeNetwork();
+        BattlefieldClient battlefieldClient = BattlefieldClient.getBattlefieldInstance();
 
         String serverName1 = "127.0.0.3";
         String player2 = "Marcus";

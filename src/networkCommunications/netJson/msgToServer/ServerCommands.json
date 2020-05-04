@@ -14,55 +14,39 @@
     "data":{
       "cards":[
         "ATHENA",
-        "APOLLO",
-        "ARES"
+        "APOLLO"
       ]
     }
   },
   {
     "action":"setPlayerCard",
     "data":{
-      "playerNickname": "Bill Gates",
+      "playerNickname":"Bill",
       "card":"ATHENA"
     }
   },
   {
-    "action":"setPickedCards",
-    "data":{
-      "cards":[
-        "APOLLO",
-        "ARES",
-        "ATHENA"
-      ]
-    }
+    "action":"getPlayers"
   },
-  {
-    "action":"setPlayerCard",
-    "data":{
-      "playerNickname":"Dario",
-      "card":"APOLLO"
-    }
-  },
-  {"action":"setWorkersPosition",
-    "data":{
-      "playerNickname":"Bill",
-      "workersPosition":[
-        {"workerID":0,"x":4,"y":4},
-        {"workerID":1,"x":2,"y":3}
-      ]
-    }
-  }
-,
   {
     "action":"getBattlefield"
   },
   {
-    "action":"setInitialWorkerPosition",
+    "action":"setWorkersPosition",
     "data":{
       "playerNickname":"Bill",
-      "worker":0,
-      "x":4,
-      "y":4
+      "workersPosition":[
+        {
+          "workerID":0,
+          "x":4,
+          "y":4
+        },
+        {
+          "workerID":1,
+          "x":4,
+          "y":3
+        }
+      ]
     }
   },
 
