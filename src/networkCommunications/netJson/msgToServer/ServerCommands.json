@@ -1,79 +1,95 @@
 [
   {
-    "action":"addPlayer",
-    "data":{
-      "playerNickname":"Bill",
-      "lobbySize":2
+    "action": "addPlayer",
+    "data": {
+      "playerNickname": "Bill",
+      "lobbySize": 2
     }
   },
   {
-    "action":"getDeck"
+    "action": "getDeck"
   },
   {
-    "action":"setPickedCards",
-    "data":{
-      "cards":[
+    "action": "setPickedCards",
+    "data": {
+      "cards": [
         "ATHENA",
         "APOLLO"
       ]
     }
   },
   {
-    "action":"setPlayerCard",
-    "data":{
-      "playerNickname":"Bill",
-      "card":"ATHENA"
+    "action": "setPlayerCard",
+    "data": {
+      "playerNickname": "Bill",
+      "card": "ATHENA"
     }
   },
   {
-    "action":"getPlayers"
+    "action": "getPlayers"
   },
   {
-    "action":"getBattlefield"
+    "action": "getBattlefield"
   },
   {
-    "action":"setWorkersPosition",
-    "data":{
-      "playerNickname":"Bill",
-      "workersPosition":[
+    "action": "setWorkersPosition",
+    "data": {
+      "playerNickname": "Bill",
+      "workersPosition": [
         {
-          "workerID":0,
-          "x":4,
-          "y":4
+          "workerID": 0,
+          "x": 4,
+          "y": 4
         },
         {
-          "workerID":1,
-          "x":4,
-          "y":3
+          "workerID": 1,
+          "x": 4,
+          "y": 3
         }
       ]
     }
   },
-
-
   {
-    "action" : "setStartTurn",
-    "data" :{
-      "playerNickname" : "Bill",
-      "basicTurn" : true
-    }
-  },
-  {
-    "action" : "selectWorker",
-    "data" : {
-      "playerNickname" : "Bill",
-      "x" : 4,
-      "y" : 4
-    }
-  },
-  {
-    "action" : "playStep",
+    "action": "setWorkersPosition",
     "data": {
-      "x" : 3,
-      "y" : 4
+      "playerNickname": "Gio",
+      "workersPosition": [
+        {
+          "workerID": 2,
+          "x": 2,
+          "y": 2
+        },
+        {
+          "workerID": 3,
+          "x": 1,
+          "y": 1
+        }
+      ]
     }
   },
   {
-    "action":"skipStep"
+    "action": "setStartTurn",
+    "data": {
+      "playerNickname": "Bill",
+      "basicTurn": true
+    }
+  },
+  {
+    "action": "selectWorker",
+    "data": {
+      "playerNickname": "Bill",
+      "x": 4,
+      "y": 4
+    }
+  },
+  {
+    "action": "playStep",
+    "data": {
+      "x": 3,
+      "y": 4
+    }
+  },
+  {
+    "action": "skipStep"
   }
 ]

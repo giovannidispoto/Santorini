@@ -212,8 +212,8 @@ public class Controller {
         Battlefield.getBattlefieldInstance().setWorkersInGame(workerList);
 
         //Register observer
-        w1.attach(clientHandler);
-        w2.attach(clientHandler);
+        //w1.attach(clientHandler);
+        // w2.attach(clientHandler);
 
     }
 
@@ -297,10 +297,18 @@ public class Controller {
      * @param x row
      * @param y column
      */
-    public boolean[][] selectWorker(String player, int x, int y){
+    public boolean[][] selectWorker(String player, ClientHandler handler,int x, int y){
         if(!Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().getOwnerWorker().getPlayerNickname().equalsIgnoreCase(player))
             throw new RuntimeException("Not Your Worker");
+
+        //Removing all old observer
+        for(Worker w : getPlayerFromString(player).getPlayerWorkers())
+            w.detachAll();
+
         match.setSelectedWorker(Battlefield.getBattlefieldInstance().getCell(x,y).getWorker());
+
+        //Add observer
+        Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().attach(handler);
         this.turn.updateMovmentMatrix();
         boolean[][] workerView = new boolean[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
 

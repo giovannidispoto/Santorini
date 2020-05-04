@@ -65,7 +65,7 @@ public class Worker implements SubjectWorkerView {
     public void setWorkerView(Cell[][] workerView){
         this.workerView = workerView;
         //call observer
-        notifyUpdate();
+
     }
 
     /**
@@ -117,6 +117,14 @@ public class Worker implements SubjectWorkerView {
     }
 
     /**
+     * Remove all observers
+     */
+    @Override
+    public void detachAll() {
+        observers = new ArrayList<>();
+    }
+
+    /**
      * Notify observer that matrix is changed
      */
     @Override
@@ -127,7 +135,7 @@ public class Worker implements SubjectWorkerView {
        // Battlefield instance = Battlefield.getBattlefieldInstance();
         for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
             for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
-                workerView[i][j] = this.workerView == null;
+                workerView[i][j] = this.workerView[i][j] != null;
             }
         }
         for(ObserverWorkerView o: observers)

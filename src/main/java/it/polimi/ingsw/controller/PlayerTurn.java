@@ -41,6 +41,7 @@ public class PlayerTurn {
     public void updateMovmentMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
         match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
+        match.getSelectedWorker().notifyUpdate();
     }
 
     /**
@@ -48,6 +49,7 @@ public class PlayerTurn {
      */
     public void updateBuildingMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
+        match.getSelectedWorker().notifyUpdate();
     }
 
     /**

@@ -14,7 +14,7 @@ public class SelectWorkerCommand implements Command{
     private String playerNickname;
     private int x;
     private int y;
-    private boolean[][] workerView;
+   // private boolean[][] workerView;
 
     /**
      * Create SelectWorkerCommand
@@ -35,8 +35,8 @@ public class SelectWorkerCommand implements Command{
      */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        this.workerView = controller.selectWorker(playerNickname,x,y);
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
+        controller.selectWorker(playerNickname,handler,x,y);
+       // handler.responseQueue(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
         handler.sendMessageQueue();
     }
 
