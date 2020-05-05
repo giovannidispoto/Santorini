@@ -43,7 +43,7 @@ public class ClientController {
     //--    View - Management
     private View userView;
     //TODO:debug
-    public boolean debug = true;
+    public boolean debug = false;
 
     /**
      * ClientController Constructor

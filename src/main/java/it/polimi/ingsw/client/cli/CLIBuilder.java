@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
 
 import java.util.*;
 
@@ -75,7 +76,7 @@ public class CLIBuilder implements UIActions{
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
-    private static final String MOVES_TITLE = "PLAYER MOVES 🕹";
+    private static final String MOVES_TITLE = "PLAYER MOVES 🎮";
     private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
 
     //------------------ # UI Data # ------------------
@@ -202,7 +203,7 @@ public class CLIBuilder implements UIActions{
     private int godPlayerRefreshHeight;
     private int printedLinesCounter;
     private final int boardTitleEdgeDistance = 12;
-    private final int refreshableAreaHeight = 14;
+    private final int refreshableAreaHeight = 15;
     private final int editableRowCells = 5;
 
     //DONE: Class Constructor
@@ -237,6 +238,14 @@ public class CLIBuilder implements UIActions{
     }
 
     //DONE: Implemented Support Methods
+
+    /**
+     * Prints notification about God player activity
+     */
+    public void printGodPlayerActivity(ClientController clientController){
+        System.out.println(ANSI_LIGHT_GREEN+String.format(waitGodTemplate,clientController.getGodPlayer())+ANSI_WHITE);
+        printedLinesCounter+=1;
+    }
 
     /**
      * Extracts a single formatted String from the playerMoves list
@@ -291,22 +300,71 @@ public class CLIBuilder implements UIActions{
     }
 
     /**
+     * Renders a generic message box
+     * @param messageColor is the chosen color for the box
+     * @param message is the string that will be printed in the box
+     */
+    public void renderTitleBox(String messageColor, String message){
+        int messageLength = message.length();
+        System.out.print(messageColor+L_THIN_T_CORNER);
+        //+2 to consider the blank spaces between the message and the lateral edges -> │ message │
+        for(int i=0;i<messageLength+2;i++)
+            System.out.print(H_THIN_LINE);
+        System.out.println(R_THIN_T_CORNER);
+        System.out.println(V_THIN_LINE+BLANK+message+BLANK+V_THIN_LINE);
+        System.out.print(L_THIN_B_CORNER);
+        for(int i=0;i<messageLength+2;i++)
+            System.out.print(H_THIN_LINE);
+        System.out.println(R_THIN_B_CORNER);
+        System.out.print(ANSI_WHITE);
+        printedLinesCounter+=3;
+    }
+
+    /**
+     *  Renders the entire deck (list of cards)
+     *  • CHRONUS | effect...
+     *  ...
+     *  • ZEUS | effect...
+     * @param clientController is the client side controller
+     */
+    public void renderDeck(ClientController clientController){
+        clientController.getDeckRequest();
+        for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
+            printedLinesCounter+=1;
+        }
+    }
+
+    /**
+     *  Renders the available cards for the initial player choice
+     *  • CHRONUS | Owner win if there are five full towers on the board
+     * @param clientController is the client side controller
+     */
+    public void renderAvailableCards(ClientController clientController){
+        for(String card : clientController.getGodCards()){
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+clientController.getCardsDeck().getDivinityCard(card).getCardName().toUpperCase()+ANSI_WHITE,clientController.getCardsDeck().getDivinityCard(card).getCardEffect()));
+            printedLinesCounter+=1;
+        }
+    }
+
+    /**
      * Renders the CLI Data part
      * 0 |            BOARD
-     * 1 |     0   1   2   3   4      FULL TOWERS 🏗
-     * 2 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
-     * 3 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
-     * 4 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
-     * 5 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
-     * 6 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌┐
-     * 7 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Building ┊
-     * 8 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌┘
-     * 9 | 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
-     * 10|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
-     * 11| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
-     * 12|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
-     * 13|
+     * 1 |
+     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
+     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
+     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
+     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌┐
+     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Building ┊
+     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌┘
+     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
      * 14|
+     * 15|
      * @param availableMoves is a formatted String with all the available moves for the player
      */
     public void renderBoard(String availableMoves){
@@ -321,7 +379,7 @@ public class CLIBuilder implements UIActions{
         //Print line 0
         currentLine.append(BLANK.repeat(boardTitleEdgeDistance));
         currentLine.append(ANSI_WHITE+BOARD_TITLE);
-        System.out.println(currentLine);
+        System.out.print(currentLine+NEW_LINE+NEW_LINE);
         currentLine.setLength(0);
 
         //Print line 1
@@ -436,7 +494,208 @@ public class CLIBuilder implements UIActions{
      */
     @Override
     public void setupConnection(ClientController clientController) {
-
+        //Local Variables
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInputString;
+        int userInputValue;
+        boolean isOperationValid = false;
+        //Lobby Parameters
+        String chosenNickname;
+        int chosenLobbySize;
+        /*  # TITLE BOX #
+            ┌──────────────────┐
+            │ Setup Connection │
+            └──────────────────┘
+        */
+        renderTitleBox(ANSI_PURPLE,SETUP_TITLE);
+        while (!isOperationValid){
+            /*  # Setup Server IP #
+                Server IP 🌍
+                >
+                |
+            */
+            System.out.print(COLOR_MODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+            userInputString=consoleScanner.next();
+            printedLinesCounter+=2;
+            while (!clientController.getSocketConnection().setServerName(userInputString)){
+                /*  # Setup Server IP #
+                    Invalid IP...retry • Server IP 🌍
+                    >
+                    |
+                */
+                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_IP+COLOR_MODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+                userInputString=consoleScanner.next();
+            }
+            /*  # Setup Socket Port #
+                Server IP 🌍
+                >
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                |
+            */
+            System.out.print(COLOR_MODE+SOCKET_PORT+NEW_LINE+ ANSI_GRAY);
+            System.out.print(PORT_SUGGESTION+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+PORT_SUGGESTION_ERROR+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            userInputValue=consoleScanner.nextInt();
+            printedLinesCounter+=2;
+            clientController.getSocketConnection().setServerPort(userInputValue);
+                /*  # Connection Success #
+                    Server IP 🌍
+                    >
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
+                    Handshaking with 192.168.1.9 on port 1337...🦖
+                    |
+                */
+            System.out.print(String.format(handshakingTemplate,clientController.getSocketConnection().getServerName(),clientController.getSocketConnection().getServerPort())+NEW_LINE);
+            printedLinesCounter+=1;
+            if(clientController.getSocketConnection().startConnection()){
+                /*  # Connection Success #
+                    Server IP 🌍
+                    >
+                    Socket Port ⛩
+                    We suggest you the port 1337 • >
+                    Handshaking with 192.168.1.9 on port 1337...🦖
+                    Connection established!
+                */
+                isOperationValid=true;
+                System.out.print(ANSI_GREEN+SUCCESSFUL_HANDSHAKING+ANSI_WHITE+NEW_LINE);
+                printedLinesCounter+=1;
+            }
+            else{
+                /*  # Failed Connection #
+                    Failed Connection...retry!
+                    Server IP 🌍
+                    >
+                */
+                System.out.print(String.format(CURSOR_UP,printedLinesCounter-3)); //-3 because we don't have to delete the title boc
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+FAILED_CONNECTION+NEW_LINE+ANSI_WHITE);
+                printedLinesCounter=4;
+            }
+        }
+        /*  # Nickname Setup #
+            Server IP 🌍
+            >
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
+            Connection established!
+            Nickname 👾
+            >
+            |
+        */
+        System.out.print(COLOR_MODE+NICKNAME+NEW_LINE+CLI_INPUT);
+        userInputString=consoleScanner.next();
+        clientController.setPlayerNickname(userInputString);
+        printedLinesCounter+=2;
+        /*  # Nickname Setup #
+            Server IP 🌍
+            >
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
+            Connection established!
+            Nickname 👾
+            >
+            Lobby Size 📦
+            >
+            |
+        */
+        System.out.print(LOBBY_SIZE+NEW_LINE+CLI_INPUT);
+        while(!consoleScanner.hasNextInt()){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+ANSI_WHITE+CLI_INPUT);
+            consoleScanner.next();
+        }
+        userInputValue=consoleScanner.nextInt();
+        printedLinesCounter+=2;
+        //Only two valid choices...
+        isOperationValid= userInputValue == 2 || userInputValue == 3;
+        while (!isOperationValid){
+            /*  # Nickname Setup #
+                Server IP 🌍
+                >
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
+                Connection established!
+                Nickname 👾
+                >
+                This game is just for 2 or 3 people...retry! • Lobby Size 📦
+                >
+                |
+            */
+            System.out.print(String.format(CURSOR_UP,2));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLOR_MODE+LOBBY_SIZE+NEW_LINE+CLI_INPUT);
+            userInputValue=consoleScanner.nextInt();
+            isOperationValid= userInputValue == 2 || userInputValue == 3;
+        }
+        //Save user preferences
+        chosenLobbySize=userInputValue;
+        chosenNickname=clientController.getPlayerNickname();
+        //Adds the player to the lobby
+        clientController.addPlayerRequest(chosenNickname,userInputValue);
+        System.out.print(LOBBY_JOIN+NEW_LINE);
+        printedLinesCounter+=1;
+        //Troubles with the lobby...
+        //# Full Lobby # -> we close the client
+        if(clientController.isFullLobby()){
+            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+CLOSING);
+            System.exit(0);
+        }
+        while(!clientController.getValidNick()){
+            /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
+                Server IP 🌍
+                >
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
+                Connection established!
+                Nickname 👾
+                >
+                Lobby Size 📦
+                >
+                Joining the lobby...
+                There is already a player with this nickname in the lobby...retry!
+                > |
+            */
+            System.out.println(ANSI_RED+NICKNAME_ERROR);
+            System.out.print(ANSI_WHITE+CLI_INPUT);
+            userInputString=consoleScanner.next();
+            clientController.setPlayerNickname(userInputString);
+            clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobbySize);
+            System.out.print(String.format(CURSOR_UP,2));
+            System.out.print(CLEAN);
+        }
+        /*  # Setup Done! #
+            Server IP 🌍
+            >
+            Socket Port ⛩
+            We suggest you the port 1337 • >
+            Handshaking with 192.168.1.9 on port 1337...🦖
+            Connection established!
+            Nickname 👾
+            >
+            Lobby Size 📦
+            >
+            Joining the lobby...
+            You have correctly joined the lobby!
+            > Wait for the match startup...
+            |
+        */
+        System.out.print(ANSI_GREEN+ SUCCESSFUL_LOBBY_ACCESS +NEW_LINE);
+        System.out.print(COLOR_MODE+CLI_INPUT+WAIT_START+NEW_LINE);
+        printedLinesCounter+=2;
     }
 
     /**
@@ -445,7 +704,72 @@ public class CLIBuilder implements UIActions{
      */
     @Override
     public void pickCards(ClientController clientController) {
-
+        //Local Variables
+        boolean isValidInput;
+        int numberOfPlayers=clientController.getCurrentLobbySize();
+        int pickedCounter=0;
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        List<String> chosenCards = new ArrayList<>();
+        //Clean the CLI from the last phase elements
+        System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+        System.out.print(CLEAN);
+        //Render graphic elements
+        /*  # Cards Extraction #
+            ┌───────────────┐
+            │ Cards Pick Up │
+            └───────────────┘
+            • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            • ZEUS | Your Build: Your Worker may build a block under itself
+            You're the player chosen by the gods! Choose %s cards for this match 👑
+            Your 1 choice • >
+            Wait for other players choice...
+         */
+        printedLinesCounter=0;
+        renderTitleBox(ANSI_PURPLE,PICK_TITLE);
+        renderDeck(clientController);
+        System.out.print(String.format(pickCardsTemplate,numberOfPlayers)+NEW_LINE);
+        //Multiple extraction
+        while (pickedCounter<numberOfPlayers){
+            System.out.print(String.format(pickChoiceTemplate,pickedCounter+1)+CLI_INPUT);
+            userInput=consoleScanner.next().toUpperCase();
+            isValidInput= clientController.getCardsDeck().getCardsNames().contains(userInput);
+            if(!chosenCards.isEmpty()){
+                if(chosenCards.contains(userInput))
+                    isValidInput=false;}
+            while (!isValidInput){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+                userInput=consoleScanner.next().toUpperCase();
+                isValidInput=true;
+                if(!chosenCards.isEmpty()){
+                    if(chosenCards.contains(userInput))
+                        isValidInput=false;}
+            }
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            pickedCounter++;
+            chosenCards.add(userInput);
+        }
+        clientController.setPickedCardsRequest(chosenCards);
+        System.out.print(ANSI_LIGHT_GREEN+WAIT_PLAYERS+NEW_LINE);
+        printedLinesCounter+=2;
+        godPlayerRefreshHeight=printedLinesCounter;
     }
 
     /**
@@ -454,7 +778,55 @@ public class CLIBuilder implements UIActions{
      */
     @Override
     public void chooseCard(ClientController clientController) {
-
+        //Local Variables
+        boolean validInput = true;
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        List<String> availableCards = clientController.getGodCards();
+        //Clean the CLI from the last phase elements
+        if(clientController.getGodPlayer().equals(clientController.getPlayerNickname())){
+            System.out.print(String.format(CURSOR_UP,godPlayerRefreshHeight));
+        }
+        else{
+            System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+        }
+        System.out.print(CLEAN);
+        //Render the graphic elements
+        /*   # Card Selection #
+            ┌─────────────┐
+            │ Card Choice │
+            └─────────────┘
+            •
+            •
+            • ZEUS | Your Build: Your Worker may build a block under itself
+            Choose your card for this match 🕹
+            >
+            Wait for other players choice...
+         */
+        printedLinesCounter=0;
+        renderTitleBox(ANSI_PURPLE,CHOICE_TITLE);
+        renderAvailableCards(clientController);
+        System.out.print(ANSI_WHITE+CHOOSE_CARD+NEW_LINE+CLI_INPUT);
+        userInput=consoleScanner.next().toUpperCase();
+        if(!availableCards.contains(userInput))
+            validInput=false;
+        while(!validInput){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            /*  # Card Selection #
+                •
+                •
+                • ZEUS | Your Build: Your Worker may build a block under itself
+                Choose your card for this match 🕹
+                Invalid card choice...retry! • >
+            */
+            System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+            userInput=consoleScanner.next().toUpperCase();
+            validInput= availableCards.contains(userInput);
+        }
+        clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
+        System.out.print(ANSI_LIGHT_GREEN+WAIT_PLAYERS+NEW_LINE);
+        printedLinesCounter+=3;
     }
 
     /**
@@ -462,8 +834,109 @@ public class CLIBuilder implements UIActions{
      * @param clientController is the client-side controller
      */
     @Override
-    public void placeWorkers(ClientController clientController) {
-
+    public WorkerPositionInterface placeWorkers(ClientController clientController, int workerID) {
+        //Local Variables
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        List<String> placementMoves = new ArrayList<>();
+        boolean repeat;
+        int workerRow,workerCol;
+        //Logic
+        do {
+            writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+            renderBoard("Choose a free cell");
+            printedLinesCounter=0;
+            /* # ROW COORDINATE #
+               •
+               •
+               Choose the row for your worker • >
+            */
+            System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+            printedLinesCounter+=1;
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            workerRow = consoleScanner.nextInt();
+            while (workerRow<0 || workerRow>4){
+                /* # ROW COORDINATE ERROR #
+                   •
+                   •
+                   Invalid coordinate...stay between 0 and 4! • >
+                */
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                workerRow = consoleScanner.nextInt();
+            }
+            /* # COL COORDINATE #
+               •
+               •
+               Choose the column for your worker • >
+            */
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                /* # COL COORDINATE ERROR #
+                   •
+                   •
+                   Invalid coordinate...stay between 0 and 4! • >
+                */
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            workerCol = consoleScanner.nextInt();
+            while (workerCol<0 || workerCol>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                workerCol = consoleScanner.nextInt();
+            }
+            if(BattlefieldClient.getBattlefieldInstance().isCellOccupied(workerRow,workerCol)){
+                /*  # INVALID COORDINATES #
+                    •
+                    • Line 13
+                    Already occupied position...retry! • Choose the row for your worker • >
+                */
+                repeat = true;
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.println(ANSI_RED+OCCUPIED_POSITION);
+            }
+            else {
+                /*  #SUCCESFUL COORDINATES#
+                    •
+                    • Line 13
+                    Worker Placed!
+                */
+                repeat = false;
+                System.out.print(ANSI_GREEN+SUCCESSFUL_PLACEMENT+ANSI_WHITE+NEW_LINE);
+                printedLinesCounter+=1;
+            }
+            printedLinesCounter+=refreshableAreaHeight;
+        }while(repeat);
+        System.out.println(ANSI_LIGHT_GREEN+WAIT_TURN+ANSI_WHITE);
+        printedLinesCounter+=1;
+        BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).setPlayer(clientController.getPlayerNickname());
+        BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).setWorkerColor(clientController.getPlayerColor());
+        return new WorkerPositionInterface(workerID, workerRow, workerCol);
     }
 
     //TODO: Unimplemented UI Methods
@@ -483,4 +956,7 @@ public class CLIBuilder implements UIActions{
     public void removeBlock(ClientController clientController) {
 
     }
+
+    //GETTER and SETTER
+    public int getPrintable(){ return printedLinesCounter;}
 }

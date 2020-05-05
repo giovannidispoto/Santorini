@@ -21,7 +21,6 @@ public class CLIController implements View {
     @Override
     public void startGame() {
 
-        commandLine.renderBoard("Free Cells");
         commandLine.setupConnection(clientController);
         //Connection with server is UP
         clientController.waitSetPickedCards();
@@ -33,14 +32,13 @@ public class CLIController implements View {
             commandLine.pickCards(clientController);
         }
         else{
-            //commandLine.printGodPlayerActivity(clientController);
+            commandLine.printGodPlayerActivity(clientController);
         }
         clientController.waitSetPlayerCard();
         //Woke up by: setPlayerCard
 
         //Player choose his card used in game
         commandLine.chooseCard(clientController);
-
         clientController.waitSetWorkersPosition();
         //Woke up by: SetWorkersPosition
         clientController.getPlayersRequest();
@@ -48,12 +46,14 @@ public class CLIController implements View {
 
         List<WorkerPositionInterface> workersPosition= new ArrayList<>();
 
+        commandLine.renderPlayersInfo(clientController);
+
         for(int workerID : clientController.getWorkersID()){
-            //commandLine.stampBattlefield;
-            System.out.println("Choose position for your workerID: " + workerID);
-            workersPosition.add(placeWorker(clientController, workerID));
+            workersPosition.add(commandLine.placeWorkers(clientController, workerID));
         }
-        //commandLine.stampBattlefield;
+        commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+        commandLine.renderBoard("Wait");
+
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
 
         clientController.waitBattlefieldUpdate();
@@ -62,32 +62,6 @@ public class CLIController implements View {
 
     @Override
     public void printBattlefield() {
-
-    }
-
-    public WorkerPositionInterface placeWorker(ClientController clientController, int workerID){
-        Scanner sc = new Scanner(System.in);
-        boolean redoCondition;
-        int x,y;
-        do {
-            System.out.print("Enter x: ");
-            while (!sc.hasNextInt()) sc.next();
-            x = sc.nextInt();
-            System.out.print("Enter y: ");
-            while (!sc.hasNextInt()) sc.next();
-            y = sc.nextInt();
-            if(BattlefieldClient.getBattlefieldInstance().isCellOccupied(x,y)){
-                redoCondition = true;
-                System.out.println("--Error Position already occupied--");
-            }
-            else {
-                redoCondition = false;
-                System.out.println("--position ok--");
-            }
-        }while(redoCondition);
-
-        BattlefieldClient.getBattlefieldInstance().getCell(x,y).setPlayer(clientController.getPlayerNickname());
-        BattlefieldClient.getBattlefieldInstance().getCell(x,y).setWorkerColor(clientController.getPlayerColor());
-        return new WorkerPositionInterface(workerID, x, y);
-    }
+        commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+        commandLine.renderBoard(commandLine.transformMovesList()); }
 }
