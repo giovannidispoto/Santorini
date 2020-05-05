@@ -1,73 +1,80 @@
 package it.polimi.ingsw.client.cli;
 
-import it.polimi.ingsw.model.Block;
-import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.client.clientModel.basic.Block;
+import it.polimi.ingsw.client.clientModel.basic.Color;
+import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
 
 import java.util.HashMap;
 
 public class CLIDataObject {
 
-    //ANSI Colors
-    private static final String CODE_BLUE ="33";
-    private static final String CODE_LIGHTBLUE ="75";
-    private static final String CODE_BROWN ="130";
-    private static final String CODE_GRAY ="252";
-    private static final String CODE_WHITE ="255";
+    //------------------ # ANSI Colors 256 bit # ------------------
+    private static final String CODE_BLUE = "33";
+    private static final String CODE_LIGHTBLUE = "75";
+    private static final String CODE_GRAY = "248";
     private static final String CODE_GREEN = "41";
-    private static final String ANSI_PRFX ="\u001b[38;5;";
-    protected static final String ANSI_RST = "\u001b[0m";
-    protected static final String ANSI_BLUE = ANSI_PRFX+CODE_BLUE+"m";
-    protected static final String ANSI_LIGHTBLUE = ANSI_PRFX+CODE_LIGHTBLUE+"m";
-    protected static final String ANSI_BROWN = ANSI_PRFX+CODE_BROWN+"m";
-    protected static final String ANSI_GRAY = ANSI_PRFX+CODE_GRAY+"m";
-    protected static final String ANSI_WHITE = ANSI_PRFX+CODE_WHITE+"m";
-    protected static final String ANSI_GREEN = ANSI_PRFX+CODE_GREEN+"m";
+    private static final String CODE_BROWN = "130";
+    private static final String CODE_WHITE = "255";
+    private static final String ANSI_PREFIX = "\u001b[38;5;";
 
-    //Game Objects
-    protected static final String WORKER = "ᳵ";
-    protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_RST;
-    protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_RST;
+    private static final String ANSI_BLUE = ANSI_PREFIX+CODE_BLUE+"m";
+    private static final String ANSI_LIGHTBLUE = ANSI_PREFIX+CODE_LIGHTBLUE+"m";
+    private static final String ANSI_GRAY = ANSI_PREFIX+CODE_GRAY+"m";
+    private static final String ANSI_GREEN = ANSI_PREFIX+CODE_GREEN+"m";
+    private static final String ANSI_BROWN = ANSI_PREFIX+CODE_BROWN+"m";
+    private static final String ANSI_WHITE = ANSI_PREFIX+CODE_WHITE+"m";
+
+    //------------------ # Game Objects # ------------------
+    protected static final String WORKER = "✲";
+    protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
+    protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
 
     //Data
     private static final String cellDataTemplate = "%s %s";
-    private static final String freeCellTemplate = "  "+GRASS;
+    private static final String freeCellTemplate = "  "+GRASS+ANSI_WHITE;
     private String[] cellsData; // ┃col1┃col2┃col3┃col4┃col5┃
-    private HashMap<Block,String> towersInformations;
-    private HashMap<Color,String> colorsInformations;
+    private final HashMap<Block,String> towersInformation;
+    private final HashMap<Color,String> colorsInformation;
 
     /**
-     * Class Constructor : generates an empty row
+     * Class Constructor
      */
     public CLIDataObject() {
         this.cellsData = new String[5];
-        this.towersInformations = new HashMap<>();
-        this.colorsInformations = new HashMap<>();
-        for(String current : cellsData){
-            current=freeCellTemplate;
+        this.towersInformation = new HashMap<>();
+        this.colorsInformation = new HashMap<>();
+        for(int i=0;i<5;i++){
+            String data = new String(freeCellTemplate);
+            cellsData[i]=data;
         }
-        towersInformations.put(Block.GROUND,GRASS);
-        towersInformations.put(Block.LEVEL_1,ANSI_WHITE+"1"+ANSI_RST);
-        towersInformations.put(Block.LEVEL_2,ANSI_WHITE+"2"+ANSI_RST);
-        towersInformations.put(Block.LEVEL_3,ANSI_WHITE+"3"+ANSI_RST);
-        towersInformations.put(Block.DOME,DOME);
-        colorsInformations.put(Color.BLUE,ANSI_BLUE+WORKER+ANSI_RST);
-        colorsInformations.put(Color.BROWN,ANSI_BROWN+WORKER+ANSI_RST);
-        colorsInformations.put(Color.GREY,ANSI_GRAY+WORKER+ANSI_RST);
+        towersInformation.put(Block.GROUND,GRASS);
+        towersInformation.put(Block.LEVEL_1,ANSI_WHITE+"1");
+        towersInformation.put(Block.LEVEL_2,ANSI_WHITE+"2");
+        towersInformation.put(Block.LEVEL_3,ANSI_WHITE+"3");
+        towersInformation.put(Block.DOME,DOME);
+        colorsInformation.put(Color.BLUE,ANSI_BLUE+WORKER+ANSI_WHITE);
+        colorsInformation.put(Color.BROWN,ANSI_BROWN+WORKER+ANSI_WHITE);
+        colorsInformation.put(Color.GREY,ANSI_GRAY+WORKER+ANSI_WHITE);
     }
+
+    //DONE: Methods
 
     /**
-     * Writes data inside the row
+     * Reads a Cell and writes her content in a string
+     * @param col is the cell column coordinate
+     * @param cellInterface is the cell
      */
-    public void writeData(){
-
+    public void writeCellData(int col, CellInterface cellInterface){
+        String cellWorker;
+        if(cellInterface.getPlayer()!=null)
+            cellWorker= colorsInformation.get(cellInterface.getWorkerColor());
+        else
+            cellWorker=" ";
+        String cellTower = towersInformation.get(cellInterface.getLastBlock());
+        cellsData[col]=String.format(cellDataTemplate,cellWorker,cellTower);
     }
-    /**
-     * Resets the row to initial state
-     */
-    public void resetData(){
-        for(String current : cellsData){
-            current=freeCellTemplate;
-        }
 
-    }
+    //GETTER and SETTERS
+    public String getCellContent(int col){ return cellsData[col]; }
+
 }

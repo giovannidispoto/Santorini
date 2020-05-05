@@ -21,6 +21,7 @@ public class CLIController implements View {
     @Override
     public void startGame() {
 
+        commandLine.renderBoard("Free Cells");
         commandLine.setupConnection(clientController);
         //Connection with server is UP
         clientController.waitSetPickedCards();
@@ -32,7 +33,7 @@ public class CLIController implements View {
             commandLine.pickCards(clientController);
         }
         else{
-            commandLine.printGodPlayerActivity(clientController);
+            //commandLine.printGodPlayerActivity(clientController);
         }
         clientController.waitSetPlayerCard();
         //Woke up by: setPlayerCard
