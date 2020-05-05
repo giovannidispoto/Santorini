@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.gui.GuiController;
+import it.polimi.ingsw.client.gui.GUIController;
 
 public class ClientMain {
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class ClientMain {
         }
         //Launch GUI -> Santorini.jar gui
         else{
-            userInterface = new GuiController(clientController);
+            userInterface = new GUIController(clientController);
         }
 
         clientController.setUserView(userInterface);

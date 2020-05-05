@@ -3,10 +3,10 @@ package it.polimi.ingsw.client.gui;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.controller.ClientController;
 
-public class GuiController implements View {
+public class GUIController implements View {
     private final ClientController clientController;
 
-    public GuiController(ClientController clientController) {
+    public GUIController(ClientController clientController) {
         this.clientController = clientController;
     }
 
