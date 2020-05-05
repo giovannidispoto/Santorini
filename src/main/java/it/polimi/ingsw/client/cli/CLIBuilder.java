@@ -266,7 +266,32 @@ public class CLIBuilder implements UIActions{
     }
 
     /**
-     * Renders the data of the CLI
+     * Prints players information
+     * @param clientController is the client-side controller
+     */
+    public void renderPlayersInfo(ClientController clientController){
+        //Local Variables
+        StringBuilder playerData = new StringBuilder();
+        List<String> playersInfo = new ArrayList<>();
+        //Request
+        clientController.getPlayersRequest();
+        //Logic
+        System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+        System.out.print(CLEAN);
+        System.out.println(NEW_LINE+ANSI_WHITE+edge_distance+PLAYERS_TITLE+NEW_LINE);
+        for(PlayerInterface currentPlayer : clientController.getPlayers()){
+            playerData.append(edge_distance).append(String.format(playerDataTemplate, WorkerColorsMap.get(currentPlayer.getColor()), ANSI_WHITE+currentPlayer.getPlayerNickname(), currentPlayer.getCard()));
+            playersInfo.add(playerData.toString());
+            playerData.setLength(0);
+        }
+        for(String current : playersInfo)
+            System.out.println(current);
+        System.out.print(NEW_LINE+NEW_LINE);
+        printedLinesCounter=0;
+    }
+
+    /**
+     * Renders the CLI Data part
      * 0 |            BOARD
      * 1 |     0   1   2   3   4      FULL TOWERS 🏗
      * 2 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
