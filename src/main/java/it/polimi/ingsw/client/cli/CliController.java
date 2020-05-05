@@ -10,17 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CliController implements View {
-    private final String cliColor;
     private final ClientController clientController;
+    private CLIBuilder commandLine;
 
     public CliController(String cliColor, ClientController clientController) {
-        this.cliColor = cliColor;
         this.clientController = clientController;
+        this.commandLine = new CLIBuilder(cliColor,clientController);
     }
 
     @Override
     public void startGame() {
-        CLIBuilder commandLine = new CLIBuilder(cliColor,clientController);
 
         commandLine.setupConnection(clientController);
         //Connection with server is UP
@@ -58,6 +57,11 @@ public class CliController implements View {
 
         clientController.waitBattlefieldUpdate();
         //Woke up by: SetBattlefield
+    }
+
+    @Override
+    public void printBattlefield() {
+
     }
 
     public WorkerPositionInterface placeWorker(ClientController clientController, int workerID){

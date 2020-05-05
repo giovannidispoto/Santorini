@@ -16,4 +16,9 @@ public class GuiController implements View {
         //test
         clientController.getSocketConnection().setServerPort(2027);
     }
+
+    @Override
+    public void printBattlefield() {
+
+    }
 }
