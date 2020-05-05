@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
@@ -83,7 +83,7 @@ public class Controller {
         for(DivinityCard d : pickedCards)
             pickedCardsName.add(d.getCardName());
 
-        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageInterface("setPlayerCard", new SetPlayerCardRequest(pickedCardsName))));
+        handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageResponse("setPlayerCard", new SetPlayerCardRequest(pickedCardsName))));
     }
 
     /**
@@ -160,7 +160,7 @@ public class Controller {
                 //startMatch();
                 this.firstPlayer = playersInLobby.get(0);
                 //notify all player who is the first
-                String message = new Gson().toJson(new BasicMessageInterface("setPickedCards", new SetPickedCardRequest(firstPlayer)));
+                String message = new Gson().toJson(new BasicMessageResponse("setPickedCards", new SetPickedCardRequest(firstPlayer)));
                 for (String p : playersInLobby) {
                     if (p.equals(playerNickname))
                         handlers.get(p).responseQueue(message);

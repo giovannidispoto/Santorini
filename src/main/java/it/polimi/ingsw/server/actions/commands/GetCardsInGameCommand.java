@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.actions.data.BasicErrorMessage;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class GetCardsInGameCommand implements Command{
        if(cards == null) {
            handler.responseQueue(new Gson().toJson(new BasicErrorMessage("invalidRequest")));
        }else {
-           handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getCardsInGameResponse", this)));
+           handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getCardsInGameResponse", this)));
 
        }
         handler.sendMessageQueue();

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 /**
  *
@@ -37,7 +37,7 @@ public class SetPlayerCardCommand implements Command {
         }else{
             result = false;
         }
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setPlayerCardResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPlayerCardResponse", this)));
         handler.sendMessageQueue();
     }
 

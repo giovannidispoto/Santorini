@@ -7,9 +7,8 @@ import it.polimi.ingsw.server.actions.data.CellInterface;
  */
 public interface ObserverBattlefield {
     /**
-     * Update from Battlefield or workerView, both represented by array of CellInterface
+     * Update from Battlefield
      * @param cellInterfaces matrix
-     * @param message who update
      */
-    public void update(CellInterface[][] cellInterfaces, Message message);
+    public void update(CellInterface[][] cellInterfaces);
 }

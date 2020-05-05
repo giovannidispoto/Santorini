@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 /**
  * AddPlayerCommand class represent addPlayer action from the client
@@ -41,7 +41,7 @@ public class AddPlayerCommand implements Command {
                 controller.addNewPlayer(playerNickname, lobbySize);
             }
 
-            handler.responseQueue(new Gson().toJson(new BasicMessageInterface("addPlayerResponse", this)));
+            handler.responseQueue(new Gson().toJson(new BasicMessageResponse("addPlayerResponse", this)));
             handler.sendMessageQueue();
     }
 }
