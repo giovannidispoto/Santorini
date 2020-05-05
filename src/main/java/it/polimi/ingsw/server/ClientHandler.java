@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.actions.CommandFactory;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
@@ -36,7 +37,11 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * @param m message
      */
     public void process(String m){
-        CommandFactory.from(m).execute(controller, this);
+        try {
+            CommandFactory.from(m).execute(controller, this);
+        }catch(JsonParseException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -58,17 +63,20 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
 
     /**
-     * Update received from subject observed
+     * Send Battlefield when observer notify change
      * @param cellInterfaces matrix
-     * @param message who update
      */
     @Override
-    public void update(CellInterface[][] cellInterfaces, Message message) {
+    public void update(CellInterface[][] cellInterfaces) {
         response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
         System.out.println("Battlefield Updated!");
 
     }
 
+    /**
+     * Send worker view when observer notify change
+     * @param workerView workerView
+     */
     @Override
     public void update(boolean[][] workerView) {
         response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));

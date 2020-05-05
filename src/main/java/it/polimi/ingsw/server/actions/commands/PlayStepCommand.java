@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 /**
  * PlayStepCommand represent playStp action from the client
@@ -34,7 +34,7 @@ public class PlayStepCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         nextStep = controller.playStep(x,y);
         this.result = true;
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("playStepResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("playStepResponse", this)));
         handler.sendMessageQueue();
     }
 

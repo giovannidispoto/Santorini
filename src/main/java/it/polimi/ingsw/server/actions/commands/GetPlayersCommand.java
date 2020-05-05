@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.PlayerInterface;
 import it.polimi.ingsw.server.ClientHandler;
 
@@ -33,7 +33,7 @@ public class GetPlayersCommand implements Command {
         for(Player p : playersList)
             players.add(new PlayerInterface(p.getPlayerNickname(),p.getPlayerColor(), p.getPlayerCard().getCardName()));
         result = true;
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("getPlayersResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getPlayersResponse", this)));
         handler.sendMessageQueue();
     }
 

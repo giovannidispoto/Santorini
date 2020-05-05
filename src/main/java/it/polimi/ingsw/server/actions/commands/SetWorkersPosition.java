@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.WorkerPosition;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class SetWorkersPosition implements Command{
                                     workersPosition.get(1).getWorkerID(), workersPosition.get(1).getX(), workersPosition.get(1).getY());
 
         result = true;
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setWorkerPositionResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkerPositionResponse", this)));
         handler.sendMessageQueue();
     }
 }

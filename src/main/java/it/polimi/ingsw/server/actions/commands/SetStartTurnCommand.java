@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 /** Start Turn command, selecting if player want a basic or special turn*/
 public class SetStartTurnCommand implements Command {
@@ -21,7 +21,7 @@ public class SetStartTurnCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         controller.startTurn(playerNickname, basicTurn);
         this.currentStep = controller.getStepState();
-        handler.responseQueue(new Gson().toJson(new BasicMessageInterface("setStartTurnResponse", this)));
+        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setStartTurnResponse", this)));
         handler.sendMessageQueue();
     }
 }

@@ -234,7 +234,7 @@ public class Battlefield implements SubjectBattlefield {
         
             for (ObserverBattlefield o : observers) {
                 if(o != null)
-                     o.update(battlefield, Message.BATTLEFIELD);
+                     o.update(battlefield);
             }
 
     }
