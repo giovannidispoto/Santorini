@@ -11,7 +11,7 @@ public class CLIDataObject {
     //------------------ # ANSI Colors 256 bit # ------------------
     private static final String CODE_BLUE = "33";
     private static final String CODE_LIGHTBLUE = "75";
-    private static final String CODE_GRAY = "248";
+    private static final String CODE_GRAY = "244";
     private static final String CODE_GREEN = "41";
     private static final String CODE_BROWN = "130";
     private static final String CODE_WHITE = "255";

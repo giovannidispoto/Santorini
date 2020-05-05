@@ -23,7 +23,7 @@ public class BattlefieldCommands implements Command {
     public void execute(ClientController clientController) {
         BattlefieldClient.getBattlefieldInstance().setBattlefieldBoard(battlefield);
         if(action.equals("battlefieldUpdate")){
-            clientController.showToUserBattlefield();
+            //clientController.showToUserBattlefield();
             //Awakens who was waiting Server Response
             synchronized (clientController.waitManager.waitBattlefieldUpdate){
                 clientController.waitManager.waitBattlefieldUpdate.setUsed();

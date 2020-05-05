@@ -17,8 +17,8 @@ public class CLIBuilder implements UIActions{
     //------------------ # ANSI Colors 256 bit # ------------------
     private static final String CODE_BLUE = "33";
     private static final String CODE_LIGHTBLUE = "75";
-    private static final String CODE_GRAY = "248";
-    private static final String CODE_LIGHT_GRAY = "244";
+    private static final String CODE_GRAY = "244";
+    private static final String CODE_LIGHT_GRAY = "248";
     private static final String CODE_GREEN = "41";
     private static final String CODE_LIGHT_GREEN = "83";
     private static final String CODE_BROWN = "130";
@@ -73,6 +73,8 @@ public class CLIBuilder implements UIActions{
     //------------------ # UI Objects # ------------------
     private static final String CLI_INPUT = "> ";
     private static final String WORKER = "✲";
+    protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
+    protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
@@ -234,7 +236,7 @@ public class CLIBuilder implements UIActions{
         //Fulfill the WorkerColorsMap
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
-        WorkerColorsMap.put(Color.GREY, ANSI_LIGHT_GRAY +WORKER);
+        WorkerColorsMap.put(Color.GREY, ANSI_GRAY +WORKER);
     }
 
     //DONE: Implemented Support Methods
@@ -295,6 +297,9 @@ public class CLIBuilder implements UIActions{
         }
         for(String current : playersInfo)
             System.out.println(current);
+        System.out.print(NEW_LINE);
+        System.out.println(edge_distance+GRASS+BLANK+"is the grass, a good place to build a tower");
+        System.out.println(edge_distance+DOME+BLANK+"is a dome, the highest level of a tower ");
         System.out.print(NEW_LINE+NEW_LINE);
         printedLinesCounter=0;
     }
@@ -959,4 +964,5 @@ public class CLIBuilder implements UIActions{
 
     //GETTER and SETTER
     public int getPrintable(){ return printedLinesCounter;}
+    public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
 }
