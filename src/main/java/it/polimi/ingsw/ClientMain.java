@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.client.View;
-import it.polimi.ingsw.client.cli.CliController;
+import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.gui.GuiController;
 
@@ -18,13 +18,14 @@ public class ClientMain {
             if(args.length == 2 && args[1].equals("light")) {
                 cliColor = "light";
             }
-            userInterface = new CliController(cliColor,clientController);
+            userInterface = new CLIController(cliColor,clientController);
         }
         //Launch GUI -> Santorini.jar gui
         else{
             userInterface = new GuiController(clientController);
         }
 
+        clientController.setUserView(userInterface);
         clientController.initializeNetwork();
         userInterface.startGame();
     }

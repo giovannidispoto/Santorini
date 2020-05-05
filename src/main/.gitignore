@@ -3,7 +3,7 @@
 #----------- WHITELIST -----------
 # Don't Ignore those folders and files
 
-#src/main/  (rules = 58)
+#src/main/  (rules = 64)
 !.gitignore
 !java/
 !java/it/
@@ -30,16 +30,22 @@
 #client/network
 !java/it/polimi/ingsw/client/network/
 !java/it/polimi/ingsw/client/network/*.java
+!java/it/polimi/ingsw/client/network/commands/
+!java/it/polimi/ingsw/client/network/commands/*.java
+!java/it/polimi/ingsw/client/network/commands/allPhases/
+!java/it/polimi/ingsw/client/network/commands/allPhases/*.java
+!java/it/polimi/ingsw/client/network/commands/lobbyPhase/
+!java/it/polimi/ingsw/client/network/commands/lobbyPhase/*.java
+!java/it/polimi/ingsw/client/network/commands/matchPhase/
+!java/it/polimi/ingsw/client/network/commands/matchPhase/*.java
 !java/it/polimi/ingsw/client/network/commandDeserializer/
 !java/it/polimi/ingsw/client/network/commandDeserializer/*.java
-!java/it/polimi/ingsw/client/network/actions/
-!java/it/polimi/ingsw/client/network/actions/*.java
-!java/it/polimi/ingsw/client/network/actions/data/
-!java/it/polimi/ingsw/client/network/actions/data/*.java
-!java/it/polimi/ingsw/client/network/actions/data/basicInterfaces/
-!java/it/polimi/ingsw/client/network/actions/data/basicInterfaces/*.java
-!java/it/polimi/ingsw/client/network/actions/data/dataInterfaces/
-!java/it/polimi/ingsw/client/network/actions/data/dataInterfaces/*.java
+!java/it/polimi/ingsw/client/network/data/
+!java/it/polimi/ingsw/client/network/data/*.java
+!java/it/polimi/ingsw/client/network/data/basicInterfaces/
+!java/it/polimi/ingsw/client/network/data/basicInterfaces/*.java
+!java/it/polimi/ingsw/client/network/data/dataInterfaces/
+!java/it/polimi/ingsw/client/network/data/dataInterfaces/*.java
 #controller
 !java/it/polimi/ingsw/controller/
 !java/it/polimi/ingsw/controller/*.java

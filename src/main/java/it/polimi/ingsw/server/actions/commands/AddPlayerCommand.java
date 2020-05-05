@@ -1,10 +1,9 @@
 package it.polimi.ingsw.server.actions.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
+import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.server.ClientHandler;
-import it.polimi.ingsw.server.actions.commands.Command;
 
 /**
  * AddPlayerCommand class represent addPlayer action from the client

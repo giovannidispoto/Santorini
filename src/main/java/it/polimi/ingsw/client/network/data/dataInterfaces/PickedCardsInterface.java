@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.actions.data.dataInterfaces;
+package it.polimi.ingsw.client.network.data.dataInterfaces;
 
 import java.util.List;
 

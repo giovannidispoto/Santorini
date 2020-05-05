@@ -3,13 +3,14 @@ package it.polimi.ingsw.client.controller;
 import java.util.*;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
-import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicActionInterface;
-import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.*;
+import it.polimi.ingsw.client.network.data.basicInterfaces.BasicActionInterface;
+import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.*;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
 
 
@@ -39,6 +40,8 @@ public class ClientController {
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
+    //--    View - Management
+    private View userView;
     //TODO:debug
     public boolean debug = true;
 
@@ -50,6 +53,13 @@ public class ClientController {
         this.workersID = new ArrayList<>();
         this.waitManager = new WaitManager();
         this.mainThread = Thread.currentThread();
+    }
+
+    /**
+     * Show the battlefield to the user (regardless of the graphic interface chosen)
+     */
+    public void showToUserBattlefield(){
+        userView.printBattlefield();
     }
 
     //------    START NETWORK
@@ -233,6 +243,11 @@ public class ClientController {
     }
 
     //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
+
+    //------    USED BY MAIN:
+    public void setUserView(View userView) {
+        this.userView = userView;
+    }
 
     //------    USED BY UI:
     public List<String> getGodCards() {

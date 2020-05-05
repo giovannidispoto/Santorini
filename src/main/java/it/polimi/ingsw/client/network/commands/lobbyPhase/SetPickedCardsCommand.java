@@ -1,8 +1,9 @@
-package it.polimi.ingsw.client.network.actions;
+package it.polimi.ingsw.client.network.commands.lobbyPhase;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.network.commands.Command;
 
-public class SetPickedCardsCommand implements Command{
+public class SetPickedCardsCommand implements Command {
     String playerNickname;
 
     public SetPickedCardsCommand(String playerNickname) {

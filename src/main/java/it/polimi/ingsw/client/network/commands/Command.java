@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.actions;
+package it.polimi.ingsw.client.network.commands;
 
 import it.polimi.ingsw.client.controller.ClientController;
 

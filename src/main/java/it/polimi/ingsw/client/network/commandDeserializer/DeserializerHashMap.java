@@ -3,10 +3,13 @@ package it.polimi.ingsw.client.network.commandDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import it.polimi.ingsw.client.network.actions.*;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellMatrixInterface;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.PlayerInterface;
+import it.polimi.ingsw.client.network.commands.*;
+import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
+import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
+import it.polimi.ingsw.client.network.commands.matchPhase.WorkerViewUpdateCommand;
+import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.CellMatrixInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

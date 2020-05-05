@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.actions.data.basicInterfaces;
+package it.polimi.ingsw.client.network.data.basicInterfaces;
 
 public class BasicActionInterface {
     private String action;

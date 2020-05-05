@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.network.commandDeserializer;
 
 import com.google.gson.*;
-import it.polimi.ingsw.client.network.actions.Command;
-import it.polimi.ingsw.client.network.actions.NotExistCommand;
+import it.polimi.ingsw.client.network.commands.Command;
+import it.polimi.ingsw.client.network.commands.allPhases.NotExistCommand;
 
 import java.lang.reflect.Type;
 

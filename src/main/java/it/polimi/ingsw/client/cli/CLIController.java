@@ -3,17 +3,17 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.WorkerPositionInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CliController implements View {
+public class CLIController implements View {
     private final ClientController clientController;
     private CLIBuilder commandLine;
 
-    public CliController(String cliColor, ClientController clientController) {
+    public CLIController(String cliColor, ClientController clientController) {
         this.clientController = clientController;
         this.commandLine = new CLIBuilder(cliColor,clientController);
     }
@@ -47,10 +47,10 @@ public class CliController implements View {
 
         List<WorkerPositionInterface> workersPosition= new ArrayList<>();
 
-        for(int worker : clientController.getWorkersID()){
+        for(int workerID : clientController.getWorkersID()){
             //commandLine.stampBattlefield;
-            System.out.println("Choose position for your worker: " + worker);
-            workersPosition.add(placeWorker(clientController, worker));
+            System.out.println("Choose position for your workerID: " + workerID);
+            workersPosition.add(placeWorker(clientController, workerID));
         }
         //commandLine.stampBattlefield;
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);

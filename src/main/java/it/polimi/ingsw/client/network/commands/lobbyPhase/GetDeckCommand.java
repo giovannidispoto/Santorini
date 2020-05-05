@@ -1,7 +1,8 @@
-package it.polimi.ingsw.client.network.actions;
+package it.polimi.ingsw.client.network.commands.lobbyPhase;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
+import it.polimi.ingsw.client.network.commands.Command;
 
 public class GetDeckCommand implements Command {
     Deck deck;

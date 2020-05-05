@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.actions.data.dataInterfaces;
+package it.polimi.ingsw.client.network.data.dataInterfaces;
 
 import it.polimi.ingsw.client.clientModel.basic.Color;
 

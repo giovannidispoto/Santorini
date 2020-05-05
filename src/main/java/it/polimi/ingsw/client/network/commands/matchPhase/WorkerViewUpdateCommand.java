@@ -1,6 +1,7 @@
-package it.polimi.ingsw.client.network.actions;
+package it.polimi.ingsw.client.network.commands.matchPhase;
 
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.commands.Command;
+import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.controller.ClientController;
 
 

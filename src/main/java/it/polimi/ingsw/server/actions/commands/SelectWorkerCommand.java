@@ -1,11 +1,7 @@
 package it.polimi.ingsw.server.actions.commands;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.actions.data.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.server.ClientHandler;
-import it.polimi.ingsw.server.actions.data.CellInterface;
 
 /**
  * SelectWorkerCommand represent selectWorker action from the client

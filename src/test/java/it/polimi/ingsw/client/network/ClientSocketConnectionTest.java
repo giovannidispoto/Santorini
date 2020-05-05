@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.network;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.network.actions.data.dataInterfaces.WorkerPositionInterface;
+import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
