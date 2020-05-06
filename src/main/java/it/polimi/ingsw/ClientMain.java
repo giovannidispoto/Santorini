@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.GUIController;
 
 public class ClientMain {
@@ -27,6 +28,11 @@ public class ClientMain {
 
         clientController.setUserView(userInterface);
         clientController.initializeNetwork();
-        userInterface.startGame();
+
+        try {
+            userInterface.startGame();
+        }catch (SantoriniException e){
+            System.out.println("Game Ended, error: " + e.getMessage());
+        }
     }
 }

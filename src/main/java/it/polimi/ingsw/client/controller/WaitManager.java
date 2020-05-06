@@ -16,7 +16,8 @@ public class WaitManager {
     public final WaitObject waitSetWorkersPosition;
     public final WaitObject waitGetPlayers;
     public final WaitObject waitGetBattlefield;
-    public final WaitObject waitBattlefieldUpdate;
+    public final WaitObject waitActualPlayer;
+    public final WaitObject waitStartTurn;
 
     public WaitManager() {
         this.waitAddPlayer      =   new WaitObject();
@@ -26,7 +27,8 @@ public class WaitManager {
         this.waitSetWorkersPosition =   new WaitObject();
         this.waitGetPlayers     =   new WaitObject();
         this.waitGetBattlefield =   new WaitObject();
-        this.waitBattlefieldUpdate =   new WaitObject();
+        this.waitActualPlayer   =   new WaitObject();
+        this.waitStartTurn      =   new WaitObject();
     }
 
     /** Takes care of waiting on a specific request / operation,
@@ -43,13 +45,14 @@ public class WaitManager {
      *  N.B:    This function can generate an error only if the thread flag (Interrupted) is set true.
      *
      * @param object    WaitObject based on the activity you are waiting for
-     * @return  false: if there was an error (InterruptedException), true: method performed without errors
+     * @param clientController  ClientController
+     * @throws SantoriniException: if there was an error (InterruptedException)
      */
-    public boolean setWait(WaitObject object){
+    public void setWait(WaitObject object, ClientController clientController) throws SantoriniException {
         //If the unlocking operation has already been performed
         if(object.isUsed()){
             object.resetState();
-            return true;
+            return;
         }
         //If the unlocking operation has not already been performed -> WAIT
         try {
@@ -57,10 +60,9 @@ public class WaitManager {
         } catch (InterruptedException e) {
             //TODO: Manage Well Interruption
             Thread.currentThread().interrupt();
-            return false;
+            throw clientController.getGameException();
         }
 
         object.resetState();
-        return true;
     }
 }

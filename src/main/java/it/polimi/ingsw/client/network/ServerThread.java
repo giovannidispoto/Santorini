@@ -55,10 +55,13 @@ public class ServerThread implements Runnable {
             this.socket.close();
             System.out.println("Socket Connection Closed");  //debug
         }catch (IOException  e1){
-            System.out.println("I/O Scanner Socket Exception");  //debug
+            if(clientController.debug){System.out.println("I/O Scanner Socket Exception");}  //debug
+            clientController.setGameExceptionMessage("I/O Scanner Socket - Error");
+            clientController.launchError();
             //TODO: debug
         }catch (NoSuchElementException e2){
-            System.out.println("Most likely the server went offline | ｡ﾟ･（>﹏<）･ﾟ｡ | Damn it");  //debug
+            if(clientController.debug){System.out.println("Most likely the server went offline | ｡ﾟ･（>﹏<）･ﾟ｡ | Damn it");}  //debug
+            clientController.setGameExceptionMessage("Server went offline");
             clientController.launchError();
         }
     }

@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
+import it.polimi.ingsw.client.network.commands.matchPhase.ActualPlayerCommand;
+import it.polimi.ingsw.client.network.commands.matchPhase.SetStartTurnResponse;
 import it.polimi.ingsw.client.network.commands.matchPhase.WorkerViewUpdateCommand;
 import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.network.data.dataInterfaces.CellMatrixInterface;
@@ -55,6 +57,10 @@ public class  DeserializerHashMap  {
         loadGetPlayersResponse();
         loadGetBattlefieldResponse();
         loadBattlefieldUpdate();
+
+        loadActualPlayer();
+        loadSetStartTurnResponse();
+
         loadWorkerViewUpdate();
     }
 
@@ -138,6 +144,25 @@ public class  DeserializerHashMap  {
     }
 
     //9
+    private void loadActualPlayer(){
+        this.commandMap.put("actualPlayer", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new ActualPlayerCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
+            }
+        });
+    }
+
+    //10
+    private void loadSetStartTurnResponse(){
+        this.commandMap.put("setStartTurnResponse", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetStartTurnResponse.class);
+            }
+        });
+    }
+
+    //10
     private void loadWorkerViewUpdate(){
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {

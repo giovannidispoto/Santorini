@@ -23,9 +23,10 @@ public class ClientController {
     private Color playerColor;
     private CellInterface[][] workerView;
     //--    Match
+    private String actualPlayer;
     private List<PlayerInterface> players;
     private List<Integer> workersID;
-    private Step turn;
+    private Step currentStep;
     //--    Lobby
     private boolean validNick;          //Indicates if your nickname is valid
     private boolean lobbyState;         //Indicates if you are registered with a lobby
@@ -42,6 +43,9 @@ public class ClientController {
     private ServerHandler serverHandler;
     //--    View - Management
     private View userView;
+    //--    ERROR - Game Management
+    private GameState gameState;
+    private SantoriniException gameException;
     //TODO:debug
     public boolean debug = false;
 
@@ -53,6 +57,12 @@ public class ClientController {
         this.workersID = new ArrayList<>();
         this.waitManager = new WaitManager();
         this.mainThread = Thread.currentThread();
+        this.gameException = new SantoriniException("Unexpected error");
+        this.gameState = GameState.START;
+    }
+
+    public void setGameExceptionMessage(String errorMessage) {
+        this.gameException = new SantoriniException(errorMessage);
     }
 
     /**
@@ -94,41 +104,41 @@ public class ClientController {
 
     /** Wait until you receive SetPickedCards message from the server
      *  N.B: Blocking method until a response is received
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean waitSetPickedCards(){
+    public void waitSetPickedCards() throws SantoriniException {
         synchronized (waitManager.waitSetPickedCards){
-            return waitManager.setWait(waitManager.waitSetPickedCards);
+            waitManager.setWait(waitManager.waitSetPickedCards, this);
         }
     }
 
     /** Wait until you receive SetPlayerCard message from the server
      *  N.B: Blocking method until a response is received
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean waitSetPlayerCard(){
+    public void waitSetPlayerCard() throws SantoriniException {
         synchronized (waitManager.waitSetPlayerCard){
-            return waitManager.setWait(waitManager.waitSetPlayerCard);
+            waitManager.setWait(waitManager.waitSetPlayerCard, this);
         }
     }
 
     /** Wait until you receive SetWorkersID message from the server
      *  N.B: Blocking method until a response is received
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean waitSetWorkersPosition(){
+    public void waitSetWorkersPosition() throws SantoriniException {
         synchronized (waitManager.waitSetWorkersPosition){
-            return waitManager.setWait(waitManager.waitSetWorkersPosition);
+            waitManager.setWait(waitManager.waitSetWorkersPosition, this);
         }
     }
 
-    /** Wait until you receive BattlefieldUpdate message from the server
+    /** Wait until you receive ActualPlayer message from the server
      *  N.B: Blocking method until a response is received
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean waitBattlefieldUpdate(){
-        synchronized (waitManager.waitBattlefieldUpdate){
-            return waitManager.setWait(waitManager.waitBattlefieldUpdate);
+    public void waitActualPlayer() throws SantoriniException {
+        synchronized (waitManager.waitActualPlayer){
+            waitManager.setWait(waitManager.waitActualPlayer, this);
         }
     }
 
@@ -141,13 +151,13 @@ public class ClientController {
      *
      * @param playerNickname    NickName Choose by the player
      * @param lobbySize Preferred size of the lobby
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean addPlayerRequest(String playerNickname, int lobbySize){
+    public void addPlayerRequest(String playerNickname, int lobbySize) throws SantoriniException {
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
         synchronized (waitManager.waitAddPlayer){
-            return waitManager.setWait(waitManager.waitAddPlayer);
+            waitManager.setWait(waitManager.waitAddPlayer, this);
         }
     }
 
@@ -155,12 +165,12 @@ public class ClientController {
      *  N.B: Only who is the God Player should make this request
      *  N.B: Blocking request until a response is received
      *
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean getDeckRequest(){
+    public void getDeckRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
         synchronized (waitManager.waitGetDeck){
-            return waitManager.setWait(waitManager.waitGetDeck);
+            waitManager.setWait(waitManager.waitGetDeck, this);
         }
     }
 
@@ -188,24 +198,24 @@ public class ClientController {
     /** Client asks the server for PlayersList Update
      *  N.B: Blocking request until a response is received
      *
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean getPlayersRequest(){
+    public void getPlayersRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
         synchronized (waitManager.waitGetPlayers){
-            return waitManager.setWait(waitManager.waitGetPlayers);
+            waitManager.setWait(waitManager.waitGetPlayers, this);
         }
     }
 
     /** Client asks the server for Battlefield Update
      *  N.B: Blocking request until a response is received
      *
-     * @return  false: if there was an error, true: method performed without errors
+     * @throws SantoriniException: if there was an error
      */
-    public boolean getBattlefieldRequest(){
+    public void getBattlefieldRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getBattlefield")));
         synchronized (waitManager.waitGetBattlefield){
-            return waitManager.setWait(waitManager.waitGetBattlefield);
+            waitManager.setWait(waitManager.waitGetBattlefield, this);
         }
     }
 
@@ -223,6 +233,14 @@ public class ClientController {
 
         //--  REQUESTS IN MATCH
 
+    public void setStartTurn(String playerNickname, boolean basicTurn) throws SantoriniException {
+        SetStartTurnInterface data = new SetStartTurnInterface(playerNickname, basicTurn);
+        serverHandler.request(new Gson().toJson(new BasicMessageInterface("setStartTurn", data)));
+        synchronized (waitManager.waitStartTurn){
+            waitManager.setWait(waitManager.waitStartTurn, this);
+        }
+    }
+
     public void selectWorkerRequest(String playerNickname, int workerID) {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
@@ -231,11 +249,6 @@ public class ClientController {
     public void playStepRequest(int row, int col) {
         PlayStepInterface data = new PlayStepInterface(row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
-    }
-
-    public void startTurnRequest(String playerNickname, boolean basicTurn){
-        StartTurnInterface data = new StartTurnInterface(playerNickname, basicTurn);
-        serverHandler.request(new Gson().toJson(new BasicMessageInterface("startTurn", data)));
     }
 
     public void skipStepRequest() {
@@ -298,6 +311,22 @@ public class ClientController {
         return playerColor;
     }
 
+    public String getActualPlayer() {
+        return actualPlayer;
+    }
+
+    public Step getCurrentStep() {
+        return currentStep;
+    }
+
+    public SantoriniException getGameException() {
+        return gameException;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
         //--    WORKER-VIEW
 
     public CellInterface[][] getWorkerView() {
@@ -356,5 +385,17 @@ public class ClientController {
 
     public void setPlayerColor(Color playerColor) {
         this.playerColor = playerColor;
+    }
+
+    public void setActualPlayer(String actualPlayer) {
+        this.actualPlayer = actualPlayer;
+    }
+
+    public void setCurrentStep(Step currentStep) {
+        this.currentStep = currentStep;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

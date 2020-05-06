@@ -1,8 +1,5 @@
 package it.polimi.ingsw.client.clientModel.basic;
 
-/**
- *
- */
 public enum Step {
     MOVE,
     MOVE_SPECIAL,

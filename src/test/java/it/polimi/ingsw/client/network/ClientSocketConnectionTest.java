@@ -49,9 +49,9 @@ class ClientSocketConnectionTest {
 
         //-------------------------------------------------------------------------------------- MATCH CREATION
         //1
-        clientController.addPlayerRequest("Bill",2);
+        //clientController.addPlayerRequest("Bill",2);
         //2
-        clientController.getDeckRequest();
+        //clientController.getDeckRequest();
         //3
         List<String> cards = new ArrayList<>();
         cards.add("ATHENA");
@@ -60,7 +60,7 @@ class ClientSocketConnectionTest {
         //4
         clientController.setPlayerCardRequest("ATHENA","Josh");
         //5
-        clientController.getBattlefieldRequest();
+        //clientController.getBattlefieldRequest();
         //6
         List<WorkerPositionInterface> workersPosition= new ArrayList<>();
         workersPosition.add(new WorkerPositionInterface(0,4,4));
@@ -83,7 +83,6 @@ class ClientSocketConnectionTest {
         assertTrue(clientController.getSocketConnection().startConnection());
 
         //Only if you send messages from server
-        clientController.getPlayersRequest();
     }
 
 

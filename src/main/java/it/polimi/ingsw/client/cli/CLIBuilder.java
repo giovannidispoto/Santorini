@@ -3,6 +3,7 @@ import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
 import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
@@ -280,7 +281,7 @@ public class CLIBuilder implements UIActions{
      * Prints players information
      * @param clientController is the client-side controller
      */
-    public void renderPlayersInfo(ClientController clientController){
+    public void renderPlayersInfo(ClientController clientController) throws SantoriniException {
         //Local Variables
         StringBuilder playerData = new StringBuilder();
         List<String> playersInfo = new ArrayList<>();
@@ -332,7 +333,7 @@ public class CLIBuilder implements UIActions{
      *  • ZEUS | effect...
      * @param clientController is the client side controller
      */
-    public void renderDeck(ClientController clientController){
+    public void renderDeck(ClientController clientController) throws SantoriniException {
         clientController.getDeckRequest();
         for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
@@ -498,7 +499,7 @@ public class CLIBuilder implements UIActions{
      * @param clientController is the client-side controller
      */
     @Override
-    public void setupConnection(ClientController clientController) {
+    public void setupConnection(ClientController clientController) throws SantoriniException {
         //Local Variables
         Scanner consoleScanner = new Scanner(System.in);
         String userInputString;
@@ -708,7 +709,7 @@ public class CLIBuilder implements UIActions{
      * @param clientController is the client-side controller
      */
     @Override
-    public void pickCards(ClientController clientController) {
+    public void pickCards(ClientController clientController) throws SantoriniException {
         //Local Variables
         boolean isValidInput;
         int numberOfPlayers=clientController.getCurrentLobbySize();

@@ -33,16 +33,20 @@
 	setWorkersPosition      --------------------------------->	ok
 (end)
 
-    waitBattlefieldUpdate
+    (Accepted only if Client is Ready for the Match)
 
-	ok(Battlefield)			<---------------------------------	battlefieldUpdate		(notify all)
+	ok(Battlefield)			<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 
 (end)
 
 -------------------------------------------------------------------------------------- START MATCH
+
+        waitActualPlayer
+
+    ok						<---------------------------------	actualPlayer    (notify all)
 (For Players)
-	ok						<---------------------------------	setStartTurn
 	setStartTurn			--------------------------------->	ok
+	ok						<---------------------------------	setStartTurnResponse
 (For Steps)
 	ok	(check)				<---------------------------------	setPlayStep
 (Do)
@@ -52,7 +56,7 @@
 (While WorkerView NULL)
 	skipStepRequest(opt)	--------------------------------->	ok
 	playStepRequest(opt)	--------------------------------->	ok
-	Battlefield				<---------------------------------	battlefieldUpdate		(notify all)
+	Battlefield				<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 (end)
 
 (ASYNCHRONOUS)
