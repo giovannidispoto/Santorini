@@ -88,7 +88,7 @@ public class CLIController implements View {
             do {
                 do {
                     //Select worker & get automatically his workerView
-                    clientController.selectWorkerRequest(clientController.getPlayerNickname(), clientController.getWorkersID().get(0));
+                    clientController.selectWorkerRequest(clientController.getPlayerNickname(), 2, 2);
                     //Woke up by: WorkerViewUpdate
                 }while(clientController.isInvalidWorkerView());
                 //do something for every step

@@ -242,8 +242,8 @@ public class ClientController {
         }
     }
 
-    public void selectWorkerRequest(String playerNickname, int workerID) throws SantoriniException {
-        SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
+    public void selectWorkerRequest(String playerNickname, int x, int y) throws SantoriniException {
+        SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, x, y);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
         synchronized (waitManager.waitWorkerViewUpdate){
             waitManager.setWait(waitManager.waitWorkerViewUpdate, this);

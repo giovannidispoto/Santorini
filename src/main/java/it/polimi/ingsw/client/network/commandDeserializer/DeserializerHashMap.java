@@ -6,9 +6,7 @@ import com.google.gson.JsonElement;
 import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
-import it.polimi.ingsw.client.network.commands.matchPhase.ActualPlayerCommand;
-import it.polimi.ingsw.client.network.commands.matchPhase.SetStartTurnResponse;
-import it.polimi.ingsw.client.network.commands.matchPhase.WorkerViewUpdateCommand;
+import it.polimi.ingsw.client.network.commands.matchPhase.*;
 import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.network.data.dataInterfaces.CellMatrixInterface;
 import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
@@ -60,8 +58,9 @@ public class  DeserializerHashMap  {
 
         loadActualPlayer();
         loadSetStartTurnResponse();
-
         loadWorkerViewUpdate();
+        loadPlayStepResponse();
+        loadSkipStepResponse();
     }
 
     //Specific Deserialization Methods
@@ -167,6 +166,24 @@ public class  DeserializerHashMap  {
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
                 return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), WorkerViewUpdateCommand.class);
+            }
+        });
+    }
+
+    //12
+    private void loadPlayStepResponse(){
+        this.commandMap.put("playStepResponse", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), PlayStepResponse.class);
+            }
+        });
+    }
+
+    //13
+    private void loadSkipStepResponse(){
+        this.commandMap.put("skipStepResponse", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SkipStepResponse.class);
             }
         });
     }

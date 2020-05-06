@@ -64,27 +64,27 @@ class TwoPlayersMatchTest {
             clientController.setWorkersPositionRequest(player1, workersPosition);
             clientController.setGameState(GameState.MATCH);
             //Player1
-            boolean isYou;
+            boolean isYourTurn;
             do {
                 do {
                     clientController.waitActualPlayer();
                     //Woke up by: ActualPlayer
-                    isYou = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
-                    if (isYou) {
+                    isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
+                    if (isYourTurn) {
                         System.out.println("It's Your Turn");
                     } else {
                         System.out.println("It's turn of: " + clientController.getActualPlayer());
                     }
-                } while (!isYou);
+                } while (!isYourTurn);
 
                 //It's your Turn, choose type of turn
                 clientController.setStartTurn(player1, true);
                 System.out.println("My Step Is " + clientController.getCurrentStep());
 
-                do {
-                    clientController.getCurrentStep();
-
-                } while (Step.END == clientController.getCurrentStep());
+                clientController.selectWorkerRequest(player1, 4,4);
+                clientController.playStepRequest(3,4);
+                //Test
+                clientController.skipStepRequest();
 
             } while (true);
         }catch (SantoriniException e){
@@ -143,27 +143,27 @@ class TwoPlayersMatchTest {
             clientController.setWorkersPositionRequest(player2, workersPosition);
             clientController.setGameState(GameState.MATCH);
             //Player2
-            boolean isYou;
+            boolean isYourTurn;
             do {
                 do {
                     clientController.waitActualPlayer();
                     //Woke up by: ActualPlayer
-                    isYou = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
-                    if (isYou) {
+                    isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
+                    if (isYourTurn) {
                         System.out.println("It's Your Turn");
                     } else {
                         System.out.println("It's turn of: " + clientController.getActualPlayer());
                     }
-                } while (!isYou);
+                } while (!isYourTurn);
 
                 //It's your Turn, choose type of turn
                 clientController.setStartTurn(player2, true);
                 System.out.println("My Step Is " + clientController.getCurrentStep());
 
-                do {
-                    clientController.getCurrentStep();
-
-                } while (Step.END == clientController.getCurrentStep());
+                clientController.selectWorkerRequest(player2, 0,0);
+                clientController.playStepRequest(0,1);
+                //Test
+                clientController.skipStepRequest();
 
             } while (true);
         }catch (SantoriniException e){
