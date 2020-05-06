@@ -14,7 +14,6 @@ import java.util.List;
  * GetPlayersCommand represent getPlayers action from the client
  */
 public class GetPlayersCommand implements Command {
-    private boolean result;
     private List<PlayerInterface> players;
 
 
@@ -22,22 +21,18 @@ public class GetPlayersCommand implements Command {
         players = new ArrayList<>();
     }
 
-    @Override
-    /*
+
+    /**
      * Execute command
      * @param controller context
      * @param handler context
      */
+    @Override
     public void execute(Controller controller, ClientHandler handler) {
         List<Player> playersList = controller.getPlayers();
         for(Player p : playersList)
             players.add(new PlayerInterface(p.getPlayerNickname(),p.getPlayerColor(), p.getPlayerCard().getCardName()));
-        result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getPlayersResponse", this)));
         handler.sendMessageQueue();
-    }
-
-    public boolean getResult(){
-        return result;
     }
 }

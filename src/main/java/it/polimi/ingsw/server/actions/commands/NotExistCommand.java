@@ -13,7 +13,11 @@ public class NotExistCommand implements Command {
         this.message = message;
     }
 
-
+    /**
+     *
+     * @param controller context
+     * @param handler context
+     */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         System.out.println("Command not found");

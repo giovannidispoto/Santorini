@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class GetWorkersIDCommand implements Command{
     private String player;
-    private boolean result;
     private List<Integer> workersID;
 
     public GetWorkersIDCommand(String player){
@@ -20,27 +19,18 @@ public class GetWorkersIDCommand implements Command{
     }
 
     /**
-     *
+     * Execute command on the server
      * @param controller context
      * @param handler context
      */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        if(controller.checkHandler(player, handler) == false){
-            throw new RuntimeException("Trying to operate like another player!");
+        //check if handler is associated with playerNickname
+        if(controller.checkHandler(player, handler)){
+            workersID = controller.getWorkersId(player);
+            handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getWorkersIDResponse", this)));
+            handler.sendMessageQueue();
         }
-
-        workersID = controller.getWorkersId(player);
-        result = true;
-        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getWorkersIDResponse", this)));
-        handler.sendMessageQueue();
     }
 
-    public boolean getStatus(){
-        return result;
-    }
-
-    public List<Integer> getWorkers(){
-        return List.copyOf(workersID);
-    }
 }

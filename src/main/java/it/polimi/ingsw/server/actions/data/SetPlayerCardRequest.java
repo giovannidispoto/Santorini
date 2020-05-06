@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.DivinityCard;
 
 import java.util.List;
 
+/**Interface used for rending request to client*/
 public class SetPlayerCardRequest {
     private List<String> cards;
 

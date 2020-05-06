@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -53,8 +54,8 @@ public class ClientThread implements Runnable {
             in.close();
             out.close();
             socket.close();
-        }catch (IOException e){
-            e.printStackTrace();
+        }catch (IOException | NoSuchElementException e){
+           System.out.println(e.getMessage());
         }
     }
 

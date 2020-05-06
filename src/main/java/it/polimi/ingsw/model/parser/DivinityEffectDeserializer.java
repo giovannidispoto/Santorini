@@ -33,7 +33,7 @@ public class DivinityEffectDeserializer implements JsonDeserializer<Map<String,T
      */
     @Override
     public Map<String, Turn> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Map<String, Turn> map = new HashMap<>();
+       Map<String, Turn> map = new HashMap<>();
         JsonArray jsonArray = jsonElement.getAsJsonObject().get("cardsEffects").getAsJsonArray();
         Turn t = null;
         for(JsonElement jsonE : jsonArray){

@@ -10,6 +10,10 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * GetCardsInGameCommand class represent getCardsInGame action from the client
+ * used for requesting cards used in the game
+ */
 public class GetCardsInGameCommand implements Command{
 
     private List<DivinityCard> cards;
@@ -19,7 +23,7 @@ public class GetCardsInGameCommand implements Command{
     }
 
     /**
-     *
+     * Execute command on the server
      * @param controller context
      * @param handler context
      */

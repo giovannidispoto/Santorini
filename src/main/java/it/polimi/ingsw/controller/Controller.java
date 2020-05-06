@@ -358,8 +358,15 @@ public class Controller {
     /**
      * Skip step if possible
      */
-    public void skipStep(){
+    public Step skipStep(){
         turn.skip();
+        //if no move left, end the turn
+        if(turn.getCurrentState() == Step.END) {
+            turn.passTurn();
+            handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+        }
+
+        return turn.getCurrentState();
     }
 
     /**

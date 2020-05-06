@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 /**
- *
+ * Steps of the turn
  */
 public enum Step {
     MOVE,

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.actions.data;
 
-
+/**
+ * Interface used for sending update about WorkerView
+ * */
 
 public class WorkerViewResponse {
     private boolean workerView[][];

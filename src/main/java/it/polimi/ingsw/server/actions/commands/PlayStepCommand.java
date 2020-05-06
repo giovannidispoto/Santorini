@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 public class PlayStepCommand implements Command {
     private int x;
     private int y;
-    private boolean result;
     private Step nextStep;
 
     /**
@@ -33,16 +32,8 @@ public class PlayStepCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         nextStep = controller.playStep(x,y);
-        this.result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("playStepResponse", this)));
         handler.sendMessageQueue();
     }
 
-    public boolean getResult(){
-        return result;
-    }
-
-    public Step getNextStep(){
-        return nextStep;
-    }
 }

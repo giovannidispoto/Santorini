@@ -8,10 +8,13 @@ import it.polimi.ingsw.server.actions.data.WorkerPosition;
 
 import java.util.List;
 
+/**
+ * SetWorkerPosition class represent setWorkerPosition action that
+ * collocates worker on the battlefield
+ */
 public class SetWorkersPosition implements Command{
     private String playerNickname;
     private List<WorkerPosition> workersPosition;
-    private boolean result;
 
     /**
      * Create setWorkerPosition Command
@@ -21,10 +24,13 @@ public class SetWorkersPosition implements Command{
     public SetWorkersPosition(String playerNickname, List<WorkerPosition> workersPosition) {
         this.playerNickname = playerNickname;
         this.workersPosition = workersPosition;
-        this.result = false;
     }
 
-    /*Execute command*/
+    /**
+     * Execute command
+     * @param controller context
+     * @param handler context
+     */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
 
@@ -32,7 +38,6 @@ public class SetWorkersPosition implements Command{
                                     workersPosition.get(0).getWorkerID(), workersPosition.get(0).getX(), workersPosition.get(0).getY(),
                                     workersPosition.get(1).getWorkerID(), workersPosition.get(1).getX(), workersPosition.get(1).getY());
 
-        result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkerPositionResponse", this)));
         handler.sendMessageQueue();
     }

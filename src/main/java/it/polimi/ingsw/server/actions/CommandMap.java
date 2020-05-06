@@ -195,7 +195,7 @@ public class CommandMap {
         this.commandMap.put("getBattlefield", new ProcessingCommand() {
             @Override
             public Command command(JsonElement jsonElement) {
-                return new GetBattlefield();
+                return new GetBattlefieldCommand();
             }
         });
     }

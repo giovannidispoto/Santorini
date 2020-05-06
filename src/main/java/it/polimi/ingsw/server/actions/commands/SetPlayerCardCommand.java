@@ -6,7 +6,8 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 
 /**
- *
+ * SetPlayerCard class represent setPlayerCard action used for
+ * adding a card to player
  */
 public class SetPlayerCardCommand implements Command {
     private String playerNickname;
@@ -15,8 +16,8 @@ public class SetPlayerCardCommand implements Command {
 
     /**
      *
-     * @param playerNickname
-     * @param card
+     * @param playerNickname player nickname
+     * @param card card choosed
      */
     public SetPlayerCardCommand(String playerNickname, String card){
         this.playerNickname = playerNickname;
@@ -25,7 +26,7 @@ public class SetPlayerCardCommand implements Command {
     }
 
     /**
-     *
+     * Execute command on the server
      * @param controller context
      * @param handler context
      */
@@ -33,15 +34,9 @@ public class SetPlayerCardCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         if(controller.checkHandler(playerNickname, handler)) {
             controller.setPlayerCard(playerNickname, card);
-            result = true;
-        }else{
-            result = false;
+            handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPlayerCardResponse", this)));
+            handler.sendMessageQueue();
         }
-        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPlayerCardResponse", this)));
-        handler.sendMessageQueue();
     }
 
-    public boolean getResult(){
-        return result;
-    }
 }

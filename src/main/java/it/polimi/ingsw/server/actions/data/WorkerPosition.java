@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.actions.data;
 /*
-* Data sent by client for 
+* Interface used for receiving position of the worker on the battlefield
 * */
 public class WorkerPosition {
     private int workerID;

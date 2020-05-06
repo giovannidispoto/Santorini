@@ -6,18 +6,20 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.server.actions.data.CellInterface;
 
-public class GetBattlefield implements Command{
+/**
+ * GetBattlefieldCommand class represent getBattlefield action from the client
+* */
+public class GetBattlefieldCommand implements Command{
     private CellInterface[][] cellMatrix;
-    private boolean result;
 
-    public GetBattlefield(){
-        result = false;
-    }
-
+    /**
+     * Execute command on the server
+     * @param controller context
+     * @param handler context
+     */
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         cellMatrix = controller.getBattlefield();
-        result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getBattlefieldResponse", this)));
         handler.sendMessageQueue();
     }

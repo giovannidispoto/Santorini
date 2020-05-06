@@ -11,7 +11,6 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
  */
 public class GetDeckCommand implements Command{
     private Deck deck;
-    private boolean result;
     /**
      * Execute command
      * @param controller context
@@ -20,24 +19,8 @@ public class GetDeckCommand implements Command{
     @Override
     public void execute(Controller controller, ClientHandler handler) {
        this.deck =  controller.getDeck();
-       this.result = true;
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("getDeckResponse", this)));
         handler.sendMessageQueue();
     }
 
-    /**
-     * Gets status
-     * @return status
-     */
-    public boolean getResult(){
-        return result;
-    }
-
-    /**
-     * Gets deck
-     * @return deck
-     */
-    public Deck getDeck(){
-        return deck;
-    }
 }
