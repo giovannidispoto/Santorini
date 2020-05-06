@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
@@ -21,7 +22,7 @@ public class ClientController {
     //--    This Player Client-Side
     private String playerNickname;
     private Color playerColor;
-    private CellInterface[][] workerView;
+    private boolean[][] workerView;
     //--    Match
     private String actualPlayer;
     private List<PlayerInterface> players;
@@ -241,18 +242,27 @@ public class ClientController {
         }
     }
 
-    public void selectWorkerRequest(String playerNickname, int workerID) {
+    public void selectWorkerRequest(String playerNickname, int workerID) throws SantoriniException {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, workerID);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
+        synchronized (waitManager.waitWorkerViewUpdate){
+            waitManager.setWait(waitManager.waitWorkerViewUpdate, this);
+        }
     }
 
-    public void playStepRequest(int row, int col) {
+    public void playStepRequest(int row, int col) throws SantoriniException {
         PlayStepInterface data = new PlayStepInterface(row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
+        synchronized (waitManager.waitPlayStepResponse){
+            waitManager.setWait(waitManager.waitPlayStepResponse, this);
+        }
     }
 
-    public void skipStepRequest() {
+    public void skipStepRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
+        synchronized (waitManager.waitSkipStepResponse){
+            waitManager.setWait(waitManager.waitSkipStepResponse, this);
+        }
     }
 
     //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
@@ -329,12 +339,27 @@ public class ClientController {
 
         //--    WORKER-VIEW
 
-    public CellInterface[][] getWorkerView() {
+    public boolean[][] getWorkerView() {
         return workerView;
     }
 
-    public CellInterface getWorkerViewCell(int x, int y){
+    public boolean getWorkerViewCell(int x, int y){
         return workerView[x][y];
+    }
+
+    /** Check if the workerView is all false and therefore no action is possible
+     *
+     * @return  true if workerView is all false, false at least one action is possible
+     */
+    public boolean isInvalidWorkerView(){
+        for(int x=0; x < BattlefieldClient.N_ROWS; x++){
+            for(int y=0; y < BattlefieldClient.N_COLUMNS; y++){
+                if(workerView[x][y]){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     //------    USED BY COMMAND PATTERN:
@@ -347,7 +372,7 @@ public class ClientController {
         this.fullLobby = fullLobby;
     }
 
-    public void setWorkerView(CellInterface[][] workerView) {
+    public void setWorkerView(boolean[][] workerView) {
         this.workerView = workerView;
     }
 

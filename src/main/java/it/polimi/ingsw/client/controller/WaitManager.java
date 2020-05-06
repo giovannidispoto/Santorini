@@ -18,6 +18,9 @@ public class WaitManager {
     public final WaitObject waitGetBattlefield;
     public final WaitObject waitActualPlayer;
     public final WaitObject waitStartTurn;
+    public final WaitObject waitWorkerViewUpdate;
+    public final WaitObject waitPlayStepResponse;
+    public final WaitObject waitSkipStepResponse;
 
     public WaitManager() {
         this.waitAddPlayer      =   new WaitObject();
@@ -29,6 +32,9 @@ public class WaitManager {
         this.waitGetBattlefield =   new WaitObject();
         this.waitActualPlayer   =   new WaitObject();
         this.waitStartTurn      =   new WaitObject();
+        this.waitWorkerViewUpdate   =   new WaitObject();
+        this.waitPlayStepResponse   =   new WaitObject();
+        this.waitSkipStepResponse   =   new WaitObject();
     }
 
     /** Takes care of waiting on a specific request / operation,

@@ -8,9 +8,9 @@
 //UP-CONTROLLED
 {"action":"actualPlayer","data":{"playerNickname":"Bill"}}
 {"action":"setStartTurnResponse","data":{"playerNickname":"Bill","basicTurn":false,"currentStep":"MOVE"}}
-
-
 {"action":"setWorkerPositionResponse","data":{"playerNickname":"Bill","workersPosition":[{"workerID":0,"x":4,"y":4},{"workerID":1,"x":4,"y":3}],"result":true}}
 {"action":"workerViewUpdate","data":{"workerView":[[false,false,false,false,false],[false,false,false,false,false],[false,false,false,false,false],[false,false,false,true,true],[false,false,false,true,false]]}}
+
 {"action":"playStepResponse","data":{"x":3,"y":4,"result":true,"nextStep":"BUILD"}}
 {"action":"playStepResponse","data":{"x":4,"y":4,"result":true,"nextStep":"END"}}
+{"action":"skipStepResponse","data":{"currentStep":"END"}}

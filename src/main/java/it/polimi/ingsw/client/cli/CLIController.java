@@ -27,6 +27,7 @@ public class CLIController implements View {
         //Connection with server is UP
 
         clientController.setGameState(GameState.LOBBY);
+        //----------------------------------------------------------------------------------    LOGGED IN LOBBY
 
         clientController.waitSetPickedCards();
         //Woke up by: setPickedCards
@@ -66,32 +67,52 @@ public class CLIController implements View {
         //TODO:
         //----------------------------------------------------------------------------------    START MATCH
         //Wait Your Turn
-        boolean isYou;
+        boolean isYourTurn;
         do {
             do {
                 clientController.waitActualPlayer();
                 //Woke up by: ActualPlayer
-                isYou = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
-                if (isYou) {
+                isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
+                if (isYourTurn) {
                     System.out.println("It's Your Turn");
                 } else {
                     System.out.println("It's turn of: " + clientController.getActualPlayer());
                 }
-            } while (!isYou);
+            } while (!isYourTurn);
 
             //It's your Turn, choose type of turn
             clientController.setStartTurn(clientController.getPlayerNickname(), true);
+            //Woke up by: SetStartTurnResponse
 
             //do all steps
             do {
-                clientController.getCurrentStep();
-                //do something for every step, select worker
-                clientController.selectWorkerRequest(clientController.getPlayerNickname(), clientController.getWorkersID().get(0));
-                clientController.playStepRequest(2,2);
+                do {
+                    //Select worker & get automatically his workerView
+                    clientController.selectWorkerRequest(clientController.getPlayerNickname(), clientController.getWorkersID().get(0));
+                    //Woke up by: WorkerViewUpdate
+                }while(clientController.isInvalidWorkerView());
+                //do something for every step
+                switch (clientController.getCurrentStep()){
+                    case MOVE:
+                        clientController.playStepRequest(2,2);
+                        break;
+                    case BUILD:
+                        break;
+                    case END:
+                        break;
+                    case MOVE_SPECIAL:
+                        break;
+                    case BUILD_SPECIAL:
+                        break;
+                    case MOVE_UNTIL:
+                        break;
+                    case REMOVE:
+                        break;
+                }
 
             } while (Step.END == clientController.getCurrentStep());
 
-        }while(true);
+        }while(GameState.FINISH == clientController.getGameState());
 
     }
 

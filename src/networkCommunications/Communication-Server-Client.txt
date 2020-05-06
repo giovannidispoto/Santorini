@@ -43,20 +43,23 @@
 
         waitActualPlayer
 
-    ok						<---------------------------------	actualPlayer    (notify all)
 (For Players)
+    ok  (check)				<---------------------------------	actualPlayer    (notify all)
 	setStartTurn			--------------------------------->	ok
 	ok						<---------------------------------	setStartTurnResponse
-(For Steps)
-	ok	(check)				<---------------------------------	setPlayStep
-(Do)
+(Do-1)
+ (Do-2)
 	selectWorker	(check)	--------------------------------->	ok
-	getWorkerView           --------------------------------->	ok
-	WorkerView				<---------------------------------	Response (!!!WorkerView NULL no step)
-(While WorkerView NULL)
-	skipStepRequest(opt)	--------------------------------->	ok
-	playStepRequest(opt)	--------------------------------->	ok
+	ok      				<---------------------------------	(Response) WorkerViewUpdate (All WorkerView NULL, you lose)
+ (While-2 WorkerView NULL)
+	skipStep    (opt)	    --------------------------------->	ok
+	playStep    (opt)	    --------------------------------->	ok
+	ok				        <---------------------------------	skipStepResponse    (opt)
+	ok				        <---------------------------------	playStepResponse    (opt)
+
 	Battlefield				<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
+(While-1 Step != END)
+
 (end)
 
 (ASYNCHRONOUS)

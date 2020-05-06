@@ -162,11 +162,11 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //10
+    //11
     private void loadWorkerViewUpdate(){
         this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new WorkerViewUpdateCommand(deserializeCellMatrix(jsonElement));
+                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), WorkerViewUpdateCommand.class);
             }
         });
     }
