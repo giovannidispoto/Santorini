@@ -1,12 +1,12 @@
 	CLIENT														SERVER
 
 -------------------------------------------------------------------------------------- MATCH CREATION
-(Do)
+(Do-1)
 	addPlayer       		--------------------------------->	ok					(Communicates to the server the intention to join the game)
 	check           		<---------------------------------	addPlayerResponse	(Server check Nick presence & lobby Decision)
-(While Nick or lobbyState invalid)
+(While-1 NickName,lobbyState invalid)
 
-    waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
+        waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
 
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
 	getDeck      			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
@@ -14,36 +14,37 @@
     (only the GodPlayer)
 	setPickedCards        	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 
-	waitSetPlayerCard   (Unlock the player when asked to choose the card)
+	    waitSetPlayerCard   (Unlock the player when asked to choose the card)
 
-(For players)
+(For players-1)
 	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
 	setPlayerCard         	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
 
 
-    waitSetWorkersPosition   (Unlock the player when asked to choose the Initial Workers Position)
+        waitSetWorkersPosition   (Unlock the player when asked to choose the Initial Workers Position)
 
 
-(For players)
+(For players-2)
     ok						<---------------------------------	setWorkersPosition
     getPlayers              --------------------------------->  ok
     ok						<---------------------------------	getPlayersResponse   (nick+color+card)
     getBattlefield			--------------------------------->	ok
     ok      				<---------------------------------	getBattlefieldResponse
 	setWorkersPosition      --------------------------------->	ok
-(end)
+(end-2)
 
-    (Accepted only if Client is Ready for the Match)
 
 	ok(Battlefield)			<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 
-(end)
+    (Update Accepted only if Client is Ready for the Match)
+(end-1)
 
 -------------------------------------------------------------------------------------- START MATCH
 
         waitActualPlayer
 
-(For Players)
+(For Players-1)
+
     ok  (check)				<---------------------------------	actualPlayer    (notify all)
 	setStartTurn			--------------------------------->	ok
 	ok						<---------------------------------	setStartTurnResponse
@@ -60,7 +61,7 @@
 	Battlefield				<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 (While-1 Step != END)
 
-(end)
+(end-1)
 
 (ASYNCHRONOUS)
     ok						<---------------------------------	notifyWinner/Loser  (notify all)

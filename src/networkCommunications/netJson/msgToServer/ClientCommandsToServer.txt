@@ -10,4 +10,5 @@
 {"action":"setStartTurn","data":{"playerNickname":"Bill","basicTurn":true}}
 {"action":"selectWorker","data":{"playerNickname":"Bill","x":4,"y":4}}
 {"action":"playStep","data":{"x":3,"y":4}}
+{"action":"skipStep"}
 
