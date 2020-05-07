@@ -9,16 +9,19 @@ import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CLIController implements View {
     private final ClientController clientController;
     private final CLIBuilder commandLine;
+    private HashMap<Integer,String> moveMessages;
 
     public CLIController(String cliColor, ClientController clientController) {
         this.clientController = clientController;
+        this.moveMessages = new HashMap<>();
         this.commandLine = new CLIBuilder(cliColor,clientController);
-    }
+        moveMessages.put(0,"Wait your turn");}
 
     @Override
     public void startGame() throws SantoriniException {
@@ -58,7 +61,7 @@ public class CLIController implements View {
             workersPosition.add(commandLine.placeWorkers(clientController, workerID));
         }
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        commandLine.renderBoard("Wait");
+        commandLine.renderBoard(moveMessages.get(0));
 
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
 
@@ -119,6 +122,6 @@ public class CLIController implements View {
     @Override
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        commandLine.renderBoard(commandLine.transformMovesList());
+        commandLine.renderBoard(moveMessages.get(0));
     }
 }

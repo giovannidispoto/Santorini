@@ -12,5 +12,6 @@ public interface UIActions {
     void buildBlock(ClientController clientController);
     void removeBlock(ClientController clientController);
     void setupConnection(ClientController clientController) throws SantoriniException;
+    void callError(String exceptionName);
 
 }

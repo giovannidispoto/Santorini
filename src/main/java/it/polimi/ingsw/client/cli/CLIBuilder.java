@@ -8,7 +8,9 @@ import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * CLIBuilder contains everything you need to build the CLI and use it
@@ -25,6 +27,7 @@ public class CLIBuilder implements UIActions{
     private static final String CODE_BROWN = "130";
     private static final String CODE_RED = "197";
     private static final String CODE_PURPLE = "99";
+    private static final String CODE_ORANGE = "215";
     private static final String CODE_BLACK = "232";
     private static final String CODE_WHITE = "255";
     private static final String ANSI_PREFIX = "\u001b[38;5;";
@@ -38,6 +41,7 @@ public class CLIBuilder implements UIActions{
     private static final String ANSI_BROWN = ANSI_PREFIX+CODE_BROWN+"m";
     private static final String ANSI_PURPLE = ANSI_PREFIX+CODE_PURPLE+"m";
     private static final String ANSI_RED = ANSI_PREFIX+CODE_RED+"m";
+    private static final String ANSI_ORANGE = ANSI_PREFIX+CODE_ORANGE+"m";
     private static final String ANSI_BLACK = ANSI_PREFIX+CODE_BLACK+"m";
     private static final String ANSI_WHITE = ANSI_PREFIX+CODE_WHITE+"m";
     //Dark Mode function
@@ -76,6 +80,8 @@ public class CLIBuilder implements UIActions{
     private static final String WORKER = "✲";
     protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
     protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
+    private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI"+ANSI_WHITE;
+    private static final String WELCOME = "Welcome to %s : The Board Game 🎲";
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
@@ -141,7 +147,8 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
 
     //Fatal
-    private static final String FATAL_ERROR = "Something broke down... what do you want to do? 🔥";
+    private static final String FATAL_ERROR = "Something broke down... a Player encountered the %s 🔥";
+    private static final String EXIT = "Type [quit] to close the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
     private static final String CLOSING = "Closing the program...";
 
@@ -240,14 +247,15 @@ public class CLIBuilder implements UIActions{
         WorkerColorsMap.put(Color.GREY, ANSI_GRAY +WORKER);
     }
 
-    //DONE: Implemented Support Methods
+    //SECTION: Support Methods
 
+    //DONE: Verified
     /**
      * Prints notification about God player activity
      */
     public void printGodPlayerActivity(ClientController clientController){
-        System.out.println(ANSI_LIGHT_GREEN+String.format(waitGodTemplate,clientController.getGodPlayer())+ANSI_WHITE);
-        printedLinesCounter+=1;
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.println(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+String.format(waitGodTemplate,clientController.getGodPlayer())+ANSI_WHITE);
     }
 
     /**
@@ -277,6 +285,7 @@ public class CLIBuilder implements UIActions{
         fullTowersNumber=battlefield.countFullTowers();
     }
 
+    //DONE: Verified
     /**
      * Prints players information
      * @param clientController is the client-side controller
@@ -290,7 +299,7 @@ public class CLIBuilder implements UIActions{
         //Logic
         System.out.print(String.format(CURSOR_UP,printedLinesCounter));
         System.out.print(CLEAN);
-        System.out.println(NEW_LINE+ANSI_WHITE+edge_distance+PLAYERS_TITLE+NEW_LINE);
+        System.out.print(ANSI_WHITE+edge_distance+PLAYERS_TITLE+NEW_LINE+NEW_LINE);
         for(PlayerInterface currentPlayer : clientController.getPlayers()){
             playerData.append(edge_distance).append(String.format(playerDataTemplate, WorkerColorsMap.get(currentPlayer.getColor()), ANSI_WHITE+currentPlayer.getPlayerNickname(), currentPlayer.getCard()));
             playersInfo.add(playerData.toString());
@@ -339,6 +348,8 @@ public class CLIBuilder implements UIActions{
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
             printedLinesCounter+=1;
         }
+        System.out.print(NEW_LINE);
+        printedLinesCounter+=1;
     }
 
     /**
@@ -351,6 +362,8 @@ public class CLIBuilder implements UIActions{
             System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+clientController.getCardsDeck().getDivinityCard(card).getCardName().toUpperCase()+ANSI_WHITE,clientController.getCardsDeck().getDivinityCard(card).getCardEffect()));
             printedLinesCounter+=1;
         }
+        System.out.print(NEW_LINE);
+        printedLinesCounter+=1;
     }
 
     /**
@@ -508,6 +521,8 @@ public class CLIBuilder implements UIActions{
         //Lobby Parameters
         String chosenNickname;
         int chosenLobbySize;
+        System.out.print(NEW_LINE+ANSI_WHITE+String.format(WELCOME,SANTORINI)+NEW_LINE+NEW_LINE);
+        printedLinesCounter+=2;
         /*  # TITLE BOX #
             ┌──────────────────┐
             │ Setup Connection │
@@ -581,10 +596,10 @@ public class CLIBuilder implements UIActions{
                     Server IP 🌍
                     >
                 */
-                System.out.print(String.format(CURSOR_UP,printedLinesCounter-3)); //-3 because we don't have to delete the title boc
+                System.out.print(String.format(CURSOR_UP,printedLinesCounter-6)); //-3 because we don't have to delete the title box and the welcome message
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+FAILED_CONNECTION+NEW_LINE+ANSI_WHITE);
-                printedLinesCounter=4;
+                printedLinesCounter=6;
             }
         }
         /*  # Nickname Setup #
@@ -656,7 +671,16 @@ public class CLIBuilder implements UIActions{
         //Troubles with the lobby...
         //# Full Lobby # -> we close the client
         if(clientController.isFullLobby()){
-            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY+NEW_LINE+ANSI_WHITE+CLOSING);
+            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY);
+            System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            userInputString=consoleScanner.next();
+            while (!userInputString.equalsIgnoreCase("quit")){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.println(CLEAN);
+                System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+                userInputString=consoleScanner.next();
+            }
+            System.out.println(GOODBYE+NEW_LINE+CLOSING);
             System.exit(0);
         }
         while(!clientController.getValidNick()){
@@ -683,7 +707,7 @@ public class CLIBuilder implements UIActions{
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
         }
-        /*  # Setup Done! #
+        /*  # Setup Completed! #
             Server IP 🌍
             >
             Socket Port ⛩
@@ -700,7 +724,7 @@ public class CLIBuilder implements UIActions{
             |
         */
         System.out.print(ANSI_GREEN+ SUCCESSFUL_LOBBY_ACCESS +NEW_LINE);
-        System.out.print(COLOR_MODE+CLI_INPUT+WAIT_START+NEW_LINE);
+        System.out.print(COLOR_MODE+CLI_INPUT+ANSI_GRAY+WAIT_START+ANSI_WHITE+NEW_LINE);
         printedLinesCounter+=2;
     }
 
@@ -741,9 +765,9 @@ public class CLIBuilder implements UIActions{
             •
             •
             • ZEUS | Your Build: Your Worker may build a block under itself
+
             You're the player chosen by the gods! Choose %s cards for this match 👑
-            Your 1 choice • >
-            Wait for other players choice...
+            Your 1 choice • > |
          */
         printedLinesCounter=0;
         renderTitleBox(ANSI_PURPLE,PICK_TITLE);
@@ -751,7 +775,7 @@ public class CLIBuilder implements UIActions{
         System.out.print(String.format(pickCardsTemplate,numberOfPlayers)+NEW_LINE);
         //Multiple extraction
         while (pickedCounter<numberOfPlayers){
-            System.out.print(String.format(pickChoiceTemplate,pickedCounter+1)+CLI_INPUT);
+            System.out.print(ANSI_GRAY+String.format(pickChoiceTemplate,pickedCounter+1)+ANSI_WHITE+CLI_INPUT);
             userInput=consoleScanner.next().toUpperCase();
             isValidInput= clientController.getCardsDeck().getCardsNames().contains(userInput);
             if(!chosenCards.isEmpty()){
@@ -773,7 +797,32 @@ public class CLIBuilder implements UIActions{
             chosenCards.add(userInput);
         }
         clientController.setPickedCardsRequest(chosenCards);
-        System.out.print(ANSI_LIGHT_GREEN+WAIT_PLAYERS+NEW_LINE);
+        /*  # Cards Extraction #
+            ┌───────────────┐
+            │ Cards Pick Up │
+            └───────────────┘
+            • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            •
+            • ZEUS | Your Build: Your Worker may build a block under itself
+
+            You're the player chosen by the gods! Choose %s cards for this match 👑
+            > Wait for other players choice...
+            |
+         */
+        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
         printedLinesCounter+=2;
         godPlayerRefreshHeight=printedLinesCounter;
     }
@@ -805,9 +854,10 @@ public class CLIBuilder implements UIActions{
             •
             •
             • ZEUS | Your Build: Your Worker may build a block under itself
+
             Choose your card for this match 🕹
-            >
-            Wait for other players choice...
+            > Wait for other players choice...
+
          */
         printedLinesCounter=0;
         renderTitleBox(ANSI_PURPLE,CHOICE_TITLE);
@@ -823,6 +873,7 @@ public class CLIBuilder implements UIActions{
                 •
                 •
                 • ZEUS | Your Build: Your Worker may build a block under itself
+
                 Choose your card for this match 🕹
                 Invalid card choice...retry! • >
             */
@@ -831,8 +882,9 @@ public class CLIBuilder implements UIActions{
             validInput= availableCards.contains(userInput);
         }
         clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
-        System.out.print(ANSI_LIGHT_GREEN+WAIT_PLAYERS+NEW_LINE);
-        printedLinesCounter+=3;
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
+        printedLinesCounter+=2;
     }
 
     /**
@@ -961,6 +1013,27 @@ public class CLIBuilder implements UIActions{
     @Override
     public void removeBlock(ClientController clientController) {
 
+    }
+
+    /**
+     * Prints a fatal error message and closes the client
+     * @param exceptionName is Exception name
+     */
+    @Override
+    public void callError(String exceptionName) {
+        Scanner consoleScanner = new Scanner(System.in);
+        String userInput;
+        System.out.println(ANSI_RED+String.format(FATAL_ERROR,exceptionName));
+        System.out.println(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+        userInput=consoleScanner.next();
+        while (!userInput.equalsIgnoreCase("quit")){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.println(CLEAN);
+            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            userInput=consoleScanner.next();
+        }
+        System.out.println(GOODBYE+NEW_LINE+CLOSING);
+        System.exit(0);
     }
 
     //GETTER and SETTER
