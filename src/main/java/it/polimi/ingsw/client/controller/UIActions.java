@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.controller;
 
-import it.polimi.ingsw.client.network.ClientSocketConnection;
-import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 
 public interface UIActions {
     //UI Actions implemented by CLI and GUI

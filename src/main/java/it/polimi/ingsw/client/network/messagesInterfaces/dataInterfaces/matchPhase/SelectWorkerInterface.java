@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.data.dataInterfaces;
+package it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase;
 
 public class SelectWorkerInterface {
     String playerNickname;

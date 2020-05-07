@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.data.dataInterfaces;
+package it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase;
 
 
 public class AddPlayerInterface {

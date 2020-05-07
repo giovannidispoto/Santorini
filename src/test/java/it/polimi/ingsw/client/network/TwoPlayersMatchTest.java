@@ -2,11 +2,10 @@ package it.polimi.ingsw.client.network;
 
 import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
-import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.GameState;
 import it.polimi.ingsw.client.controller.SantoriniException;
-import it.polimi.ingsw.client.network.data.dataInterfaces.WorkerPositionInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

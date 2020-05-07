@@ -7,9 +7,9 @@ import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
 import it.polimi.ingsw.client.network.commands.matchPhase.*;
-import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
-import it.polimi.ingsw.client.network.data.dataInterfaces.CellMatrixInterface;
-import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellMatrixInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

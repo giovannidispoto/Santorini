@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.clientModel.basic.Block;
 import it.polimi.ingsw.client.clientModel.basic.Color;
-import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellInterface;
 
 import java.util.HashMap;
 

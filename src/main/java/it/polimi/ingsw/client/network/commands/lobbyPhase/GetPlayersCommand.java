@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.network.commands.lobbyPhase;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.commands.Command;
-import it.polimi.ingsw.client.network.data.dataInterfaces.PlayerInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 
 import java.util.List;
 

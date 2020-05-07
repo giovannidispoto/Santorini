@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.network.commands.allPhases;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.controller.GameState;
 import it.polimi.ingsw.client.network.commands.Command;
-import it.polimi.ingsw.client.network.data.dataInterfaces.CellInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.controller.ClientController;
 
 

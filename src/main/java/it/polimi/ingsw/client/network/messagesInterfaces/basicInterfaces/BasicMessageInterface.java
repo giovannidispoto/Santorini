@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network.data.basicInterfaces;
+package it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces;
 
 public class BasicMessageInterface {
     private String action;

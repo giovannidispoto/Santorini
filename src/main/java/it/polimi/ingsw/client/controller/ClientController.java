@@ -9,10 +9,13 @@ import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicActionInterface;
-import it.polimi.ingsw.client.network.data.basicInterfaces.BasicMessageInterface;
-import it.polimi.ingsw.client.network.data.dataInterfaces.*;
+import it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces.BasicActionInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.*;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.PlayStepInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SelectWorkerInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SetStartTurnInterface;
 
 
 /**
