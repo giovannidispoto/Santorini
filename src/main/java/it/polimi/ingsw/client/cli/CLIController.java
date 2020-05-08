@@ -21,7 +21,7 @@ public class CLIController implements View {
         this.clientController = clientController;
         this.moveMessages = new HashMap<>();
         this.commandLine = new CLIBuilder(cliColor,clientController);
-        moveMessages.put(0,"Wait your turn");}
+        moveMessages.put(0,"Wait");}
 
     @Override
     public void startGame() throws SantoriniException {
@@ -60,8 +60,6 @@ public class CLIController implements View {
         for(int workerID : clientController.getWorkersID()){
             workersPosition.add(commandLine.placeWorkers(clientController, workerID));
         }
-        commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        commandLine.renderBoard(moveMessages.get(0));
 
         clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
 

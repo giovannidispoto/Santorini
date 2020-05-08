@@ -2,13 +2,13 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
+import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.controller.UIActions;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -117,8 +117,20 @@ public class CLIBuilder implements UIActions{
     private static final String CHOOSE_CARD = "Choose your card for this match 🕹";
 
     //Worker Placement
+    private static final String PLACEMENT_REQUEST = "Place two workers on the board";
     private static final String ROW_WORKER = "Worker row • ";
     private static final String COL_WORKER = "Worker column • ";
+
+    //Worker Selection
+    private static final String WORKER_SELECTION_REQUEST = "Select a worker for this turn";
+    //Movement
+    private static final String MOVEMENT_REQUEST = "Select a valid cell for the movement phase";
+    //Building
+    private static final String BUILDING_REQUEST = "Select a valid cell for the building phase";
+    //Remove
+    private static final String REMOVE_REQUEST = "Select a valid tower for the remove phase";
+    //Skip
+    private static final String SKIP_REQUEST = "or type [skip] to skip this action";
 
     //------------------ # Successes Messages # ------------------
 
@@ -127,7 +139,10 @@ public class CLIBuilder implements UIActions{
     private static final String SUCCESSFUL_LOBBY_ACCESS = "You have correctly joined the lobby!";
 
     //Worker Placement
-    private static final String SUCCESSFUL_PLACEMENT = "Worker Placed!";
+    private static final String SUCCESSFUL_PLACEMENT = "Worker Placed! • ";
+
+    //Worker Selection
+    private static final String SUCCESSFUL_SELECTION = "You have selected the worker in the cell [%s|%s]";
 
     //------------------ # Failures and Errors Messages # ------------------
 
@@ -155,6 +170,9 @@ public class CLIBuilder implements UIActions{
     //Worker Placement
     private static final String OCCUPIED_POSITION = "Already occupied cell...retry! • ";
     private static final String INVALID_COORDINATE = "Invalid coordinate... [0 and 4] • ";
+
+    //Worker Selection
+    private static final String INVALID_SELECTION = "Invalid selection... retry!";
 
     //------------------ # Templates # ------------------
 
@@ -224,9 +242,6 @@ public class CLIBuilder implements UIActions{
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
         this.WorkerColorsMap = new HashMap<>();
-
-        //DEBUG: Currently use Placement as the Current Phase etiquette
-        this.currentPhase = "Placement";
 
         this.fullTowersNumber = 0;
         this.godPlayerRefreshHeight=0;
@@ -394,6 +409,7 @@ public class CLIBuilder implements UIActions{
         //Clean the screen
         System.out.print(String.format(CURSOR_UP,printedLinesCounter));
         System.out.print(CLEAN);
+        printedLinesCounter=refreshableAreaHeight;
 
         //Print line 0
         currentLine.append(BLANK.repeat(boardTitleEdgeDistance));
@@ -899,18 +915,20 @@ public class CLIBuilder implements UIActions{
         List<String> placementMoves = new ArrayList<>();
         boolean repeat;
         int workerRow,workerCol;
+        currentPhase = "Placement";
+        writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+        renderBoard("Choose a free cell");
+
+        System.out.print(ANSI_LIGHT_GREEN+PLACEMENT_REQUEST+NEW_LINE);
         //Logic
         do {
-            writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-            renderBoard("Choose a free cell");
-            printedLinesCounter=0;
             /* # ROW COORDINATE #
                •
                •
-               Choose the row for your worker • >
+               Place two workers on the board
+               Worker row • > |
             */
             System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
-            printedLinesCounter+=1;
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
@@ -922,6 +940,7 @@ public class CLIBuilder implements UIActions{
                 /* # ROW COORDINATE ERROR #
                    •
                    •
+                   Place two workers on the board
                    Invalid coordinate...stay between 0 and 4! • >
                 */
                 System.out.print(String.format(CURSOR_UP,1));
@@ -938,7 +957,8 @@ public class CLIBuilder implements UIActions{
             /* # COL COORDINATE #
                •
                •
-               Choose the column for your worker • >
+               Place two workers on the board
+               Worker col • >
             */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
@@ -947,6 +967,7 @@ public class CLIBuilder implements UIActions{
                 /* # COL COORDINATE ERROR #
                    •
                    •
+                   Place two workers on the board
                    Invalid coordinate...stay between 0 and 4! • >
                 */
                 System.out.print(String.format(CURSOR_UP,1));
@@ -971,47 +992,115 @@ public class CLIBuilder implements UIActions{
                 /*  # INVALID COORDINATES #
                     •
                     • Line 13
-                    Already occupied position...retry! • Choose the row for your worker • >
+                    Place two workers on the board
+                    Already occupied position...retry! • Worker row• >
                 */
                 repeat = true;
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.println(ANSI_RED+OCCUPIED_POSITION);
+                System.out.print(ANSI_RED+OCCUPIED_POSITION);
             }
-            else {
-                /*  #SUCCESFUL COORDINATES#
-                    •
-                    • Line 13
-                    Worker Placed!
-                */
+            else
                 repeat = false;
-                System.out.print(ANSI_GREEN+SUCCESSFUL_PLACEMENT+ANSI_WHITE+NEW_LINE);
-                printedLinesCounter+=1;
-            }
-            printedLinesCounter+=refreshableAreaHeight;
         }while(repeat);
-        System.out.println(ANSI_LIGHT_GREEN+WAIT_TURN+ANSI_WHITE);
-        printedLinesCounter+=1;
+        printedLinesCounter+=2;
         BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).setPlayer(clientController.getPlayerNickname());
         BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).setWorkerColor(clientController.getPlayerColor());
         return new WorkerPositionInterface(workerID, workerRow, workerCol);
     }
 
-    //TODO: Unimplemented UI Methods
+    //TODO: WIP UI Methods
     @Override
     public void selectWorker(ClientController clientController) {
+        //Local Variables
+        Scanner consoleScanner = new Scanner(System.in);
+        int workerRow,workerCol;
+        boolean validSelection=false;
+        currentPhase="Selection";
+        //Clean the previous prompt message
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(CLEAN);
+        //Logic
+        System.out.print(ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+        do{
+            /* # SELECTION #
+               BOARD
+
+               Select a worker for this turn
+               Worker row • >
+            */
+            System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            workerRow = consoleScanner.nextInt();
+            /* # SELECTION #
+               BOARD
+
+               Worker col • >
+            */
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            workerCol = consoleScanner.nextInt();
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getPlayer().equalsIgnoreCase(clientController.getPlayerNickname()))
+                validSelection=true;
+            else
+            {
+                /* # SELECTION #
+                   BOARD
+
+                   Invalid selection... retry!
+                   >
+                */
+                validSelection=false;
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+NEW_LINE);
+            }
+        }
+        while (!validSelection);
+        /* # SELECTION #
+           BOARD
+
+           You have selected the worker in the cell [1|2]
+           |
+        */
+        System.out.println(ANSI_GRAY+String.format(SUCCESSFUL_SELECTION,workerRow,workerCol));
+        printedLinesCounter+=1;
 
     }
+
     @Override
     public void moveWorker(ClientController clientController) {
+        //Local Variables
+        boolean skipAvailable = clientController.getCurrentStep().equals(Step.MOVE_SPECIAL);
+        currentPhase="Movement";
+
 
     }
     @Override
     public void buildBlock(ClientController clientController) {
+        //Local Variables
+        boolean skipAvailable = clientController.getCurrentStep().equals(Step.BUILD_SPECIAL);
+        currentPhase="Building";
 
     }
     @Override
     public void removeBlock(ClientController clientController) {
+        //Local Variables
+        currentPhase="Remove";
 
     }
 
@@ -1036,7 +1125,4 @@ public class CLIBuilder implements UIActions{
         System.exit(0);
     }
 
-    //GETTER and SETTER
-    public int getPrintable(){ return printedLinesCounter;}
-    public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
 }
