@@ -13,7 +13,7 @@ public class ServerHandler{
     /**
      * Create ServerHandler
      * @param clientController controller
-     * @param thread thread
+     * @param thread ServerThread manage connection with Server
      */
     public ServerHandler(ClientController clientController, ServerThread thread) {
        this.clientController = clientController;

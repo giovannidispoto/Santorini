@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.network;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,9 +9,6 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-/**
- *
- */
 public class ServerThread implements Runnable {
 
     private final Socket socket;
@@ -30,7 +28,7 @@ public class ServerThread implements Runnable {
     }
 
     /**
-     *Run clientSocket on this thread, send messages to ServerHandler
+     *  Run ClientSocket on this thread, send in-messages to ServerHandler
      */
     @Override
     public void run() {
@@ -46,7 +44,7 @@ public class ServerThread implements Runnable {
                     //line received
                     serverHandler.process(line);
                     //TODO: debug
-                    if(clientController.debug){System.out.println(clientController.getPlayerNickname()+"Received: "+line);}
+                    if(clientController.debug){System.out.println(clientController.getPlayerNickname() + "Received: "+line);}   //debug
                 }
             }
             //close streams and socket
@@ -55,13 +53,10 @@ public class ServerThread implements Runnable {
             this.socket.close();
             System.out.println("Socket Connection Closed");  //debug
         }catch (IOException  e1){
-            if(clientController.debug){System.out.println("I/O Scanner Socket Exception");}  //debug
-            clientController.setGameExceptionMessage("I/O Scanner Socket - Error");
+            clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError);
             clientController.launchError();
-            //TODO: debug
         }catch (NoSuchElementException e2){
-            if(clientController.debug){System.out.println("Most likely the server went offline | ｡ﾟ･（>﹏<）･ﾟ｡ | Damn it");}  //debug
-            clientController.setGameExceptionMessage("Server went offline");
+            clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
             clientController.launchError();
         }
     }

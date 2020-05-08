@@ -64,7 +64,7 @@ public class WaitManager {
         try {
             object.wait();
         } catch (InterruptedException e) {
-            //TODO: Manage Well Interruption
+            //re-set interrupted flag
             Thread.currentThread().interrupt();
             throw clientController.getGameException();
         }
