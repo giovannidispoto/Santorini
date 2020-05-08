@@ -23,11 +23,11 @@ public class ClientController {
     private String playerNickname;
     private Color playerColor;
     private boolean[][] workerView;
+    private List<Integer> workersID;
+    private Step currentStep;
     //--    Match
     private String actualPlayer;
     private List<PlayerInterface> players;
-    private List<Integer> workersID;
-    private Step currentStep;
     //--    Lobby
     private boolean validNick;          //Indicates if your nickname is valid
     private boolean lobbyState;         //Indicates if you are registered with a lobby
@@ -37,8 +37,8 @@ public class ClientController {
     private Deck cardsDeck;             //Deck sent by the server, containing the playable cards in this lobby
     private int currentLobbySize;
     //--    Utils - Locks for Wait & Notify
-    public WaitManager waitManager;
-    public Thread mainThread;
+    private final WaitManager waitManager;
+    private final Thread mainThread;
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
@@ -54,8 +54,6 @@ public class ClientController {
      * ClientController Constructor
      */
     public ClientController(){
-        this.players = new ArrayList<>();
-        this.workersID = new ArrayList<>();
         this.waitManager = new WaitManager();
         this.mainThread = Thread.currentThread();
         this.gameException = new SantoriniException(ExceptionMessages.genericError);
@@ -96,6 +94,7 @@ public class ClientController {
     /** Set an error code ("string") in the exception
      *  It is good to do this before calling launchError,
      *  so as not to have a default error
+     *  N.B:    It is recommended to use ExceptionMessages.java to choose error messages
      *
      * @param errorMessage  String representing the error
      */
@@ -118,8 +117,8 @@ public class ClientController {
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
     public void waitSetPickedCards() throws SantoriniException {
-        synchronized (waitManager.waitSetPickedCards){
-            waitManager.setWait(waitManager.waitSetPickedCards, this);
+        synchronized (WaitManager.waitSetPickedCards){
+            waitManager.setWait(WaitManager.waitSetPickedCards, this);
         }
     }
 
@@ -128,8 +127,8 @@ public class ClientController {
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
     public void waitSetPlayerCard() throws SantoriniException {
-        synchronized (waitManager.waitSetPlayerCard){
-            waitManager.setWait(waitManager.waitSetPlayerCard, this);
+        synchronized (WaitManager.waitSetPlayerCard){
+            waitManager.setWait(WaitManager.waitSetPlayerCard, this);
         }
     }
 
@@ -138,8 +137,8 @@ public class ClientController {
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
     public void waitSetWorkersPosition() throws SantoriniException {
-        synchronized (waitManager.waitSetWorkersPosition){
-            waitManager.setWait(waitManager.waitSetWorkersPosition, this);
+        synchronized (WaitManager.waitSetWorkersPosition){
+            waitManager.setWait(WaitManager.waitSetWorkersPosition, this);
         }
     }
 
@@ -148,8 +147,8 @@ public class ClientController {
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
     public void waitActualPlayer() throws SantoriniException {
-        synchronized (waitManager.waitActualPlayer){
-            waitManager.setWait(waitManager.waitActualPlayer, this);
+        synchronized (WaitManager.waitActualPlayer){
+            waitManager.setWait(WaitManager.waitActualPlayer, this);
         }
     }
 
@@ -167,8 +166,9 @@ public class ClientController {
     public void addPlayerRequest(String playerNickname, int lobbySize) throws SantoriniException {
         AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
-        synchronized (waitManager.waitAddPlayer){
-            waitManager.setWait(waitManager.waitAddPlayer, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitAddPlayer){
+            waitManager.setWait(WaitManager.waitAddPlayer, this);
         }
     }
 
@@ -179,8 +179,9 @@ public class ClientController {
      */
     public void getDeckRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
-        synchronized (waitManager.waitGetDeck){
-            waitManager.setWait(waitManager.waitGetDeck, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitGetDeck){
+            waitManager.setWait(WaitManager.waitGetDeck, this);
         }
     }
 
@@ -212,8 +213,9 @@ public class ClientController {
      */
     public void getPlayersRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
-        synchronized (waitManager.waitGetPlayers){
-            waitManager.setWait(waitManager.waitGetPlayers, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitGetPlayers){
+            waitManager.setWait(WaitManager.waitGetPlayers, this);
         }
     }
 
@@ -224,8 +226,9 @@ public class ClientController {
      */
     public void getBattlefieldRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getBattlefield")));
-        synchronized (waitManager.waitGetBattlefield){
-            waitManager.setWait(waitManager.waitGetBattlefield, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitGetBattlefield){
+            waitManager.setWait(WaitManager.waitGetBattlefield, this);
         }
     }
 
@@ -253,8 +256,9 @@ public class ClientController {
     public void setStartTurn(String playerNickname, boolean basicTurn) throws SantoriniException {
         SetStartTurnInterface data = new SetStartTurnInterface(playerNickname, basicTurn);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setStartTurn", data)));
-        synchronized (waitManager.waitStartTurn){
-            waitManager.setWait(waitManager.waitStartTurn, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitStartTurn){
+            waitManager.setWait(WaitManager.waitStartTurn, this);
         }
     }
 
@@ -270,8 +274,9 @@ public class ClientController {
     public void selectWorkerRequest(String playerNickname, int row, int col) throws SantoriniException {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
-        synchronized (waitManager.waitWorkerViewUpdate){
-            waitManager.setWait(waitManager.waitWorkerViewUpdate, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitWorkerViewUpdate){
+            waitManager.setWait(WaitManager.waitWorkerViewUpdate, this);
         }
     }
 
@@ -285,8 +290,9 @@ public class ClientController {
     public void playStepRequest(int row, int col) throws SantoriniException {
         PlayStepInterface data = new PlayStepInterface(row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("playStep", data)));
-        synchronized (waitManager.waitPlayStepResponse){
-            waitManager.setWait(waitManager.waitPlayStepResponse, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitPlayStepResponse){
+            waitManager.setWait(WaitManager.waitPlayStepResponse, this);
         }
     }
 
@@ -297,8 +303,9 @@ public class ClientController {
      */
     public void skipStepRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));
-        synchronized (waitManager.waitSkipStepResponse){
-            waitManager.setWait(waitManager.waitSkipStepResponse, this);
+        //Wait Server Response
+        synchronized (WaitManager.waitSkipStepResponse){
+            waitManager.setWait(WaitManager.waitSkipStepResponse, this);
         }
     }
 

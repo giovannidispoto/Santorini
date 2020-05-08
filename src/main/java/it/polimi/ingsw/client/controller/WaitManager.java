@@ -9,33 +9,19 @@ package it.polimi.ingsw.client.controller;
  *  which will take care of the synchronization only on the functions where it is necessary.
  */
 public class WaitManager {
-    public final WaitObject waitAddPlayer;
-    public final WaitObject waitSetPickedCards;
-    public final WaitObject waitGetDeck;
-    public final WaitObject waitSetPlayerCard;
-    public final WaitObject waitSetWorkersPosition;
-    public final WaitObject waitGetPlayers;
-    public final WaitObject waitGetBattlefield;
-    public final WaitObject waitActualPlayer;
-    public final WaitObject waitStartTurn;
-    public final WaitObject waitWorkerViewUpdate;
-    public final WaitObject waitPlayStepResponse;
-    public final WaitObject waitSkipStepResponse;
+    public static final WaitObject waitAddPlayer            = new WaitObject();
+    public static final WaitObject waitSetPickedCards       = new WaitObject();
+    public static final WaitObject waitGetDeck              = new WaitObject();
+    public static final WaitObject waitSetPlayerCard        = new WaitObject();
+    public static final WaitObject waitSetWorkersPosition   = new WaitObject();
+    public static final WaitObject waitGetPlayers           = new WaitObject();
+    public static final WaitObject waitGetBattlefield       = new WaitObject();
+    public static final WaitObject waitActualPlayer         = new WaitObject();
+    public static final WaitObject waitStartTurn            = new WaitObject();
+    public static final WaitObject waitWorkerViewUpdate     = new WaitObject();
+    public static final WaitObject waitPlayStepResponse     = new WaitObject();
+    public static final WaitObject waitSkipStepResponse     = new WaitObject();
 
-    public WaitManager() {
-        this.waitAddPlayer      =   new WaitObject();
-        this.waitSetPickedCards =   new WaitObject();
-        this.waitGetDeck        =   new WaitObject();
-        this.waitSetPlayerCard  =   new WaitObject();
-        this.waitSetWorkersPosition =   new WaitObject();
-        this.waitGetPlayers     =   new WaitObject();
-        this.waitGetBattlefield =   new WaitObject();
-        this.waitActualPlayer   =   new WaitObject();
-        this.waitStartTurn      =   new WaitObject();
-        this.waitWorkerViewUpdate   =   new WaitObject();
-        this.waitPlayStepResponse   =   new WaitObject();
-        this.waitSkipStepResponse   =   new WaitObject();
-    }
 
     /** Takes care of waiting on a specific request / operation,
      *  based on the Wait Object passed as a parameter.

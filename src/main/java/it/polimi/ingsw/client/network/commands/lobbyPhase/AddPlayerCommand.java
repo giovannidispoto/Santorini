@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.network.commands.lobbyPhase;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
 public class AddPlayerCommand implements Command {
@@ -24,9 +25,9 @@ public class AddPlayerCommand implements Command {
         clientController.setFullLobby(this.fullLobby);
 
         //Awakens who was waiting Server Response
-        synchronized (clientController.waitManager.waitAddPlayer){
-            clientController.waitManager.waitAddPlayer.setUsed();
-            clientController.waitManager.waitAddPlayer.notify();
+        synchronized (WaitManager.waitAddPlayer){
+            WaitManager.waitAddPlayer.setUsed();
+            WaitManager.waitAddPlayer.notify();
         }
     }
 }

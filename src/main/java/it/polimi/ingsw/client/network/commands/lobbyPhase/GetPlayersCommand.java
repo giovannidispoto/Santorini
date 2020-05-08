@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.network.commands.lobbyPhase;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 
@@ -35,9 +36,9 @@ public class GetPlayersCommand implements Command {
             }
         }
         //Awakens who was waiting Server Response
-        synchronized (clientController.waitManager.waitGetPlayers){
-            clientController.waitManager.waitGetPlayers.setUsed();
-            clientController.waitManager.waitGetPlayers.notify();
+        synchronized (WaitManager.waitGetPlayers){
+            WaitManager.waitGetPlayers.setUsed();
+            WaitManager.waitGetPlayers.notify();
         }
     }
 }
