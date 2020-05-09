@@ -74,11 +74,6 @@ public class CLIController implements View {
                 clientController.waitActualPlayer();
                 //Woke up by: ActualPlayer
                 isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
-                if (isYourTurn) {
-                    System.out.println("It's Your Turn");
-                } else {
-                    System.out.println("It's turn of: " + clientController.getActualPlayer());
-                }
             } while (!isYourTurn);
 
             //It's your Turn, choose type of turn
@@ -89,25 +84,34 @@ public class CLIController implements View {
             do {
                 do {
                     //Select worker & get automatically his workerView
-                    clientController.selectWorkerRequest(clientController.getPlayerNickname(), 2, 2);
+                    commandLine.selectWorker(clientController);
                     //Woke up by: WorkerViewUpdate
                 }while(clientController.isInvalidWorkerView());
                 //do something for every step
                 switch (clientController.getCurrentStep()){
                     case MOVE:
-                        clientController.playStepRequest(2,2);
+                        commandLine.moveWorker(clientController);
                         break;
                     case BUILD:
+                        commandLine.buildBlock(clientController);
                         break;
                     case END:
                         break;
                     case MOVE_SPECIAL:
+                        commandLine.moveWorker(clientController);
                         break;
                     case BUILD_SPECIAL:
+                        commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
+                        commandLine.setKeepRepeating(true);
+                        do{
+                            commandLine.moveWorkerUntil(clientController);
+                        }
+                        while (commandLine.getKeepRepeating());
                         break;
                     case REMOVE:
+                        commandLine.removeBlock(clientController);
                         break;
                 }
 
@@ -120,6 +124,6 @@ public class CLIController implements View {
     @Override
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        commandLine.renderBoard(moveMessages.get(0));
+        commandLine.renderBoard(moveMessages.get(0), clientController);
     }
 }

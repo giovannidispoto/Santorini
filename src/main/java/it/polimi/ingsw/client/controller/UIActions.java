@@ -7,10 +7,11 @@ public interface UIActions {
     void pickCards(ClientController clientController) throws SantoriniException;
     void chooseCard(ClientController clientController);
     WorkerPositionInterface placeWorkers(ClientController clientController, int workerID);
-    void selectWorker(ClientController clientController);
-    void moveWorker(ClientController clientController);
-    void buildBlock(ClientController clientController);
-    void removeBlock(ClientController clientController);
+    void selectWorker(ClientController clientController) throws SantoriniException;
+    void moveWorker(ClientController clientController) throws SantoriniException;
+    void moveWorkerUntil(ClientController clientController) throws SantoriniException;
+    void buildBlock(ClientController clientController) throws SantoriniException;
+    void removeBlock(ClientController clientController) throws SantoriniException;
     void setupConnection(ClientController clientController) throws SantoriniException;
     void callError(String exceptionName);
 
