@@ -297,9 +297,9 @@ public class CLIBuilder implements UIActions{
         for(int row=0;row<5;row++)
             for (int col=0;col<5;col++){
                 //Add a blank space between to moves, except for the last one
-                if(clientController.getWorkerViewCell(row,col) && row!=4 && col!=4)
+                if(clientController.getWorkerViewCell(row,col))
                     movesBuilder.append(String.format(playerMoveTemplate,row,col)).append(BLANK);
-                else if(clientController.getWorkerViewCell(row,col))
+                else if(clientController.getWorkerViewCell(row,col) && row==4 && col==4)
                     movesBuilder.append(String.format(playerMoveTemplate,row,col));
             }
         return movesBuilder.toString();
@@ -1524,7 +1524,7 @@ public class CLIBuilder implements UIActions{
                 }
                 cellRow = consoleScanner.nextInt();
             }
-            /*  # MOVEMENT CELL COL #
+            /*  # BUILDING CELL COL #
                 14|
                 15|Select a valid cell for the building phase
                 16|Cell col • >
@@ -1566,7 +1566,7 @@ public class CLIBuilder implements UIActions{
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+BUILDING_REQUEST+NEW_LINE);
             }
-        } while (validMove);
+        } while (!validMove);
         printedLinesCounter+=1;
         clientController.playStepRequest(cellRow,cellCol);
     }
