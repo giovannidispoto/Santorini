@@ -61,7 +61,7 @@ public class PlayerTurn {
     public void move(Worker w, int x, int y){
         //move
         currentTurn.moveWorker(w,x,y);
-        match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
+        updateBuildingMatrix();
         steps.remove(0);
     }
 
