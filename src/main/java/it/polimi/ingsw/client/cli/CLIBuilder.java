@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
+import it.polimi.ingsw.client.clientModel.basic.Block;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.clientModel.basic.Step;
@@ -95,6 +96,7 @@ public class CLIBuilder implements UIActions{
     private String currentPhase;
     private int fullTowersNumber;
     private boolean keepRepeating;
+    private HashMap<Integer,String> phasesMap;
 
     //------------------ # Titles # ------------------
     private static final String SETUP_TITLE = "Setup Connection";
@@ -253,6 +255,7 @@ public class CLIBuilder implements UIActions{
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
         this.WorkerColorsMap = new HashMap<>();
+        this.phasesMap = new HashMap<>();
         this.keepRepeating=true;
         this.fullTowersNumber = 0;
         this.godPlayerRefreshHeight=0;
@@ -271,6 +274,11 @@ public class CLIBuilder implements UIActions{
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
         WorkerColorsMap.put(Color.GREY, ANSI_GRAY +WORKER);
+        phasesMap.put(0,"Placement"+BLANK);
+        phasesMap.put(1,"Selection"+BLANK);
+        phasesMap.put(2,"Movement"+BLANK);
+        phasesMap.put(3,"Building"+BLANK);
+        phasesMap.put(4,"Remove"+BLANK);
     }
 
     //SECTION: Support Methods
@@ -299,8 +307,6 @@ public class CLIBuilder implements UIActions{
                 //Add a blank space between to moves, except for the last one
                 if(clientController.getWorkerViewCell(row,col))
                     movesBuilder.append(String.format(playerMoveTemplate,row,col)).append(BLANK);
-                else if(clientController.getWorkerViewCell(row,col) && row==4 && col==4)
-                    movesBuilder.append(String.format(playerMoveTemplate,row,col));
             }
         return movesBuilder.toString();
     }
@@ -529,7 +535,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+V_THIN_LINE+BLANK);
         currentLine.append(availableMoves);
-        currentLine.append(BLANK+V_THIN_LINE+ANSI_WHITE);
+        currentLine.append(V_THIN_LINE+ANSI_WHITE);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -959,9 +965,9 @@ public class CLIBuilder implements UIActions{
         List<String> placementMoves = new ArrayList<>();
         boolean repeat;
         int workerRow,workerCol;
-        currentPhase = "Placement";
+        currentPhase = phasesMap.get(0);
         writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        renderBoard("Choose a free cell");
+        renderBoard("Choose a free cell"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         System.out.print(ANSI_WHITE+PLACEMENT_REQUEST+NEW_LINE);
@@ -1084,9 +1090,9 @@ public class CLIBuilder implements UIActions{
         //Local Variables
         int workerRow,workerCol;
         boolean validSelection=false;
-        currentPhase="Selection";
+        currentPhase=phasesMap.get(1);
         //Clean the previous prompt message
-        renderBoard("Select one of your workers");
+        renderBoard("Select one of your workers"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         //Logic
@@ -1147,29 +1153,30 @@ public class CLIBuilder implements UIActions{
                 workerCol = consoleScanner.nextInt();
             }
 
-            if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getPlayer().equalsIgnoreCase(clientController.getPlayerNickname()))
-                validSelection=true;
+            if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor()!=null){
+                if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor().equals(clientController.getPlayerColor()))
+                    validSelection=true;
+            }
             else
             {
                 /*  # INVALID SELECTION #
                     * 14|
                     * 15|Invalid selection... retry! • Select a worker for this turn
-                    * 16|Worker col • >
+                    * 16|
                     * 17|
                  */
-                validSelection=false;
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
             }
         }
         while (!validSelection);
-        clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
         printedLinesCounter+=1;
+        clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
     }
 
     /**
-     * Move a worker in one of the free available cells
+     * Move a worker
      * 0 |            BOARD
      * 1 |
      * 2 |     0   1   2   3   4      FULL TOWERS 🏗
@@ -1199,7 +1206,7 @@ public class CLIBuilder implements UIActions{
         boolean skipChosen = false;
         boolean validMove = false;
         int cellRow=0,cellCol=0;
-        currentPhase="Movement";
+        currentPhase=phasesMap.get(2);
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1359,7 +1366,7 @@ public class CLIBuilder implements UIActions{
     }
 
     /**
-     * Move a worker in one of the free available cells
+     * Move a worker in a looped way
      * 0 |            BOARD
      * 1 |
      * 2 |     0   1   2   3   4      FULL TOWERS 🏗
@@ -1387,7 +1394,7 @@ public class CLIBuilder implements UIActions{
         String userInput;
         boolean validMove = false;
         int cellRow=0,cellCol=0;
-        currentPhase="Loop Movement";
+        currentPhase=phasesMap.get(2);
         //Clean
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
@@ -1486,12 +1493,35 @@ public class CLIBuilder implements UIActions{
         printedLinesCounter+=1;
     }
 
+    /**
+     * Build a block
+     * 0 |            BOARD
+     * 1 |
+     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
+     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
+     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
+     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Loop Movement ┊
+     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 14|
+     * 15|Select a valid cell for the building phase
+     * 16|Cell row • >
+     * 17|
+     * @param clientController is the client-side controller
+     * @throws SantoriniException is a generic purpose exception
+     */
     @Override
     public void buildBlock(ClientController clientController) throws SantoriniException {
         //Local Variables
         boolean validMove=false;
         int cellRow=0,cellCol=0;
-        currentPhase="Building";
+        currentPhase=phasesMap.get(3);
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1574,7 +1604,7 @@ public class CLIBuilder implements UIActions{
     @Override
     public void removeBlock(ClientController clientController) throws SantoriniException {
         //Local Variables
-        currentPhase="Remove";
+        currentPhase=phasesMap.get(4);
 
     }
 
@@ -1597,6 +1627,7 @@ public class CLIBuilder implements UIActions{
         System.out.println(GOODBYE+NEW_LINE+CLOSING);
         System.exit(0);
     }
+
 
     public boolean getKeepRepeating(){return keepRepeating;}
     public void setKeepRepeating(boolean action){this.keepRepeating=action;}

@@ -22,7 +22,7 @@ public class CLIController implements View {
         this.clientController = clientController;
         this.moveMessages = new HashMap<>();
         this.commandLine = new CLIBuilder(cliColor, clientController, consoleScanner);
-        moveMessages.put(0,"Wait");}
+        moveMessages.put(0,"Wait ");}
 
     @Override
     public void startGame() throws SantoriniException {
