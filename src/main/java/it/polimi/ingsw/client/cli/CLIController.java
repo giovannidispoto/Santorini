@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class CLIController implements View {
     private final ClientController clientController;
     private final CLIBuilder commandLine;
-    private HashMap<Integer,String> moveMessages;
+    private final HashMap<Integer,String> moveMessages;
 
     public CLIController(String cliColor, ClientController clientController, Scanner consoleScanner) {
         this.clientController = clientController;
@@ -81,14 +81,14 @@ public class CLIController implements View {
             clientController.setStartTurn(clientController.getPlayerNickname(), true);
             //Woke up by: SetStartTurnResponse
 
-            //do all steps
             do {
                 //Select worker & get automatically his workerView
                 commandLine.selectWorker(clientController);
                 //Woke up by: WorkerViewUpdate
             }while(clientController.isInvalidWorkerView());
+            //do all steps
             do {
-                //do something for every step
+
                 switch (clientController.getCurrentStep()){
                     case MOVE:
                         commandLine.moveWorker(clientController);
@@ -116,9 +116,9 @@ public class CLIController implements View {
                         break;
                 }
 
-            } while (Step.END == clientController.getCurrentStep());
+            } while (Step.END != clientController.getCurrentStep());
 
-        }while(GameState.FINISH == clientController.getGameState());
+        }while(GameState.FINISH != clientController.getGameState());
 
     }
 
