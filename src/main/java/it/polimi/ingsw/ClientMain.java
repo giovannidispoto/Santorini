@@ -36,6 +36,11 @@ public class ClientMain {
             userInterface.startGame();
         }catch (SantoriniException e){
             System.out.println("Game Ended : " + e.getMessage());
+
+            if(Thread.interrupted()){
+                System.out.println("Hi i've been interrupted, but now i'm ready :)");
+            }
+            System.exit(0);
         }
     }
 }

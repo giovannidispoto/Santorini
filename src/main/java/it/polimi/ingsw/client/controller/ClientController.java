@@ -48,7 +48,7 @@ public class ClientController {
     private GameState gameState;
     private SantoriniException gameException;
     //TODO:debug
-    public boolean debug = true;
+    public boolean debug = false;
 
     /**
      * ClientController Constructor
