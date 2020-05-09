@@ -11,16 +11,17 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPha
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class CLIController implements View {
     private final ClientController clientController;
     private final CLIBuilder commandLine;
     private HashMap<Integer,String> moveMessages;
 
-    public CLIController(String cliColor, ClientController clientController) {
+    public CLIController(String cliColor, ClientController clientController, Scanner consoleScanner) {
         this.clientController = clientController;
         this.moveMessages = new HashMap<>();
-        this.commandLine = new CLIBuilder(cliColor,clientController);
+        this.commandLine = new CLIBuilder(cliColor, clientController, consoleScanner);
         moveMessages.put(0,"Wait");}
 
     @Override

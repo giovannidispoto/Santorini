@@ -6,6 +6,8 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.GUIController;
 
+import java.util.Scanner;
+
 public class ClientMain {
     public static void main(String[] args) {
         //Create client objects
@@ -19,7 +21,8 @@ public class ClientMain {
             if(args.length == 2 && args[1].equals("light")) {
                 cliColor = "light";
             }
-            userInterface = new CLIController(cliColor,clientController);
+            Scanner consoleScanner = new Scanner(System.in);
+            userInterface = new CLIController(cliColor, clientController, consoleScanner);
         }
         //Launch GUI -> Santorini.jar gui
         else{

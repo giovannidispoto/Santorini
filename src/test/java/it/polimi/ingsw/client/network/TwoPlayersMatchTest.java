@@ -10,13 +10,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class TwoPlayersMatchTest {
 
     @Test
     void Player1Test(){
         ClientController clientController = new ClientController();
-        clientController.setUserView(new CLIController("dark",clientController));
+        Scanner consoleScanner = new Scanner(System.in);
+        clientController.setUserView(new CLIController("dark",clientController, consoleScanner));
         clientController.initializeNetwork();
 
         //StartGame
@@ -95,7 +97,8 @@ class TwoPlayersMatchTest {
     @Test
     void Player2Test(){
         ClientController clientController = new ClientController();
-        clientController.setUserView(new CLIController("dark",clientController));
+        Scanner consoleScanner = new Scanner(System.in);
+        clientController.setUserView(new CLIController("dark",clientController, consoleScanner));
         clientController.initializeNetwork();
 
         //StartGame

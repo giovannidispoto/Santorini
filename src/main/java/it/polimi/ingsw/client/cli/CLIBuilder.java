@@ -241,11 +241,15 @@ public class CLIBuilder implements UIActions{
     private int refreshableAreaHeight = 17;
     private final int editableRowCells = 5;
 
+
+    private Scanner consoleScanner;
+
     //DONE: Class Constructor
     /**
      * Class Constructor
      */
-    public CLIBuilder(String colorMode, ClientController clientController) {
+    public CLIBuilder(String colorMode, ClientController clientController, Scanner consoleScanner) {
+        this.consoleScanner = consoleScanner;
         this.boardCellsContents = new CLIDataObject[5];
         this.playerMoves = new ArrayList<>();
         this.WorkerColorsMap = new HashMap<>();
@@ -553,7 +557,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public void setupConnection(ClientController clientController) throws SantoriniException {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         String userInputString;
         int userInputValue;
         boolean isOperationValid = false;
@@ -778,7 +781,6 @@ public class CLIBuilder implements UIActions{
         boolean isValidInput;
         int numberOfPlayers=clientController.getCurrentLobbySize();
         int pickedCounter=0;
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         List<String> chosenCards = new ArrayList<>();
         //Clean the CLI from the last phase elements
@@ -876,7 +878,6 @@ public class CLIBuilder implements UIActions{
     public void chooseCard(ClientController clientController) {
         //Local Variables
         boolean validInput = true;
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         List<String> availableCards = clientController.getGodCards();
         //Clean the CLI from the last phase elements
@@ -954,7 +955,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public WorkerPositionInterface placeWorkers(ClientController clientController, int workerID) {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         List<String> placementMoves = new ArrayList<>();
         boolean repeat;
@@ -1082,7 +1082,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public void selectWorker(ClientController clientController) throws SantoriniException {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         int workerRow,workerCol;
         boolean validSelection=false;
         currentPhase="Selection";
@@ -1195,7 +1194,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public void moveWorker(ClientController clientController) throws SantoriniException {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         boolean skipAvailable = clientController.getCurrentStep().equals(Step.MOVE_SPECIAL);
         boolean skipChosen = false;
@@ -1386,7 +1384,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public void moveWorkerUntil(ClientController clientController) throws SantoriniException {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         boolean validMove = false;
         int cellRow=0,cellCol=0;
@@ -1492,7 +1489,6 @@ public class CLIBuilder implements UIActions{
     @Override
     public void buildBlock(ClientController clientController) throws SantoriniException {
         //Local Variables
-        Scanner consoleScanner = new Scanner(System.in);
         boolean validMove=false;
         int cellRow=0,cellCol=0;
         currentPhase="Building";
@@ -1588,7 +1584,6 @@ public class CLIBuilder implements UIActions{
      */
     @Override
     public void callError(String exceptionName) {
-        Scanner consoleScanner = new Scanner(System.in);
         String userInput;
         System.out.println(ANSI_RED+String.format(FATAL_ERROR,exceptionName));
         System.out.println(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
