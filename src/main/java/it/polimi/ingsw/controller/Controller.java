@@ -287,6 +287,18 @@ public class Controller {
         Player p = getPlayerFromString(playerNickname);
         this.turn = new PlayerTurn(match.generateTurn(basicTurn), match);
         match.setCurrentPlayer(p);
+        if(turn.isLoser()){
+            match.removePlayer(p);
+            checkDeclareWinner();
+            handlers.get(playerNickname).responseQueue(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+        }
+    }
+
+    private void checkDeclareWinner(){
+        if(match.getMatchPlayers().size() == 1){
+            match.declareWinner(match.getMatchPlayers().get(0));
+            handlers.get(match.getMatchPlayers().get(0).getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youWin", null)));
+        }
     }
 
     /**
@@ -329,7 +341,10 @@ public class Controller {
         switch(turn.getCurrentState()){
             case MOVE:
             case MOVE_SPECIAL:
-                turn.move(match.getSelectedWorker(),x,y);
+               boolean winner = turn.move(match.getSelectedWorker(),x,y);
+                if(winner){
+                    delcareWinner(match.getWinner());
+                }
                 break;
             case BUILD:
             case BUILD_SPECIAL:
@@ -345,6 +360,16 @@ public class Controller {
         }
 
         return turn.getCurrentState();
+    }
+
+    private void delcareWinner(Player winner) {
+        for(Player p : match.getMatchPlayers()){
+            if(p.getPlayerNickname().equals(winner.getPlayerNickname()))
+                handlers.get(winner.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youWin", null)));
+            else
+                handlers.get(p.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+        }
+
     }
 
     /**
