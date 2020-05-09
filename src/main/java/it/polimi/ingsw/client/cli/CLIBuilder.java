@@ -81,7 +81,7 @@ public class CLIBuilder implements UIActions{
     protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
     protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
     private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI"+ANSI_WHITE;
-    private static final String WELCOME = "Welcome to %s : The Board Game 🎲";
+    private static final String WELCOME = "Welcome to %s : The Board Game 🎲 → Enable the full screen to enjoy the best experience";
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
@@ -111,7 +111,6 @@ public class CLIBuilder implements UIActions{
     private static final String LOBBY_SIZE = "Lobby Size 📦";
     private static final String WAIT_START = "Wait for the match startup...";
     private static final String WAIT_PLAYERS = "Wait for the other players choices...";
-    private static final String WAIT_TURN = "Wait for the end of the other players turns...";
     private static final String LOBBY_JOIN = "Joining the lobby...";
 
     //Cards
@@ -129,7 +128,7 @@ public class CLIBuilder implements UIActions{
     private static final String ROW_CELL = "Cell row • ";
     private static final String COL_CELL = "Cell column • ";
     private static final String SKIP = "Do you want to skip this action? [yes/no] • ";
-    private static final String REPEAT_MOVE = "Do you want to repeat the movement phase? [yes/no] • ";
+    private static final String REPEAT = "Do you want to repeat this phase? [yes/no] • ";
     //Building
     private static final String BUILDING_REQUEST = "Select a valid cell for the building phase";
     //Remove
@@ -154,7 +153,8 @@ public class CLIBuilder implements UIActions{
 
     //Web
     private static final String INVALID_IP = "Invalid IP...retry! • ";
-    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full or unavailable... try later 😭";
+    private static final String UNAVAILABLE_LOBBY = "The selected lobby is full... try later 😭";
+    private static final String INEXISTENT_LOBBY = "The selected lobby doesn't exist...retry • ";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
     private static final String FAILED_CONNECTION = "Troubles with the connection...retry!";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
@@ -174,10 +174,10 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_COORDINATE = "Invalid coordinate... [0 and 4] • ";
 
     //Worker Selection
-    private static final String INVALID_SELECTION = "Invalid selection... retry!";
+    private static final String INVALID_SELECTION = "Invalid selection... retry! • ";
 
     //Movement
-    private static final String INVALID_CELL = "Invalid cell... retry!";
+    private static final String INVALID_CELL = "Invalid cell... retry! • ";
 
     //------------------ # Templates # ------------------
 
@@ -282,18 +282,6 @@ public class CLIBuilder implements UIActions{
     }
 
     /**
-     * Extracts a single formatted String from the playerMoves list
-     * @return String
-     */
-    public String transformMovesList(){
-        StringBuilder availableMoves = new StringBuilder();
-        for(String currentMove : playerMoves){
-            availableMoves.append(currentMove).append(BLANK);
-        }
-        return availableMoves.toString();
-    }
-
-    /**
      * Extracts from the worker view a string which represents all the available cells
      * @param clientController is the client-side controller
      * @return String obj
@@ -304,8 +292,11 @@ public class CLIBuilder implements UIActions{
         //Logic
         for(int row=0;row<5;row++)
             for (int col=0;col<5;col++){
-                if(clientController.getWorkerViewCell(row,col))
+                //Add a blank space between to moves, except for the last one
+                if(clientController.getWorkerViewCell(row,col) && row!=4 && col!=4)
                     movesBuilder.append(String.format(playerMoveTemplate,row,col)).append(BLANK);
+                else if(clientController.getWorkerViewCell(row,col))
+                    movesBuilder.append(String.format(playerMoveTemplate,row,col));
             }
         return movesBuilder.toString();
     }
@@ -426,9 +417,9 @@ public class CLIBuilder implements UIActions{
      * 15|> Wait... || Wait till Players ends his turn...
      * 16|
      * @param availableMoves is a formatted String with all the available moves for the player
-     * @param clientController is the client-side controller
+     *
      */
-    public void renderBoard(String availableMoves,ClientController clientController){
+    public void renderBoard(String availableMoves){
         //Local Variables
         StringBuilder currentLine = new StringBuilder();
         int currentRow = 0;
@@ -549,10 +540,7 @@ public class CLIBuilder implements UIActions{
         //Print line 14 and 15
         System.out.print(NEW_LINE+NEW_LINE);
 
-        if(clientController.getActualPlayer()!=null)
-            System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+String.format(waitTurn,clientController.getActualPlayer())+NEW_LINE);
-        else
-            System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+waitGeneric+NEW_LINE);
+        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+waitGeneric+NEW_LINE);
     }
 
     //SECTION: UI Methods
@@ -947,20 +935,20 @@ public class CLIBuilder implements UIActions{
      * 1 |
      * 2 |     0   1   2   3   4      FULL TOWERS 🏗
      * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
-     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 0 ┊
      * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
      * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
      * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌┐
      * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Building ┊
      * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌┘
      * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
-     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
-     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
-     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Choose a free cell ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
      * 14|
      * 15|Place two workers on the board
      * 16|Worker row • >
-     * 17|[]
+     * 17|
      * @param clientController is the client-side controller
      */
     @Override
@@ -973,18 +961,18 @@ public class CLIBuilder implements UIActions{
         int workerRow,workerCol;
         currentPhase = "Placement";
         writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        renderBoard("Choose a free cell", clientController);
+        renderBoard("Choose a free cell");
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_LIGHT_GREEN+PLACEMENT_REQUEST+NEW_LINE);
+        System.out.print(ANSI_WHITE+PLACEMENT_REQUEST+NEW_LINE);
         //Logic
         do {
             /* # ROW COORDINATE #
-               •
-               •
-               Place two workers on the board
-               Worker row • > |
-            */
+                * 14|
+                * 15|Place two workers on the board
+                * 16|Worker row • > []
+                * 17|
+             */
             System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -995,14 +983,14 @@ public class CLIBuilder implements UIActions{
             workerRow = consoleScanner.nextInt();
             while (workerRow<0 || workerRow>4){
                 /* # ROW COORDINATE ERROR #
-                   •
-                   •
-                   Place two workers on the board
-                   Invalid coordinate...stay between 0 and 4! • >
-                */
+                    * 14|
+                    * 15|Place two workers on the board
+                    * 16|Invalid coordinate...stay between 0 and 4! • Worker row • > []
+                    * 17|
+                 */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
@@ -1012,21 +1000,21 @@ public class CLIBuilder implements UIActions{
                 workerRow = consoleScanner.nextInt();
             }
             /* # COL COORDINATE #
-               •
-               •
-               Place two workers on the board
-               Worker col • >
-            */
+             * 14|
+             * 15|Place two workers on the board
+             * 16|Worker col • > []
+             * 17|
+             */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
             System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 /* # COL COORDINATE ERROR #
-                   •
-                   •
-                   Place two workers on the board
-                   Invalid coordinate...stay between 0 and 4! • >
-                */
+                 * 14|
+                 * 15|Place two workers on the board
+                 * 16|Invalid coordinate...stay between 0 and 4! • Worker col • > []
+                 * 17|
+                 */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
@@ -1046,16 +1034,16 @@ public class CLIBuilder implements UIActions{
                 workerCol = consoleScanner.nextInt();
             }
             if(BattlefieldClient.getBattlefieldInstance().isCellOccupied(workerRow,workerCol)){
-                /*  # INVALID COORDINATES #
-                    •
-                    • Line 13
-                    Place two workers on the board
-                    Already occupied position...retry! • Worker row• >
-                */
+                /* # INVALID COORDINATES #
+                 * 14|
+                 * 15|Already occupied position...retry! • Place two workers on the board
+                 * 16|
+                 * 17|
+                 */
                 repeat = true;
-                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+OCCUPIED_POSITION);
+                System.out.print(ANSI_RED+OCCUPIED_POSITION+ANSI_WHITE+PLACEMENT_REQUEST);
             }
             else
                 repeat = false;
@@ -1067,6 +1055,30 @@ public class CLIBuilder implements UIActions{
     }
 
     //TODO: WIP UI Methods
+
+    /**
+     * Allows the user to move a worker
+     * 0 |            BOARD
+     * 1 |
+     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 0 ┊
+     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
+     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
+     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Placement ┊
+     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌╌┘
+     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Select one of your workers ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 14|
+     * 15|Place two workers on the board
+     * 16|Worker row • >
+     * 17|
+     * @param clientController is the client-side controller
+     * @throws SantoriniException is a generic purpose exception
+     */
     @Override
     public void selectWorker(ClientController clientController) throws SantoriniException {
         //Local Variables
@@ -1075,17 +1087,18 @@ public class CLIBuilder implements UIActions{
         boolean validSelection=false;
         currentPhase="Selection";
         //Clean the previous prompt message
+        renderBoard("Select one of your workers");
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         //Logic
         System.out.print(ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
         do{
-            /* # SELECTION #
-               BOARD
-
-               Select a worker for this turn
-               Worker row • >
-            */
+            /*  # SELECTION ROW #
+                * 14|
+                * 15|Select a worker for this turn
+                * 16|Worker row • >
+                * 17|
+             */
             System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -1094,11 +1107,24 @@ public class CLIBuilder implements UIActions{
                 consoleScanner.next();
             }
             workerRow = consoleScanner.nextInt();
-            /* # SELECTION #
-               BOARD
-
-               Worker col • >
-            */
+            while(workerRow<0 || workerRow>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                workerRow = consoleScanner.nextInt();
+            }
+            /*  # SELECTION COL #
+             * 14|
+             * 15|Select a worker for this turn
+             * 16|Worker col • >
+             * 17|
+             */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
             System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
@@ -1109,36 +1135,63 @@ public class CLIBuilder implements UIActions{
                 consoleScanner.next();
             }
             workerCol = consoleScanner.nextInt();
-            System.out.print(String.format(CURSOR_UP,1));
-            System.out.print(CLEAN);
+            while(workerCol<0 || workerCol>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                workerCol = consoleScanner.nextInt();
+            }
+
             if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getPlayer().equalsIgnoreCase(clientController.getPlayerNickname()))
                 validSelection=true;
             else
             {
-                /* # SELECTION #
-                   BOARD
-
-                   Invalid selection... retry!
-                   >
-                */
+                /*  # INVALID SELECTION #
+                    * 14|
+                    * 15|Invalid selection... retry! • Select a worker for this turn
+                    * 16|Worker col • >
+                    * 17|
+                 */
                 validSelection=false;
-                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
             }
         }
         while (!validSelection);
-        /* # SELECTION #
-           BOARD
-
-           You have selected the worker in the cell [1|2]
-           |
-        */
-        System.out.println(ANSI_GRAY+String.format(SUCCESSFUL_SELECTION,workerRow,workerCol));
+        clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
         printedLinesCounter+=1;
-
     }
 
+    /**
+     * Move a worker in one of the free available cells
+     * 0 |            BOARD
+     * 1 |
+     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
+     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
+     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
+     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌┐
+     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Movement ┊
+     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌┘
+     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 14|
+     * 15|Select a valid cell for the movement phase
+     * 16|Cell row • >
+     * 17|
+     * @param clientController is the client-side controller
+     * @throws SantoriniException is a generic purpose exception
+     */
     @Override
     public void moveWorker(ClientController clientController) throws SantoriniException {
         //Local Variables
@@ -1149,14 +1202,14 @@ public class CLIBuilder implements UIActions{
         boolean validMove = false;
         int cellRow=0,cellCol=0;
         currentPhase="Movement";
-        //Clean
-        System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+        renderBoard(decomposeWorkerView(clientController));
+        System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         //Logic
         if(skipAvailable)
-            System.out.print(ANSI_LIGHT_GREEN+MOVEMENT_REQUEST+SKIP_REQUEST+NEW_LINE);
+            System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+SKIP_REQUEST+NEW_LINE);
         else
-            System.out.print(ANSI_LIGHT_GREEN+MOVEMENT_REQUEST+NEW_LINE);
+            System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
         do{
             if(skipAvailable){
                 //You can skip OR choose a cell from the available ones
@@ -1170,34 +1223,70 @@ public class CLIBuilder implements UIActions{
                 }
                 if(userInput.equalsIgnoreCase("yes")) skipChosen=true;
                 else{
-                    System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                    while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    do{
+                        System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                        while(!consoleScanner.hasNextInt()){
+                            System.out.print(String.format(CURSOR_UP,1));
+                            System.out.print(CLEAN);
+                            System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                            consoleScanner.next();
+                        }
+                        cellRow = consoleScanner.nextInt();
+                        while(cellRow<0 || cellRow>4){
+                            System.out.print(String.format(CURSOR_UP,1));
+                            System.out.print(CLEAN);
+                            System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                            while(!consoleScanner.hasNextInt()){
+                                System.out.print(String.format(CURSOR_UP,1));
+                                System.out.print(CLEAN);
+                                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                                consoleScanner.next();
+                            }
+                            cellRow = consoleScanner.nextInt();
+                        }
                         System.out.print(String.format(CURSOR_UP,1));
                         System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                        consoleScanner.next();
-                    }
-                    cellRow = consoleScanner.nextInt();
-                    System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                    while(!consoleScanner.hasNextInt()){
-                        System.out.print(String.format(CURSOR_UP,1));
-                        System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                        consoleScanner.next();
-                    }
-                    cellCol = consoleScanner.nextInt();
-                    //Check if the inserted values belong to the worker view
-                    if(clientController.getWorkerViewCell(cellRow,cellCol))
-                        validMove=true;
-                    if(!validMove){
-                        System.out.print(String.format(CURSOR_UP,2));
-                        System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+INVALID_CELL+NEW_LINE);
-                    }
+                        System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                        while(!consoleScanner.hasNextInt()){
+                            System.out.print(String.format(CURSOR_UP,1));
+                            System.out.print(CLEAN);
+                            System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                            consoleScanner.next();
+                        }
+                        cellCol = consoleScanner.nextInt();
+                        while(cellCol<0 || cellCol>4){
+                            System.out.print(String.format(CURSOR_UP,1));
+                            System.out.print(CLEAN);
+                            System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                            while(!consoleScanner.hasNextInt()){
+                                System.out.print(String.format(CURSOR_UP,1));
+                                System.out.print(CLEAN);
+                                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                                consoleScanner.next();
+                            }
+                            cellCol = consoleScanner.nextInt();
+                        }
+                        //Check if the inserted values belong to the worker view
+                        if(clientController.getWorkerViewCell(cellRow,cellCol))
+                            validMove=true;
+                        if(!validMove){
+                            System.out.print(String.format(CURSOR_UP,2));
+                            System.out.print(CLEAN);
+                            System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
+                        }
+                    }while (!validMove);
                 }
             }
             else{
                 //Can't skip, choose a cell from the available ones
+                /*  # MOVEMENT CELL ROW #
+                    14|
+                    15|Select a valid cell for the movement phase
+                    16|Cell row • >
+                    17|
+                 */
                 System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
@@ -1206,6 +1295,24 @@ public class CLIBuilder implements UIActions{
                     consoleScanner.next();
                 }
                 cellRow = consoleScanner.nextInt();
+                while(cellRow<0 || cellRow>4){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                    while(!consoleScanner.hasNextInt()){
+                        System.out.print(String.format(CURSOR_UP,1));
+                        System.out.print(CLEAN);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        consoleScanner.next();
+                    }
+                    cellRow = consoleScanner.nextInt();
+                }
+                /*  # MOVEMENT CELL COL #
+                    14|
+                    15|Select a valid cell for the movement phase
+                    16|Cell col • >
+                    17|
+                 */
                 System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
@@ -1214,13 +1321,31 @@ public class CLIBuilder implements UIActions{
                     consoleScanner.next();
                 }
                 cellCol = consoleScanner.nextInt();
+                while(cellCol<0 || cellCol>4){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                    while(!consoleScanner.hasNextInt()){
+                        System.out.print(String.format(CURSOR_UP,1));
+                        System.out.print(CLEAN);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        consoleScanner.next();
+                    }
+                    cellCol = consoleScanner.nextInt();
+                }
                 //Check if the inserted values belong to the worker view
                 if(clientController.getWorkerViewCell(cellRow,cellCol))
                     validMove=true;
                 if(!validMove){
+                    /*  # MOVEMENT CELL COL #
+                        14|
+                        15|Invalid cell... retry! • Select a valid cell for the movement phase
+                        16|
+                        17|
+                    */
                     System.out.print(String.format(CURSOR_UP,2));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_CELL+NEW_LINE);
+                    System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
                 }
             }
 
@@ -1230,8 +1355,32 @@ public class CLIBuilder implements UIActions{
             clientController.skipStepRequest();
         else
             clientController.playStepRequest(cellRow,cellCol);
+        printedLinesCounter+=1;
     }
 
+    /**
+     * Move a worker in one of the free available cells
+     * 0 |            BOARD
+     * 1 |
+     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
+     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
+     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
+     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
+     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Loop Movement ┊
+     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
+     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
+     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+     * 14|
+     * 15|Select a valid cell for the movement phase
+     * 16|Cell row • >
+     * 17|
+     * @param clientController is the client-side controller
+     * @throws SantoriniException is a generic purpose exception
+     */
     @Override
     public void moveWorkerUntil(ClientController clientController) throws SantoriniException {
         //Local Variables
@@ -1239,13 +1388,20 @@ public class CLIBuilder implements UIActions{
         String userInput;
         boolean validMove = false;
         int cellRow=0,cellCol=0;
-        currentPhase="Movement";
+        currentPhase="Loop Movement";
         //Clean
-        System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+        renderBoard(decomposeWorkerView(clientController));
+        System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         //Logic
-        System.out.print(ANSI_LIGHT_GREEN+MOVEMENT_REQUEST+NEW_LINE);
+        System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
         do{
+            /*  # MOVEMENT CELL ROW #
+                14|
+                15|Select a valid cell for the movement phase
+                16|Cell row • >
+                17|
+             */
             System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -1254,6 +1410,24 @@ public class CLIBuilder implements UIActions{
                 consoleScanner.next();
             }
             cellRow = consoleScanner.nextInt();
+            while(cellRow<0 || cellRow>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                cellRow = consoleScanner.nextInt();
+            }
+            /*  # MOVEMENT CELL COL #
+                14|
+                15|Select a valid cell for the movement phase
+                16|Cell row • >
+                17|
+             */
             System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -1262,17 +1436,43 @@ public class CLIBuilder implements UIActions{
                 consoleScanner.next();
             }
             cellCol = consoleScanner.nextInt();
+            while(cellCol<0 || cellCol>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                cellCol = consoleScanner.nextInt();
+            }
             //Check if the inserted values belong to the worker view
             if(clientController.getWorkerViewCell(cellRow,cellCol))
                 validMove=true;
             if(!validMove){
+                /*  # INVALID MOVEMENT CELL #
+                    14|
+                    15|Invalid cell... retry! • Select a valid cell for the movement phase
+                    16|
+                    17|
+                */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_CELL+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
             }
         }while (!validMove);
         clientController.playStepRequest(cellRow,cellCol);
-        System.out.print(ANSI_GRAY+REPEAT_MOVE+ANSI_WHITE+CLI_INPUT);
+        /*  # ASKING FOR REPETITION #
+            14|
+            15|Select a valid cell for the movement phase
+            16|Do you want to repeat this phase? [yes/no] • >
+            17|
+        */
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(CLEAN);
+        System.out.print(ANSI_GRAY+REPEAT+ANSI_WHITE+CLI_INPUT);
         userInput=consoleScanner.next();
         while(!userInput.equalsIgnoreCase("yes") && !userInput.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
@@ -1282,6 +1482,7 @@ public class CLIBuilder implements UIActions{
         }
         if(userInput.equalsIgnoreCase("no"))
             keepRepeating=false;
+        printedLinesCounter+=1;
     }
 
     @Override
@@ -1289,7 +1490,7 @@ public class CLIBuilder implements UIActions{
         //Local Variables
         boolean skipAvailable = clientController.getCurrentStep().equals(Step.BUILD_SPECIAL);
         currentPhase="Building";
-
+        renderBoard(decomposeWorkerView(clientController));
     }
     @Override
     public void removeBlock(ClientController clientController) throws SantoriniException {

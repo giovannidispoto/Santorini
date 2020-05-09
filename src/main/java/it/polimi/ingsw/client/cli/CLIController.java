@@ -124,6 +124,6 @@ public class CLIController implements View {
     @Override
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-        commandLine.renderBoard(moveMessages.get(0), clientController);
+        commandLine.renderBoard(moveMessages.get(0));
     }
 }
