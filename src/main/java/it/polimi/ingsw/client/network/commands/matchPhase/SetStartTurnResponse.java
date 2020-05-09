@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.network.commands.matchPhase;
 
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
 public class SetStartTurnResponse implements Command {
@@ -20,9 +21,9 @@ public class SetStartTurnResponse implements Command {
     public void execute(ClientController clientController) {
         clientController.setCurrentStep(this.currentStep);
         //Awakens who was waiting Server Response
-        synchronized (clientController.waitManager.waitStartTurn){
-            clientController.waitManager.waitStartTurn.setUsed();
-            clientController.waitManager.waitStartTurn.notify();
+        synchronized (WaitManager.waitStartTurn){
+            WaitManager.waitStartTurn.setUsed();
+            WaitManager.waitStartTurn.notify();
         }
     }
 }
