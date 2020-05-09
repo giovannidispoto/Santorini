@@ -38,6 +38,8 @@
 !java/it/polimi/ingsw/client/network/commands/lobbyPhase/*.java
 !java/it/polimi/ingsw/client/network/commands/matchPhase/
 !java/it/polimi/ingsw/client/network/commands/matchPhase/*.java
+!java/it/polimi/ingsw/client/network/commands/finishPhase/
+!java/it/polimi/ingsw/client/network/commands/finishPhase/*.java
 !java/it/polimi/ingsw/client/network/commandDeserializer/
 !java/it/polimi/ingsw/client/network/commandDeserializer/*.java
 

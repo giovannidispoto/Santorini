@@ -35,7 +35,7 @@ public class ClientMain {
         try {
             userInterface.startGame();
         }catch (SantoriniException e){
-            System.out.println("Game Ended, error: " + e.getMessage());
+            System.out.println("Game Ended : " + e.getMessage());
         }
     }
 }

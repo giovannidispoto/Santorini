@@ -61,7 +61,7 @@
 	ok				        <---------------------------------	playStepResponse    (opt)
 
 	if(next-Step != END)
-	    wait    WorkerViewUpdate;
+	    waitWorkerViewUpdate
 
 	ok      				<---------------------------------	WorkerViewUpdate    (opt)
 
@@ -70,7 +70,8 @@
 
 (end-1)
 
+-------------------------------------------------------------------------------------- FINISH MATCH
 (ASYNCHRONOUS)
-    ok						<---------------------------------	notifyWinner/Loser  (notify all)
+    ok						<---------------------------------	notifyWinner/Loser/Error  (notify all)
 
 

@@ -106,7 +106,7 @@ public class ClientController {
      * Interrupts the thread that started the controller first and
      * therefore started executing the program (usually main)
      */
-    public void launchError(){
+    public void interruptNormalExecution(){
         mainThread.interrupt();
     }
 

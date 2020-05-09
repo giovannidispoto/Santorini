@@ -13,7 +13,7 @@ public class ServerThread implements Runnable {
 
     private final Socket socket;
     private final ServerHandler serverHandler;
-    private ClientController clientController;
+    private final ClientController clientController;
     private PrintWriter out;
 
     /**
@@ -54,10 +54,10 @@ public class ServerThread implements Runnable {
             System.out.println("Socket Connection Closed");  //debug
         }catch (IOException  e1){
             clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError);
-            clientController.launchError();
+            clientController.interruptNormalExecution();
         }catch (NoSuchElementException e2){
             clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
-            clientController.launchError();
+            clientController.interruptNormalExecution();
         }
     }
 
