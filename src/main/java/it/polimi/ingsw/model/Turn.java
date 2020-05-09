@@ -67,8 +67,8 @@ public abstract class Turn {
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //Basic movement: Banned Cells = workers, higher than 1 than the worker, Dome
-        return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
-                && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+        return battlefield.getWorkerView(selectedWorker, (cell)-> !cell.isWorkerPresent()
+                && (battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight())
                 && !(cell.getTower().getLastBlock() == Block.DOME));
     }
 

@@ -38,7 +38,7 @@ public class SetWorkersPosition implements Command{
                                     workersPosition.get(0).getWorkerID(), workersPosition.get(0).getX(), workersPosition.get(0).getY(),
                                     workersPosition.get(1).getWorkerID(), workersPosition.get(1).getX(), workersPosition.get(1).getY());
 
-        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkerPositionResponse", this)));
+       // handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkerPositionResponse", this)));
         handler.sendMessageQueue();
     }
 }

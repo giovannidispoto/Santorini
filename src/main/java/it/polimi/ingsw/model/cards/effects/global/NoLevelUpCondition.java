@@ -43,12 +43,13 @@ public class NoLevelUpCondition extends GlobalEffect {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         if(changeLevel) {
             //deny only level up
+            //TODO: Modify condition
             return battlefield.getWorkerView(w, (cell) -> battlefield.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight() >= cell.getTower().getHeight());
         }
         //in case applyEffect is called even if changeLevel==false
         else{
             //don't deny level up, so don't change WorkerView
-            return battlefield.getWorkerView(w);
+            return w.getWorkerView();
         }
     }
 }

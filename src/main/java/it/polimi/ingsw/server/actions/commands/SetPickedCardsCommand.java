@@ -29,7 +29,7 @@ public class SetPickedCardsCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.setPickedCards(cards);
-        handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPickedCardsResponse", this)));
+        //handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPickedCardsResponse", this)));
         handler.sendMessageQueue();
     }
 

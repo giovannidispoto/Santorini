@@ -34,7 +34,7 @@ public class SetPlayerCardCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         if(controller.checkHandler(playerNickname, handler)) {
             controller.setPlayerCard(playerNickname, card);
-            handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPlayerCardResponse", this)));
+           // handler.responseQueue(new Gson().toJson(new BasicMessageResponse("setPlayerCardResponse", this)));
             handler.sendMessageQueue();
         }
     }

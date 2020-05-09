@@ -15,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BasicTurnTest {
     final Player p1 = new Player("Bill Gates", Color.BLUE);
+    final Player p2 = new Player("Steve Jobs", Color.GREY);
     final Worker w1 = new Worker(p1);
+    final Worker w2 = new Worker(p2);
     final DeckReader reader = new DeckReader();
 
 
@@ -26,11 +28,15 @@ class BasicTurnTest {
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
         p1.setPlayerCard(d.getDivinityCard("APOLLO"));
+        p2.setPlayerCard(d.getDivinityCard("ZEUS"));
         players.add(p1);
+        players.add(p2);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
+        workers.add(w2);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
+        w2.setWorkerPosition(0,0);
         Match m = new Match(players,new ArrayList<>());
         m.setCurrentPlayer(p1);
 
@@ -41,6 +47,7 @@ class BasicTurnTest {
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
         w1.setWorkerView(t.generateMovementMatrix(w1));
+        assertTrue(w1.getWorkerView()[0][0] == null);
         //3. Move()
         t.moveWorker(m.getSelectedWorker(),m.getSelectedWorker().getRowWorker()+1,m.getSelectedWorker().getColWorker()+1);
         //4. Generate Building Matrix
