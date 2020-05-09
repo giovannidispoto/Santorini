@@ -344,6 +344,7 @@ public class Controller {
                boolean winner = turn.move(match.getSelectedWorker(),x,y);
                 if(winner){
                     delcareWinner(match.getWinner());
+                    System.out.println("Winner: "+ match.getWinner().getPlayerNickname());
                 }
                 break;
             case BUILD:
@@ -365,9 +366,9 @@ public class Controller {
     private void delcareWinner(Player winner) {
         for(Player p : match.getMatchPlayers()){
             if(p.getPlayerNickname().equals(winner.getPlayerNickname()))
-                handlers.get(winner.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youWin", null)));
+                handlers.get(p.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youWin", null)));
             else
-                handlers.get(p.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+                handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
         }
 
     }

@@ -80,14 +80,15 @@ public class PlayerTurn {
     public boolean move(Worker w, int x, int y){
         //move
         currentTurn.moveWorker(w,x,y);
-        updateBuildingMatrix();
-        steps.remove(0);
         currentTurn.checkLocalCondition(w);
+        steps.remove(0);
 
         if(match.getWinner() != null)
             return true;
-
-        return false;
+        else {
+            updateBuildingMatrix();
+            return false;
+        }
     }
 
     /**
