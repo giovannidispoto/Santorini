@@ -116,6 +116,12 @@ public class CLIController implements View {
                         break;
                 }
 
+                //CurrentStep is Updated by Server after the step has been done
+                if(clientController.getCurrentStep() != Step.END){
+                    clientController.waitWorkerViewUpdate();
+                    //Woke up by: WorkerViewUpdate
+                }
+
             } while (Step.END != clientController.getCurrentStep());
 
         }while(GameState.FINISH != clientController.getGameState());

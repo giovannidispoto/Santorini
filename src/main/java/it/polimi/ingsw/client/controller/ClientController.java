@@ -152,6 +152,16 @@ public class ClientController {
         }
     }
 
+    /** Wait until you receive WorkerViewUpdate message from the server
+     *  N.B: Blocking method until a response is received
+     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     */
+    public void waitWorkerViewUpdate() throws SantoriniException {
+        synchronized (WaitManager.waitWorkerViewUpdate){
+            waitManager.setWait(WaitManager.waitWorkerViewUpdate, this);
+        }
+    }
+
     //------    REQUEST MESSAGES to Server
 
         //--  REQUESTS IN LOBBY
@@ -275,9 +285,7 @@ public class ClientController {
         SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
         //Wait Server Response
-        synchronized (WaitManager.waitWorkerViewUpdate){
-            waitManager.setWait(WaitManager.waitWorkerViewUpdate, this);
-        }
+        waitWorkerViewUpdate();
     }
 
     /** Client notifies the server of the action requested by the player for the current step
