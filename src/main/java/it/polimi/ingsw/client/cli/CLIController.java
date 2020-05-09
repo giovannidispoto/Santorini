@@ -82,11 +82,11 @@ public class CLIController implements View {
 
             //do all steps
             do {
-                do {
-                    //Select worker & get automatically his workerView
-                    commandLine.selectWorker(clientController);
-                    //Woke up by: WorkerViewUpdate
-                }while(clientController.isInvalidWorkerView());
+                //Select worker & get automatically his workerView
+                commandLine.selectWorker(clientController);
+                //Woke up by: WorkerViewUpdate
+            }while(clientController.isInvalidWorkerView());
+            do {
                 //do something for every step
                 switch (clientController.getCurrentStep()){
                     case MOVE:

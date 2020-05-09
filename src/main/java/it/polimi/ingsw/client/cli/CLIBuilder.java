@@ -1248,7 +1248,7 @@ public class CLIBuilder implements UIActions{
                         }
                         System.out.print(String.format(CURSOR_UP,1));
                         System.out.print(CLEAN);
-                        System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                        System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
                         while(!consoleScanner.hasNextInt()){
                             System.out.print(String.format(CURSOR_UP,1));
                             System.out.print(CLEAN);
@@ -1313,7 +1313,9 @@ public class CLIBuilder implements UIActions{
                     16|Cell col • >
                     17|
                  */
-                System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
@@ -1337,7 +1339,7 @@ public class CLIBuilder implements UIActions{
                 if(clientController.getWorkerViewCell(cellRow,cellCol))
                     validMove=true;
                 if(!validMove){
-                    /*  # MOVEMENT CELL COL #
+                    /*  # MOVEMENT INVALID CELL #
                         14|
                         15|Invalid cell... retry! • Select a valid cell for the movement phase
                         16|
@@ -1351,11 +1353,11 @@ public class CLIBuilder implements UIActions{
 
         }
         while(!validMove);
+        printedLinesCounter+=1;
         if(skipChosen)
             clientController.skipStepRequest();
         else
             clientController.playStepRequest(cellRow,cellCol);
-        printedLinesCounter+=1;
     }
 
     /**
@@ -1428,7 +1430,9 @@ public class CLIBuilder implements UIActions{
                 16|Cell row • >
                 17|
              */
-            System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
@@ -1488,10 +1492,89 @@ public class CLIBuilder implements UIActions{
     @Override
     public void buildBlock(ClientController clientController) throws SantoriniException {
         //Local Variables
-        boolean skipAvailable = clientController.getCurrentStep().equals(Step.BUILD_SPECIAL);
+        Scanner consoleScanner = new Scanner(System.in);
+        boolean validMove=false;
+        int cellRow=0,cellCol=0;
         currentPhase="Building";
         renderBoard(decomposeWorkerView(clientController));
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(CLEAN);
+        //Logic
+        System.out.print(ANSI_WHITE+BUILDING_REQUEST+NEW_LINE);
+        do{
+            /*  # BUILDING CELL ROW #
+                14|
+                15|Select a valid cell for the building phase
+                16|Cell row • >
+                17|
+            */
+            System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            cellRow = consoleScanner.nextInt();
+            while(cellRow<0 || cellRow>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                cellRow = consoleScanner.nextInt();
+            }
+            /*  # MOVEMENT CELL COL #
+                14|
+                15|Select a valid cell for the building phase
+                16|Cell col • >
+                17|
+             */
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
+            }
+            cellCol = consoleScanner.nextInt();
+            while(cellCol<0 || cellCol>4){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                while(!consoleScanner.hasNextInt()){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    consoleScanner.next();
+                }
+                cellCol = consoleScanner.nextInt();
+            }
+            //Check if the inserted values belong to the worker view
+            if(clientController.getWorkerViewCell(cellRow,cellCol))
+                validMove=true;
+            if(!validMove){
+                    /*  # BUILDING INVALID CELL #
+                        14|
+                        15|Invalid cell... retry! • Select a valid cell for the building phase
+                        16|
+                        17|
+                    */
+                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+BUILDING_REQUEST+NEW_LINE);
+            }
+        } while (validMove);
+        printedLinesCounter+=1;
+        clientController.playStepRequest(cellRow,cellCol);
     }
+
     @Override
     public void removeBlock(ClientController clientController) throws SantoriniException {
         //Local Variables
