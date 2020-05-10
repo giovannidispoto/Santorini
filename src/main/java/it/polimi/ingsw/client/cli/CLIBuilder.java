@@ -157,7 +157,7 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_IP = "Invalid IP...retry! • ";
     private static final String UNAVAILABLE_LOBBY = "The selected lobby is full... try later 😭";
     private static final String INEXISTENT_LOBBY = "The selected lobby doesn't exist...retry • ";
-    private static final String NICKNAME_ERROR = "There is already a player with this nickname in the lobby...retry!";
+    private static final String NICKNAME_ERROR = "There is already a player with this nickname in this server...retry!";
     private static final String FAILED_CONNECTION = "Troubles with the connection...retry!";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
     private static final String PORT_SUGGESTION_ERROR = "This is not a number! We suggest you the port 1337 • ";
@@ -203,7 +203,7 @@ public class CLIBuilder implements UIActions{
     private static final String pickCardsTemplate = "You're the player chosen by the gods! Choose %s cards for this match 👑";
     //Turn
     private static final String waitTurn = "Wait till %s ends his turn...";
-    private static final String waitGeneric = "Wait...";
+    private static final String waitGeneric = "xait...";
     //Board
     private static final String horizontalNumberRowTemplate = BLANK+BLANK+"%s"+BLANK;
 
@@ -744,7 +744,7 @@ public class CLIBuilder implements UIActions{
                 Lobby Size 📦
                 >
                 Joining the lobby...
-                There is already a player with this nickname in the lobby...retry!
+                There is already a player with this nickname in this server...retry!
                 > |
             */
             System.out.println(ANSI_RED+NICKNAME_ERROR);
