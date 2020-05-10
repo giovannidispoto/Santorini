@@ -6,7 +6,7 @@
 	check           		<---------------------------------	addPlayerResponse	(Server check Nick presence & lobby Decision)
 (While-1 NickName,lobbyState invalid)
 
-        waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
+        **-waitSetPickedCards  (Unlocks all players but only godPlayer makes the choice)
 
 	ok						<---------------------------------	setPickedCards		("God"Player whose nickname will be in the message, choose 3 or 2 cards according to the lobby size)
 	getDeck      			--------------------------------->	ok                  (Server sends to the player god, the deck from which he can choose the cards (skimmed according to the lobby size))
@@ -14,34 +14,33 @@
     (only the GodPlayer)
 	setPickedCards        	--------------------------------->	ok					(Set Deck, Then send choose card, SelectedPlayer is the last)
 
-	    waitSetPlayerCard   (Unlock the player when asked to choose the card)
+	    **-waitSetPlayerCard   (Unlock the player when asked to choose the card)
 
 (For players-1)
 	ok						<---------------------------------	setPlayerCard   	(Player chose 1 card, send deck(little))
 	setPlayerCard         	--------------------------------->	ok					(Server add Player in match, Add card to forbidden cards, Add Color to Player and set PlayersID)
 
 
-        waitSetWorkersPosition   (Unlock the player when asked to choose the Initial Workers Position)
+        **-waitSetWorkersPosition   (Unlock the player when asked to choose the Initial Workers Position)
 
 
-(For players-2)
     ok						<---------------------------------	setWorkersPosition
     getPlayers              --------------------------------->  ok
     ok						<---------------------------------	getPlayersResponse   (nick+color+card)
     getBattlefield			--------------------------------->	ok
     ok      				<---------------------------------	getBattlefieldResponse
 	setWorkersPosition      --------------------------------->	ok
-(end-2)
 
 
 	ok(Battlefield)			<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 
     (Update Accepted only if Client is Ready for the Match)
+
 (end-1)
 
 -------------------------------------------------------------------------------------- START MATCH
 
-        waitActualPlayer
+        **-waitActualPlayer     (Unlock the player when it's his turn)
 
 (For Players-1)
 
@@ -51,7 +50,7 @@
 
 (Do-1)
     selectWorker	(check)	--------------------------------->	ok
-    ok      				<---------------------------------	(Response) WorkerViewUpdate (All WorkerView NULL, you lose)
+    ok      				<---------------------------------	(Response) workerViewUpdate (All WorkerView NULL, you lose)
 (While-1 WorkerView NULL)
 
 (Do-2)
@@ -61,9 +60,9 @@
 	ok				        <---------------------------------	playStepResponse    (opt)
 
 	if(next-Step != END)
-	    waitWorkerViewUpdate
+	    **-waitWorkerViewUpdate
 
-	ok      				<---------------------------------	WorkerViewUpdate    (opt)
+	ok      				<---------------------------------	workerViewUpdate    (opt)
 
 	Battlefield				<---------------------------------	battlefieldUpdate		(notify all, only if it has been changed)
 (While-2 Step != END)

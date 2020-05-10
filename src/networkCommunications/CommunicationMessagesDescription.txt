@@ -168,7 +168,7 @@ N.B:   (OPTIONAL) : the message is not always present   |    (ASYNCHRONOUS) : th
     }
 
 2   (ASYNCHRONOUS)  (OPTIONAL)
-    {   -notifyServerError:     {"action":"error"}
+    {   -notifyServerError:     {"action":"serverError","data":{"error":"String"}}
 
     Notifies the client that there has been a server-side error (unexpected or a cheat attempt)
     The client has the task of reporting the error and closing the program
