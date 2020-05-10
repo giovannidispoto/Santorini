@@ -44,6 +44,25 @@ public class PlayerTurn {
         match.getSelectedWorker().notifyUpdate();
     }
 
+    public boolean isLoser(){
+        List<Cell[][]> workerViews = new ArrayList<>();
+        boolean looser = true;
+        for(Worker w: match.getCurrentPlayer().getPlayerWorkers()){
+            workerViews.add(currentTurn.generateMovementMatrix(w));
+        }
+
+        for(Cell[][] workerView: workerViews){
+            for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
+                for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
+                    if(workerView[i][j] != null)
+                        looser = false;
+                }
+            }
+        }
+
+        return looser;
+    }
+
     /**
      *
      */
@@ -58,11 +77,18 @@ public class PlayerTurn {
      * @param x row
      * @param y col
      */
-    public void move(Worker w, int x, int y){
+    public boolean move(Worker w, int x, int y){
         //move
         currentTurn.moveWorker(w,x,y);
-        updateBuildingMatrix();
+        currentTurn.checkLocalCondition(w);
         steps.remove(0);
+
+        if(match.getWinner() != null)
+            return true;
+        else {
+            updateBuildingMatrix();
+            return false;
+        }
     }
 
     /**

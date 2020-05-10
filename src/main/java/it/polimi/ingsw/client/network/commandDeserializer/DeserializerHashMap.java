@@ -5,6 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
+import it.polimi.ingsw.client.network.commands.finishPhase.ServerErrorCommand;
+import it.polimi.ingsw.client.network.commands.finishPhase.LoseCommand;
+import it.polimi.ingsw.client.network.commands.finishPhase.WinCommand;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
 import it.polimi.ingsw.client.network.commands.matchPhase.*;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellInterface;
@@ -61,6 +64,10 @@ public class  DeserializerHashMap  {
         loadWorkerViewUpdate();
         loadPlayStepResponse();
         loadSkipStepResponse();
+
+        loadYouLose();
+        loadYouWin();
+        loadServerError();
     }
 
     //Specific Deserialization Methods
@@ -184,6 +191,35 @@ public class  DeserializerHashMap  {
         this.commandMap.put("skipStepResponse", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
                 return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SkipStepResponse.class);
+            }
+        });
+    }
+
+    //14
+    private void loadYouWin(){
+        this.commandMap.put("youWin", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new WinCommand();
+            }
+        });
+    }
+
+    //15
+    private void loadYouLose(){
+        this.commandMap.put("youLose", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new LoseCommand();
+            }
+        });
+    }
+
+    //TODO: check
+    //16
+    private void loadServerError(){
+        this.commandMap.put("serverError", new ProcessingCommand() {
+            public Command command(JsonElement jsonElement) {
+                return  new ServerErrorCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("error").getAsString());
             }
         });
     }

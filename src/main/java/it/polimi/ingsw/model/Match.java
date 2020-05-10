@@ -53,6 +53,14 @@ public class Match {
     }
 
     /**
+     * Gets winner
+     * @return
+     */
+    public Player getWinner() {
+        return winner;
+    }
+
+    /**
      * Generates a new turn
      * @param basic request basic turn
      * @return Turn object
