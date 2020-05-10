@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
-import it.polimi.ingsw.client.network.commands.finishPhase.ErrorCommand;
+import it.polimi.ingsw.client.network.commands.finishPhase.ServerErrorCommand;
 import it.polimi.ingsw.client.network.commands.finishPhase.LoseCommand;
 import it.polimi.ingsw.client.network.commands.finishPhase.WinCommand;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
@@ -67,7 +67,7 @@ public class  DeserializerHashMap  {
 
         loadYouLose();
         loadYouWin();
-        loadError();
+        loadServerError();
     }
 
     //Specific Deserialization Methods
@@ -215,10 +215,11 @@ public class  DeserializerHashMap  {
 
     //TODO: check
     //16
-    private void loadError(){
-        this.commandMap.put("error", new ProcessingCommand() {
+    private void loadServerError(){
+        this.commandMap.put("serverError", new ProcessingCommand() {
             public Command command(JsonElement jsonElement) {
-                return  new ErrorCommand();
+                return  new ServerErrorCommand(
+                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("error").getAsString());
             }
         });
     }

@@ -6,5 +6,5 @@ public final class ExceptionMessages {
     public static final String streamDownSocketError = "Most likely the server went offline | ｡ﾟ･（>﹏<）･ﾟ｡ | Damn it";
     public static final String loseMessage = "You Have Lost :(";
     public static final String winMessage = "You Have WON :)";
-    public static final String serverError = "!! SERVER_ERROR !!";
+    public static final String defaultServerError = "!! SERVER_ERROR !!";
 }
