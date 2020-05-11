@@ -9,12 +9,10 @@
 #N.B: Other gitignore must implement only the whitelist
 # Don't Ignore those folders and files
 
-#root	(rules = 5)
+#root	(rules = 3)
 !.gitignore
 !pom.xml
 !README.md
-!player1.txt
-!player2.txt
 
 #ASSETS/ (rules = 2) (You can do everything here, this folder has it's own gitignore)
 !ASSETS/

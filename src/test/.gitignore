@@ -30,14 +30,8 @@
 #client/network
 !java/it/polimi/ingsw/client/network/
 !java/it/polimi/ingsw/client/network/*.java
-!java/it/polimi/ingsw/client/network/actions/
-!java/it/polimi/ingsw/client/network/actions/*.java
-!java/it/polimi/ingsw/client/network/actions/data/
-!java/it/polimi/ingsw/client/network/actions/data/*.java
-!java/it/polimi/ingsw/client/network/actions/data/basicInterfaces/
-!java/it/polimi/ingsw/client/network/actions/data/basicInterfaces/*.java
-!java/it/polimi/ingsw/client/network/actions/data/dataInterfaces/
-!java/it/polimi/ingsw/client/network/actions/data/dataInterfaces/*.java
+!java/it/polimi/ingsw/client/network/player1.txt
+!java/it/polimi/ingsw/client/network/player2.txt
 #controller
 !java/it/polimi/ingsw/controller/
 !java/it/polimi/ingsw/controller/*.java

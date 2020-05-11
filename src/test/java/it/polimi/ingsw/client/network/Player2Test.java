@@ -21,7 +21,7 @@ public class Player2Test {
         String serverName1 = "127.0.0.3";
         String player2 = "Marcus";
 
-        File file = new File("player2.txt");
+        File file = new File("src/test/java/it/polimi/ingsw/client/network/player2.txt");
         Scanner consoleScanner = null;
         try {
             consoleScanner = new Scanner(file);
