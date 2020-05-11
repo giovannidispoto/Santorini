@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="497.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.App">
+   <children>
+      <Pane layoutX="40.0" layoutY="63.0" prefHeight="317.0" prefWidth="302.0" style="-fx-background-color: #E3DBC6; -fx-background-radius: 20px;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="24.0" layoutY="59.0" prefHeight="21.0" prefWidth="79.0" text="Port" textFill="#68583e">
+               <font>
+                  <Font name="Mistral" size="23.0" />
+               </font>
+            </Label>
+            <TextField layoutX="24.0" layoutY="88.0" prefHeight="36.0" prefWidth="250.0" promptText="Insert Socket Port.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;" />
+            <Label layoutX="26.0" layoutY="138.0" prefHeight="21.0" prefWidth="79.0" text="Server" textFill="#68583e">
+               <font>
+                  <Font name="Mistral" size="23.0" />
+               </font>
+            </Label>
+            <TextField layoutX="24.0" layoutY="167.0" prefHeight="36.0" prefWidth="250.0" promptText="Insert Server IP.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;" />
+            <Button layoutX="103.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" text="Connect" textFill="WHITE">
+               <font>
+                  <Font name="Mistral" size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <ImageView fitHeight="77.0" fitWidth="195.0" layoutX="93.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../ASSETS/Images/Web/Logo.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="106.0" layoutY="447.0" prefHeight="29.0" prefWidth="158.0" style="-fx-background-color: #ff8080; -fx-text-fill: white; -fx-background-radius: 20px; -fx-background-size: 100px;" text="Connection Error.. retry!" />
+   </children>
+</AnchorPane>
