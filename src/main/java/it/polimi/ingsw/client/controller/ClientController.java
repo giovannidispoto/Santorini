@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.controller;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.View;
@@ -49,6 +53,7 @@ public class ClientController {
     private SantoriniException gameException;
     //TODO:debug
     public boolean debug = false;
+    public final Logger loggerIO;
 
     /**
      * ClientController Constructor
@@ -58,6 +63,7 @@ public class ClientController {
         this.mainThread = Thread.currentThread();
         this.gameException = new SantoriniException(ExceptionMessages.genericError);
         this.gameState = GameState.START;
+        this.loggerIO = start_IO_Logger();
     }
 
     /**
@@ -481,5 +487,29 @@ public class ClientController {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    //-- DEBUG -- LOGGER
+    public Logger start_IO_Logger(){
+        Logger logger = Logger.getLogger("SantoriniLog");
+        FileHandler fileHandler;
+
+        try {
+            // This block configure the logger with handler and formatter
+            fileHandler = new FileHandler("./SantoriniLogFile.log");
+            logger.addHandler(fileHandler);
+            SimpleFormatter formatter = new SimpleFormatter();
+            // Set the preferred format
+            fileHandler.setFormatter(formatter);
+            // Remove console output (remove the console handler)
+            logger.setUseParentHandlers(false);
+
+            // Start first message
+            logger.info("Started Santorini Log\n");
+
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+        }
+        return logger;
     }
 }

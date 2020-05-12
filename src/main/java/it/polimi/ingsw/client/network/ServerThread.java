@@ -43,8 +43,10 @@ public class ServerThread implements Runnable {
                 } else {
                     //line received
                     serverHandler.process(line);
+                    //log input messages
+                    clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ line + "\n");
                     //TODO: debug
-                    if(clientController.debug){System.out.println(clientController.getPlayerNickname() + "Received: "+line);}   //debug
+                    if(clientController.debug){System.out.println(clientController.getPlayerNickname() + "Received: "+ line);}   //debug
                 }
             }
             //close streams and socket
