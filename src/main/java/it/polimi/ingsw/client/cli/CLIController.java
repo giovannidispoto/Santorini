@@ -105,11 +105,7 @@ public class CLIController implements View {
                         commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
-                        commandLine.setKeepRepeating(true);
-                        do{
-                            commandLine.moveWorkerUntil(clientController);
-                        }
-                        while (commandLine.getKeepRepeating());
+                        commandLine.moveWorkerUntil(clientController);
                         break;
                     case REMOVE:
                         commandLine.removeBlock(clientController);

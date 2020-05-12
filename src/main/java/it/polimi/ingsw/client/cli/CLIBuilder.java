@@ -129,7 +129,7 @@ public class CLIBuilder implements UIActions{
     private static final String MOVEMENT_REQUEST = "Select a valid cell for the movement phase";
     private static final String ROW_CELL = "Cell row • ";
     private static final String COL_CELL = "Cell column • ";
-    private static final String SKIP = "Do you want to skip this action? [yes/no] • ";
+    private static final String SKIP = "Do you want to repeat this action? [yes/no] • ";
     private static final String REPEAT = "Do you want to repeat this phase? [yes/no] • ";
     //Building
     private static final String BUILDING_REQUEST = "Select a valid cell for the building phase";
@@ -1363,6 +1363,7 @@ public class CLIBuilder implements UIActions{
             clientController.skipStepRequest();
         else
             clientController.playStepRequest(cellRow,cellCol);
+        //writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
     }
 
     /**
@@ -1486,10 +1487,10 @@ public class CLIBuilder implements UIActions{
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
             System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
-            consoleScanner.next();
+            userInput=consoleScanner.next();
         }
         if(userInput.equalsIgnoreCase("no"))
-            keepRepeating=false;
+            clientController.skipStepRequest();
         printedLinesCounter+=1;
     }
 
