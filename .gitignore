@@ -43,4 +43,8 @@
 !src/test/
 !src/test/*
 
+#src/resources (rules = 2)
+!src/resources/
+!src/resources/*
+
 #Maintained by Gorlenah

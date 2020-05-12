@@ -33,7 +33,7 @@
 		"Effect": {"effectName": "BasicTurn", "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
 	{	"cardName" : "TRITON",
-		"Effect": {"effectName": "ExtraMovePerimeter", "turnStructure": ["MOVE_UNTIL", "BUILD", "END"]}
+		"Effect": {"effectName": "ExtraMovePerimeter", "turnStructure": ["MOVE","MOVE_UNTIL", "BUILD", "END"]}
 	},
 	{	"cardName" : "HESTIA",
 		"Effect": {"effectName": "ExtraBlockPerimetral", "blocksLeft":2, "turnStructure": ["MOVE", "BUILD", "BUILD_SPECIAL", "END"]}
