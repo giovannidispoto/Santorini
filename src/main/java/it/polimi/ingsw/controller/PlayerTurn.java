@@ -64,10 +64,18 @@ public class PlayerTurn {
     }
 
     /**
-     *
+     * Update building matrix
      */
     public void updateBuildingMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
+        match.getSelectedWorker().notifyUpdate();
+    }
+
+    /**
+     * Update remove matrix
+     */
+    private void updateRemoveMatrix(){
+        match.getSelectedWorker().setWorkerView(currentTurn.generateRemoveMatrix(match.getSelectedWorker()));
         match.getSelectedWorker().notifyUpdate();
     }
 
@@ -120,6 +128,10 @@ public class PlayerTurn {
         //for turn that have a build before a move
         if(steps.get(0) == Step.MOVE)
             updateMovmentMatrix();
+
+        //for turn that have remove after build
+        if(steps.get(0) == Step.REMOVE)
+            updateRemoveMatrix();
     }
 
     /**
