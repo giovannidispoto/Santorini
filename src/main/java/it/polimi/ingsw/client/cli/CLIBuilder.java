@@ -80,7 +80,7 @@ public class CLIBuilder implements UIActions{
     private static final String CLI_INPUT = "> ";
     private static final String WORKER = "✲";
     protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
-    protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
+    protected static final String GRASS = ANSI_GREEN+"☘︎"+ANSI_WHITE;
     private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI"+ANSI_WHITE;
     private static final String WELCOME = "Welcome to %s : The Board Game 🎲 → Enable the full screen to enjoy the best experience";
     private static final String BOARD_TITLE = "BOARD";
@@ -203,7 +203,7 @@ public class CLIBuilder implements UIActions{
     private static final String pickCardsTemplate = "You're the player chosen by the gods! Choose %s cards for this match 👑";
     //Turn
     private static final String waitTurn = "Wait till %s ends his turn...";
-    private static final String waitGeneric = "xait...";
+    private static final String waitGeneric = "Wait...";
     //Board
     private static final String horizontalNumberRowTemplate = BLANK+BLANK+"%s"+BLANK;
 
@@ -274,11 +274,11 @@ public class CLIBuilder implements UIActions{
         WorkerColorsMap.put(Color.BLUE,ANSI_BLUE+WORKER);
         WorkerColorsMap.put(Color.BROWN,ANSI_BROWN+WORKER);
         WorkerColorsMap.put(Color.GREY, ANSI_GRAY +WORKER);
-        phasesMap.put(0,"Placement"+BLANK);
-        phasesMap.put(1,"Selection"+BLANK);
-        phasesMap.put(2,"Movement"+BLANK);
-        phasesMap.put(3,"Building"+BLANK);
-        phasesMap.put(4,"Remove"+BLANK);
+        phasesMap.put(0,"Placement");
+        phasesMap.put(1,"Selection");
+        phasesMap.put(2,"Movement");
+        phasesMap.put(3,"Building");
+        phasesMap.put(4,"Remove");
     }
 
     //SECTION: Support Methods
@@ -524,7 +524,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+L_THIN_T_CORNER+H_THIN_LINE);
         currentLine.append(H_THIN_LINE.repeat(availableMoves.length()));
-        currentLine.append(H_THIN_LINE+R_THIN_T_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_T_CORNER+ANSI_WHITE);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -543,7 +543,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+lowerEdgeBoard+edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+L_THIN_B_CORNER+H_THIN_LINE);
         currentLine.append(H_THIN_LINE.repeat(availableMoves.length()));
-        currentLine.append(H_THIN_LINE+R_THIN_B_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_B_CORNER+ANSI_WHITE);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -1224,7 +1224,7 @@ public class CLIBuilder implements UIActions{
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
                     System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
-                    consoleScanner.next();
+                    userInput=consoleScanner.next();
                 }
                 if(userInput.equalsIgnoreCase("yes")) skipChosen=true;
                 else{

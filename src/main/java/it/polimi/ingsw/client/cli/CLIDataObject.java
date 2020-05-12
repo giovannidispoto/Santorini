@@ -27,7 +27,7 @@ public class CLIDataObject {
     //------------------ # Game Objects # ------------------
     protected static final String WORKER = "✲";
     protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
-    protected static final String GRASS = ANSI_GREEN+"᭟"+ANSI_WHITE;
+    protected static final String GRASS = ANSI_GREEN+"☘"+ANSI_WHITE;
 
     //Data
     private static final String cellDataTemplate = "%s %s";

@@ -78,7 +78,7 @@ public class CLIController implements View {
             } while (!isYourTurn);
 
             //It's your Turn, choose type of turn
-            clientController.setStartTurn(clientController.getPlayerNickname(), true);
+            clientController.setStartTurn(clientController.getPlayerNickname(), false);
             //Woke up by: SetStartTurnResponse
 
             do {
