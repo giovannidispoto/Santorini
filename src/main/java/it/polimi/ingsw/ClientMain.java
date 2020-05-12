@@ -35,7 +35,11 @@ public class ClientMain {
         try {
             userInterface.startGame();
         }catch (SantoriniException e){
-            System.out.println("Game Ended : " + e.getMessage());
+            if(e.getMessage().equalsIgnoreCase("You have won! 👑") || e.getMessage().equalsIgnoreCase("You have lost! 😡"))
+                userInterface.callMatchResult(e.getMessage());
+            else
+                userInterface.callErrorMessage(e.getMessage());
+            //System.out.println("Game Ended : " + e.getMessage());
 
             if(Thread.interrupted()){
                 System.out.println("Hi i've been interrupted, but now i'm ready :)");

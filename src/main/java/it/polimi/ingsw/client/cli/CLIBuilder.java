@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
-import it.polimi.ingsw.client.clientModel.basic.Block;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.clientModel.basic.Step;
@@ -129,17 +128,18 @@ public class CLIBuilder implements UIActions{
     private static final String MOVEMENT_REQUEST = "Select a valid cell for the movement phase";
     private static final String ROW_CELL = "Cell row • ";
     private static final String COL_CELL = "Cell column • ";
-    private static final String SKIP = "Do you want to repeat this action? [yes/no] • ";
+    private static final String SKIP = "Do you want to skip this action? [yes/no] • ";
     private static final String REPEAT = "Do you want to repeat this phase? [yes/no] • ";
     //Building
     private static final String BUILDING_REQUEST = "Select a valid cell for the building phase";
     //Remove
     private static final String REMOVE_REQUEST = "Select a valid tower for the remove phase";
     //Skip
-    private static final String SKIP_REQUEST = "or type [skip] to skip this action";
+    private static final String SKIP_REQUEST = "Skip request";
+    //Repeat
+    private static final String REPEAT_REQUEST = "Repeat request";
 
     //------------------ # Successes Messages # ------------------
-
     //Web
     private static final String SUCCESSFUL_HANDSHAKING = "Connection established!";
     private static final String SUCCESSFUL_LOBBY_ACCESS = "You have correctly joined the lobby!";
@@ -166,7 +166,7 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
 
     //Fatal
-    private static final String FATAL_ERROR = "Something broke down... a Player encountered the %s 🔥";
+    private static final String FATAL_ERROR = "Something broke down! PROBLEM: %s 🔥";
     private static final String EXIT = "Type [quit] to close the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
     private static final String CLOSING = "Closing the program...";
@@ -1210,205 +1210,15 @@ public class CLIBuilder implements UIActions{
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
+        System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
         //Logic
-        if(skipAvailable)
-            System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+SKIP_REQUEST+NEW_LINE);
-        else
-            System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
         do{
-            if(skipAvailable){
-                //You can skip OR choose a cell from the available ones
-                System.out.print(ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
-                userInput=consoleScanner.next();
-                while(!userInput.equalsIgnoreCase("yes") && !userInput.equalsIgnoreCase("no")){
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
-                    userInput=consoleScanner.next();
-                }
-                if(userInput.equalsIgnoreCase("yes")) skipChosen=true;
-                else{
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    do{
-                        System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                        while(!consoleScanner.hasNextInt()){
-                            System.out.print(String.format(CURSOR_UP,1));
-                            System.out.print(CLEAN);
-                            System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                            consoleScanner.next();
-                        }
-                        cellRow = consoleScanner.nextInt();
-                        while(cellRow<0 || cellRow>4){
-                            System.out.print(String.format(CURSOR_UP,1));
-                            System.out.print(CLEAN);
-                            System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                            while(!consoleScanner.hasNextInt()){
-                                System.out.print(String.format(CURSOR_UP,1));
-                                System.out.print(CLEAN);
-                                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                                consoleScanner.next();
-                            }
-                            cellRow = consoleScanner.nextInt();
-                        }
-                        System.out.print(String.format(CURSOR_UP,1));
-                        System.out.print(CLEAN);
-                        System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
-                        while(!consoleScanner.hasNextInt()){
-                            System.out.print(String.format(CURSOR_UP,1));
-                            System.out.print(CLEAN);
-                            System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                            consoleScanner.next();
-                        }
-                        cellCol = consoleScanner.nextInt();
-                        while(cellCol<0 || cellCol>4){
-                            System.out.print(String.format(CURSOR_UP,1));
-                            System.out.print(CLEAN);
-                            System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                            while(!consoleScanner.hasNextInt()){
-                                System.out.print(String.format(CURSOR_UP,1));
-                                System.out.print(CLEAN);
-                                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                                consoleScanner.next();
-                            }
-                            cellCol = consoleScanner.nextInt();
-                        }
-                        //Check if the inserted values belong to the worker view
-                        if(clientController.getWorkerViewCell(cellRow,cellCol))
-                            validMove=true;
-                        if(!validMove){
-                            System.out.print(String.format(CURSOR_UP,2));
-                            System.out.print(CLEAN);
-                            System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
-                        }
-                    }while (!validMove);
-                }
-            }
-            else{
-                //Can't skip, choose a cell from the available ones
                 /*  # MOVEMENT CELL ROW #
                     14|
                     15|Select a valid cell for the movement phase
                     16|Cell row • >
                     17|
                  */
-                System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                while(!consoleScanner.hasNextInt()){
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                    consoleScanner.next();
-                }
-                cellRow = consoleScanner.nextInt();
-                while(cellRow<0 || cellRow>4){
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                    while(!consoleScanner.hasNextInt()){
-                        System.out.print(String.format(CURSOR_UP,1));
-                        System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                        consoleScanner.next();
-                    }
-                    cellRow = consoleScanner.nextInt();
-                }
-                /*  # MOVEMENT CELL COL #
-                    14|
-                    15|Select a valid cell for the movement phase
-                    16|Cell col • >
-                    17|
-                 */
-                System.out.print(String.format(CURSOR_UP,1));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
-                while(!consoleScanner.hasNextInt()){
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                    consoleScanner.next();
-                }
-                cellCol = consoleScanner.nextInt();
-                while(cellCol<0 || cellCol>4){
-                    System.out.print(String.format(CURSOR_UP,1));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
-                    while(!consoleScanner.hasNextInt()){
-                        System.out.print(String.format(CURSOR_UP,1));
-                        System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                        consoleScanner.next();
-                    }
-                    cellCol = consoleScanner.nextInt();
-                }
-                //Check if the inserted values belong to the worker view
-                if(clientController.getWorkerViewCell(cellRow,cellCol))
-                    validMove=true;
-                if(!validMove){
-                    /*  # MOVEMENT INVALID CELL #
-                        14|
-                        15|Invalid cell... retry! • Select a valid cell for the movement phase
-                        16|
-                        17|
-                    */
-                    System.out.print(String.format(CURSOR_UP,2));
-                    System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
-                }
-            }
-
-        }
-        while(!validMove);
-        printedLinesCounter+=1;
-        if(skipChosen)
-            clientController.skipStepRequest();
-        else
-            clientController.playStepRequest(cellRow,cellCol);
-        //writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
-    }
-
-    /**
-     * Move a worker in a looped way
-     * 0 |            BOARD
-     * 1 |
-     * 2 |     0   1   2   3   4      FULL TOWERS 🏗
-     * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
-     * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
-     * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
-     * 6 | 1 ┃   ┃   ┃   ┃   ┃   ┃    CURRENT PHASE 🚀
-     * 7 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
-     * 8 | 2 ┃   ┃   ┃   ┃   ┃   ┃    ┊ Loop Movement ┊
-     * 9 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
-     * 10| 3 ┃   ┃   ┃   ┃   ┃   ┃    AVAILABLE MOVES 🎮
-     * 11|   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    ┌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
-     * 12| 4 ┃   ┃   ┃   ┃   ┃   ┃    ┊ [2|1] [0|2] ┊
-     * 13|   ┗━━━┻━━━┻━━━┻━━━┻━━━┛    └╌╌╌╌╌╌╌╌╌╌╌╌╌┘
-     * 14|
-     * 15|Select a valid cell for the movement phase
-     * 16|Cell row • >
-     * 17|
-     * @param clientController is the client-side controller
-     * @throws SantoriniException is a generic purpose exception
-     */
-    @Override
-    public void moveWorkerUntil(ClientController clientController) throws SantoriniException {
-        //Local Variables
-        String userInput;
-        boolean validMove = false;
-        int cellRow=0,cellCol=0;
-        currentPhase=phasesMap.get(2);
-        //Clean
-        renderBoard(decomposeWorkerView(clientController));
-        System.out.print(String.format(CURSOR_UP,1));
-        System.out.print(CLEAN);
-        //Logic
-        System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
-        do{
-            /*  # MOVEMENT CELL ROW #
-                14|
-                15|Select a valid cell for the movement phase
-                16|Cell row • >
-                17|
-             */
             System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
@@ -1429,12 +1239,12 @@ public class CLIBuilder implements UIActions{
                 }
                 cellRow = consoleScanner.nextInt();
             }
-            /*  # MOVEMENT CELL COL #
-                14|
-                15|Select a valid cell for the movement phase
-                16|Cell row • >
-                17|
-             */
+                /*  # MOVEMENT CELL COL #
+                    14|
+                    15|Select a valid cell for the movement phase
+                    16|Cell col • >
+                    17|
+                 */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
             System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
@@ -1461,37 +1271,64 @@ public class CLIBuilder implements UIActions{
             if(clientController.getWorkerViewCell(cellRow,cellCol))
                 validMove=true;
             if(!validMove){
-                /*  # INVALID MOVEMENT CELL #
-                    14|
-                    15|Invalid cell... retry! • Select a valid cell for the movement phase
-                    16|
-                    17|
-                */
+                    /*  # MOVEMENT INVALID CELL #
+                        14|
+                        15|Invalid cell... retry! • Select a valid cell for the movement phase
+                        16|
+                        17|
+                    */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
             }
-        }while (!validMove);
+
+        }while(!validMove);
+        printedLinesCounter+=1;
         clientController.playStepRequest(cellRow,cellCol);
-        /*  # ASKING FOR REPETITION #
-            14|
-            15|Select a valid cell for the movement phase
-            16|Do you want to repeat this phase? [yes/no] • >
-            17|
-        */
+    }
+
+    @Override
+    public boolean askForSkip() {
+        boolean answer;
+        String userAnswer;
+        currentPhase=phasesMap.get(2);
+        renderBoard("Ask for skip"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_GRAY+REPEAT+ANSI_WHITE+CLI_INPUT);
-        userInput=consoleScanner.next();
-        while(!userInput.equalsIgnoreCase("yes") && !userInput.equalsIgnoreCase("no")){
+        System.out.print(ANSI_WHITE+SKIP_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+        printedLinesCounter+=1;
+        userAnswer=consoleScanner.next();
+        while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
-            userInput=consoleScanner.next();
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+            userAnswer=consoleScanner.next();
         }
-        if(userInput.equalsIgnoreCase("no"))
-            clientController.skipStepRequest();
+        answer= userAnswer.equalsIgnoreCase("yes");
+        return answer;
+    }
+
+    @Override
+    public boolean askForRepeat() {
+        boolean answer;
+        String userAnswer;
+        currentPhase=phasesMap.get(2);
+        renderBoard("Ask for repeat"+BLANK);
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(CLEAN);
+        System.out.print(ANSI_WHITE+REPEAT_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+REPEAT+ANSI_WHITE+CLI_INPUT);
         printedLinesCounter+=1;
+        userAnswer=consoleScanner.next();
+        while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+            userAnswer=consoleScanner.next();
+        }
+        answer= userAnswer.equalsIgnoreCase("yes");
+        return answer;
     }
 
     /**
@@ -1617,7 +1454,7 @@ public class CLIBuilder implements UIActions{
     public void callError(String exceptionName) {
         String userInput;
         System.out.println(ANSI_RED+String.format(FATAL_ERROR,exceptionName));
-        System.out.println(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+        System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
         userInput=consoleScanner.next();
         while (!userInput.equalsIgnoreCase("quit")){
             System.out.print(String.format(CURSOR_UP,1));
@@ -1625,10 +1462,16 @@ public class CLIBuilder implements UIActions{
             System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
             userInput=consoleScanner.next();
         }
-        System.out.println(GOODBYE+NEW_LINE+CLOSING);
+        System.out.println(GOODBYE+NEW_LINE+ANSI_GRAY+CLOSING);
         System.exit(0);
     }
 
+    @Override
+    public void callMatchResult(String result) {
+        System.out.print(ANSI_WHITE+"RESULT:"+BLANK+result+NEW_LINE);
+        System.out.print(ANSI_GRAY+CLOSING);
+        System.exit(0);
+    }
 
     public boolean getKeepRepeating(){return keepRepeating;}
     public void setKeepRepeating(boolean action){this.keepRepeating=action;}

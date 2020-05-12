@@ -9,10 +9,12 @@ public interface UIActions {
     WorkerPositionInterface placeWorkers(ClientController clientController, int workerID);
     void selectWorker(ClientController clientController) throws SantoriniException;
     void moveWorker(ClientController clientController) throws SantoriniException;
-    void moveWorkerUntil(ClientController clientController) throws SantoriniException;
+    boolean askForSkip();
+    boolean askForRepeat();
     void buildBlock(ClientController clientController) throws SantoriniException;
     void removeBlock(ClientController clientController) throws SantoriniException;
     void setupConnection(ClientController clientController) throws SantoriniException;
     void callError(String exceptionName);
+    void callMatchResult(String result);
 
 }

@@ -21,4 +21,15 @@ public class GUIController implements View {
     public void printBattlefield() {
 
     }
+
+    @Override
+    public void callErrorMessage(String message) {
+
+    }
+
+    @Override
+    public void callMatchResult(String message) {
+
+    }
+
 }

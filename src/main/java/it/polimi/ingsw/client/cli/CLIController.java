@@ -99,13 +99,17 @@ public class CLIController implements View {
                     case END:
                         break;
                     case MOVE_SPECIAL:
-                        commandLine.moveWorker(clientController);
+                        if(commandLine.askForSkip())
+                            clientController.skipStepRequest();
+                        else
+                            commandLine.moveWorker(clientController);
                         break;
                     case BUILD_SPECIAL:
                         commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
-                        commandLine.moveWorkerUntil(clientController);
+                        while (commandLine.askForRepeat())
+                            commandLine.moveWorker(clientController);
                         break;
                     case REMOVE:
                         commandLine.removeBlock(clientController);
@@ -128,5 +132,15 @@ public class CLIController implements View {
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
         commandLine.renderBoard(moveMessages.get(0));
+    }
+
+    @Override
+    public void callErrorMessage(String message) {
+        commandLine.callError(message);
+    }
+
+    @Override
+    public void callMatchResult(String result) {
+       commandLine.callMatchResult(result);
     }
 }
