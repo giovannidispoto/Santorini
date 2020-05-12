@@ -34,7 +34,7 @@
       </Pane>
       <ImageView fitHeight="77.0" fitWidth="195.0" layoutX="93.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../ASSETS/Images/Web/Logo.png" />
+            <Image url="@Images/Web/Logo.png" />
          </image>
       </ImageView>
       <Label alignment="CENTER" layoutX="106.0" layoutY="447.0" prefHeight="29.0" prefWidth="158.0" style="-fx-background-color: #ff8080; -fx-text-fill: white; -fx-background-radius: 20px; -fx-background-size: 100px;" text="Connection Error.. retry!" />
