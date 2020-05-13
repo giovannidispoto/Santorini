@@ -166,7 +166,7 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
 
     //Fatal
-    private static final String FATAL_ERROR = "Something broke down! PROBLEM: %s 🔥";
+    private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s 🔥";
     private static final String EXIT = "Type [quit] to close the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
     private static final String CLOSING = "Closing the program...";
@@ -569,7 +569,7 @@ public class CLIBuilder implements UIActions{
         //Lobby Parameters
         String chosenNickname;
         int chosenLobbySize;
-        System.out.print(NEW_LINE+ANSI_WHITE+String.format(WELCOME,SANTORINI)+NEW_LINE+NEW_LINE);
+        System.out.print(NEW_LINE+COLOR_MODE+String.format(WELCOME,COLOR_MODE+SANTORINI)+NEW_LINE+NEW_LINE);
         printedLinesCounter+=2;
         /*  # TITLE BOX #
             ┌──────────────────┐
