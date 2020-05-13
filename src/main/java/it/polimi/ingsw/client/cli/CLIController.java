@@ -109,7 +109,10 @@ public class CLIController implements View {
                         break;
                     case MOVE_UNTIL:
                         while (commandLine.askForRepeat())
+                        {
                             commandLine.moveWorker(clientController);
+                            clientController.waitWorkerViewUpdate();
+                        }
                         break;
                     case REMOVE:
                         commandLine.removeBlock(clientController);
