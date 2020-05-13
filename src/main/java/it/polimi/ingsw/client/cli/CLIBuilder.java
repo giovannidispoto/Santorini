@@ -1469,7 +1469,7 @@ public class CLIBuilder implements UIActions{
     @Override
     public void callMatchResult(String result) {
         System.out.print(ANSI_WHITE+"RESULT:"+BLANK+result+NEW_LINE);
-        System.out.print(ANSI_GRAY+CLOSING);
+        System.out.println(ANSI_GRAY+CLOSING);
         System.exit(0);
     }
 
