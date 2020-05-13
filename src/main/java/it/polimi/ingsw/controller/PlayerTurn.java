@@ -89,7 +89,7 @@ public class PlayerTurn {
         //move
         currentTurn.moveWorker(w,x,y);
         currentTurn.checkLocalCondition(w);
-        if(steps.get(0) == Step.MOVE)
+        if(steps.get(0) == Step.MOVE || currentTurn.getMovesLeft() == 0)
             steps.remove(0);
 
         if(match.getWinner() != null)
