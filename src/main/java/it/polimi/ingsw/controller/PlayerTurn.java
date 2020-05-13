@@ -111,6 +111,10 @@ public class PlayerTurn {
             currentTurn.skipBuild();
 
         steps.remove(0);
+
+        //update matrix
+        if(steps.get(0) == Step.BUILD)
+            updateBuildingMatrix();
     }
 
     /**
