@@ -17,7 +17,7 @@ public class ClientMain {
 
         //Default Option (no args) = cli & dark interface
         // Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
-        if(args.length == 0 || args[0].equals("cli")){
+        if((args.length == 0 || args[0].equals("cli")) && false){
             if(args.length == 2 && args[1].equals("light")) {
                 cliColor = "light";
             }
