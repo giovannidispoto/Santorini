@@ -341,6 +341,7 @@ public class Controller {
         switch(turn.getCurrentState()){
             case MOVE:
             case MOVE_SPECIAL:
+            case MOVE_UNTIL:
                boolean winner = turn.move(match.getSelectedWorker(),x,y);
                 if(winner){
                     delcareWinner(match.getWinner());

@@ -89,14 +89,22 @@ public class PlayerTurn {
         //move
         currentTurn.moveWorker(w,x,y);
         currentTurn.checkLocalCondition(w);
-        steps.remove(0);
+        if(steps.get(0) == Step.MOVE)
+            steps.remove(0);
 
         if(match.getWinner() != null)
             return true;
-        else {
+        //Build
+
+        if(steps.get(0) == Step.BUILD){
             updateBuildingMatrix();
-            return false;
         }
+
+        if(steps.get(0) == Step.MOVE_UNTIL || steps.get(0) == Step.MOVE) {
+            updateMovmentMatrix();
+        }
+
+        return false;
     }
 
     /**
