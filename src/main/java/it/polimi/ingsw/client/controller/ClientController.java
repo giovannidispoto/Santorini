@@ -323,6 +323,14 @@ public class ClientController {
         }
     }
 
+    public void sendPingResponse() {
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("pong")));
+    }
+
+    public void resetPingTimer() {
+        serverHandler.resetServerTimeout();
+    }
+
     //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
 
     //------    USED BY WAIT-MANAGER:

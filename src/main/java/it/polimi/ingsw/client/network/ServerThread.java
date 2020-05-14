@@ -44,7 +44,9 @@ public class ServerThread implements Runnable {
                     //line received
                     serverHandler.process(line);
                     //log input messages
-                    clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ line + "\n");
+                    if(!line.equals("{\"action\":\"ping\"}")){
+                        clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ line + "\n");
+                    }
                     //TODO: debug
                     if(clientController.debug){System.out.println(clientController.getPlayerNickname() + "Received: "+ line);}   //debug
                 }
