@@ -10,6 +10,8 @@ import it.polimi.ingsw.server.actions.data.CellMatrixResponse;
 import it.polimi.ingsw.server.actions.data.WorkerViewResponse;
 
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * ClientHandler execute commands from socket and send response to client.
@@ -20,6 +22,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     private Controller controller;
     private ClientThread thread;
     private Stack<String> messageQueue;
+    private Timer timeout;
 
     /**
      * Create ClientHandler
@@ -30,6 +33,29 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
        this.controller = controller;
        this.thread = thread;
        messageQueue = new Stack<>();
+
+    }
+
+    public void setTimer(){
+        Timer timer = new Timer();
+        timeout = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                response(new Gson().toJson(new BasicMessageResponse("ping", null)));
+                timeout.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.println("Timeout");
+                    }
+                }, 2000);
+
+            }
+        },4000);
+    }
+
+    public void resetTimeout(){
+        timeout.cancel();
     }
 
     /**

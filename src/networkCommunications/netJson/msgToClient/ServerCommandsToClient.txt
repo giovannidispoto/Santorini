@@ -1,3 +1,4 @@
+{"action":"ping"}
 {"action":"addPlayerResponse","data":{"playerNickname":"Bill","lobbySize":2,"lobbyState":true,"validNick":true,"fullLobby":false}}
 //--------------------------------------------------------------------------LOBBY
 {"action":"setPickedCards","data":{"playerNickname":"Bill"}}

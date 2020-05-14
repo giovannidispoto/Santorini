@@ -29,6 +29,7 @@ public class ClientThread implements Runnable {
         this.socket = socket;
         this.controller = controller;
         this.clientHandler = new ClientHandler(controller, this);
+        this.clientHandler.setTimer();
     }
 
     /**

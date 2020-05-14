@@ -54,6 +54,7 @@ public class CommandMap {
         loadGetCardsInGame();
         loadSetWorkersPosition();
         loadGetBattlefield();
+        pong();
     }
 
 
@@ -196,6 +197,15 @@ public class CommandMap {
             @Override
             public Command command(JsonElement jsonElement) {
                 return new GetBattlefieldCommand();
+            }
+        });
+    }
+
+    private void pong(){
+        this.commandMap.put("pong", new ProcessingCommand() {
+            @Override
+            public Command command(JsonElement jsonElement) {
+                return new PongCommand();
             }
         });
     }

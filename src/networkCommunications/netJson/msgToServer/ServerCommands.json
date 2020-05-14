@@ -6,6 +6,7 @@
       "lobbySize": 2
     }
   },
+  {"action":"pong"},
   {
     "action": "getDeck"
   },
