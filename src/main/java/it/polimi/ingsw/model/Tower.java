@@ -32,6 +32,7 @@ public class Tower {
      */
     public void addBlock(Block block){
         towerBlocks.add(block);
+        Battlefield.getBattlefieldInstance().notifyUpdate();
     }
 
     /**

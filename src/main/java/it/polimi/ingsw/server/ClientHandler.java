@@ -36,6 +36,9 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     }
 
+    /**
+     * Execute ping to the client, expecting a feedback before timeout
+     */
     public void setTimer(){
         Timer timer = new Timer();
         timeout = new Timer();
@@ -54,6 +57,9 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         },4000);
     }
 
+    /**
+     * Reset timeout set by ping request
+     */
     public void resetTimeout(){
         timeout.cancel();
     }
