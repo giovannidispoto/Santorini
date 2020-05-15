@@ -5,30 +5,30 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1080" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.App">
    <children>
-      <ImageView fitHeight="1920" fitWidth="1080" layoutX="-8.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../ASSETS/Images/BoardElements/Board.png"/>
-         </image>
-      </ImageView>
-      <HBox layoutX="299.0" layoutY="70.0" prefHeight="462.0" prefWidth="467.0">
+      <AnchorPane layoutX="325.0" layoutY="92.0" prefHeight="440.0" prefWidth="440.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="317.0" AnchorPane.topAnchor="92.0">
          <children>
-            <GridPane id="battlefieldGrid" alignment="CENTER_RIGHT" gridLinesVisible="true" prefHeight="454.0" prefWidth="474.0">
+            <GridPane id="battlefieldGrid" alignment="CENTER_RIGHT" gridLinesVisible="true" layoutX="-3.0" layoutY="0.5" prefHeight="437.0" prefWidth="440.0" style="-fx-vgap: 10; -fx-hgap: 10;" stylesheets="@CSS/BoardStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="102.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.0" minWidth="10.0" prefWidth="89.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="90.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="91.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                 <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                 <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                 <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                 <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
          </children>
-      </HBox>
+      </AnchorPane>
+      <ImageView fitHeight="617.0" fitWidth="1100.0" layoutX="-8.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../../ASSETS/Images/BoardElements/Board.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

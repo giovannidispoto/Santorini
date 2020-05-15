@@ -1,0 +1,52 @@
+.root{
+    -fx-pref-width: 300;
+    -fx-pref-height: 380;
+}
+
+#loginPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+}
+
+#creationPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+}
+
+#terminalPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+    -fx-background-radius: 6;
+}
+
+#terminalLabel{
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Monaco;
+    -fx-font-size: 10;
+}
+
+.button{
+    -fx-font-family: LillyBelle;
+    -fx-font-size: 16;
+    -fx-background-color:  #9E9584;
+    -fx-background-radius: 20;
+    -fx-pref-height: 20;
+    -fx-pref-width: 120;
+    -fx-alignment: center;
+}
+
+.button:pressed{
+    -fx-background-color: #BAB29E;
+}
+
+.text-field{
+    -fx-font-family: "Minion Pro";
+    -fx-font-size: 12;
+    -fx-background-color: #9E9584;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+}
+
+.label{
+    -fx-font-family: LillyBelle;
+    -fx-text-fill: #626262;
+    -fx-font-size: 20;
+}

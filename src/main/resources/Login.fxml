@@ -1,42 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="497.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane prefHeight="372.0" prefWidth="425.0" stylesheets="@CSS/SetupConnection.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <Pane layoutX="40.0" layoutY="63.0" prefHeight="317.0" prefWidth="302.0" style="-fx-background-color: #E3DBC6; -fx-background-radius: 20px;">
-         <effect>
-            <DropShadow />
-         </effect>
+      <VBox layoutX="4.0" layoutY="-16.0" prefHeight="340.0" prefWidth="280.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label layoutX="24.0" layoutY="59.0" prefHeight="21.0" prefWidth="79.0" text="Port" textFill="#68583e">
-               <font>
-                  <Font name="Mistral" size="23.0" />
-               </font>
-            </Label>
-            <TextField id="socketPortField" layoutX="24.0" layoutY="88.0" prefHeight="36.0" prefWidth="250.0" promptText="Insert Socket Port.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;" />
-            <Label layoutX="26.0" layoutY="138.0" prefHeight="21.0" prefWidth="79.0" text="Server" textFill="#68583e">
-               <font>
-                  <Font name="Mistral" size="23.0" />
-               </font>
-            </Label>
-            <TextField id="serverIPField" fx:id="ServerIPField" layoutX="24.0" layoutY="167.0" prefHeight="36.0" prefWidth="250.0" promptText="Insert Server IP.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;" />
-            <Button id="connectButton" fx:id="connectbutton" layoutX="103.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" text="Connect" textFill="WHITE">
-               <font>
-                  <Font name="Mistral" size="22.0" />
-               </font>
-            </Button>
+            <VBox prefHeight="264.0" prefWidth="280.0" spacing="20.0">
+               <children>
+                  <AnchorPane id="loginPane" prefHeight="193.0" prefWidth="280.0" style="-fx-background-color: #E3DBC5; -fx-background-radius: 16;" stylesheets="@CSS/SetupConnection.css">
+                     <children>
+                        <ImageView fitHeight="90.0" fitWidth="280.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
+                           <image>
+                              <Image url="@Images/Web/Logo.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                        <VBox prefHeight="299.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="79.0" stylesheets="@CSS/SetupConnection.css" text="Port" textFill="#68583e">
+                                 <font>
+                                    <Font name="Mistral" size="23.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField id="socketPortField" prefHeight="36.0" prefWidth="228.0" promptText="Insert Socket Port.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;">
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label prefHeight="21.0" prefWidth="79.0" text="Server" textFill="#68583e">
+                                 <font>
+                                    <Font name="Mistral" size="23.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField id="serverIPField" fx:id="ServerIPField" prefHeight="36.0" prefWidth="228.0" promptText="Insert Server IP.." stylesheets="@CSS/SetupConnection.css">
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Button id="connectButton" fx:id="connectbutton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SetupConnection.css" text="Connect" textFill="WHITE">
+                                 <font>
+                                    <Font name="Mistral" size="22.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="2.0" top="-0.8" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="80.0" right="80.0" top="20.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <AnchorPane id="terminalPane" prefHeight="30.0" prefWidth="260.0" style="-fx-background-color: #636363; -fx-background-radius: 10;" stylesheets="@CSS/SetupConnection.css">
+               <children>
+                  <Label id="terminalLabel" prefHeight="21.0" prefWidth="260.0" text="&gt; Wait..." AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </AnchorPane>
          </children>
-      </Pane>
-      <ImageView fitHeight="77.0" fitWidth="195.0" layoutX="93.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/Web/Logo.png" />
-         </image>
-      </ImageView>
-      <Label alignment="CENTER" layoutX="106.0" layoutY="447.0" prefHeight="29.0" prefWidth="158.0" style="-fx-background-color: #ff8080; -fx-text-fill: white; -fx-background-radius: 20px; -fx-background-size: 100px;" text="Connection Error.. retry!" visible="false" />
+      </VBox>
    </children>
 </AnchorPane>
