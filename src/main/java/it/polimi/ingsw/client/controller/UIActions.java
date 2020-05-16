@@ -11,6 +11,7 @@ public interface UIActions {
     void moveWorker(ClientController clientController) throws SantoriniException;
     boolean askForSkip();
     boolean askForRepeat();
+    boolean askForBasicTurn();
     void buildBlock(ClientController clientController) throws SantoriniException;
     void removeBlock(ClientController clientController) throws SantoriniException;
     void setupConnection(ClientController clientController) throws SantoriniException;

@@ -138,6 +138,9 @@ public class CLIBuilder implements UIActions{
     private static final String SKIP_REQUEST = "Skip request";
     //Repeat
     private static final String REPEAT_REQUEST = "Repeat request";
+    //Turn Type
+    private static final String TYPE_REQUEST = "Activate God Power";
+    private static final String TYPE = "Do you want to use your God Power for this turn? [yes/no] • ";
 
     //------------------ # Successes Messages # ------------------
     //Web
@@ -279,6 +282,7 @@ public class CLIBuilder implements UIActions{
         phasesMap.put(2,"Movement");
         phasesMap.put(3,"Building");
         phasesMap.put(4,"Remove");
+        phasesMap.put(5,"Type");
     }
 
     //SECTION: Support Methods
@@ -1328,6 +1332,28 @@ public class CLIBuilder implements UIActions{
             userAnswer=consoleScanner.next();
         }
         answer= userAnswer.equalsIgnoreCase("yes");
+        return answer;
+    }
+
+    @Override
+    public boolean askForBasicTurn() {
+        boolean answer;
+        String userAnswer;
+        currentPhase=phasesMap.get(5);
+        renderBoard("Take a decision"+BLANK);
+        System.out.print(String.format(CURSOR_UP,1));
+        System.out.print(CLEAN);
+        System.out.print(ANSI_WHITE+TYPE_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT+NEW_LINE);
+        userAnswer=consoleScanner.next();
+        while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.print(CLEAN);
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT);
+            userAnswer=consoleScanner.next();
+        }
+        answer= userAnswer.equalsIgnoreCase("yes");
+        printedLinesCounter+=1;
         return answer;
     }
 
