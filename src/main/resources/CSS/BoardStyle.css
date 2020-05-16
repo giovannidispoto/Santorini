@@ -8,6 +8,10 @@
     -fx-background-color: #BAB29E;
 }
 
+#skipButton:disabled{
+    -fx-background-color: #BAB29E;
+}
+
 #fullTowersLabel{
     -fx-font-size: 40;
 }

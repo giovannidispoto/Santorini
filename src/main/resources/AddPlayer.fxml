@@ -53,7 +53,7 @@
                                  <VBox.margin>
                                     <Insets left="20.0" />
                                  </VBox.margin></RadioButton>
-                                  <Button id="createButton" fx:id="connectbutton" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" text="Join" textFill="WHITE">
+                                  <Button id="createButton" fx:id="connectbutton" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" stylesheets="@CSS/SetupConnection.css" text="Join" textFill="WHITE">
                                       <font>
                                           <Font name="Mistral" size="22.0" />
                                       </font>
