@@ -15,6 +15,7 @@
 
 .button:pressed{
     -fx-background-color: #BAB29E;
+
 }
 
 .text-field{
@@ -41,10 +42,6 @@
 
 .radio-button .radio{
     -fx-background-color: #9E9584;
-}
-
-.radio-button .dot{
-
 }
 
 #terminalPane{

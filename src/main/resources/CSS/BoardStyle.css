@@ -1,0 +1,31 @@
+#boxPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+    -fx-background-color: #E3DBC5;
+    -fx-background-radius: 16;
+}
+
+.button:pressed{
+    -fx-background-color: #BAB29E;
+}
+
+#fullTowersLabel{
+    -fx-font-size: 40;
+}
+
+.button{
+    -fx-font-family: LillyBelle;
+    -fx-font-size: 16;
+    -fx-text-fill: #ffffff;
+    -fx-background-color:  #9E9584;
+    -fx-background-radius: 20;
+    -fx-pref-height: 20;
+    -fx-pref-width: 120;
+    -fx-alignment: center;
+}
+
+.label{
+    -fx-font-family: LillyBelle;
+    -fx-text-fill: #626262;
+    -fx-font-size: 20;
+}
+
