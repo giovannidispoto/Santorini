@@ -1,46 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="497.0" prefWidth="381.0" stylesheets="@CSS/SetupConnection.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
     <children>
-        <Pane id="creationPane" layoutX="25.0" layoutY="100.0" prefHeight="317.0" prefWidth="209.0" style="-fx-background-color: #E3DBC6; -fx-pref-height: 270; -fx-pref-width: 250;" stylesheets="@CSS/SetupConnection.css">
-            <effect>
-                <DropShadow />
-            </effect>
-            <children>
-                <Label layoutX="14.0" layoutY="54.0" prefHeight="21.0" prefWidth="79.0" text="Nickname" textFill="#68583e">
-                    <font>
-                        <Font name="Mistral" size="23.0" />
-                    </font>
-                </Label>
-                <TextField id="nicknameField" layoutX="21.0" layoutY="88.0" prefHeight="36.0" prefWidth="208.0" promptText="Insert yout username" style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;" />
-                <Label layoutX="26.0" layoutY="138.0" prefHeight="21.0" prefWidth="79.0" text="Players" textFill="#68583e">
-                    <font>
-                        <Font name="Mistral" size="23.0" />
-                    </font>
-                </Label>
-                <Button id="createButton" fx:id="connectbutton" layoutX="103.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" text="Create" textFill="WHITE">
-                    <font>
-                        <Font name="Mistral" size="22.0" />
-                    </font>
-                </Button>
-            <RadioButton id="twoPlayers" layoutX="22.0" layoutY="176.0" mnemonicParsing="false" selected="true" stylesheets="@CSS/SetupConnection.css" text="2">
-               <toggleGroup>
-                  <ToggleGroup fx:id="number" />
-               </toggleGroup></RadioButton>
-            <RadioButton id="threePlayers" layoutX="23.0" layoutY="202.0" mnemonicParsing="false" stylesheets="@CSS/SetupConnection.css" text="3" toggleGroup="$number" />
-            </children>
-        </Pane>
-        <Label alignment="CENTER" layoutX="106.0" layoutY="447.0" prefHeight="29.0" prefWidth="158.0" style="-fx-background-color: #ff8080; -fx-text-fill: white; -fx-background-radius: 20px; -fx-background-size: 100px;" text="Connection Error.. retry!" visible="false" />
-        <ImageView fitHeight="90.0" fitWidth="270.0" layoutX="30.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@Images/Web/Logo.png" />
-            </image>
-        </ImageView>
+      <VBox prefHeight="240.0" prefWidth="280.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <VBox prefHeight="260.0" prefWidth="280.0">
+               <children>
+                  <AnchorPane id="boxPane" stylesheets="@CSS/SetupConnection.css">
+                     <children>
+                          <ImageView fitHeight="90.0" fitWidth="260.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
+                              <image>
+                                  <Image url="@Images/Web/Logo.png" />
+                              </image>
+                          </ImageView>
+                        <VBox prefHeight="264.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                                  <Label prefHeight="38.0" prefWidth="129.0" text="Nickname" textFill="#68583e">
+                                      <font>
+                                          <Font name="Mistral" size="23.0" />
+                                      </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" top="50.0" />
+                                 </VBox.margin>
+                                  </Label>
+                                  <TextField id="nicknameField" prefHeight="32.0" prefWidth="220.0" promptText="Insert yout username..." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;">
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin></TextField>
+                                  <Label prefHeight="21.0" prefWidth="79.0" text="Players" textFill="#68583e">
+                                      <font>
+                                          <Font name="Mistral" size="23.0" />
+                                      </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" top="5.0" />
+                                 </VBox.margin>
+                                  </Label>
+                              <RadioButton id="twoPlayers" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" selected="true" stylesheets="@CSS/SetupConnection.css" text="2 Players">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="number" />
+                                 </toggleGroup>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </RadioButton>
+                              <RadioButton id="threePlayers" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" stylesheets="@CSS/SetupConnection.css" text="3 Players" toggleGroup="$number">
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin></RadioButton>
+                                  <Button id="createButton" fx:id="connectbutton" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" text="Join" textFill="WHITE">
+                                      <font>
+                                          <Font name="Mistral" size="22.0" />
+                                      </font>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="80.0" right="80.0" top="20.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="2.0" top="-0.8" />
+                                 </padding>
+                                  </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <AnchorPane id="terminalPane" maxWidth="260.0" prefHeight="30.0" stylesheets="@CSS/SetupConnection.css">
+               <children>
+                  <Label id="terminalLabel" stylesheets="@CSS/SetupConnection.css" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+               </children>
+            </AnchorPane>
+         </children></VBox>
     </children>
 </AnchorPane>

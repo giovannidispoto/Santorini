@@ -3,25 +3,6 @@
     -fx-pref-height: 380;
 }
 
-#loginPane{
-    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
-}
-
-#creationPane{
-    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
-}
-
-#terminalPane{
-    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
-    -fx-background-radius: 6;
-}
-
-#terminalLabel{
-    -fx-text-fill: #ffffff;
-    -fx-font-family: Monaco;
-    -fx-font-size: 10;
-}
-
 .button{
     -fx-font-family: LillyBelle;
     -fx-font-size: 16;
@@ -49,4 +30,37 @@
     -fx-font-family: LillyBelle;
     -fx-text-fill: #626262;
     -fx-font-size: 20;
+}
+
+.radio-button {
+    -fx-mark-color: #F6ECD0 ;
+    -fx-font-family: "Minion Pro";
+    -fx-text-fill: #626262;
+
+}
+
+.radio-button .radio{
+    -fx-background-color: #9E9584;
+}
+
+.radio-button .dot{
+
+}
+
+#terminalPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+    -fx-background-radius: 6;
+    -fx-background-color:  #636363;
+}
+
+#terminalLabel{
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Monaco;
+    -fx-font-size: 10;
+}
+
+#boxPane{
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+    -fx-background-color: #E3DBC5;
+    -fx-background-radius: 16;
 }

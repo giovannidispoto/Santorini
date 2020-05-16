@@ -26,7 +26,7 @@ public class GUIBuilder extends Application {
         mainScene = new Scene(root);
         mainStage = stage;
         LoginView view = new LoginView(root, this);
-
+        stage.setResizable(false);
         stage.setScene(mainScene);
         stage.show();
     }
