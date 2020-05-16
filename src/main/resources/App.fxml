@@ -57,7 +57,6 @@
                   <Insets bottom="2.0" />
                </padding>
             </Button>
-            <VBox id="playersPane" layoutX="6.0" layoutY="47.0" prefHeight="212.0" prefWidth="180.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="57.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

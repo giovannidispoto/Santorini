@@ -21,6 +21,7 @@
     -fx-pref-height: 20;
     -fx-pref-width: 120;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.1), 16, 0.3, 0, 0);
 }
 
 .label{
