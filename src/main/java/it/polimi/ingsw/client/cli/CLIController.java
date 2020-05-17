@@ -77,8 +77,14 @@ public class CLIController implements View {
                 isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
             } while (!isYourTurn);
 
-            //It's your Turn, choose type of turn
-            clientController.setStartTurn(clientController.getPlayerNickname(), false);
+            //It's your Turn, check if you can choose type of turn (basic or not)
+            if(clientController.getCardsDeck().getDivinityCard(clientController.getPlayerCardName()).isChooseBasic()) {
+                clientController.setStartTurn(clientController.getPlayerNickname(), commandLine.askForBasicTurn());
+            }
+            else {
+                //can't choose basic turn
+                clientController.setStartTurn(clientController.getPlayerNickname(), false);
+            }
             //Woke up by: SetStartTurnResponse
 
             do {
@@ -86,6 +92,7 @@ public class CLIController implements View {
                 commandLine.selectWorker(clientController);
                 //Woke up by: WorkerViewUpdate
             }while(clientController.isInvalidWorkerView());
+
             //do all steps
             do {
 
