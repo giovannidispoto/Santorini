@@ -115,10 +115,11 @@ public class CLIController implements View {
                         commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
-                        while (commandLine.askForRepeat())
-                        {
+                        if (commandLine.askForRepeat()) {
                             commandLine.moveWorker(clientController);
-                            clientController.waitWorkerViewUpdate();
+                        }
+                        else {
+                            clientController.skipStepRequest();
                         }
                         break;
                     case REMOVE:
