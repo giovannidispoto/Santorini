@@ -26,6 +26,7 @@ public class ClientController {
     //--    This Player Client-Side
     private String playerNickname;
     private Color playerColor;
+    private String playerCardName;
     private boolean[][] workerView;
     private List<Integer> workersID;
     private Step currentStep;
@@ -211,13 +212,15 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", data)));
     }
 
-    /** Communicate to the server the card chosen by the Player
+    /** Communicate to the server the card chosen by the Player & save it in the ClientController
      *  (choice between possible cards sent by the server with the mirror command)
      *
      * @param playerNickname    NickName Choose by the player
      * @param cardName  name of the chosen card
      */
     public void setPlayerCardRequest(String playerNickname, String cardName){
+        this.playerCardName = cardName;
+        //send to server
         SetPlayerCardInterface data = new SetPlayerCardInterface(playerNickname, cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
@@ -402,6 +405,10 @@ public class ClientController {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public String getPlayerCardName() {
+        return playerCardName;
     }
 
         //--    WORKER-VIEW
