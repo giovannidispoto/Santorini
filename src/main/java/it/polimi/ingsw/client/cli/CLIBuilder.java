@@ -1532,7 +1532,7 @@ public class CLIBuilder implements UIActions{
             System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
             userAnswer=consoleScanner.next();
         }
-        answer= userAnswer.equalsIgnoreCase("yes");
+        answer= userAnswer.equalsIgnoreCase("no");
         return answer;
     }
 

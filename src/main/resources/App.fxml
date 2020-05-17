@@ -28,27 +28,27 @@
             <Image url="@../../../ASSETS/Images/BoardElements/Board.png" />
          </image>
       </ImageView>
-      <AnchorPane id="boxPane" layoutX="17.0" prefHeight="82.0" prefWidth="129.0" stylesheets="@CSS/BoardStyle.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <AnchorPane id="fullTowersBox" layoutX="17.0" prefHeight="82.0" prefWidth="129.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
             <ImageView fitHeight="62.0" fitWidth="79.0" layoutY="-25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="67.55319213867188" AnchorPane.topAnchor="10.0">
                <image>
                   <Image url="@Images/BoardElements/FullTowerProfile.png" />
                </image>
             </ImageView>
-            <Label id="fullTowersLabel" layoutX="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="24.0" stylesheets="@CSS/BoardStyle.css" text="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="0.0" />
+            <Label id="fullTowersLabel" layoutX="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="24.0" stylesheets="@CSS/SantoriniLabel.css" text="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
-      <AnchorPane id="boxPane" prefHeight="70.0" prefWidth="200.0" stylesheets="@CSS/BoardStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+      <AnchorPane id="phaseBox" prefHeight="70.0" prefWidth="200.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
          <children>
-            <Label id="phaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="10.0" prefHeight="50.0" prefWidth="144.0" text="Current Phase" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="10.0" />
+            <Label id="phaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="10.0" prefHeight="50.0" prefWidth="144.0" stylesheets="@CSS/SantoriniLabel.css" text="Current Phase" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="10.0" />
          </children></AnchorPane>
-      <Button id="skipButton" layoutX="60.0" layoutY="475.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@CSS/BoardStyle.css" text="Skip" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="60.0">
+      <Button id="skipButton" layoutX="60.0" layoutY="475.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@CSS/SantoriniButton.css" text="Skip" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="60.0">
          <padding>
             <Insets bottom="2.0" />
          </padding></Button>
-      <AnchorPane id="boxPane" layoutX="865.0" layoutY="406.0" prefHeight="309.0" prefWidth="181.0" stylesheets="@CSS/BoardStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <AnchorPane id="playersBox" layoutX="865.0" layoutY="406.0" prefHeight="309.0" prefWidth="181.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Label alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="38.0" prefWidth="81.0" text="Players" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="14.0" />
-            <Button id="cardsButton" layoutX="50.0" layoutY="263.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" stylesheets="@CSS/BoardStyle.css" text="Cards" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <Label id="playersLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="38.0" prefWidth="81.0" stylesheets="@CSS/SantoriniLabel.css" text="Players" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0" />
+            <Button id="cardsButton" layoutX="50.0" layoutY="263.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" stylesheets="@CSS/SantoriniButton.css" text="Cards" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                <padding>
                   <Insets bottom="2.0" />
                </padding>
