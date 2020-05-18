@@ -26,7 +26,7 @@ public class CLIController implements View {
 
     @Override
     public void startGame() throws SantoriniException {
-
+        commandLine.resetScreen();
         commandLine.setupConnection(clientController);
         //Connection with server is UP
 

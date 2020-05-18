@@ -48,6 +48,7 @@ public class CLIBuilder implements UIActions{
     private static String COLOR_MODE;
     //Specials
     protected static final String CLEAN = "\u001b[0J";
+    protected static final String INITIALIZE_SCREEN = "\033[0;0H";
     //General Purpose
     private static final String NEW_LINE = "\n";
     private static final String BLANK = " ";
@@ -291,6 +292,11 @@ public class CLIBuilder implements UIActions{
     }
 
     //SECTION: Support Methods
+
+    public void resetScreen(){
+        System.out.print(INITIALIZE_SCREEN);
+        System.out.print(CLEAN);
+    }
 
     /**
      * Prints notification about God player activity
