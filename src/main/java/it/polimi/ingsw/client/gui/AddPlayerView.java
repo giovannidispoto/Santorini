@@ -1,15 +1,19 @@
 package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.controller.GameState;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import javafx.concurrent.Task;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 
-public class AddPlayerView {
+public class AddPlayerView extends Scene {
+
     public AddPlayerView(Parent root, GUIBuilder builder) {
+        super(root);
         Button btn = (Button) root.lookup("#createButton");
         TextField nicknameField = (TextField) root.lookup("#nicknameField");
         RadioButton btn1 = (RadioButton) root.lookup("#twoPlayers");
@@ -40,6 +44,7 @@ public class AddPlayerView {
             };
             /*When server response, go on*/
             wait.setOnSucceeded( s ->{
+                GUIController.getController().setGameState(GameState.LOBBY);
                 builder.changeView();
             });
 

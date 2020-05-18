@@ -14,7 +14,7 @@ public class ClientMain {
         View userInterface;
         String cliColor = "dark";
         //force use GUI
-        boolean forceGUI = false;
+        boolean forceGUI = true;
         ClientController clientController = new ClientController();
 
         //Default Option (no args) = cli & dark interface

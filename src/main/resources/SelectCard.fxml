@@ -4,13 +4,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane prefHeight="546.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="240.0" layoutY="349.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SetupConnection.css" text="Connect" textFill="WHITE">
+      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SetupConnection.css" text="Connect" textFill="WHITE">
          <font>
             <Font name="Mistral" size="22.0" />
          </font>
       </Button>
-      <ListView id="listView" layoutX="25.0" layoutY="24.0" prefHeight="316.0" prefWidth="552.0" />
+      <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="442.0" prefWidth="693.0">
+      </ListView>
    </children>
 </AnchorPane>

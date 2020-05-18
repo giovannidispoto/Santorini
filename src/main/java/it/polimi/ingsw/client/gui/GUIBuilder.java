@@ -48,8 +48,7 @@ public class GUIBuilder extends Application {
             case CONNECTION:
                 try {
                     root = FXMLLoader.load(getClass().getResource("/AddPlayer.fxml"));
-                    mainScene = new Scene(root);
-                    AddPlayerView view = new AddPlayerView(root, this);
+                    mainScene = new AddPlayerView(root, this);
                     state = ViewState.SELECT_CARD;
                 }catch(IOException e){
                     System.out.println(e.getMessage());
@@ -58,8 +57,8 @@ public class GUIBuilder extends Application {
             case SELECT_CARD:
                 try {
                     root = FXMLLoader.load(getClass().getResource("/SelectCard.fxml"));
-                    mainScene = new Scene(root);
-                    SelectCardView view = new SelectCardView(root, this);
+                   // mainScene = new Scene(root);
+                    mainScene = new SelectCardView(root, this);
                     state = ViewState.SELECT_CARD;
                 }catch(IOException e){
                     System.out.println(e.getMessage());
@@ -68,8 +67,8 @@ public class GUIBuilder extends Application {
             case GAME:
                 try {
                     root = FXMLLoader.load(getClass().getResource("/Battlefield.fxml"));
-                    mainScene = new Scene(root);
-                    BattlefieldView view = new BattlefieldView(root, this);
+                   /// mainScene = new Scene(root);
+                    mainScene = new BattlefieldView(root, this);
                     // state = ViewState.LOGIN;
                 }catch(IOException e){
                     System.out.println(e.getMessage());
