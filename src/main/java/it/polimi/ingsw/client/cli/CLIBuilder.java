@@ -182,6 +182,7 @@ public class CLIBuilder implements UIActions{
 
     //Worker Selection
     private static final String INVALID_SELECTION = "Invalid selection... retry! • ";
+    private static final String INVALID_WORKER = "This worker is blocked...choose the other one! • ";
 
     //Movement
     private static final String INVALID_CELL = "Invalid cell... retry! • ";
@@ -1090,6 +1091,7 @@ public class CLIBuilder implements UIActions{
         //Local Variables
         int workerRow,workerCol;
         boolean validSelection=false;
+        boolean validWorker = false;
         currentPhase=phasesMap.get(1);
         //Clean the previous prompt message
         renderBoard("Select one of your workers"+BLANK);
@@ -1098,24 +1100,14 @@ public class CLIBuilder implements UIActions{
         //Logic
         System.out.print(ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
         do{
-            /*  # SELECTION ROW #
-                * 14|
-                * 15|Select a worker for this turn
-                * 16|Worker row • >
-                * 17|
-             */
-            System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
-            while(!consoleScanner.hasNextInt()){
-                System.out.print(String.format(CURSOR_UP,1));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                consoleScanner.next();
-            }
-            workerRow = consoleScanner.nextInt();
-            while(workerRow<0 || workerRow>4){
-                System.out.print(String.format(CURSOR_UP,1));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+            do{
+                /*  # SELECTION ROW #
+                 * 14|
+                 * 15|Select a worker for this turn
+                 * 16|Worker row • >
+                 * 17|
+                 */
+                System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
@@ -1123,27 +1115,27 @@ public class CLIBuilder implements UIActions{
                     consoleScanner.next();
                 }
                 workerRow = consoleScanner.nextInt();
-            }
-            /*  # SELECTION COL #
-             * 14|
-             * 15|Select a worker for this turn
-             * 16|Worker col • >
-             * 17|
-             */
-            System.out.print(String.format(CURSOR_UP,1));
-            System.out.print(CLEAN);
-            System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
-            while(!consoleScanner.hasNextInt()){
+                while(workerRow<0 || workerRow>4){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                    while(!consoleScanner.hasNextInt()){
+                        System.out.print(String.format(CURSOR_UP,1));
+                        System.out.print(CLEAN);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        consoleScanner.next();
+                    }
+                    workerRow = consoleScanner.nextInt();
+                }
+                /*  # SELECTION COL #
+                 * 14|
+                 * 15|Select a worker for this turn
+                 * 16|Worker col • >
+                 * 17|
+                 */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
-                consoleScanner.next();
-            }
-            workerCol = consoleScanner.nextInt();
-            while(workerCol<0 || workerCol>4){
-                System.out.print(String.format(CURSOR_UP,1));
-                System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
@@ -1151,28 +1143,49 @@ public class CLIBuilder implements UIActions{
                     consoleScanner.next();
                 }
                 workerCol = consoleScanner.nextInt();
-            }
+                while(workerCol<0 || workerCol>4){
+                    System.out.print(String.format(CURSOR_UP,1));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                    while(!consoleScanner.hasNextInt()){
+                        System.out.print(String.format(CURSOR_UP,1));
+                        System.out.print(CLEAN);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        consoleScanner.next();
+                    }
+                    workerCol = consoleScanner.nextInt();
+                }
 
-            if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor()!=null){
-                if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor().equals(clientController.getPlayerColor()))
-                    validSelection=true;
+                if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor()!=null){
+                    if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor().equals(clientController.getPlayerColor()))
+                        validSelection=true;
+                }
+                else
+                {
+                    /*  # INVALID SELECTION #
+                     * 14|
+                     * 15|Invalid selection... retry! • Select a worker for this turn
+                     * 16|
+                     * 17|
+                     */
+                    System.out.print(String.format(CURSOR_UP,2));
+                    System.out.print(CLEAN);
+                    System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                }
             }
+            while (!validSelection);
+            printedLinesCounter+=1;
+            clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
+            if(clientController.isInvalidWorkerView())
+                validWorker=true;
             else
             {
-                /*  # INVALID SELECTION #
-                    * 14|
-                    * 15|Invalid selection... retry! • Select a worker for this turn
-                    * 16|
-                    * 17|
-                 */
-                System.out.print(String.format(CURSOR_UP,2));
+                System.out.print(String.format(CURSOR_UP,printedLinesCounter));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_WORKER+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
             }
         }
-        while (!validSelection);
-        printedLinesCounter+=1;
-        clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
+        while(!validWorker);
     }
 
     /**
