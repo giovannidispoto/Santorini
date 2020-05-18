@@ -11,23 +11,31 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args) {
+        final String darkCLI = "dark";
+        final String lightCLI = "light";
+        final String userChoiceCLI = "cli";
         //Create client objects
         View userInterface;
-        String cliColor = "dark";
+        String cliColor;
         ClientController clientController = new ClientController();
 
-        //Default Option (no args) = gui
-        //Launch GUI -> Santorini.jar
-        if(args.length == 0 || (args.length == 1 && args[0].equals("gui"))){
-            userInterface = new GUIController(clientController);
-        }
+        //Default Option (no args) = GUI
         // Launch CLI -> Santorini.jar cli dark || Santorini.jar cli light
-        else{
-            if(args.length == 2 && args[0].equals("cli") && args[1].equals("light")) {
-                cliColor = "light";
+        if( (args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase(userChoiceCLI) ){
+            //Choose CLI color
+            if(args.length == 2 && args[1].equalsIgnoreCase(lightCLI)) {
+                cliColor = lightCLI;
             }
+            else {
+                cliColor = darkCLI;
+            }
+            //Start CLI
             Scanner consoleScanner = new Scanner(System.in);
             userInterface = new CLIController(cliColor, clientController, consoleScanner);
+        }
+        //Launch GUI -> Santorini.jar || Santorini.jar gui (etc)
+        else{
+            userInterface = new GUIController(clientController);
         }
 
         clientController.setUserView(userInterface);
