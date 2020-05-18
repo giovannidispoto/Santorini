@@ -753,7 +753,7 @@ public class CLIBuilder implements UIActions{
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
         }
-        while(!clientController.getValidNick()){
+        while(!clientController.getValidNick() && !clientController.isFullLobby()){
             /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
                 Server IP 🌍
                 >
