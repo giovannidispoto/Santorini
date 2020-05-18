@@ -6,12 +6,12 @@
 
 <AnchorPane prefHeight="546.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SetupConnection.css" text="Connect" textFill="WHITE">
+      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SantoriniButton.css" text="Connect" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0">
          <font>
             <Font name="Mistral" size="22.0" />
          </font>
       </Button>
-      <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="442.0" prefWidth="693.0">
+      <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="442.0" prefWidth="693.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
       </ListView>
    </children>
 </AnchorPane>
