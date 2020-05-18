@@ -1548,7 +1548,7 @@ public class CLIBuilder implements UIActions{
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         System.out.print(ANSI_WHITE+TYPE_REQUEST+NEW_LINE);
-        System.out.print(ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT+NEW_LINE);
+        System.out.print(ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT);
         userAnswer=consoleScanner.next();
         while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
