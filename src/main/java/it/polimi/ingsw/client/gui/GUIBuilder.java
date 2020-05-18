@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,16 +19,18 @@ public class GUIBuilder extends Application {
 
     private Scene mainScene;
     private Stage mainStage;
+    private ViewState state;
 
 
     @Override
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+        state = ViewState.CONNECTION;
         mainScene = new Scene(root);
         mainStage = stage;
         LoginView view = new LoginView(root, this);
-        stage.setResizable(false);
+
         stage.setScene(mainScene);
         stage.show();
     }
@@ -38,15 +42,45 @@ public class GUIBuilder extends Application {
 
 
     public void changeView() {
+        Parent root = null;
 
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/AddPlayer.fxml"));
-                mainScene = new Scene(root);
-                mainStage.setScene(mainScene);
-                mainStage.show();
-                AddPlayerView view = new AddPlayerView(root, this);
-            }catch(IOException e){
-                System.out.println("Error");
-            }
+        switch(state){
+            case CONNECTION:
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/AddPlayer.fxml"));
+                    mainScene = new Scene(root);
+                    AddPlayerView view = new AddPlayerView(root, this);
+                    state = ViewState.SELECT_CARD;
+                }catch(IOException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case SELECT_CARD:
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/SelectCard.fxml"));
+                    mainScene = new Scene(root);
+                    SelectCardView view = new SelectCardView(root, this);
+                    state = ViewState.SELECT_CARD;
+                }catch(IOException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case GAME:
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/Battlefield.fxml"));
+                    mainScene = new Scene(root);
+                    BattlefieldView view = new BattlefieldView(root, this);
+                    // state = ViewState.LOGIN;
+                }catch(IOException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            default:
+                root = new Pane();
+        }
+
+        mainStage.setScene(mainScene);
+        mainStage.show();
+
     }
 }

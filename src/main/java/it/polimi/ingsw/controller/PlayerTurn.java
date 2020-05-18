@@ -117,6 +117,8 @@ public class PlayerTurn {
             currentTurn.skipMove();
         if(steps.get(0) == Step.BUILD_SPECIAL)
             currentTurn.skipBuild();
+        if(steps.get(0) == Step.REMOVE)
+            currentTurn.skipBuild();
 
         steps.remove(0);
 

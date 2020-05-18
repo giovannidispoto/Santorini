@@ -29,7 +29,7 @@ public class ClientThread implements Runnable {
         this.socket = socket;
         this.controller = controller;
         this.clientHandler = new ClientHandler(controller, this);
-       // this.clientHandler.setTimer();
+        this.clientHandler.setTimer();
     }
 
     /**
@@ -47,7 +47,8 @@ public class ClientThread implements Runnable {
                     break;
                 } else {
                     clientHandler.process(line);
-                    System.out.println("Received: "+line);
+                    if(!line.contains("pong"))
+                         System.out.println("Received: "+line);
                 }
             }
             //close streams and socket

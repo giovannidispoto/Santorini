@@ -103,6 +103,8 @@ public abstract class Turn {
             throw new RuntimeException("Unexpected Error!");
         //Delete Block
         Battlefield.getBattlefieldInstance().getCell(delBlockRow,delBlockCol).getTower().removeLatestBlock();
+        //notify that battlefield has changed
+        Battlefield.getBattlefieldInstance().notifyUpdate();
     }
 
     /**
