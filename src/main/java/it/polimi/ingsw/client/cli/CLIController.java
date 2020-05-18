@@ -66,7 +66,6 @@ public class CLIController implements View {
 
         clientController.setGameState(GameState.MATCH);
 
-        //TODO:
         //----------------------------------------------------------------------------------    START MATCH
         //Wait Your Turn
         boolean isYourTurn;
@@ -138,8 +137,9 @@ public class CLIController implements View {
                 }
 
             } while (Step.END != clientController.getCurrentStep());
-        }while(GameState.FINISH != clientController.getGameState());
+        }while(GameState.FINISH != clientController.getGameState() && GameState.ERROR != clientController.getGameState());
 
+        //Game Ended
     }
 
     @Override

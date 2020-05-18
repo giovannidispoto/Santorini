@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.GUIController;
 
@@ -13,22 +14,20 @@ public class ClientMain {
         //Create client objects
         View userInterface;
         String cliColor = "dark";
-        //force use GUI
-        boolean forceGUI = true;
         ClientController clientController = new ClientController();
 
-        //Default Option (no args) = cli & dark interface
-        // Launch CLI -> Santorini.jar cli dark || Santorini.jar cli white
-        if((args.length == 0 || args[0].equals("cli")) && !forceGUI){
-            if(args.length == 2 && args[1].equals("light")) {
+        //Default Option (no args) = gui
+        //Launch GUI -> Santorini.jar
+        if(args.length == 0 || (args.length == 1 && args[0].equals("gui"))){
+            userInterface = new GUIController(clientController);
+        }
+        // Launch CLI -> Santorini.jar cli dark || Santorini.jar cli light
+        else{
+            if(args.length == 2 && args[0].equals("cli") && args[1].equals("light")) {
                 cliColor = "light";
             }
             Scanner consoleScanner = new Scanner(System.in);
             userInterface = new CLIController(cliColor, clientController, consoleScanner);
-        }
-        //Launch GUI -> Santorini.jar gui
-        else{
-            userInterface = new GUIController(clientController);
         }
 
         clientController.setUserView(userInterface);
@@ -37,10 +36,15 @@ public class ClientMain {
         try {
             userInterface.startGame();
         }catch (SantoriniException e){
-            if(e.getMessage().equalsIgnoreCase("You have won! 👑") || e.getMessage().equalsIgnoreCase("You have lost! 😡"))
+            if(e.getMessage().equals(ExceptionMessages.winMessage) || e.getMessage().equals(ExceptionMessages.loseMessage)) {
                 userInterface.callMatchResult(e.getMessage());
-            else
+            }
+            else {
                 userInterface.callErrorMessage(e.getMessage());
+            }
+
+
+            //TODO: clean
             //System.out.println("Game Ended : " + e.getMessage());
 
             if(Thread.interrupted()){
