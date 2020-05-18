@@ -161,7 +161,7 @@ public class CLIBuilder implements UIActions{
     //Web
     private static final String INVALID_IP = "Invalid IP...retry! • ";
     private static final String UNAVAILABLE_LOBBY = "The selected lobby is full... try later 😭";
-    private static final String INEXISTENT_LOBBY = "The selected lobby doesn't exist...retry • ";
+    private static final String ALREADY_EXISTENT_LOBBY = "Someone else already have created a lobby...choose the other one!";
     private static final String NICKNAME_ERROR = "There is already a player with this nickname in this server...retry!";
     private static final String FAILED_CONNECTION = "Troubles with the connection...retry!";
     private static final String LOBBY_SIZE_ERROR = "This game is just for 2 or 3 people...retry! • ";
@@ -723,19 +723,35 @@ public class CLIBuilder implements UIActions{
         System.out.print(LOBBY_JOIN+NEW_LINE);
         printedLinesCounter+=1;
         //Troubles with the lobby...
-        //# Full Lobby # -> we close the client
-        if(clientController.isFullLobby()){
-            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY);
-            System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
-            userInputString=consoleScanner.next();
-            while (!userInputString.equalsIgnoreCase("quit")){
+        while(!clientController.getLobbyState() && !clientController.isFullLobby()){
+            /*  # Already Existent Lobby # -> Someone else have already created a lobby
+                Server IP 🌍
+                >
+                Socket Port ⛩
+                We suggest you the port 1337 • >
+                Handshaking with 192.168.1.9 on port 1337...🦖
+                Connection established!
+                Nickname 👾
+                >
+                Lobby Size 📦
+                >
+                Joining the lobby...
+                Someone else already have created a lobby...choose the other one!
+                > |
+            */
+            System.out.println(ANSI_RED+ALREADY_EXISTENT_LOBBY);
+            System.out.print(ANSI_WHITE+CLI_INPUT);
+            while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
-                System.out.println(CLEAN);
-                System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
-                userInputString=consoleScanner.next();
+                System.out.print(CLEAN);
+                System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+ANSI_WHITE+CLI_INPUT);
+                consoleScanner.next();
             }
-            System.out.println(GOODBYE+NEW_LINE+CLOSING);
-            System.exit(0);
+            userInputValue=consoleScanner.nextInt();
+            chosenLobbySize=userInputValue;
+            clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobbySize);
+            System.out.print(String.format(CURSOR_UP,2));
+            System.out.print(CLEAN);
         }
         while(!clientController.getValidNick()){
             /*  # Nickname Unavailable # -> There is a player with the same nickname in the lobby
@@ -760,6 +776,20 @@ public class CLIBuilder implements UIActions{
             clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobbySize);
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
+        }
+        //# Full Lobby # -> we close the client
+        if(clientController.isFullLobby()){
+            System.out.println(ANSI_RED+UNAVAILABLE_LOBBY);
+            System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            userInputString=consoleScanner.next();
+            while (!userInputString.equalsIgnoreCase("quit")){
+                System.out.print(String.format(CURSOR_UP,1));
+                System.out.println(CLEAN);
+                System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+                userInputString=consoleScanner.next();
+            }
+            System.out.println(GOODBYE+NEW_LINE+CLOSING);
+            System.exit(0);
         }
         /*  # Setup Completed! #
             Server IP 🌍
@@ -1176,7 +1206,7 @@ public class CLIBuilder implements UIActions{
             while (!validSelection);
             printedLinesCounter+=1;
             clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
-            if(clientController.isInvalidWorkerView())
+            if(!clientController.isInvalidWorkerView())
                 validWorker=true;
             else
             {
