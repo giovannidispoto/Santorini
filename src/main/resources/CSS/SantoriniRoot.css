@@ -1,0 +1,11 @@
+#basicTurnRoot{
+    -fx-pref-height: 240;
+    -fx-pref-width: 300;
+    -fx-background-color: transparent;
+}
+
+#cardRoot{
+    -fx-pref-height: 429;
+    -fx-pref-width: 243;
+    -fx-background-color: transparent;
+}

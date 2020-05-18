@@ -4,8 +4,10 @@ package it.polimi.ingsw.client.clientModel.basic;
  * The DivinityCard class represent the card used in the game
  */
 public class DivinityCard {
+
     private final String cardName;
     private final Type cardType;
+    private final boolean chooseBasic;
     private final int numberOfPlayersAllowed;
     private final String cardEffect;
 
@@ -15,9 +17,10 @@ public class DivinityCard {
      * @param cardType Type of the card, according to enum
      * @param numberOfPlayersAllowed Number of player
      */
-    public DivinityCard(String cardName, Type cardType, String cardEffect, int numberOfPlayersAllowed) {
+    public DivinityCard(String cardName, Type cardType, boolean chooseBasic, String cardEffect, int numberOfPlayersAllowed) {
         this.cardName = cardName;
         this.cardType = cardType;
+        this.chooseBasic = chooseBasic;
         this.numberOfPlayersAllowed = numberOfPlayersAllowed;
         this.cardEffect = cardEffect;
     }
@@ -52,5 +55,13 @@ public class DivinityCard {
      */
     public String getCardEffect() {
         return cardEffect;
+    }
+
+    /**
+     * Return true if the god needs a choice before turn about type of the turn
+     * @return true if god need a choose, false otherwise
+     * */
+    public boolean isChooseBasic() {
+        return chooseBasic;
     }
 }

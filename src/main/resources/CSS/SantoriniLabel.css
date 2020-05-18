@@ -1,0 +1,24 @@
+
+.label{
+    -fx-font-family: LillyBelle;
+    -fx-text-fill: #636363;
+}
+
+#basicTurnLabel{
+    -fx-font-size: 20;
+}
+
+#playersLabel{
+    -fx-text-fill: #626262;
+    -fx-font-size: 18;
+}
+
+#phaseLabel{
+    -fx-text-fill: #626262;
+    -fx-font-size: 18;
+}
+
+#fullTowersLabel{
+    -fx-text-fill: #626262;
+    -fx-font-size: 40;
+}

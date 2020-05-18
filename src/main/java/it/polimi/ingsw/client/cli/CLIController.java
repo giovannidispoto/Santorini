@@ -77,15 +77,18 @@ public class CLIController implements View {
                 isYourTurn = clientController.getActualPlayer().equals(clientController.getPlayerNickname());
             } while (!isYourTurn);
 
-            //It's your Turn, choose type of turn
-            clientController.setStartTurn(clientController.getPlayerNickname(), false);
+            //It's your Turn, check if you can choose type of turn (basic or not)
+            if(clientController.getCardsDeck().getDivinityCard(clientController.getPlayerCardName()).isChooseBasic()) {
+                clientController.setStartTurn(clientController.getPlayerNickname(), commandLine.askForBasicTurn());
+            }
+            else {
+                //can't choose basic turn
+                clientController.setStartTurn(clientController.getPlayerNickname(), false);
+            }
             //Woke up by: SetStartTurnResponse
 
-            do {
-                //Select worker & get automatically his workerView
-                commandLine.selectWorker(clientController);
-                //Woke up by: WorkerViewUpdate
-            }while(clientController.isInvalidWorkerView());
+            commandLine.selectWorker(clientController);
+
             //do all steps
             do {
 
@@ -108,14 +111,18 @@ public class CLIController implements View {
                         commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
-                        while (commandLine.askForRepeat())
-                        {
+                        if (commandLine.askForRepeat()) {
                             commandLine.moveWorker(clientController);
-                            clientController.waitWorkerViewUpdate();
+                        }
+                        else {
+                            clientController.skipStepRequest();
                         }
                         break;
                     case REMOVE:
-                        commandLine.removeBlock(clientController);
+                        if(commandLine.askForSkip())
+                            clientController.skipStepRequest();
+                        else
+                            commandLine.removeBlock(clientController);
                         break;
                 }
 
@@ -124,9 +131,13 @@ public class CLIController implements View {
                     clientController.waitWorkerViewUpdate();
                     //Woke up by: WorkerViewUpdate
                 }
+                else {
+                    commandLine.setOperationRepeated();
+                    commandLine.setCurrentPhase("Opponent's Turn");
+                    commandLine.renderBoard(moveMessages.get(0));
+                }
 
             } while (Step.END != clientController.getCurrentStep());
-
         }while(GameState.FINISH != clientController.getGameState());
 
     }
@@ -134,6 +145,7 @@ public class CLIController implements View {
     @Override
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+        commandLine.setCurrentPhase("Opponent's Turn");
         commandLine.renderBoard(moveMessages.get(0));
     }
 

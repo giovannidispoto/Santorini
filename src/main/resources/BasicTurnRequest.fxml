@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="basicTurnRoot" prefHeight="240.0" prefWidth="300.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BasicTurnRequest">
+   <children>
+      <AnchorPane id="popUpBox" layoutX="10.0" layoutY="39.0" prefHeight="122.0" prefWidth="280.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="39.0">
+         <children>
+            <Button id="booleanButton" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" />
+            <Button id="booleanButton" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="40.0" />
+            <Label id="basicTurnLabel" alignment="CENTER" layoutX="36.0" layoutY="41.0" prefHeight="38.0" prefWidth="209.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
