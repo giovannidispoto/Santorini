@@ -133,7 +133,7 @@ public class CLIBuilder implements UIActions{
     //Building
     private static final String BUILDING_REQUEST = "Select a valid cell for the building phase";
     //Remove
-    private static final String REMOVE_REQUEST = "Select a valid tower for the remove phase";
+    private static final String REMOVE_REQUEST = "Select a valid tower for the removal phase";
     private static final String TOWER_ROW_CELL = "Tower cell row • ";
     private static final String TOWER_COL_CELL = "Tower cell column • ";
     //Skip
@@ -285,7 +285,7 @@ public class CLIBuilder implements UIActions{
         phasesMap.put(1,"Selection");
         phasesMap.put(2,"Movement");
         phasesMap.put(3,"Building");
-        phasesMap.put(4,"Remove");
+        phasesMap.put(4,"Removal");
         phasesMap.put(5,"Type");
     }
 
