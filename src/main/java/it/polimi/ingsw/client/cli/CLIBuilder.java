@@ -94,7 +94,7 @@ public class CLIBuilder implements UIActions{
     private List<String> playerMoves; //Available Moves for the Player
     private String currentPhase;
     private int fullTowersNumber;
-    private boolean keepRepeating;
+    private boolean operationRepeated=false;
     private HashMap<Integer,String> phasesMap;
 
     //------------------ # Titles # ------------------
@@ -264,7 +264,6 @@ public class CLIBuilder implements UIActions{
         this.playerMoves = new ArrayList<>();
         this.WorkerColorsMap = new HashMap<>();
         this.phasesMap = new HashMap<>();
-        this.keepRepeating=true;
         this.fullTowersNumber = 0;
         this.godPlayerRefreshHeight=0;
         this.printedLinesCounter = 0;
@@ -1592,5 +1591,8 @@ public class CLIBuilder implements UIActions{
         System.out.println(ANSI_GRAY+CLOSING);
         System.exit(0);
     }
+
+    public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
+    public void setOperationRepeated(){this.operationRepeated= !operationRepeated;}
 
 }

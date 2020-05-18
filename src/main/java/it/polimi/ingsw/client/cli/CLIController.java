@@ -87,11 +87,7 @@ public class CLIController implements View {
             }
             //Woke up by: SetStartTurnResponse
 
-            do {
-                //Select worker & get automatically his workerView
-                commandLine.selectWorker(clientController);
-                //Woke up by: WorkerViewUpdate
-            }while(clientController.isInvalidWorkerView());
+            commandLine.selectWorker(clientController);
 
             //do all steps
             do {
@@ -123,7 +119,10 @@ public class CLIController implements View {
                         }
                         break;
                     case REMOVE:
-                        commandLine.removeBlock(clientController);
+                        if(commandLine.askForSkip())
+                            clientController.skipStepRequest();
+                        else
+                            commandLine.removeBlock(clientController);
                         break;
                 }
 
@@ -132,9 +131,13 @@ public class CLIController implements View {
                     clientController.waitWorkerViewUpdate();
                     //Woke up by: WorkerViewUpdate
                 }
+                else {
+                    commandLine.setOperationRepeated();
+                    commandLine.setCurrentPhase("Opponent's Turn");
+                    commandLine.renderBoard(moveMessages.get(0));
+                }
 
             } while (Step.END != clientController.getCurrentStep());
-
         }while(GameState.FINISH != clientController.getGameState());
 
     }
@@ -142,6 +145,7 @@ public class CLIController implements View {
     @Override
     public void printBattlefield() {
         commandLine.writeBattlefieldData(BattlefieldClient.getBattlefieldInstance());
+        commandLine.setCurrentPhase("Opponent's Turn");
         commandLine.renderBoard(moveMessages.get(0));
     }
 
