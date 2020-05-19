@@ -501,7 +501,7 @@ public class ClientController {
 
         try {
             // This block configure the logger with handler and formatter
-            fileHandler = new FileHandler("./" + UUID.randomUUID().toString() + "_SantoriniLogFile.log");
+            fileHandler = new FileHandler("./" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             // Set the preferred format
