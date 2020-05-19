@@ -75,6 +75,21 @@ public class Worker implements SubjectWorkerView {
         return this.workerView;
     }
 
+    /** Check if the workerView is all null and therefore no action is possible
+     *
+     * @return  true if workerView is all null, false at least one action is possible
+     */
+    public boolean isInvalidWorkerView(){
+        for(int x=0; x < Battlefield.N_ROWS; x++){
+            for(int y=0; y < Battlefield.N_COLUMNS; y++){
+                if(workerView[x][y] != null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Gets the x coordinate of the worker inside the ground
      * @return integer
