@@ -317,8 +317,9 @@ public class Controller {
 
         match.setSelectedWorker(Battlefield.getBattlefieldInstance().getCell(x,y).getWorker());
 
-        //Add observer
-        Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().attach(handler);
+        for(Worker w : getPlayerFromString(player).getPlayerWorkers())
+            w.attach(handler);
+
         this.turn.updateMovmentMatrix();
         boolean[][] workerView = new boolean[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
 
