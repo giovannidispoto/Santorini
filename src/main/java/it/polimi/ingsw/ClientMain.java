@@ -21,7 +21,7 @@ public class ClientMain {
 
         //Default Option (no args) = GUI
         // Launch CLI -> Santorini.jar cli dark || Santorini.jar cli light
-        if( (args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase(userChoiceCLI) || true){
+        if( (args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase(userChoiceCLI)){
             //Choose CLI color
             if(args.length == 2 && args[1].equalsIgnoreCase(lightCLI)) {
                 cliColor = lightCLI;
