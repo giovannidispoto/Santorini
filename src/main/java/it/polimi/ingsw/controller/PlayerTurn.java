@@ -108,8 +108,20 @@ public class PlayerTurn {
             updateBuildingMatrix();
         }
 
-        if(steps.get(0) == Step.MOVE_UNTIL || steps.get(0) == Step.MOVE) {
+        if(steps.get(0) == Step.MOVE) {
             updateMovmentMatrix();
+        }
+
+        if(steps.get(0) == Step.MOVE_UNTIL){
+            //Check if the worker with the previous move has left the perimeter (skip action)
+            if(Battlefield.getBattlefieldInstance().getPerimeterCells().contains(Battlefield.getBattlefieldInstance().getCell(x,y))){
+                //Continue move until action
+                updateMovmentMatrix();
+            }
+            else{
+                //No longer in the perimeter
+                this.skip();
+            }
         }
 
         return false;
