@@ -1135,6 +1135,7 @@ public class CLIBuilder implements UIActions{
         System.out.print(CLEAN);
         //Logic
         System.out.print(ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+        printedLinesCounter+=1;
         do{
             do{
                 /*  # SELECTION ROW #
@@ -1195,6 +1196,19 @@ public class CLIBuilder implements UIActions{
                 if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor()!=null){
                     if(BattlefieldClient.getBattlefieldInstance().getCell(workerRow,workerCol).getWorkerColor().equals(clientController.getPlayerColor()))
                         validSelection=true;
+                    else
+                    {
+                        /*  # INVALID SELECTION #
+                         * 14|
+                         * 15|Invalid selection... retry! • Select a worker for this turn
+                         * 16|
+                         * 17|
+                         */
+                        validSelection=false;
+                        System.out.print(String.format(CURSOR_UP,2));
+                        System.out.print(CLEAN);
+                        System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                    }
                 }
                 else
                 {
@@ -1204,19 +1218,26 @@ public class CLIBuilder implements UIActions{
                      * 16|
                      * 17|
                      */
+                    validSelection=false;
                     System.out.print(String.format(CURSOR_UP,2));
                     System.out.print(CLEAN);
                     System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
                 }
             }
             while (!validSelection);
-            printedLinesCounter+=1;
             clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
             if(!clientController.isInvalidWorkerView())
                 validWorker=true;
             else
             {
-                System.out.print(String.format(CURSOR_UP,printedLinesCounter));
+                /*  # INVALID SELECTION #
+                 * 14|
+                 * 15|This worker is blocked...choose the other one! • Select a worker for this turn
+                 * 16|
+                 * 17|
+                 */
+                validWorker=false;
+                System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
                 System.out.print(ANSI_RED+INVALID_WORKER+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
             }
