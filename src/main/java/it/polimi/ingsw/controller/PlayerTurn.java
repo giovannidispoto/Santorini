@@ -75,8 +75,16 @@ public class PlayerTurn {
      * Update remove matrix
      */
     private void updateRemoveMatrix(){
+        //Change Selected Worker
+        match.setSelectedWorker(currentTurn.changeWorkerPlayer(match.getSelectedWorker()));
         match.getSelectedWorker().setWorkerView(currentTurn.generateRemoveMatrix(match.getSelectedWorker()));
-        match.getSelectedWorker().notifyUpdate();
+
+        if(match.getSelectedWorker().isInvalidWorkerView()) {
+            this.skip();
+        }
+        else {
+            match.getSelectedWorker().notifyUpdate();
+        }
     }
 
     /**
