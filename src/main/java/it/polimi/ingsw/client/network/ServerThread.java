@@ -47,21 +47,22 @@ public class ServerThread implements Runnable {
                     if(!line.equals("{\"action\":\"ping\"}")){
                         clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ line + "\n");
                     }
-                    //TODO: debug
-                    if(clientController.debug){System.out.println(clientController.getPlayerNickname() + "Received: "+ line);}   //debug
                 }
             }
             //close streams and socket
             in.close();
             this.out.close();
             this.socket.close();
-            System.out.println("Socket Connection Closed");  //debug
+            clientController.loggerIO.info("Socket Connection Closed, received quit\n");
+
         }catch (IOException  e1){
             clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError);
             clientController.interruptNormalExecution();
+            clientController.loggerIO.severe("IO-EXCEPTION "+ e1.getMessage() + "\n");
         }catch (NoSuchElementException e2){
             clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
             clientController.interruptNormalExecution();
+            clientController.loggerIO.severe("NO-SOCKET-LINE-EXCEPTION "+ e2.getMessage() + "\n");
         }
     }
 

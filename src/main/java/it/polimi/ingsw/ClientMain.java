@@ -51,14 +51,11 @@ public class ClientMain {
                 userInterface.callErrorMessage(e.getMessage());
             }
 
-
-            //TODO: clean
-            //System.out.println("Game Ended : " + e.getMessage());
-
+            //TODO: testing
             if(Thread.interrupted()){
-                System.out.println("Hi i've been interrupted, but now i'm ready :)");
+                clientController.loggerIO.severe("Thread interrupted but now ready (test)\n");
             }
-            System.exit(0);
+
         }
     }
 }

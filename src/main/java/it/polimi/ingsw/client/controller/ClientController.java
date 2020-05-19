@@ -52,8 +52,6 @@ public class ClientController {
     //--    ERROR - Game Management
     private GameState gameState;
     private SantoriniException gameException;
-    //TODO:debug
-    public boolean debug = false;
     public final Logger loggerIO;
 
     /**
@@ -326,14 +324,6 @@ public class ClientController {
         }
     }
 
-    public void sendPingResponse() {
-        serverHandler.request(new Gson().toJson(new BasicActionInterface("pong")));
-    }
-
-    public void resetPingTimer() {
-        serverHandler.resetServerTimeout();
-    }
-
     //-------------------------------------------------------------------------------------------   GETTERS & SETTERS
 
     //------    USED BY WAIT-MANAGER:
@@ -523,8 +513,17 @@ public class ClientController {
             logger.info("Started Santorini Log\n");
 
         } catch (SecurityException | IOException e) {
-            e.printStackTrace();
+            this.loggerIO.severe("FAILED-LOADING-LOGGER\n");
         }
         return logger;
+    }
+
+    //-- PING MANAGEMENT
+    public void sendPingResponse() {
+        serverHandler.request(new Gson().toJson(new BasicActionInterface("pong")));
+    }
+
+    public void resetPingTimer() {
+        serverHandler.resetServerTimeout();
     }
 }

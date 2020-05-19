@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.network;
 
+import com.google.gson.JsonParseException;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.network.commands.CommandFactory;
@@ -31,8 +32,15 @@ public class ServerHandler{
      * Process command received from the server
      * @param m message
      */
-    public void process(String m){
-        CommandFactory.from(m).execute(this.clientController);
+    public void process(String m) {
+        try {
+            CommandFactory.from(m).execute(this.clientController);
+
+        }catch(JsonParseException e) {
+            clientController.setGameExceptionMessage(ExceptionMessages.jsonError);
+            clientController.interruptNormalExecution();
+            clientController.loggerIO.severe("JSON-PARSING ERROR" + e.getMessage() + "\n");
+        }
     }
 
     /**
@@ -51,6 +59,7 @@ public class ServerHandler{
             public void run() {
                 clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
                 clientController.interruptNormalExecution();
+                clientController.loggerIO.severe("NO-PING-ERROR\n");
             }
 
         },5000);

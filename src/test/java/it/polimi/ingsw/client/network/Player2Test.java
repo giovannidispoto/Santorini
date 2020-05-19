@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.cli.CLIController;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.SantoriniException;
 
 import java.io.File;
@@ -38,12 +39,17 @@ public class Player2Test {
         try {
             userInterface.startGame();
         }catch (SantoriniException e){
-            System.out.println("Game Ended : " + e.getMessage());
+            if(e.getMessage().equals(ExceptionMessages.winMessage) || e.getMessage().equals(ExceptionMessages.loseMessage)) {
+                userInterface.callMatchResult(e.getMessage());
+            }
+            else {
+                userInterface.callErrorMessage(e.getMessage());
+            }
 
             if(Thread.interrupted()){
-                System.out.println("Hi i've been interrupted, but now i'm ready :)");
+                clientController.loggerIO.severe("Thread interrupted but now ready (test)\n");
             }
-            System.exit(0);
+
         }
     }
 
