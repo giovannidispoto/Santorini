@@ -9,6 +9,6 @@
          <image>
             <Image url="@Images/Cards/Apollo.png" />
          </image></ImageView>
-      <ImageView id="playerPawn" fitHeight="40.0" fitWidth="40.0" layoutX="197.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <ImageView id="playerPawn" fitHeight="40.0" fitWidth="40.0" layoutX="197.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>
