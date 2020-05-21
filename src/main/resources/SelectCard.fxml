@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="546.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane id="cardPickerRoot" prefHeight="444.0" prefWidth="740.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SantoriniButton.css" text="Select" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0">
+      <ImageView fitHeight="444.0" fitWidth="754.0" layoutX="14.0" layoutY="294.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@Images/Cards/PickerBackground.png" />
+         </image>
+      </ImageView>
+      <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="388.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Confirm Choice" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="290.0">
          <font>
             <Font name="Mistral" size="22.0" />
          </font>
       </Button>
-      <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="442.0" prefWidth="693.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="322.0" prefWidth="690.0" stylesheets="@CSS/SantoriniListView.css" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
       </ListView>
    </children>
 </AnchorPane>

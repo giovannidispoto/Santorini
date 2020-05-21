@@ -24,7 +24,6 @@ public class GUIBuilder extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
         state = ViewState.CONNECTION;
         mainScene = new Scene(root);
@@ -53,6 +52,7 @@ public class GUIBuilder extends Application {
                 }catch(IOException e){
                     System.out.println(e.getMessage());
                 }
+                mainStage.setResizable(false);
                 break;
             case SELECT_CARD:
                 try {
@@ -63,6 +63,7 @@ public class GUIBuilder extends Application {
                 }catch(IOException e){
                     System.out.println(e.getMessage());
                 }
+                mainStage.setResizable(false);
                 break;
             case GAME:
                 try {

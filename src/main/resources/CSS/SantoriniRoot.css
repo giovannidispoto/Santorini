@@ -5,7 +5,12 @@
 }
 
 #cardRoot{
-    -fx-pref-height: 429;
-    -fx-pref-width: 243;
+    -fx-pref-height: 298;
+    -fx-pref-width: 166;
     -fx-background-color: transparent;
+}
+
+#cardPickerRoot{
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 754;
 }

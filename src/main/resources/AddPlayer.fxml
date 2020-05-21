@@ -8,6 +8,11 @@
 
 <AnchorPane prefHeight="497.0" prefWidth="381.0" stylesheets="@CSS/SetupConnection.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
     <children>
+      <ImageView fitHeight="391.0" fitWidth="300.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@Images/Web/Sea.png" />
+         </image>
+      </ImageView>
       <VBox prefHeight="240.0" prefWidth="280.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
             <VBox prefHeight="260.0" prefWidth="280.0">
