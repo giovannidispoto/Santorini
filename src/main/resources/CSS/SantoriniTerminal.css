@@ -1,0 +1,11 @@
+#terminalBox {
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.3), 16, 0.3, 0, 0);
+    -fx-background-radius: 6;
+    -fx-background-color:  #636363;
+}
+
+.label{
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Monaco;
+    -fx-font-size: 10;
+}

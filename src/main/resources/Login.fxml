@@ -6,30 +6,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="372.0" prefWidth="425.0" stylesheets="@CSS/SetupConnection.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane id="loginRoot" prefHeight="372.0" prefWidth="425.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="381.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="408.0" fitWidth="300.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Web/Sea.png" />
          </image>
       </ImageView>
-      <VBox layoutX="4.0" layoutY="-16.0" prefHeight="340.0" prefWidth="280.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <VBox prefHeight="260.0" prefWidth="280.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <VBox prefHeight="260.0" prefWidth="280.0" spacing="20.0">
+            <VBox prefHeight="320.0" prefWidth="260.0" spacing="20.0">
                <children>
-                  <AnchorPane id="boxPane" prefHeight="190.0" prefWidth="280.0" stylesheets="@CSS/SetupConnection.css">
+                  <AnchorPane id="loginBox" prefHeight="307.0" prefWidth="261.0" stylesheets="@CSS/BeigeBox.css">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
                      <children>
-                        <ImageView fitHeight="90.0" fitWidth="280.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
-                           <image>
-                              <Image url="@Images/Web/Logo.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
-                        <VBox prefHeight="299.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="200.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label prefHeight="21.0" prefWidth="79.0" stylesheets="@CSS/SetupConnection.css" text="Port" textFill="#68583e">
+                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Port" textFill="#68583e">
                                  <font>
                                     <Font name="Mistral" size="23.0" />
                                  </font>
@@ -37,12 +32,12 @@
                                     <Insets left="20.0" right="20.0" top="50.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField id="socketPortField" prefHeight="36.0" prefWidth="228.0" promptText="Insert Socket Port.." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;">
+                              <TextField id="socketPortField" prefHeight="24.0" prefWidth="223.0" promptText="Insert Socket Port.." stylesheets="@CSS/SantoriniTextField.css">
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
                               </TextField>
-                              <Label prefHeight="21.0" prefWidth="79.0" text="Server" textFill="#68583e">
+                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Server" textFill="#68583e">
                                  <font>
                                     <Font name="Mistral" size="23.0" />
                                  </font>
@@ -50,49 +45,46 @@
                                     <Insets left="20.0" right="20.0" top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField id="serverIPField" fx:id="ServerIPField" prefHeight="36.0" prefWidth="228.0" promptText="Insert Server IP.." stylesheets="@CSS/SetupConnection.css">
+                              <TextField id="serverIPField" fx:id="ServerIPField" prefHeight="24.0" prefWidth="235.0" promptText="Insert Server IP.." stylesheets="@CSS/SantoriniTextField.css">
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
                               </TextField>
-                              <Button id="connectButton" fx:id="connectbutton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SetupConnection.css" text="Connect" textFill="WHITE">
+                              <Button id="connectButton" fx:id="connectbutton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" stylesheets="@CSS/SantoriniButton.css" text="Connect" textFill="WHITE">
                                  <font>
                                     <Font name="Mistral" size="22.0" />
                                  </font>
                                  <padding>
                                     <Insets bottom="2.0" top="-0.8" />
                                  </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" left="80.0" right="80.0" top="20.0" />
-                                 </VBox.margin>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="80.0" right="80.0" top="20.0" />
+                                 </VBox.margin>
                               </Button>
                            </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
                         </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </AnchorPane>
+                     </children></AnchorPane>
                </children>
             </VBox>
-            <AnchorPane id="terminalPane" prefHeight="30.0" prefWidth="260.0" stylesheets="@CSS/SetupConnection.css">
-               <children>
-                  <Label id="terminalLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="260.0" text="&gt; Wait..." AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
-               </children>
+            <AnchorPane id="terminalBox" prefHeight="30.0" prefWidth="260.0" stylesheets="@CSS/SantoriniTerminal.css">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="20.0" />
                </VBox.margin>
-            </AnchorPane>
+               <children>
+                  <Label id="terminalLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="240.0" text="&gt; Wait..." AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+               </children></AnchorPane>
          </children>
       </VBox>
+      <ImageView fitHeight="90.0" fitWidth="260.0" pickOnBounds="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+         <image>
+            <Image url="@Images/Web/Logo.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
    </children>
 </AnchorPane>

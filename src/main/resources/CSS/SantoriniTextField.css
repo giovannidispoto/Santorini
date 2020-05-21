@@ -1,0 +1,8 @@
+.text-field{
+    -fx-font-family: "Minion Pro";
+    -fx-font-size: 12;
+    -fx-background-color: #9E9584;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+}

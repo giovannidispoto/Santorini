@@ -1,0 +1,16 @@
+.radio-button {
+    -fx-font-family: "Minion Pro";
+    -fx-text-fill: #626262;
+    -fx-background-insets: 0, 0 0 0 0, 0;
+
+}
+
+.radio-button .radio{
+    -fx-background-color: #9E9584;
+    -fx-background-insets: 0, 0 0 0 0, 0;
+}
+
+.radio-button .dot{
+    -fx-mark-color: #F6ECD0 ;
+    -fx-background-insets: 0, 0 0 0 0, 0;
+}
