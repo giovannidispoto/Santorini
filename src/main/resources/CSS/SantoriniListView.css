@@ -9,7 +9,6 @@
     -fx-faint-focus-color: transparent;
     -fx-background-insets: 0, 0 0 0 0, 0;
     -fx-inner-border: transparent;
-    -fx-animated: false;
     -fx-pref-width: 704;
     -fx-background-color: transparent;
 }
@@ -73,6 +72,10 @@
 .list-cell:selected{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-background-insets: 0, 0 0 0 0, 0;
+}
+
+.list-cell:pressed{
     -fx-background-insets: 0, 0 0 0 0, 0;
 }
 
