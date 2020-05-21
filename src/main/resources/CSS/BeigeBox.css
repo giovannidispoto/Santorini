@@ -28,3 +28,11 @@
     -fx-background-radius: 16;
 }
 
+#loginBox{
+    -fx-pref-width: 260;
+    -fx-pref-height: 287;
+    -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.1), 16, 0.3, 0, 0);
+    -fx-background-color: #E3DBC5;
+    -fx-background-radius: 16;
+}
+

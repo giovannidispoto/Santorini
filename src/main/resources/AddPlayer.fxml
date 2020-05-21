@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="497.0" prefWidth="381.0" stylesheets="@CSS/SetupConnection.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane id="loginRoot" prefHeight="497.0" prefWidth="381.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
     <children>
-      <ImageView fitHeight="391.0" fitWidth="300.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="404.0" fitWidth="300.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Web/Sea.png" />
          </image>
@@ -17,16 +17,11 @@
          <children>
             <VBox prefHeight="260.0" prefWidth="280.0">
                <children>
-                  <AnchorPane id="boxPane" stylesheets="@CSS/SetupConnection.css">
+                  <AnchorPane id="loginBox" stylesheets="@CSS/BeigeBox.css">
                      <children>
-                          <ImageView fitHeight="90.0" fitWidth="260.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
-                              <image>
-                                  <Image url="@Images/Web/Logo.png" />
-                              </image>
-                          </ImageView>
-                        <VBox prefHeight="264.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox id="loginBox" prefHeight="264.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                                  <Label prefHeight="38.0" prefWidth="129.0" text="Nickname" textFill="#68583e">
+                                  <Label prefHeight="38.0" prefWidth="129.0" stylesheets="@CSS/SantoriniLabel.css" text="Nickname" textFill="#68583e">
                                       <font>
                                           <Font name="Mistral" size="23.0" />
                                       </font>
@@ -34,11 +29,11 @@
                                     <Insets left="20.0" right="20.0" top="50.0" />
                                  </VBox.margin>
                                   </Label>
-                                  <TextField id="nicknameField" prefHeight="32.0" prefWidth="220.0" promptText="Insert yout username..." style="-fx-background-color: #9E9584; -fx-prompt-text-fill: white;">
+                                  <TextField id="nicknameField" prefHeight="32.0" prefWidth="220.0" promptText="Insert yout username..." stylesheets="@CSS/SantoriniTextField.css">
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin></TextField>
-                                  <Label prefHeight="21.0" prefWidth="79.0" text="Players" textFill="#68583e">
+                                  <Label prefHeight="21.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Players" textFill="#68583e">
                                       <font>
                                           <Font name="Mistral" size="23.0" />
                                       </font>
@@ -46,7 +41,7 @@
                                     <Insets left="20.0" right="20.0" top="5.0" />
                                  </VBox.margin>
                                   </Label>
-                              <RadioButton id="twoPlayers" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" selected="true" stylesheets="@CSS/SetupConnection.css" text="2 Players">
+                              <RadioButton id="twoPlayers" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" selected="true" stylesheets="@CSS/SantoriniRadioButton.css" text="2 Players">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="number" />
                                  </toggleGroup>
@@ -54,11 +49,11 @@
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
                               </RadioButton>
-                              <RadioButton id="threePlayers" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" stylesheets="@CSS/SetupConnection.css" text="3 Players" toggleGroup="$number">
+                              <RadioButton id="threePlayers" mnemonicParsing="false" prefHeight="17.5" prefWidth="95.0" stylesheets="@CSS/SantoriniRadioButton.css" text="3 Players" toggleGroup="$number">
                                  <VBox.margin>
                                     <Insets left="20.0" />
                                  </VBox.margin></RadioButton>
-                                  <Button id="createButton" fx:id="connectbutton" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" stylesheets="@CSS/SetupConnection.css" text="Join" textFill="WHITE">
+                                  <Button id="createButton" fx:id="connectbutton" mnemonicParsing="false" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #9E9584; -fx-background-radius: 20px;" stylesheets="@CSS/SantoriniButton.css" text="Join" textFill="WHITE">
                                       <font>
                                           <Font name="Mistral" size="22.0" />
                                       </font>
@@ -87,5 +82,10 @@
                </children>
             </AnchorPane>
          </children></VBox>
+        <ImageView fitHeight="90.0" fitWidth="260.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+            <image>
+                <Image url="@Images/Web/Logo.png" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>

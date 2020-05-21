@@ -28,8 +28,8 @@ public class GUIBuilder extends Application {
         state = ViewState.CONNECTION;
         mainScene = new Scene(root);
         mainStage = stage;
+        mainStage.setResizable(false);
         LoginView view = new LoginView(root, this);
-
         stage.setScene(mainScene);
         stage.show();
     }
