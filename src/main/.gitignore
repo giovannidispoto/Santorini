@@ -5,6 +5,8 @@
 
 #src/main/  (rules = 64)
 !.gitignore
+#Java Resources (if you want access it from jar put here) (All files- no restriction)
+!resources/*
 !java/
 !java/it/
 !java/it/polimi/
