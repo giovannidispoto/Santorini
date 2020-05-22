@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.network;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
+import it.polimi.ingsw.client.controller.GameState;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,10 +57,12 @@ public class ServerThread implements Runnable {
             clientController.loggerIO.info("Socket Connection Closed, received quit\n");
 
         }catch (IOException  e1){
+            clientController.setGameState(GameState.ERROR);
             clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError);
             clientController.interruptNormalExecution();
             clientController.loggerIO.severe("IO-EXCEPTION "+ e1.getMessage() + "\n");
         }catch (NoSuchElementException e2){
+            clientController.setGameState(GameState.ERROR);
             clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
             clientController.interruptNormalExecution();
             clientController.loggerIO.severe("NO-SOCKET-LINE-EXCEPTION "+ e2.getMessage() + "\n");

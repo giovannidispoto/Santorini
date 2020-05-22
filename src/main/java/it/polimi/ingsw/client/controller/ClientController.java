@@ -104,7 +104,8 @@ public class ClientController {
      * @param errorMessage  String representing the error
      */
     public void setGameExceptionMessage(String errorMessage) {
-        this.gameException = new SantoriniException(errorMessage);
+        if(gameState != GameState.ERROR && gameState != GameState.FINISH)
+            this.gameException = new SantoriniException(errorMessage);
     }
 
     /**
