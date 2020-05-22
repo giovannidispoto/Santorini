@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class LoginView {
 
@@ -29,7 +30,7 @@ public class LoginView {
                 boolean result = GUIController.getController().getSocketConnection().startConnection();
                 if(result){
                     System.out.println("Connection established");
-                    builder.changeView();
+                    builder.changeView(Optional.empty());
                 }
             });
 

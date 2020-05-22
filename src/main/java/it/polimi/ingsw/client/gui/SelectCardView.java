@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
 import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
 import it.polimi.ingsw.client.controller.GameState;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,35 +24,30 @@ import javafx.scene.paint.Paint;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class SelectCardView extends Scene {
     private Map<String,Boolean> map;
 
-    public SelectCardView(Parent root, GUIBuilder builder) throws IOException {
+    public SelectCardView(Parent root, GUIBuilder builder, boolean god) throws IOException, ExecutionException, InterruptedException {
         super(root);
-        Task<Void> wait;
-        if(GUIController.getController().getGodPlayer().equals(GUIController.getController().getPlayerNickname())) {
+        Task<Void> wait = null;
+        Task<Void> wait1 = null;
+        Task<Void> wait2 = null;
 
-            wait = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    GUIController.getController().getDeckRequest();
-                    return null;
-                }
-            };
-            /*When server response, go on*/
-            wait.setOnSucceeded(s -> {
-                ObservableList<String> deck = FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getCardsDeck().getAllCards().stream().map(card -> card.getCardName()).collect(Collectors.toList())));
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+
+        if(god){
+            ObservableList<String> deck =  FXCollections.emptyObservableList();
                 map = new HashMap<>();
-
-                for (int i = 0; i < deck.size(); i++)
-                    map.put(deck.get(i), false);
 
                 //  ObservableList<String> selectedCard = FXCollections.observableArrayList(cardS);
                 ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
-                listView.setItems(deck);
-                listView.setCellFactory(param -> new BuildCell());
                 listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -62,55 +58,80 @@ public class SelectCardView extends Scene {
                     }
                 });
 
-                ((Button) root.lookup("#selectButton")).setOnMouseClicked(
-                        e->{
-                            List<String> cards = new LinkedList<>();
-                            for(String card : map.keySet()){
-                                if(map.get(card))
-                                    cards.add(card);
-                            }
-                            GUIController.getController().setPickedCardsRequest(cards);
 
-                            System.out.println("Event");
-                        });
+            ((Button) root.lookup("#selectButton")).setOnMouseClicked(
+                    e->{
+                        List<String> cards = new LinkedList<>();
+                        for(String card : map.keySet()){
+                            if(map.get(card))
+                                cards.add(card);
+                        }
+                        GUIController.getController().setPickedCardsRequest(cards);
+                        builder.changeView(Optional.empty());
+                    });
 
+            wait = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    GUIController.getController().getDeckRequest();
+                    return null;
+                }
+            };
 
+            wait.setOnSucceeded(s->{
+                listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getCardsDeck().getAllCards().stream().map(card->card.getCardName()).collect(Collectors.toList()))));
+                for (int i = 0; i < listView.getItems().size(); i++)
+                    map.put(listView.getItems().get(i), false);
+                listView.setCellFactory(param -> new BuildCell());
             });
+
+            executor.submit(wait);
         }else{
-             wait = new Task<>() {
+           // ObservableList<String> deck = FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards()));
+                map = new HashMap<>();
+
+                //  ObservableList<String> selectedCard = FXCollections.observableArrayList(cardS);
+                ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
+                listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                        //listView.getSelectionModel().get
+                        if (map.values().stream().filter(e -> e == true).count() == 0)
+                            map.put(t1, true);
+                        listView.refresh();
+                    }
+                });
+
+            ((Button) root.lookup("#selectButton")).setOnMouseClicked(
+                    e->{
+                        List<String> cards = new LinkedList<>();
+                        for(String card : map.keySet()){
+                            if(map.get(card))
+                                cards.add(card);
+                        }
+                        GUIController.getController().setPlayerCardRequest(GUIController.getController().getPlayerNickname(), cards.get(0));
+                        builder.changeView(Optional.empty());
+                        //t2.start();
+                    });
+
+            wait1 = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
                     GUIController.getController().waitSetPlayerCard();
                     return null;
                 }
             };
-            /*When server response, go on*/
-            wait.setOnSucceeded(s -> {
-                System.out.println("Your turn");
-                ObservableList<String> deck = FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards()));
-                map = new HashMap<>();
 
-                for (int i = 0; i < deck.size(); i++)
-                    map.put(deck.get(i), false);
-
-                //  ObservableList<String> selectedCard = FXCollections.observableArrayList(cardS);
-                ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
-                listView.setItems(deck);
+            wait1.setOnSucceeded(e->{
+                listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards())));
+                for (int i = 0; i < listView.getItems().size(); i++)
+                    map.put(listView.getItems().get(i), false);
                 listView.setCellFactory(param -> new BuildCell());
-                listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        //listView.getSelectionModel().get
-                        if (map.values().stream().filter(e -> e == true).count() < 1)
-                            map.put(t1, true);
-                        listView.refresh();
-                    }
-                });
-
-
             });
+
+
+            executor.submit(wait1);
         }
-        new Thread(wait).start();
     }
 
     private class BuildCell extends ListCell<String> {
@@ -122,7 +143,6 @@ public class SelectCardView extends Scene {
             try {
                 root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
                 ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
-
 
             } catch (IOException e) {
                 e.printStackTrace();

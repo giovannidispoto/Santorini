@@ -16,6 +16,6 @@ public class Dome extends Rectangle {
     public Dome() throws FileNotFoundException {
         super.setWidth(width);
         super.setHeight(height);
-        super.setFill(new ImagePattern(new Image(new FileInputStream("C:/Users/Giovanni/IdeaProjects/hellofx3/ASSETS/Dome.png"))));
+        super.setFill(new ImagePattern(new Image(new FileInputStream("C:/Users/Giovanni/IdeaProjects/AM28/ASSETS/Dome.png"))));
     }
 }

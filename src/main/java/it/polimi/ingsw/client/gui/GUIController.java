@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.SantoriniException;
 
 public class GUIController implements View {
     private static  ClientController clientController;

@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
+import java.util.Optional;
+
 
 public class AddPlayerView extends Scene {
 
@@ -45,7 +47,10 @@ public class AddPlayerView extends Scene {
             /*When server response, go on*/
             wait.setOnSucceeded( s ->{
                 GUIController.getController().setGameState(GameState.LOBBY);
-                builder.changeView();
+                if(GUIController.getController().getPlayerNickname().equals(GUIController.getController().getGodPlayer()))
+                    builder.changeView(Optional.of(ViewState.SELECT_GOD_CARD));
+                else
+                    builder.changeView(Optional.of(ViewState.SELECT_CARD));
             });
 
             new Thread(wait).start();
