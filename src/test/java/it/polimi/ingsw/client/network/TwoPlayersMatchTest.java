@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 class TwoPlayersMatchTest {
 
-    @Test
+    //@Test
     void Player1Test(){
         ClientController clientController = new ClientController();
         Scanner consoleScanner = new Scanner(System.in);
@@ -94,7 +94,7 @@ class TwoPlayersMatchTest {
 
     }
 
-    @Test
+    //@Test
     void Player2Test(){
         ClientController clientController = new ClientController();
         Scanner consoleScanner = new Scanner(System.in);
