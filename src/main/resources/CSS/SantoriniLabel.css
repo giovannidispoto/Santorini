@@ -5,7 +5,7 @@
 }
 
 #basicTurnLabel{
-    -fx-font-size: 20;
+    -fx-font-size: 18;
 }
 
 #playersLabel{
@@ -22,3 +22,4 @@
     -fx-text-fill: #626262;
     -fx-font-size: 40;
 }
+

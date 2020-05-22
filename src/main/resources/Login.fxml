@@ -17,7 +17,7 @@
          <children>
             <VBox prefHeight="320.0" prefWidth="260.0" spacing="20.0">
                <children>
-                  <AnchorPane id="loginBox" prefHeight="307.0" prefWidth="261.0" stylesheets="@CSS/BeigeBox.css">
+                  <AnchorPane id="loginBox" blendMode="SRC_ATOP" prefHeight="307.0" prefWidth="261.0" stylesheets="@CSS/BeigeBox.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>

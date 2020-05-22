@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="basicTurnRoot" prefHeight="240.0" prefWidth="300.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BasicTurnRequest">
+<AnchorPane id="basicTurnRoot" prefHeight="197.0" prefWidth="300.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BasicTurnRequest">
    <children>
-      <AnchorPane id="popUpBox" layoutX="10.0" layoutY="39.0" prefHeight="122.0" prefWidth="280.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="39.0">
+      <AnchorPane id="popUpBox" layoutX="10.0" layoutY="55.0" prefHeight="120.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button id="booleanButton" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" />
-            <Button id="booleanButton" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="40.0" />
-            <Label id="basicTurnLabel" alignment="CENTER" layoutX="36.0" layoutY="41.0" prefHeight="38.0" prefWidth="209.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="20.0" />
+            <ImageView blendMode="SRC_ATOP" fitHeight="120.0" fitWidth="113.0" layoutX="-41.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-30.0" AnchorPane.leftAnchor="-20.0">
+               <image>
+                  <Image url="@Images/Decorations/PowerOne.png" />
+               </image>
+            </ImageView>
+            <ImageView blendMode="SRC_ATOP" fitHeight="120.0" fitWidth="113.0" layoutX="-10.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-30.0" AnchorPane.rightAnchor="-20.0">
+               <image>
+                  <Image url="@Images/Decorations/PowerTwo.png" />
+               </image>
+            </ImageView>
+            <Button id="booleanButton" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="70.0" />
+            <Button id="booleanButton" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="70.0" />
+            <Label id="basicTurnLabel" alignment="CENTER" layoutX="36.0" layoutY="40.0" prefHeight="38.0" prefWidth="209.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
    </children>

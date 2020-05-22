@@ -21,7 +21,6 @@ public class GUIBuilder extends Application {
     private Stage mainStage;
     private ViewState state;
 
-
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
@@ -33,7 +32,6 @@ public class GUIBuilder extends Application {
         stage.setScene(mainScene);
         stage.show();
     }
-
 
     public void launchGUI(){
         launch();
