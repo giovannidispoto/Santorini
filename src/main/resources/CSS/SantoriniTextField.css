@@ -1,3 +1,9 @@
+@font-face
+{
+    -fx-font-family: 'Minion Pro';
+    src: url('Minion.ttf');
+}
+
 .text-field{
     -fx-font-family: "Minion Pro";
     -fx-font-size: 12;

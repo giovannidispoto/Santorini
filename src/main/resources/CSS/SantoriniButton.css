@@ -1,3 +1,8 @@
+@font-face
+{
+    -fx-font-family: 'LillyBelle';
+    src: url('LillyBelle.ttf');
+}
 .button{
     -fx-font-family: LillyBelle;
     -fx-font-size: 16;

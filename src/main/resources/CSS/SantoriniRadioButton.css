@@ -1,3 +1,8 @@
+@font-face
+{
+    -fx-font-family: 'Minion Pro';
+    src: url('Minion.ttf');
+}
 .radio-button {
     -fx-font-family: "Minion Pro";
     -fx-text-fill: #626262;
