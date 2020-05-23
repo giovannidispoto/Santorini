@@ -39,7 +39,7 @@
             </children></AnchorPane>
         <AnchorPane id="phaseBox" prefHeight="70.0" prefWidth="200.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
             <children>
-                <Label id="phaseLabel" fx:id="phaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="10.0" prefHeight="50.0" prefWidth="144.0" stylesheets="@CSS/SantoriniLabel.css" text="Current Phase" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="10.0" />
+                <Label id="phaseLabel" fx:id="phaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="10.0" prefHeight="50.0" prefWidth="200.0" stylesheets="@CSS/SantoriniLabel.css" text="Current Phase" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
             </children></AnchorPane>
         <Button id="skipButton" layoutX="60.0" layoutY="475.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@CSS/SantoriniButton.css" text="Skip" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="60.0">
             <padding>

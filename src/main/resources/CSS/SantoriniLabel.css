@@ -23,3 +23,8 @@
     -fx-font-size: 40;
 }
 
+#resultLabel{
+    -fx-text-fill: #626262;
+    -fx-font-size: 30;
+}
+

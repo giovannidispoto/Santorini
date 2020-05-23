@@ -19,3 +19,9 @@
     -fx-pref-width: 300;
     -fx-pref-height: 380;
 }
+
+#resultRoot{
+    -fx-pref-height: 300;
+    -fx-pref-width: 380;
+    -fx-background-color: transparent;
+}

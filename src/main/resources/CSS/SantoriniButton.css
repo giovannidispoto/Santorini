@@ -18,9 +18,19 @@
     -fx-background-color: #BAB29E;
 }
 
-#booleanButton{
+#booleanButtonYes{
     -fx-font-size: 12;
     -fx-pref-height: 20;
     -fx-pref-width: 60;
+}
+
+#booleanButtonNo{
+    -fx-font-size: 12;
+    -fx-pref-height: 20;
+    -fx-pref-width: 60;
+}
+
+#exitButton{
+    -fx-background-radius: 10;
 }
 

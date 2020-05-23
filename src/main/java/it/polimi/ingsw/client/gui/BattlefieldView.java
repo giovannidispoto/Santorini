@@ -41,7 +41,7 @@ public class BattlefieldView extends Scene {
         };
         wait.setOnSucceeded(s->{
             System.out.println("HE");
-            ((Label) root.lookup("#phaseLabel")).setText("Worker Position");
+            ((Label) root.lookup("#phaseLabel")).setText("Workers Placement");
             List<String> players = GUIController.getController().getPlayers().stream().map(PlayerInterface::getPlayerNickname).collect(Collectors.toList());
             for(String player : players){
                 Label p = new Label(player);

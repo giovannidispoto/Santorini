@@ -18,9 +18,9 @@
                   <Image url="@Images/Decorations/PowerTwo.png" />
                </image>
             </ImageView>
-            <Button id="booleanButton" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="70.0" />
-            <Button id="booleanButton" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="70.0" />
-            <Label id="basicTurnLabel" alignment="CENTER" layoutX="36.0" layoutY="40.0" prefHeight="38.0" prefWidth="209.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="20.0" />
+            <Button id="booleanButtonYes" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="70.0" />
+            <Button id="booleanButtonNo" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="70.0" />
+            <Label id="basicTurnLabel" alignment="CENTER" layoutX="37.0" layoutY="18.0" prefHeight="37.0" prefWidth="228.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="18.0" />
          </children>
       </AnchorPane>
    </children>
