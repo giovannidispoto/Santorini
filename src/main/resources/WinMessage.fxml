@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="400.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WinMessage">
+   <children>
+      <ImageView fitHeight="162.0" fitWidth="150.0" layoutX="117.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.33001708984375" AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="38.0">
+         <image>
+            <Image url="@Images/Decorations/Trophy.png" />
+         </image>
+      </ImageView>
+      <AnchorPane id="resultBox" layoutX="40.0" layoutY="119.0" prefHeight="160.0" prefWidth="303.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="-27.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0">
+               <image>
+                  <Image url="@Images/Decorations/CloudDX.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="-20.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="0.0">
+               <image>
+                  <Image url="@Images/Decorations/CloudDX.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="222.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-30.0">
+               <image>
+                  <Image url="@Images/Decorations/CloudRX.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="252.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="0.0">
+               <image>
+                  <Image url="@Images/Decorations/CloudRX.png" />
+               </image>
+            </ImageView>
+            <Button id="exitButton" layoutX="92.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" />
+            <Label id="resultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="24.0" stylesheets="@CSS/SantoriniLabel.css" text="You Win!" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="25.0" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
