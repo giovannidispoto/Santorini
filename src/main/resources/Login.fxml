@@ -24,7 +24,7 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="260.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Port" textFill="#68583e">
+                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Server" textFill="#68583e">
                                  <font>
                                     <Font name="Mistral" size="23.0" />
                                  </font>
@@ -32,12 +32,12 @@
                                     <Insets left="20.0" right="20.0" top="50.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField id="socketPortField" prefHeight="24.0" prefWidth="223.0" promptText="Insert Socket Port.." stylesheets="@CSS/SantoriniTextField.css">
+                              <TextField id="serverIPField" prefHeight="24.0" prefWidth="223.0" promptText="Insert Server IP..." stylesheets="@CSS/SantoriniTextField.css">
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
                               </TextField>
-                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Server" textFill="#68583e">
+                              <Label prefHeight="38.0" prefWidth="79.0" stylesheets="@CSS/SantoriniLabel.css" text="Port" textFill="#68583e">
                                  <font>
                                     <Font name="Mistral" size="23.0" />
                                  </font>
@@ -45,7 +45,7 @@
                                     <Insets left="20.0" right="20.0" top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField id="serverIPField" fx:id="ServerIPField" prefHeight="24.0" prefWidth="235.0" promptText="Insert Server IP.." stylesheets="@CSS/SantoriniTextField.css">
+                              <TextField id="socketPortField" fx:id="ServerIPField" prefHeight="24.0" prefWidth="235.0" promptText="Insert Socket Port..." stylesheets="@CSS/SantoriniTextField.css">
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
