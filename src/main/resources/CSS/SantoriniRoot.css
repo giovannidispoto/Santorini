@@ -25,3 +25,9 @@
     -fx-pref-width: 380;
     -fx-background-color: transparent;
 }
+
+#playerDataRoot{
+    -fx-pref-width: 144;
+    -fx-pref-height: 60;
+    -fx-background-color: transparent;
+}
