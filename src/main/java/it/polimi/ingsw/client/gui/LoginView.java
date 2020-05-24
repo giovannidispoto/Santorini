@@ -19,6 +19,8 @@ public class LoginView {
             TextField socketPortField = (TextField) root.lookup("#socketPortField");
             TextField serverIPField = (TextField) root.lookup("#serverIPField");
 
+            assert GUIBuilder.getGUIController() != null;
+
             btn.setOnMouseClicked(e->{
                 btn.setDisable(true);
                 socketPortField.setDisable(true);

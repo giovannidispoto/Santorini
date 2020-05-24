@@ -28,6 +28,15 @@ public class GUIBuilder extends Application {
     private Scene mainScene;
     private Stage mainStage;
     private ViewState state;
+    private static GUIController controller;
+
+    public static void setGUIController(GUIController GUIcontroller){
+        controller = GUIcontroller;
+    }
+
+    public static GUIController getGUIController(){
+        return controller;
+    }
 
 
     @Override
@@ -36,6 +45,7 @@ public class GUIBuilder extends Application {
         state = ViewState.CONNECTION;
         mainScene = new Scene(root);
         mainStage = stage;
+
         LoginView view = new LoginView(root, this);
 
         stage.setScene(mainScene);
@@ -43,7 +53,8 @@ public class GUIBuilder extends Application {
     }
 
 
-    public void launchGUI(){
+    public void launchGUI(GUIController controller){
+        System.out.println(controller != null);
         launch();
     }
 
@@ -146,5 +157,9 @@ public class GUIBuilder extends Application {
         mainStage.setScene(mainScene);
         mainStage.show();
 
+    }
+
+    public GUIController GUIController(){
+        return controller;
     }
 }
