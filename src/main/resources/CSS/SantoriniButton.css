@@ -20,7 +20,7 @@
 }
 
 .button:disabled{
-    -fx-background-color: #BAB29E;
+    -fx-opacity: 0.5;
 }
 
 #booleanButtonYes{

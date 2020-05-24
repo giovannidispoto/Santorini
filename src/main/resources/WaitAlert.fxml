@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="waitRoot" prefHeight="106.0" prefWidth="322.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WaitAlert">
+   <children>
+      <AnchorPane id="popUpBox" layoutX="14.0" prefHeight="106.0" prefWidth="290.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label id="waitMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="23.0" prefHeight="75.0" prefWidth="279.0" stylesheets="@CSS/SantoriniLabel.css" text="Wait your Turn" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

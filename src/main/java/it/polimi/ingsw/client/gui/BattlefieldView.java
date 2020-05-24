@@ -13,6 +13,7 @@ import javafx.concurrent.Task;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,12 +41,11 @@ public class BattlefieldView extends Scene {
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
-        ((Label) root.lookup("#phaseLabel")).setText("Waiting your turn");
+        ((Label) root.lookup("#phaseLabel")).setText("Wait your turn");
+        root.lookup("#skipButton").setDisable(true);
         ExecutorService executor = Executors.newSingleThreadExecutor();
-
         battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
         guiBuilder.GUIController().addBattlefield(this);
-
         Task<Void> wait = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
