@@ -1,23 +1,27 @@
 package it.polimi.ingsw.client.controller;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Color;
-import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
+import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
 import it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces.BasicActionInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces.BasicMessageInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.*;
-import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.*;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.PlayStepInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SelectWorkerInterface;
+import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SetStartTurnInterface;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * ClientController Class
@@ -502,7 +506,11 @@ public class ClientController {
 
         try {
             // This block configure the logger with handler and formatter
-            fileHandler = new FileHandler("./" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
+            File f = new File(System.getProperty("java.class.path"));
+            File dir = f.getAbsoluteFile().getParentFile();
+            String path = dir.toString();
+            //System.out.println(path);
+            fileHandler = new FileHandler(path + "/" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             // Set the preferred format
