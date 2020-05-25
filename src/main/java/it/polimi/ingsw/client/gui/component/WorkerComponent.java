@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorkerComponent extends ImageView {
+public class WorkerComponent extends ImageView implements ViewCell {
 
     public WorkerComponent(Color c) {
         Map<Color, String> colorWorker = new HashMap<>();

@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.component;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -9,14 +10,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Level2 extends Rectangle {
-    private final int width = 80;
-    private final int height = 80;
+public class Level2 extends ImageView  implements ViewCell {
 
-    public Level2() throws FileNotFoundException {
-        super.setWidth(width);
-        super.setHeight(height);
-        super.setFill(new ImagePattern(new Image(new FileInputStream("C:/Users/Giovanni/IdeaProjects/hellofx3/ASSETS/LVL2.png"))));
+
+    public Level2() {
+        super.setFitWidth(80);
+        super.setFitHeight(80);
+        super.setImage(new Image(getClass().getResource("/Images/BoardElements/LVL2.png").toString()));
     }
 
 
