@@ -501,7 +501,7 @@ public class ClientController {
 
     //-- DEBUG -- LOGGER
     public Logger start_IO_Logger(){
-        Logger logger = Logger.getLogger("SantoriniLog");
+        Logger logger = Logger.getLogger("SantoriniClientLogger");
         FileHandler fileHandler;
 
         try {
@@ -509,8 +509,8 @@ public class ClientController {
             File f = new File(System.getProperty("java.class.path"));
             File dir = f.getAbsoluteFile().getParentFile();
             String path = dir.toString();
-            //System.out.println(path);
-            fileHandler = new FileHandler(path + "/" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
+            //System.out.println(path); //debug
+            fileHandler = new FileHandler(path + "/Client_" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             // Set the preferred format
@@ -519,7 +519,7 @@ public class ClientController {
             logger.setUseParentHandlers(false);
 
             // Start first message
-            logger.info("Started Santorini Log\n");
+            logger.info("Started Santorini Client Logger\n");
 
         } catch (SecurityException | IOException e) {
             this.loggerIO.severe("FAILED-LOADING-LOGGER\n");

@@ -59,7 +59,7 @@ public class ServerHandler{
 
             @Override
             public void run() {
-                clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
+                clientController.setGameExceptionMessage(ExceptionMessages.pingSocketError);
                 clientController.setGameState(GameState.ERROR);
                 clientController.interruptNormalExecution();
                 clientController.loggerIO.severe("NO-PING-ERROR\n");
