@@ -31,3 +31,9 @@
     -fx-pref-height: 60;
     -fx-background-color: transparent;
 }
+
+#waitRoot{
+    -fx-pref-height: 106;
+    -fx-pref-width: 322;
+    -fx-background-color: transparent;
+}

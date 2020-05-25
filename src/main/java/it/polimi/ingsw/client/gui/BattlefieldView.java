@@ -13,6 +13,7 @@ import javafx.concurrent.Task;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,6 +43,7 @@ public class BattlefieldView extends Scene {
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
+
         ((Label) root.lookup("#phaseLabel")).setText("Waiting your turn");
         executor = Executors.newFixedThreadPool(1);
         battlefieldMap = new HashMap<>();
@@ -56,8 +58,15 @@ public class BattlefieldView extends Scene {
         guiBuilder.GUIController().addBattlefield(this);
 
         /*
-        * Adding Workers to Battlefield Phase
-        * */
+         * Adding Workers to Battlefield Phase
+         * */
+
+
+        ((Label) root.lookup("#phaseLabel")).setText("Wait your turn");
+        root.lookup("#skipButton").setDisable(true);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
+        guiBuilder.GUIController().addBattlefield(this);
 
         Task<Void> wait = new Task<Void>() {
             @Override
@@ -78,18 +87,18 @@ public class BattlefieldView extends Scene {
                 Label p = new Label(player);
                 ((VBox) root.lookup("#playersVBox")).getChildren().add(p);
             }
-           // populateBattlefield();
+            // populateBattlefield();
             populateBattlefieldMap();
             renderBattlefieldMap();
         });
 
-       executor.submit(wait);
+        executor.submit(wait);
 
 
-       /*
-       * Starting Turn
-       * Waiting turn
-       * */
+        /*
+         * Starting Turn
+         * Waiting turn
+         * */
 
 
         restartTurn();
@@ -164,7 +173,7 @@ public class BattlefieldView extends Scene {
                 resetBattlefieldMap();
                 GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), true);
                 GUIController.getController().getBattlefieldRequest();
-               // System.out.println("Your Turn");
+                // System.out.println("Your Turn");
                 return null;
             }
         };
@@ -266,7 +275,7 @@ public class BattlefieldView extends Scene {
                 for (Node node : battlefieldGrid.getChildren()) {
                     if (GridPane.getColumnIndex(node) == i && GridPane.getRowIndex(node) == j) {
                         if(node instanceof AvailableCell)
-                           pairs.add(node);
+                            pairs.add(node);
                     }
                 }
             }
@@ -306,14 +315,14 @@ public class BattlefieldView extends Scene {
 
     public void reloadBattlefield(){
         /* Remove Available Cell of Worker View from Battlefield*/
-       Platform.runLater(()->battlefieldGrid.getChildren().clear());
-       resetBattlefieldMap();
+        Platform.runLater(()->battlefieldGrid.getChildren().clear());
+        resetBattlefieldMap();
 
 
-       if(GUIController.getController().getCurrentStep() == Step.BUILD){
-           removeWorkerAvailableCell();
-           populateWorkerViewMap();
-       }
+        if(GUIController.getController().getCurrentStep() == Step.BUILD){
+            removeWorkerAvailableCell();
+            populateWorkerViewMap();
+        }
 
 
 
@@ -321,7 +330,7 @@ public class BattlefieldView extends Scene {
         for (int i = 0; i < BattlefieldClient.N_ROWS; i++) {
             for (int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
                 if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor() != null)
-                     battlefieldMap.get(new Pair<>(i, j)).setWc(new WorkerComponent(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor()));
+                    battlefieldMap.get(new Pair<>(i, j)).setWc(new WorkerComponent(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor()));
 
                 if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight() > 0){
                     switch(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight()){
@@ -412,28 +421,28 @@ public class BattlefieldView extends Scene {
                     }
                 }
                 /*
-                * Check if there is a WorkerViewAvailableCell
-                * */
+                 * Check if there is a WorkerViewAvailableCell
+                 * */
 
-               if(battlefieldMap.get(new Pair<>(i,j)).getWvcl() != null){
-                   System.out.println("OK");
-                   WorkerViewCellAvailable ac = new WorkerViewCellAvailable();//battlefieldMap.get(new Pair<>(i,j)).getWvcl();
-                   GridPane.setRowIndex(ac,i);
-                   GridPane.setColumnIndex(ac, j);
-                   Platform.runLater(() ->  battlefieldGrid.getChildren().add(ac));
-                   int finalI = i;
-                   int finalJ = j;
-                   ac.setOnMouseClicked(event -> {
-                       handleWorkerViewselection(finalI, finalJ);
-                   });
-               }
+                if(battlefieldMap.get(new Pair<>(i,j)).getWvcl() != null){
+                    System.out.println("OK");
+                    WorkerViewCellAvailable ac = new WorkerViewCellAvailable();//battlefieldMap.get(new Pair<>(i,j)).getWvcl();
+                    GridPane.setRowIndex(ac,i);
+                    GridPane.setColumnIndex(ac, j);
+                    Platform.runLater(() ->  battlefieldGrid.getChildren().add(ac));
+                    int finalI = i;
+                    int finalJ = j;
+                    ac.setOnMouseClicked(event -> {
+                        handleWorkerViewselection(finalI, finalJ);
+                    });
+                }
 
-               if(battlefieldMap.get(new Pair<>(i,j)).getWc() != null){
-                  WorkerComponent wc = battlefieldMap.get(new Pair<>(i,j)).getWc();
-                   GridPane.setRowIndex(wc,i);
-                   GridPane.setColumnIndex(wc, j);
-                   Platform.runLater(() ->  battlefieldGrid.getChildren().add(wc));
-               }
+                if(battlefieldMap.get(new Pair<>(i,j)).getWc() != null){
+                    WorkerComponent wc = battlefieldMap.get(new Pair<>(i,j)).getWc();
+                    GridPane.setRowIndex(wc,i);
+                    GridPane.setColumnIndex(wc, j);
+                    Platform.runLater(() ->  battlefieldGrid.getChildren().add(wc));
+                }
 
             }
         }

@@ -45,3 +45,7 @@
     -fx-text-fill: #626262;
 }
 
+#waitMessageLabel{
+    -fx-font-size: 30;
+}
+
