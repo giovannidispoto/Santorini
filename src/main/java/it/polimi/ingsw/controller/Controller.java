@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.FileManager;
+import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
@@ -10,8 +12,7 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.*;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,8 +51,9 @@ public class Controller {
 
         try {
             DeckReader reader = new DeckReader();
-            deck = reader.loadDeck(new FileReader("src/Divinities.json"));
-        }catch(IOException e){
+            InputStream fileStream = ServerMain.class.getClassLoader().getResourceAsStream(FileManager.divinitiesCardsPath);
+            deck = reader.loadDeck(new InputStreamReader(Objects.requireNonNull(fileStream)));
+        }catch(IOException | NullPointerException e){
             e.printStackTrace();
         }
     }
@@ -137,42 +139,30 @@ public class Controller {
     }
 
 
-    /**
-     * Add new player in the game
-     * @param playerNickname unique nickname of the player
-     * @param lobbySize lobby size
-     * @return true if player was add, false if there was an error with phase
-     */
-    public synchronized boolean addNewPlayer(String playerNickname, int lobbySize) {
-        if(gameState.getState() != GameStep.CREATE_LOBBY){
-                System.out.print("Not waiting this message");
-                return false;
-        }else {
-
-            if (this.lobbySize == 0) {
-                this.lobbySize = lobbySize;
-            }
-
-            this.playersInLobby.add(playerNickname);
-
-
-            if (playersInLobby.size() == lobbySize) {
-                //startMatch();
-                this.firstPlayer = playersInLobby.get(0);
-                //notify all player who is the first
-                String message = new Gson().toJson(new BasicMessageResponse("setPickedCards", new SetPickedCardRequest(firstPlayer)));
-                for (String p : playersInLobby) {
-                    if (p.equals(playerNickname))
-                        handlers.get(p).responseQueue(message);
-                    else
-                        handlers.get(p).response(message);
-                }
-                //go to next game state
-                gameState.nextState();
-            }
-            return true;
+    public void lobbyReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap) {
+        //Set Lobby Data in Controller
+        this.lobbySize = lobbySize;
+        this.handlers = handlerMap;
+        this.playersInLobby = playersInLobby;
+        //Notify Lobby Ready to Handlers
+        this.handlers.forEach((nickName, handler) -> handler.setLobbyStart());
+        //Match Start
+        this.firstPlayer = playersInLobby.get(0);
+        //notify all player who is the first
+        String message = new Gson().toJson(new BasicMessageResponse("setPickedCards", new SetPickedCardRequest(firstPlayer)));
+        for (String p : playersInLobby) {
+            if (p.equals(playerNickname))
+                handlers.get(p).responseQueue(message);
+            else
+                handlers.get(p).response(message);
         }
+        //go to next game state
+        gameState.nextState();
+    }
 
+    public boolean clientDisconnected(){
+        this.handlers.forEach((nickName, handler) -> handler.clientShutDown());
+        return true;
     }
 
 
@@ -258,15 +248,6 @@ public class Controller {
     }
 
     /**
-     * Associate nickname to a handler
-     * @param playerNickname player nickname
-     * @param handler client handler
-     */
-    public void registerHandler(String playerNickname, ClientHandler handler){
-        this.handlers.put(playerNickname, handler);
-    }
-
-    /**
      * Check if request came from the right handler
      * @param playerNickname nickname requested
      * @param handler client handler
@@ -285,6 +266,11 @@ public class Controller {
      */
     public void startTurn(String playerNickname, boolean basicTurn){
         Player p = getPlayerFromString(playerNickname);
+        List<Integer> workersId = getWorkersId(playerNickname);
+        //Detach all old Observer
+        for(Integer w : workersId){
+            getWorkerFromString(playerNickname,w).detachAll();
+        }
         this.turn = new PlayerTurn(match.generateTurn(basicTurn), match);
         match.setCurrentPlayer(p);
         if(turn.isLoser()){

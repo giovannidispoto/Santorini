@@ -7,7 +7,9 @@ import it.polimi.ingsw.server.ClientHandler;
 public class PongCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
-        handler.resetTimeout();
-        handler.setTimer();
+        if(!handler.isMustStopExecution()) {
+            handler.resetTimeout();
+            handler.setTimer();
+        }
     }
 }

@@ -1,18 +1,17 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.FileManager;
+import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.model.cards.DivinityCard;
+import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.global.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
 import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
-import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.parser.DivinityEffectReader;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
 
 /**
  * Match class represents a match performed by a small group of players (2 or 3)
@@ -28,7 +27,6 @@ public class Match {
     private Map<Player,Turn> playerTurn;
     private Player currentPlayer;
     public Player winner; //debug for testing
-    private final String pathToFile = "src/CardsEffect.json";
 
     /**
      * Class Constructor
@@ -41,12 +39,13 @@ public class Match {
         this.playerTurn = new HashMap<>();
         DivinityEffectReader reader = new DivinityEffectReader();
         try {
-            Map<String, Turn> res = reader.load(new FileReader(pathToFile));
+            InputStream fileStream = ServerMain.class.getClassLoader().getResourceAsStream(FileManager.cardsEffectPath);
+            Map<String, Turn> res = reader.load(new InputStreamReader(Objects.requireNonNull(fileStream)));
             for (Player p : matchPlayers) {
                 playerTurn.put(p, res.get(p.getPlayerCard().getCardName()));
                 playerTurn.get(p).setCurrentMatch(this);
             }
-        }catch(IOException e){
+        }catch(Exception e){
            e.printStackTrace();
         }
         NoLevelUpCondition.getInstance().restoreEffect();

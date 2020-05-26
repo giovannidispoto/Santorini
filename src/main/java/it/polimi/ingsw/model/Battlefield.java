@@ -20,7 +20,6 @@ public class Battlefield implements SubjectBattlefield {
     public static final int N_ROWS_VIEW = 5;
     public static final int N_COLUMNS_VIEW= 5;
     private List<Worker> workersInGame;
-    private static Battlefield instance = null;
     private List<ObserverBattlefield> observers;
 
     /**
@@ -31,14 +30,14 @@ public class Battlefield implements SubjectBattlefield {
 
     }
 
+    private static final ThreadLocal<Battlefield> BATTLEFIELD_THREAD_LOCAL = ThreadLocal.withInitial(Battlefield::new);
+
     /**
-     * Factory method that returns the Battlefield instance (Singleton)
+     * Factory method that returns the Battlefield instance (Singleton per Thread)
      * @return Battlefield object
      */
     public static Battlefield getBattlefieldInstance(){
-        if(instance == null)
-            instance = new Battlefield();
-        return instance;
+        return BATTLEFIELD_THREAD_LOCAL.get();
     }
 
     /**

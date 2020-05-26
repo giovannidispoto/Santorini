@@ -1,10 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.controller.Controller;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
@@ -17,19 +13,19 @@ public class ClientThread implements Runnable {
 
     private final Socket socket;
     private ClientHandler clientHandler;
-    private Controller controller;
     private PrintWriter out;
+    private Scanner in;
+    private boolean socketShutdown;
 
     /**
-     *
-     * @param socket
-     * @param controller
+     * ClientThread manage socket connection with client
+     * @param socket clientSocket
+     * @param lobbyManager manage lobbies
      */
-    public ClientThread(Socket socket,Controller controller) {
+    public ClientThread(Socket socket,LobbyManager lobbyManager) {
         this.socket = socket;
-        this.controller = controller;
-        this.clientHandler = new ClientHandler(controller, this);
-        this.clientHandler.setTimer();
+        this.clientHandler = new ClientHandler(lobbyManager, this);
+        this.socketShutdown = false;
     }
 
     /**
@@ -38,35 +34,52 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            Scanner in = new Scanner(socket.getInputStream());
+            this.in = new Scanner(socket.getInputStream());
             this.out = new PrintWriter(socket.getOutputStream());
+            clientHandler.setTimer();
             //read from and write to the connection until I receive "quit"
-            while (true) {
+            while (!socketShutdown) {
                 String line = in.nextLine();
-                if (line.equals("quit")) {
+                if (socketShutdown) {
                     break;
                 } else {
                     clientHandler.process(line);
                     if(!line.contains("pong"))
-                         System.out.println("Received: "+line);
+                         System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
                 }
             }
             //close streams and socket
-            System.out.println("Closing sockets");
-            in.close();
-            out.close();
-            socket.close();
+            closeSocket();
         }catch (IOException | NoSuchElementException e){
-           System.out.println(e.getMessage());
+            if(!socketShutdown)
+                clientHandler.playerDisconnected();
         }
     }
 
     /**
      * Send message to client
-     * @param message
+     * @param message string json message
      */
     public void send(String message){
         out.println(message);
         out.flush();
+    }
+
+    private void closeSocket(){
+        in.close();
+        out.close();
+        if(!socket.isClosed()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Socket Closed");
+    }
+
+    public void setSocketShutdown() {
+        this.socketShutdown = true;
+        clientHandler = null;
     }
 }
