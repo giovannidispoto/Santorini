@@ -408,7 +408,7 @@ public class ClientController {
 
         //--    WORKER-VIEW
 
-    public boolean[][] getWorkerView() {
+    public synchronized boolean[][] getWorkerView() {
         return workerView;
     }
 
@@ -418,7 +418,7 @@ public class ClientController {
      * @param y workerView column
      * @return  Boolean associated with the cell
      */
-    public boolean getWorkerViewCell(int x, int y){
+    public synchronized boolean getWorkerViewCell(int x, int y){
         return workerView[x][y];
     }
 
@@ -426,7 +426,7 @@ public class ClientController {
      *
      * @return  true if workerView is all false, false at least one action is possible
      */
-    public boolean isInvalidWorkerView(){
+    public synchronized boolean isInvalidWorkerView(){
         for(int x=0; x < BattlefieldClient.N_ROWS; x++){
             for(int y=0; y < BattlefieldClient.N_COLUMNS; y++){
                 if(workerView[x][y]){
@@ -447,7 +447,7 @@ public class ClientController {
         this.fullLobby = fullLobby;
     }
 
-    public void setWorkerView(boolean[][] workerView) {
+    public synchronized void setWorkerView(boolean[][] workerView) {
         this.workerView = workerView;
     }
 
