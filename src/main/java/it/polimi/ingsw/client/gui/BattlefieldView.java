@@ -38,6 +38,7 @@ public class BattlefieldView extends Scene {
     private List<WorkerPositionInterface> positions;
     private ExecutorService executor;
     private Task<Void> startTurn;
+    private Task<Void> req;
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
 
 
@@ -45,7 +46,7 @@ public class BattlefieldView extends Scene {
         super(root);
 
         ((Label) root.lookup("#phaseLabel")).setText("Waiting your turn");
-        executor = Executors.newFixedThreadPool(1);
+        executor = Executors.newSingleThreadExecutor();
         battlefieldMap = new HashMap<>();
 
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
@@ -95,6 +96,7 @@ public class BattlefieldView extends Scene {
         executor.submit(wait);
 
 
+
         /*
          * Starting Turn
          * Waiting turn
@@ -104,6 +106,27 @@ public class BattlefieldView extends Scene {
         restartTurn();
 
 
+    }
+
+    private void callRenderWorkerView(){
+        req = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+               // System.out.println("Waiting Worker View Update");
+                GUIController.getController().waitWorkerViewUpdate();
+               // System.out.println("Worker View Update");
+                return null;
+            }
+        };
+
+        req.setOnSucceeded(e->{
+            System.out.println("Start Rendering");
+            populateWorkerViewMap();
+            renderWorkerView();
+            System.out.println("Rendering");
+        });
+
+        executor.submit(req);
     }
 
     private void populateBattlefieldMap(){
@@ -191,10 +214,10 @@ public class BattlefieldView extends Scene {
                                     int finalJ = j;
                                     node.setOnMouseClicked(event -> {
                                         try {
+                                           // executor.submit(req);
                                             GUIController.getController().selectWorkerRequest(GUIController.getController().getPlayerNickname(), finalI, finalJ);
-
-                                            populateWorkerViewMap();
-                                            renderWorkerView();
+                                             populateWorkerViewMap();
+                                             renderWorkerView();
 
                                         } catch (SantoriniException e) {
                                             e.printStackTrace();
@@ -216,8 +239,9 @@ public class BattlefieldView extends Scene {
             removeWorkerAvailableCell();
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
                 // renderOnUpdate();
-                populateWorkerViewMap();
-                reloadBattlefield();
+                //populateWorkerViewMap();
+                callRenderWorkerView();
+               // reloadBattlefield();
                 // renderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.END) {
@@ -232,12 +256,15 @@ public class BattlefieldView extends Scene {
     }
 
     private void populateWorkerViewMap(){
+
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
-                if (GUIController.getController().getWorkerView()[i][j] != false) {
+                if (GUIController.getController().getWorkerViewCell(i,j) && GUIController.getController().getWorkerView()[i][j]) {
                     System.out.println("("+i+","+j+")");
                     WorkerViewCellAvailable ac = new WorkerViewCellAvailable();
                     battlefieldMap.get(new Pair<>(i,j)).setWvcl(ac);
+                }else{
+                    battlefieldMap.get(new Pair<>(i,j)).setWvcl(null);
                 }
             }
         }
@@ -320,8 +347,9 @@ public class BattlefieldView extends Scene {
 
 
         if(GUIController.getController().getCurrentStep() == Step.BUILD){
-            removeWorkerAvailableCell();
-            populateWorkerViewMap();
+            //callRenderWorkerView();
+             removeWorkerAvailableCell();
+             //populateWorkerViewMap();
         }
 
 
