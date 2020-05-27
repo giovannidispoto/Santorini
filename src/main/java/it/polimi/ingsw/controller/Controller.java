@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.FileManager;
+import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.model.*;

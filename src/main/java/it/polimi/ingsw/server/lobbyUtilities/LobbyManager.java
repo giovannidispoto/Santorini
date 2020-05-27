@@ -1,6 +1,7 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.lobbyUtilities;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.server.ClientHandler;
 
 import java.util.*;
 

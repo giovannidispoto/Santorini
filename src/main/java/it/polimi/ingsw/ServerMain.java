@@ -1,19 +1,19 @@
 
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.server.LobbyManager;
+import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 import it.polimi.ingsw.server.ServerSocketManager;
+import it.polimi.ingsw.server.fileUtilities.FileManager;
 
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static it.polimi.ingsw.PrinterClass.*;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
 
 /**
- * Hello world!
- *
+ * Class that takes care of starting the server
  */
 public class ServerMain
 {
@@ -21,10 +21,11 @@ public class ServerMain
     {
         FileManager serverFileManager= new FileManager();
         ExecutorService ServerExit = Executors.newFixedThreadPool(1);
-        ServerSocketManager serverSocketManager = new ServerSocketManager(1337, new LobbyManager());
 
         //Start Server Testing - Essential Files
         serverFileManager.testFileReading();
+        serverFileManager.readServerSettings();
+        ServerSocketManager serverSocketManager = new ServerSocketManager(serverFileManager.getServerPort(), new LobbyManager());
 
         ServerExit.execute(() -> {
             Scanner inConsole = new Scanner(System.in);

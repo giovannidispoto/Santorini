@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.server.ObserverWorkerView;
-import it.polimi.ingsw.server.SubjectWorkerView;
-import it.polimi.ingsw.server.actions.data.CellInterface;
-import it.polimi.ingsw.server.ObserverBattlefield;
+import it.polimi.ingsw.server.observers.ObserverWorkerView;
+import it.polimi.ingsw.server.observers.SubjectWorkerView;
 
 import java.util.ArrayList;
 import java.util.List;

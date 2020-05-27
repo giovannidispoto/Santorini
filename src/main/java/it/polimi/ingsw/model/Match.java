@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.FileManager;
+import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;

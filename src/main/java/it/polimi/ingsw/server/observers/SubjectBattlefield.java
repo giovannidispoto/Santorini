@@ -1,4 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.observers;
+
+import it.polimi.ingsw.server.observers.ObserverBattlefield;
 
 /**
  * Observer interface used for Battlefield

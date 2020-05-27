@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.server.SubjectBattlefield;
+import it.polimi.ingsw.server.observers.SubjectBattlefield;
 import it.polimi.ingsw.server.actions.data.CellInterface;
-import it.polimi.ingsw.server.ObserverBattlefield;
+import it.polimi.ingsw.server.observers.ObserverBattlefield;
 
 import java.util.ArrayList;
 import java.util.List;

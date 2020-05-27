@@ -4,14 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import it.polimi.ingsw.server.actions.CommandFactory;
 import it.polimi.ingsw.server.actions.data.*;
+import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
+import it.polimi.ingsw.server.observers.ObserverBattlefield;
+import it.polimi.ingsw.server.observers.ObserverWorkerView;
 
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
-import static it.polimi.ingsw.PrinterClass.ansiRED;
-import static it.polimi.ingsw.PrinterClass.ansiRESET;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRED;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
 
 /**
  * ClientHandler execute commands from socket and send response to client.

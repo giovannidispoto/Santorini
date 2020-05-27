@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -22,7 +24,7 @@ public class ClientThread implements Runnable {
      * @param socket clientSocket
      * @param lobbyManager manage lobbies
      */
-    public ClientThread(Socket socket,LobbyManager lobbyManager) {
+    public ClientThread(Socket socket, LobbyManager lobbyManager) {
         this.socket = socket;
         this.clientHandler = new ClientHandler(lobbyManager, this);
         this.socketShutdown = false;

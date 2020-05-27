@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +12,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import static it.polimi.ingsw.PrinterClass.*;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
 
 /**
  * Server Class
@@ -40,7 +42,7 @@ public class ServerSocketManager {
         //open TCP port
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.printf("Server socket ready on port: %s %d %s\n\n" , ansiGREEN, port, ansiRESET);
-        System.out.println(ansiGREEN + "Server READY\n" + ansiRESET + nextLine + lineSeparator);
+        System.out.println(ansiGREEN + "Server READY\n" + ansiRESET + nextLine + consoleSeparator);
         //wait for connection
         while(true) {
             Socket socket = serverSocket.accept();

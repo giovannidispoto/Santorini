@@ -3,8 +3,10 @@
 #----------- WHITELIST -----------
 # Don't Ignore those folders and files
 
+#-------------------    ROOT
 #src/main/  (rules = 64)
 !.gitignore
+
 #Java Resources (if you want access it from jar put here) (All files- no restriction)
 !resources/*
 !resources/CSS/*
@@ -14,12 +16,14 @@
 !resources/Images/Cards/*
 !resources/Images/Decorations/*
 !resources/Images/Web/*
-#-------------------
+
+#-------------------    java/it/polimi/ingsw/
 !java/
 !java/it/
 !java/it/polimi/
 !java/it/polimi/ingsw/
 !java/it/polimi/ingsw/*.java
+
 #client/
 !java/it/polimi/ingsw/client/
 !java/it/polimi/ingsw/client/*.java
@@ -52,7 +56,7 @@
 !java/it/polimi/ingsw/client/network/commands/finishPhase/*.java
 !java/it/polimi/ingsw/client/network/commandDeserializer/
 !java/it/polimi/ingsw/client/network/commandDeserializer/*.java
-
+#client/network/messagesInterfaces/
 !java/it/polimi/ingsw/client/network/messagesInterfaces/
 !java/it/polimi/ingsw/client/network/messagesInterfaces/*.java
 !java/it/polimi/ingsw/client/network/messagesInterfaces/basicInterfaces/
@@ -63,9 +67,11 @@
 !java/it/polimi/ingsw/client/network/messagesInterfaces/dataInterfaces/lobbyPhase/*.java
 !java/it/polimi/ingsw/client/network/messagesInterfaces/dataInterfaces/matchPhase/
 !java/it/polimi/ingsw/client/network/messagesInterfaces/dataInterfaces/matchPhase/*.java
+
 #controller
 !java/it/polimi/ingsw/controller/
 !java/it/polimi/ingsw/controller/*.java
+
 #server
 !java/it/polimi/ingsw/server/
 !java/it/polimi/ingsw/server/*.java
@@ -73,9 +79,17 @@
 !java/it/polimi/ingsw/server/actions/*.java
 !java/it/polimi/ingsw/server/actions/data
 !java/it/polimi/ingsw/server/actions/data/*.java
-#view
-!java/it/polimi/ingsw/view/
-!java/it/polimi/ingsw/view/*.java
+!java/it/polimi/ingsw/server/consoleUtilities/
+!java/it/polimi/ingsw/server/consoleUtilities/*.java
+!java/it/polimi/ingsw/server/fileUtilities/
+!java/it/polimi/ingsw/server/fileUtilities/*.java
+!java/it/polimi/ingsw/server/fileUtilities/regex/
+!java/it/polimi/ingsw/server/fileUtilities/regex/*.java
+!java/it/polimi/ingsw/server/lobbyUtilities/
+!java/it/polimi/ingsw/server/lobbyUtilities/*.java
+!java/it/polimi/ingsw/server/observers/
+!java/it/polimi/ingsw/server/observers/*.java
+
 #model/
 !java/it/polimi/ingsw/model/
 !java/it/polimi/ingsw/model/*.java

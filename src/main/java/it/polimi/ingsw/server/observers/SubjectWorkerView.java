@@ -1,4 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.observers;
+
+import it.polimi.ingsw.server.observers.ObserverWorkerView;
 
 /** Observer interface specialized on WorkerView*/
 public interface SubjectWorkerView {
