@@ -5,11 +5,11 @@ import it.polimi.ingsw.server.LobbyManager;
 import it.polimi.ingsw.server.ServerSocketManager;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static it.polimi.ingsw.PrinterClass.ansiRED;
-import static it.polimi.ingsw.PrinterClass.ansiRESET;
+import static it.polimi.ingsw.PrinterClass.*;
 
 /**
  * Hello world!
@@ -27,9 +27,10 @@ public class ServerMain
         serverFileManager.testFileReading();
 
         ServerExit.execute(() -> {
+            Scanner inConsole = new Scanner(System.in);
             do{
-                System.out.println(ansiRED + "To close Server, write EXIT, at any moment\n"+ ansiRESET);
-            }while(!System.console().readLine().equalsIgnoreCase("EXIT"));
+                System.out.println(ansiRED + "To close Server, write EXIT, at any moment"+ ansiRESET+nextLine);
+            }while(!inConsole.nextLine().equalsIgnoreCase("EXIT"));
             System.exit(0);
         });
 

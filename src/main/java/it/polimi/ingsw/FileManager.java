@@ -11,6 +11,6 @@ public final class FileManager {
         System.out.print(CLEAN);
         System.out.println(ansiBLUE+"Testing-File-Reading:");
         System.out.println(ServerMain.class.getClassLoader().getResource(cardsEffectPath));
-        System.out.println(ServerMain.class.getClassLoader().getResource(divinitiesCardsPath)+ansiRESET+nextLine);
+        System.out.println(ServerMain.class.getClassLoader().getResource(divinitiesCardsPath)+ansiRESET+nextLine+lineSeparator+nextLine);
     }
 }
