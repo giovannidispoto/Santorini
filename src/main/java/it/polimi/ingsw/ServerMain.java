@@ -22,6 +22,9 @@ public class ServerMain
         FileManager serverFileManager= new FileManager();
         ExecutorService ServerExit = Executors.newFixedThreadPool(1);
 
+        System.out.print(INITIALIZE_SCREEN);
+        System.out.print(CLEAN);
+        System.out.println(consoleSeparator);
         //Start Server Testing - Essential Files
         serverFileManager.testFileReading();
         serverFileManager.readServerSettings();
@@ -34,6 +37,8 @@ public class ServerMain
             }while(!inConsole.nextLine().equalsIgnoreCase("EXIT"));
             System.exit(0);
         });
+
+        System.out.println(consoleSeparator);
 
         try {
             serverSocketManager.startServerSocket();

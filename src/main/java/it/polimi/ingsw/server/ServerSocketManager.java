@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,8 +40,8 @@ public class ServerSocketManager {
         printIPAddresses();
         //open TCP port
         ServerSocket serverSocket = new ServerSocket(port);
-        System.out.printf("Server socket ready on port: %s %d %s\n\n" , ansiGREEN, port, ansiRESET);
-        System.out.println(ansiGREEN + "Server READY\n" + ansiRESET + nextLine + consoleSeparator);
+        System.out.println("Server socket ready on port: "+ansiGREEN+port+ansiRESET+nextLine);
+        System.out.println(ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator);
         //wait for connection
         while(true) {
             Socket socket = serverSocket.accept();
@@ -59,16 +58,16 @@ public class ServerSocketManager {
 
     private void printIPAddresses(){
         try {
-            System.out.printf(ansiGREEN + "Your External IP is : %s %s %s\n\n", ansiRED, getExternalIP(), ansiRESET);
+            System.out.println(ansiGREEN + "Your External IP :"+ansiRESET+nextLine+nextLine+"Address: "+ansiRED+getExternalIP()+ansiRESET+nextLine);
         } catch (IOException e) {
-            System.out.println(ansiRED + "Can't Get Your External IP\n" + ansiRESET);
+            System.out.println(ansiRED + "Can't Get Your External IP"+ansiRESET+nextLine);
         }
 
         try {
-            System.out.println(ansiGREEN+"Your Local IP :\n"+ ansiRESET);
+            System.out.println(ansiGREEN+"Your Local IP :"+ansiRESET+nextLine);
             getLocalIPInterfaces();
         } catch (SocketException e){
-            System.out.println(ansiRED+"Can't Get Your Local IP\n"+ ansiRESET);
+            System.out.println(ansiRED+"Can't Get Your Local IP"+ansiRESET+nextLine);
         }
     }
 
@@ -87,24 +86,23 @@ public class ServerSocketManager {
     }
 
     private static void displayInterfaceInformation(NetworkInterface networkInterface) {
-        int ipFound=0;
-        PrintStream out = System.out;
+        int ipFoundCounter=0;
         List<InetAddress> localIpList = new ArrayList<>();
 
         Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
         for (InetAddress inetAddress : Collections.list(inetAddresses)) {
             if( inetAddress.isSiteLocalAddress()) {
                 localIpList.add(inetAddress);
-                ipFound++;
+                ipFoundCounter++;
             }
         }
-        if(ipFound>0){
-            out.printf("Interface name: %s\n", networkInterface.getDisplayName());
-            out.printf("Name: %s\n", networkInterface.getName());
+        if(ipFoundCounter>0){
+            System.out.println("Interface name: " + networkInterface.getDisplayName());
+            System.out.println("Name: " + networkInterface.getName());
             for(InetAddress localAddress : localIpList){
-                out.printf("LocalAddress: %s %s %s\n", ansiGREEN, localAddress.getHostAddress(), ansiRESET);
+                System.out.println("LocalAddress: "+ansiGREEN+localAddress.getHostAddress()+ansiRESET);
             }
-            out.print("\n");
+            System.out.println();
         }
     }
 

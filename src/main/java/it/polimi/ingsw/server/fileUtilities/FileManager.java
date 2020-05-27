@@ -35,11 +35,9 @@ public class FileManager {
      * Function that tests the reading of the essential files for the program and shows the actual loading by printing the path
      */
     public synchronized void testFileReading(){
-        System.out.print(INITIALIZE_SCREEN);
-        System.out.print(CLEAN);
         System.out.println(ansiBLUE+"Testing-File-Reading:");
         System.out.println(ServerMain.class.getClassLoader().getResource(cardsEffectPath));
-        System.out.println(ServerMain.class.getClassLoader().getResource(divinitiesCardsPath)+ansiRESET+nextLine+ consoleSeparator +nextLine);
+        System.out.println(ServerMain.class.getClassLoader().getResource(divinitiesCardsPath)+ansiRESET+nextLine+ consoleSeparator);
     }
 
     /**
@@ -82,7 +80,6 @@ public class FileManager {
                 System.out.println(ansiBLUE+"ServerSettings File is not readable"+ansiRESET);
             }
         }
-        System.out.println();
     }
 
     /**
