@@ -14,6 +14,7 @@ public interface Regex {
      * it takes care of reading the data from the line and loading it into the FileManager
      * @param line  String representing a line read from a file
      * @param fileManager   FileManager, where to save the data
+     * @return true if the data has been written correctly, false if the data has not been loaded
      */
-    void getData(String line, FileManager fileManager);
+    boolean getData(String line, FileManager fileManager);
 }

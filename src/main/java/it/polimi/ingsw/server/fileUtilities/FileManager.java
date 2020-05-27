@@ -108,8 +108,7 @@ public class FileManager {
         for(Regex regex : regexList){
 
             if(line.matches(regex.getRegexString())) {
-                regex.getData(line,this);
-                return true;
+                return regex.getData(line,this);
             }
 
         }

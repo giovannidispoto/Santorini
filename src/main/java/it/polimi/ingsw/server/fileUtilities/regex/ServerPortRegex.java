@@ -12,7 +12,11 @@ public class ServerPortRegex implements Regex {
         return "^serverPort:\\d{1,5}$";
     }
 
-    public void getData(String line, FileManager fileManager){
+    public boolean getData(String line, FileManager fileManager){
+        if(null == line){
+            return false;
+        }
+
         String[] split = line.split(":");
 
         int serverPort = Integer.parseInt(split[1]);
@@ -21,8 +25,11 @@ public class ServerPortRegex implements Regex {
         {
             System.out.println(ansiBLUE+"Syntax Correct - serverPort - Loaded"+ansiRESET);
             fileManager.setServerPort(serverPort);
+            return true;
+
         }else {
             System.out.println(ansiBLUE+"NOT Valid - serverPort"+ansiRESET);
+            return false;
         }
 
     }
