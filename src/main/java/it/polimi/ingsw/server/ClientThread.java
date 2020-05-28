@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiBLUE;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
+
 /**
  *
  */
@@ -31,27 +34,27 @@ public class ClientThread implements Runnable {
     }
 
     /**
-     *
+     *  Continues the connection with the client, opening the input and output streams of the socket,
+     *  also setting the Ping, after which the thread will wait to manage the client's inputs until it is blocked by the server
      */
     @Override
     public void run() {
         try {
             this.in = new Scanner(socket.getInputStream());
             this.out = new PrintWriter(socket.getOutputStream());
+            //Start Ping to Client after setting in & out
             clientHandler.setTimer();
-            //read from and write to the connection until I receive "quit"
+            //read from and write to the connection until shutdown (from server)
             while (!socketShutdown) {
                 String line = in.nextLine();
-                if (socketShutdown) {
-                    break;
-                } else {
+                if (!socketShutdown) {
                     clientHandler.process(line);
-                    if(!line.contains("pong"))
+                    /*if(!line.contains("pong"))
                          System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
+
+                     */
                 }
             }
-            //close streams and socket
-            closeSocket();
         }catch (IOException | NoSuchElementException e){
             if(!socketShutdown)
                 clientHandler.playerDisconnected();
@@ -67,6 +70,9 @@ public class ClientThread implements Runnable {
         out.flush();
     }
 
+    /**
+     * Close the socket input and output and close socket
+     */
     private void closeSocket(){
         in.close();
         out.close();
@@ -77,11 +83,15 @@ public class ClientThread implements Runnable {
                 e.printStackTrace();
             }
         }
-        System.out.println("Socket Closed");
+        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
     }
 
-    public void setSocketShutdown() {
+    /**
+     * Close the socket and delete all references, it also isolates ClientThread
+     */
+    public void socketShutdown() {
         this.socketShutdown = true;
+        closeSocket();
         clientHandler = null;
     }
 }

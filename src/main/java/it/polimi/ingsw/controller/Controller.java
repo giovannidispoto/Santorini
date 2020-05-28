@@ -16,21 +16,24 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiGREEN;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
+
 /**
  * Controller Class
  */
 public class Controller {
     private Match match;
     private PlayerTurn turn;
-    private List<Player> players;
+    private final List<Player> players;
     private List<String> playersInLobby;
     private String firstPlayer;
-    private List<DivinityCard> cards;
+    private final List<DivinityCard> cards;
     private Map<String, ClientHandler> handlers;
     private Deck deck;
-    private List<DivinityCard> pickedCards;
-    private List<Color> colors;
-    private GameState gameState;
+    private final List<DivinityCard> pickedCards;
+    private final List<Color> colors;
+    private final GameState gameState;
     private int lobbySize;
 
     /**
@@ -50,6 +53,7 @@ public class Controller {
         this.gameState = new GameState();
 
         try {
+            //Read Cards Deck
             DeckReader reader = new DeckReader();
             InputStream fileStream = ServerMain.class.getClassLoader().getResourceAsStream(FileManager.divinitiesCardsPath);
             deck = reader.loadDeck(new InputStreamReader(Objects.requireNonNull(fileStream)));
@@ -57,6 +61,51 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    //-----------------------------------------------------------   START MATCH & CLOSE MATCH
+
+    /**
+     * Inform the controller that the lobby is properly formed and the game can be started
+     * The status of each handler will be changed, in addition,
+     * to each player is sent the message containing the God Player (who will choose the cards for everyone)
+     *
+     * @param lobbySize number of players
+     * @param playerNickname nickname of the last player who completed the lobby
+     * @param playersInLobby list containing the nicknames of the players
+     * @param handlerMap a map that uniquely links their handler to each nickname
+     */
+    public void lobbyIsReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap) {
+        //Set Lobby Data in Controller
+        this.lobbySize = lobbySize;
+        this.handlers = handlerMap;
+        this.playersInLobby = playersInLobby;
+        //Notify Lobby Ready to Handlers
+        this.handlers.forEach((nickName, handler) -> handler.setLobbyStart());
+        //Match Start
+        this.firstPlayer = playersInLobby.get(0);
+        //notify all player who is the first
+        String message = new Gson().toJson(new BasicMessageResponse("setPickedCards", new SetPickedCardRequest(firstPlayer)));
+        for (String p : playersInLobby) {
+            if (p.equals(playerNickname))
+                handlers.get(p).responseQueue(message);
+            else
+                handlers.get(p).response(message);
+        }
+        //go to next game state
+        gameState.nextState();
+    }
+
+    /**
+     * Call when a player first disconnects (can only be called once per game)
+     * Its job is to remove all handlers from the server
+     * @return  true after task
+     */
+    public boolean clientDisconnected(){
+        this.handlers.forEach((nickName, handler) -> handler.disconnectionShutDown());
+        return true;
+    }
+
+    //-----------------------------------------------------------
 
 
     /**
@@ -137,34 +186,6 @@ public class Controller {
         addWorkers(playerNickname, handlers.get(playerNickname));
         handlers.get(playerNickname).responseQueue(new Gson().toJson(new BasicMessageResponse("setWorkersPosition", new SetWorkerPositionRequest(getWorkersId(playerNickname)))));
     }
-
-
-    public void lobbyReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap) {
-        //Set Lobby Data in Controller
-        this.lobbySize = lobbySize;
-        this.handlers = handlerMap;
-        this.playersInLobby = playersInLobby;
-        //Notify Lobby Ready to Handlers
-        this.handlers.forEach((nickName, handler) -> handler.setLobbyStart());
-        //Match Start
-        this.firstPlayer = playersInLobby.get(0);
-        //notify all player who is the first
-        String message = new Gson().toJson(new BasicMessageResponse("setPickedCards", new SetPickedCardRequest(firstPlayer)));
-        for (String p : playersInLobby) {
-            if (p.equals(playerNickname))
-                handlers.get(p).responseQueue(message);
-            else
-                handlers.get(p).response(message);
-        }
-        //go to next game state
-        gameState.nextState();
-    }
-
-    public boolean clientDisconnected(){
-        this.handlers.forEach((nickName, handler) -> handler.clientShutDown());
-        return true;
-    }
-
 
     /**
      * Gets deck
@@ -332,7 +353,7 @@ public class Controller {
                boolean winner = turn.move(match.getSelectedWorker(),x,y);
                 if(winner){
                     delcareWinner(match.getWinner());
-                    System.out.println("Winner: "+ match.getWinner().getPlayerNickname());
+                    System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
                 }
                 break;
             case BUILD:

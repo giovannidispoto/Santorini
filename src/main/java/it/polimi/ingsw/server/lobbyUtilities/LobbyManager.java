@@ -43,7 +43,7 @@ public class LobbyManager {
 
         if (this.existingLobbiesMap.get(lobbySize).setPlayerInLobby(nickName, playerHandler)) {
             //Start Lobby
-            this.lobbyLiveMap.get(this.existingLobbiesMap.get(lobbySize).getLobbyID()).getController().lobbyReady(
+            this.lobbyLiveMap.get(this.existingLobbiesMap.get(lobbySize).getLobbyID()).getController().lobbyIsReady(
                     lobbySize,
                     nickName,
                     this.existingLobbiesMap.get(lobbySize).getPlayersNickName(),

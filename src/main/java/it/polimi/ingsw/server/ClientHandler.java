@@ -13,8 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRED;
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
 
 /**
  * ClientHandler execute commands from socket and send response to client.
@@ -47,6 +46,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     /**
      * Execute ping to the client, expecting a feedback before timeout
+     * If the timer expires the client is considered disconnected
      */
     public void setTimer(){
         ClientHandler playerHandler = this;
@@ -63,6 +63,18 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         }, 6000);
     }
 
+    /**
+     * Reset timeout set by ping request
+     */
+    public void resetTimeout(){
+        clientTimeoutTimer.cancel();
+    }
+
+    /**
+     * Function invoked the first time a client disconnects
+     * Takes care of checking in what state the client was (in play or waiting for the lobby)
+     * and if he had already been blocked by disconnecting another player
+     */
     public void playerDisconnected(){
         synchronized (lobbyManager) {
             if (!isMustStopExecution()) {
@@ -71,23 +83,38 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     //end game for all in the lobby
                     if (lobbyManager.getControllerByLobbyID(lobbyID).clientDisconnected()) {
                         lobbyManager.deleteLobby(lobbyID);
-                        System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
+                        System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET + nextLine);
                     }
                 } else {
                     //remove from lobby
                     System.out.println(ansiRED + "Player-Waiting-LobbyStart-Removed: " + lobbyManager.getPlayerNickName(this) + ansiRESET);
-                    resetTimeout();
+                    stopClient();
                     lobbyManager.removePlayer(this);
+                    System.out.println();
                 }
             }
         }
     }
 
     /**
-     * Reset timeout set by ping request
+     * Notifies the handler that a client has disconnected from the game,
+     * the handler will take care of notifying the client and closing the connection
      */
-    public void resetTimeout(){
-        clientTimeoutTimer.cancel();
+    public void disconnectionShutDown(){
+        synchronized (lobbyManager) {
+            response(new Gson().toJson(new BasicMessageResponse("serverError", new BasicErrorMessage("One Client Disconnected - Game Interrupted"))));
+            stopClient();
+            System.out.println(ansiRED+"Client-Deleted_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
+        }
+    }
+
+    /**
+     * Stop the ping, the handler and the thread that manages the client
+     */
+    private synchronized void stopClient(){
+        resetTimeout();
+        setMustStopExecution();
+        clientThread.socketShutdown();
     }
 
     /**
@@ -135,7 +162,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     @Override
     public void update(CellInterface[][] cellInterfaces) {
         response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
-        System.out.println("Battlefield Updated!");
+        //System.out.println("Battlefield Updated!");
 
     }
 
@@ -146,7 +173,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     @Override
     public void update(boolean[][] workerView) {
         response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
-        System.out.println("WorkerView Updated!");
+        //System.out.println("WorkerView Updated!");
     }
 
     /**
@@ -157,17 +184,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         this.messageQueue.add(message);
     }
 
-    public void clientShutDown(){
-        synchronized (lobbyManager) {
-            response(new Gson().toJson(new BasicMessageResponse("serverError", new BasicErrorMessage("One Client Disconnected - Game Interrupted"))));
-            resetTimeout();
-            setMustStopExecution();
-            clientThread.setSocketShutdown();
-            System.out.println(ansiRED+"Client-Deleted_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
-        }
-    }
-
-    //GETTER & SETTER
+    //------------------------------------- GETTER & SETTER
 
     public LobbyManager getLobbyManager() {
         return lobbyManager;
