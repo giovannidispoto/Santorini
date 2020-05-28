@@ -83,14 +83,13 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     //end game for all in the lobby
                     if (lobbyManager.getControllerByLobbyID(lobbyID).clientDisconnected()) {
                         lobbyManager.deleteLobby(lobbyID);
-                        System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET + nextLine);
+                        System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
                     }
                 } else {
                     //remove from lobby
                     System.out.println(ansiRED + "Player-Waiting-LobbyStart-Removed: " + lobbyManager.getPlayerNickName(this) + ansiRESET);
                     stopClient();
                     lobbyManager.removePlayer(this);
-                    System.out.println();
                 }
             }
         }
@@ -108,12 +107,19 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         }
     }
 
+    public boolean playerEliminated(){
+        setMustStopExecution();
+        resetTimeout();
+        System.out.println(ansiBLUE+"Player: "+lobbyManager.getPlayerNickName(this)+" Eliminated from the game: "+lobbyID+ansiRESET);
+        return true;
+    }
+
     /**
      * Stop the ping, the handler and the thread that manages the client
      */
     private synchronized void stopClient(){
-        resetTimeout();
         setMustStopExecution();
+        resetTimeout();
         clientThread.socketShutdown();
     }
 

@@ -5,6 +5,8 @@ import it.polimi.ingsw.server.ClientHandler;
 
 import java.util.*;
 
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
+
 public class LobbyManager {
     private final Map<Integer, Lobby> existingLobbiesMap;
     private final Map<String, ClientHandler> playersNickNameMap;
@@ -48,6 +50,9 @@ public class LobbyManager {
                     nickName,
                     this.existingLobbiesMap.get(lobbySize).getPlayersNickName(),
                     this.existingLobbiesMap.get(lobbySize).getPlayersHandlerInLobby());
+
+            System.out.println(ansiBLUE+"Lobby-Started_ID: "+this.existingLobbiesMap.get(lobbySize).getLobbyID()+ansiRESET);
+            System.out.println(ansiBLUE+"Players: "+this.existingLobbiesMap.get(lobbySize).getPlayersNickName()+ansiRESET);
             //Set to default
             this.existingLobbiesMap.put(lobbySize, null);
         }

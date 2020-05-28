@@ -59,6 +59,7 @@ public class ClientThread implements Runnable {
             if(!socketShutdown)
                 clientHandler.playerDisconnected();
         }
+        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
     }
 
     /**
@@ -82,8 +83,8 @@ public class ClientThread implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
         }
-        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
     }
 
     /**
