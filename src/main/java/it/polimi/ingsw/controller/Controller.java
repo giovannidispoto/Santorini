@@ -298,7 +298,7 @@ public class Controller {
             match.removePlayer(p);
             checkDeclareWinner();
             handlers.get(playerNickname).responseQueue(new Gson().toJson(new BasicMessageResponse("youLose", null)));
-            handlers.get(playerNickname).playerEliminated();
+            handlers.get(playerNickname).playerIsEliminated();
         }
     }
 
