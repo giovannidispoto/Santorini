@@ -109,7 +109,7 @@ public class CLIBuilder implements UIActions{
     private static final String SOCKET_PORT = "Socket Port ⛩";
     private static final String PORT_SUGGESTION = "We suggest you the port 1337 • ";
     private static final String SERVER_IP = "Server IP 🌍";
-    private static final String NICKNAME = "Nickname 👾";
+    private static final String NICKNAME = "Nickname ✏️";
     private static final String LOBBY_SIZE = "Lobby Size 📦";
     private static final String WAIT_START = "Wait for the match startup...";
     private static final String WAIT_PLAYERS = "Wait for the other players choices...";
