@@ -47,7 +47,7 @@ public class ClientController {
     private int currentLobbySize;
     //--    Utils - Locks for Wait & Notify
     private final WaitManager waitManager;
-    private final Thread mainThread;
+    private Thread controllerThread;
     //--    Connection & handler
     private ClientSocketConnection socketConnection;
     private ServerHandler serverHandler;
@@ -59,11 +59,14 @@ public class ClientController {
     public final Logger loggerIO;
 
     /**
-     * ClientController Constructor
+     * ClientController Constructor:
+     * Initializes a new logger and stores the thread that the constructor invoked (so that it can be stopped)
+     * see registerControllerThread, if using multiple threads
+     *
      */
     public ClientController(){
         this.waitManager = new WaitManager();
-        this.mainThread = Thread.currentThread();
+        this.controllerThread = Thread.currentThread();
         this.gameException = new SantoriniException(ExceptionMessages.genericError);
         this.gameState = GameState.START;
         this.loggerIO = start_IO_Logger();
@@ -100,6 +103,18 @@ public class ClientController {
 
     //------    Error management / Normal execution interruption
 
+    /**
+     * If you use a different thread to invoke the functions of the controller,
+     * through this function you can register correctly so that you are interrupted in case of error
+     * -
+     * N.B: It is recommended to use only one thread to manage all commands to the controller
+     *
+     * @param controllerThread Thread that can be stopped in case of errors
+     */
+    public void registerControllerThread(Thread controllerThread){
+        this.controllerThread = controllerThread;
+    }
+
     /** Set an error code ("string") in the exception
      *  It is good to do this before calling launchError,
      *  so as not to have a default error
@@ -117,7 +132,7 @@ public class ClientController {
      * therefore started executing the program (usually main)
      */
     public void interruptNormalExecution(){
-        mainThread.interrupt();
+        controllerThread.interrupt();
     }
 
     //------    WAIT REQUESTS to Controller
