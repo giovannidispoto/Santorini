@@ -56,9 +56,8 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         clientTimeoutTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-
-                System.out.println(ansiRED+"Timeout_"+lobbyManager.getPlayerNickName(playerHandler)+" -isLobbyStart:"+ lobbyStarted +" -isStoppedByServer:"+ isMustStopExecution()+ansiRESET);
-                playerDisconnected();
+                    System.out.println(ansiRED + "Timeout_" + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution() + ansiRESET);
+                    playerDisconnected();
             }
         }, 6000);
     }
@@ -66,7 +65,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     /**
      * Reset timeout set by ping request
      */
-    public synchronized void resetTimeout(){
+    public void resetTimeout(){
         clientTimeoutTimer.cancel();
     }
 
@@ -75,15 +74,17 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * Takes care of checking in what state the client was (in play or waiting for the lobby)
      * and if he had already been blocked by disconnecting another player
      */
-    public synchronized void playerDisconnected(){
+    public void playerDisconnected(){
+        synchronized (lobbyManager) {
             if (!isMustStopExecution()) {
-                System.out.println(ansiRED+"Client-Disconnected-Suddenly_NickName: "+getLobbyManager().getPlayerNickName(this)+ansiRESET);
-                if (lobbyStarted) {
+                System.out.println(ansiRED + "Client-Disconnected-Suddenly_NickName: " + getLobbyManager().getPlayerNickName(this) + ansiRESET);
+
+                if (isLobbyStarted()) {
                     //end game for all in the lobby
-                    if (lobbyManager.getControllerByLobbyID(lobbyID).clientDisconnected()) {
-                        lobbyManager.deleteLobby(lobbyID);
-                        System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
-                    }
+                    lobbyManager.getControllerByLobbyID(lobbyID).clientDisconnected();
+                    lobbyManager.deleteLobby(lobbyID);
+                    System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
+
                 } else {
                     //remove from lobby
                     System.out.println(ansiRED + "Player-Waiting-LobbyStart-Removed: " + lobbyManager.getPlayerNickName(this) + ansiRESET);
@@ -91,13 +92,14 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     lobbyManager.removePlayer(this);
                 }
             }
+        }
     }
 
     /**
      * Notifies the handler that a client has disconnected from the game,
      * the handler will take care of notifying the client and closing the connection
      */
-    public synchronized void disconnectionShutDown(){
+    public void disconnectionShutDown(){
             response(new Gson().toJson(new BasicMessageResponse("serverError", new BasicErrorMessage("One Client Disconnected - Game Interrupted"))));
             stopClient();
             System.out.println(ansiRED+"Client-Deleted_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
@@ -106,7 +108,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     /**
      * Notifies the handler that the player has been eliminated from the match but the match is still in progress
      */
-    public synchronized void playerIsEliminated(){
+    public void playerIsEliminated(){
         setMustStopExecution();
         resetTimeout();
         System.out.println(ansiBLUE+"Player: "+lobbyManager.getPlayerNickName(this)+" Eliminated from the game: "+lobbyID+ansiRESET);
@@ -115,7 +117,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     /**
      * Stop the ping, the handler and the thread that manages the client
      */
-    private synchronized void stopClient(){
+    private void stopClient(){
         setMustStopExecution();
         resetTimeout();
         clientThread.socketShutdown();
@@ -125,17 +127,23 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * Process command received from socket
      * @param m message
      */
-    public synchronized void process(String m){
-        try {
-                if ((m.contains("addPlayer") || m.contains("pong")) && !this.lobbyStarted && !this.mustStopExecution) {
-                    CommandFactory.from(m).execute(null, this);
-                } else if (this.lobbyStarted && !this.mustStopExecution) {
-                    this.lobbyManager.getLobbyThreadByLobbyID(this.lobbyID).getLobbyExecutorService().execute(
-                            () -> CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this));
-                }
+    public void process(String m){
+        if(!isMustStopExecution()) {
+            synchronized (lobbyManager) {
+                try {
+                    if ((m.contains("addPlayer") && !isLobbyStarted()) || m.contains("pong")) {
+                        CommandFactory.from(m).execute(null, this);
 
-        }catch(JsonParseException e){
-            System.out.println(e.getMessage());
+                    } else if (isLobbyStarted()) {
+
+                        this.lobbyManager.getLobbyThreadByLobbyID(this.lobbyID).getLobbyExecutorService().execute(
+                                () -> CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this));
+                    }
+
+                } catch (JsonParseException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
     }
 
@@ -200,17 +208,20 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         return mustStopExecution;
     }
 
-    public synchronized void setMustStopExecution() {
+    public void setMustStopExecution() {
         this.mustStopExecution = true;
     }
 
-    public synchronized void setLobbyID(UUID lobbyID) {
+    public void setLobbyID(UUID lobbyID) {
         this.lobbyID = lobbyID;
     }
 
-    public synchronized void setLobbyStart() {
+    public void setLobbyStart() {
         this.lobbyStarted = true;
     }
 
+    public boolean isLobbyStarted() {
+        return lobbyStarted;
+    }
 
 }

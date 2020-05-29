@@ -57,14 +57,10 @@ public class ServerThread implements Runnable {
             clientController.loggerIO.info("Socket Connection Closed, received quit\n");
 
         }catch (IOException  e1){
-            clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError);
-            clientController.setGameState(GameState.ERROR);
-            clientController.interruptNormalExecution();
+            clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError, GameState.ERROR, true);
             clientController.loggerIO.severe("IO-EXCEPTION "+ e1.getMessage() + "\n");
         }catch (NoSuchElementException e2){
-            clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError);
-            clientController.setGameState(GameState.ERROR);
-            clientController.interruptNormalExecution();
+            clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError, GameState.ERROR, true);
             clientController.loggerIO.severe("NO-SOCKET-LINE-EXCEPTION "+ e2.getMessage() + "\n");
         }
     }

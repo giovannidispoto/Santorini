@@ -16,6 +16,8 @@ import java.util.List;
  * CLIBuilder contains everything you need to build the CLI and use it
  */
 public class CLIBuilder implements UIActions{
+    
+    private static String COLOR_SCHEME;
 
     //------------------ # ANSI Colors 256 bit # ------------------
     private static final String CODE_BLUE = "33";
@@ -35,7 +37,6 @@ public class CLIBuilder implements UIActions{
     private static final String ANSI_BLUE = ANSI_PREFIX+CODE_BLUE+"m";
     private static final String ANSI_LIGHTBLUE = ANSI_PREFIX+CODE_LIGHTBLUE+"m";
     private static final String ANSI_GRAY = ANSI_PREFIX+CODE_GRAY+"m";
-    private static final String ANSI_LIGHT_GRAY = ANSI_PREFIX+CODE_LIGHT_GRAY+"m";
     private static final String ANSI_GREEN = ANSI_PREFIX+CODE_GREEN+"m";
     private static final String ANSI_LIGHT_GREEN = ANSI_PREFIX+CODE_LIGHT_GREEN+"m";
     private static final String ANSI_BROWN = ANSI_PREFIX+CODE_BROWN+"m";
@@ -44,8 +45,6 @@ public class CLIBuilder implements UIActions{
     private static final String ANSI_ORANGE = ANSI_PREFIX+CODE_ORANGE+"m";
     private static final String ANSI_BLACK = ANSI_PREFIX+CODE_BLACK+"m";
     private static final String ANSI_WHITE = ANSI_PREFIX+CODE_WHITE+"m";
-    //Dark Mode function
-    private static String COLOR_MODE;
     //Specials
     protected static final String CLEAN = "\u001b[0J";
     protected static final String INITIALIZE_SCREEN = "\033[0;0H";
@@ -79,15 +78,16 @@ public class CLIBuilder implements UIActions{
     //------------------ # UI Objects # ------------------
     private static final String CLI_INPUT = "> ";
     private static final String WORKER = "✲";
-    protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
-    protected static final String GRASS = ANSI_GREEN+"☘︎"+ANSI_WHITE;
-    private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI"+ANSI_WHITE;
+    protected static final String DOME = ANSI_LIGHTBLUE+"◉";
+    protected static final String GRASS = ANSI_GREEN+"☘︎";
+    private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI";
     private static final String WELCOME = "Welcome to %s : The Board Game 🎲 → Enable the full screen to enjoy the best experience";
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
     private static final String MOVES_TITLE = "PLAYER MOVES 🎮";
     private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
+    private static final String SELECTED_WORKER = "SELECTED WORKER 👷🏻 ‍• ";
 
     //------------------ # UI Data # ------------------
     private HashMap<Color,String> WorkerColorsMap;
@@ -97,6 +97,7 @@ public class CLIBuilder implements UIActions{
     private int fullTowersNumber;
     private boolean operationRepeated=false;
     private HashMap<Integer,String> phasesMap;
+    private String selectedWorkerValue ="Nobody";
 
     //------------------ # Titles # ------------------
     private static final String SETUP_TITLE = "Setup Connection";
@@ -172,7 +173,7 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
 
     //Fatal
-    private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s 🔥";
+    private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s ⚠️";
     private static final String EXIT_ERROR = "Type [quit] to close the program • ";
     private static final String EXIT = "Type [quit] or [restart] to close|restart the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
@@ -204,6 +205,7 @@ public class CLIBuilder implements UIActions{
 
     //Moves
     private static final String playerMoveTemplate = "[%s|%s]";
+    private static final String selectedWorkerCoordinatesTemplate = "%s|%s";
 
     //Data Box
     private static final String playerDataTemplate = "%s %s | %s";
@@ -239,6 +241,7 @@ public class CLIBuilder implements UIActions{
                     H_LINE+H_LINE+H_LINE+LO_LAT_SEPARATOR+
                     H_LINE+H_LINE+H_LINE+R_B_CORNER;
     private static final String edge_distance = BLANK+BLANK+BLANK;
+    private static final String edge_selected_player = BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK;
 
     //Full Towers Box Preconfigured Elements
     private static final String upperEdgeTowers = L_THIN_T_CORNER+H_THIN_LINE+H_THIN_LINE+H_THIN_LINE+R_THIN_T_CORNER;
@@ -273,12 +276,12 @@ public class CLIBuilder implements UIActions{
         this.printedLinesCounter = 0;
         //Color Scheme setup
         if(colorMode.equalsIgnoreCase("light"))
-            COLOR_MODE=ANSI_BLACK;
+            COLOR_SCHEME =ANSI_BLACK;
         else
-            COLOR_MODE=ANSI_WHITE;
+            COLOR_SCHEME = ANSI_WHITE;
         //CLI Board Representation Setup
         for(int i=0;i<editableRowCells;i++){
-            CLIDataObject cell = new CLIDataObject();
+            CLIDataObject cell = new CLIDataObject(COLOR_SCHEME);
             boardCellsContents[i]=cell;
         }
         //Fulfill the WorkerColorsMap
@@ -306,7 +309,7 @@ public class CLIBuilder implements UIActions{
     public void printGodPlayerActivity(ClientController clientController){
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.println(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+String.format(waitGodTemplate,clientController.getGodPlayer())+ANSI_WHITE);
+        System.out.println(COLOR_SCHEME+CLI_INPUT+ANSI_ORANGE+String.format(waitGodTemplate,clientController.getGodPlayer())+COLOR_SCHEME);
     }
 
     /**
@@ -355,17 +358,17 @@ public class CLIBuilder implements UIActions{
         //Logic
         System.out.print(String.format(CURSOR_UP,printedLinesCounter));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+edge_distance+PLAYERS_TITLE+NEW_LINE+NEW_LINE);
+        System.out.print(COLOR_SCHEME+edge_distance+PLAYERS_TITLE+NEW_LINE+NEW_LINE);
         for(PlayerInterface currentPlayer : clientController.getPlayers()){
-            playerData.append(edge_distance).append(String.format(playerDataTemplate, WorkerColorsMap.get(currentPlayer.getColor()), ANSI_WHITE+currentPlayer.getPlayerNickname(), currentPlayer.getCard()));
+            playerData.append(edge_distance).append(String.format(playerDataTemplate, WorkerColorsMap.get(currentPlayer.getColor()), COLOR_SCHEME+currentPlayer.getPlayerNickname(), currentPlayer.getCard()));
             playersInfo.add(playerData.toString());
             playerData.setLength(0);
         }
         for(String current : playersInfo)
             System.out.println(current);
         System.out.print(NEW_LINE);
-        System.out.println(edge_distance+GRASS+BLANK+"is the grass, a good place to build a tower");
-        System.out.println(edge_distance+DOME+BLANK+"is a dome, the highest level of a tower ");
+        System.out.println(edge_distance+GRASS+BLANK+COLOR_SCHEME+"is the grass, a good place to build a tower");
+        System.out.println(edge_distance+DOME+BLANK+COLOR_SCHEME+"is a dome, the highest level of a tower ");
         System.out.print(NEW_LINE+NEW_LINE);
         printedLinesCounter=0;
     }
@@ -387,7 +390,7 @@ public class CLIBuilder implements UIActions{
         for(int i=0;i<messageLength+2;i++)
             System.out.print(H_THIN_LINE);
         System.out.println(R_THIN_B_CORNER);
-        System.out.print(ANSI_WHITE);
+        System.out.print(COLOR_SCHEME);
         printedLinesCounter+=3;
     }
 
@@ -401,7 +404,7 @@ public class CLIBuilder implements UIActions{
     public void renderDeck(ClientController clientController) throws SantoriniException {
         clientController.getDeckRequest();
         for(DivinityCard current : clientController.getCardsDeck().getAllCards()){
-            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+ANSI_WHITE,current.getCardEffect()));
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+current.getCardName().toUpperCase()+COLOR_SCHEME,current.getCardEffect()));
             printedLinesCounter+=1;
         }
         System.out.print(NEW_LINE);
@@ -415,7 +418,7 @@ public class CLIBuilder implements UIActions{
      */
     public void renderAvailableCards(ClientController clientController){
         for(String card : clientController.getGodCards()){
-            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+clientController.getCardsDeck().getDivinityCard(card).getCardName().toUpperCase()+ANSI_WHITE,clientController.getCardsDeck().getDivinityCard(card).getCardEffect()));
+            System.out.println(String.format(cardTemplate,ANSI_LIGHTBLUE+clientController.getCardsDeck().getDivinityCard(card).getCardName().toUpperCase()+COLOR_SCHEME,clientController.getCardsDeck().getDivinityCard(card).getCardEffect()));
             printedLinesCounter+=1;
         }
         System.out.print(NEW_LINE);
@@ -456,7 +459,8 @@ public class CLIBuilder implements UIActions{
 
         //Print line 0
         currentLine.append(BLANK.repeat(boardTitleEdgeDistance));
-        currentLine.append(ANSI_WHITE+BOARD_TITLE);
+        currentLine.append(COLOR_SCHEME+BOARD_TITLE);
+        currentLine.append(edge_selected_player).append(SELECTED_WORKER).append(selectedWorkerValue);
         System.out.print(currentLine+NEW_LINE);
         System.out.print(NEW_LINE);
         currentLine.setLength(0);
@@ -465,12 +469,12 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance);
         for(int i=0;i<5;i++)
             currentLine.append(String.format(horizontalNumberRowTemplate,i));
-        currentLine.append(BLANK+edge_distance).append(ANSI_LIGHTBLUE+TOWERS_TITLE+ANSI_WHITE);
+        currentLine.append(BLANK+edge_distance).append(ANSI_LIGHTBLUE+TOWERS_TITLE+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
         //Print line 3
-        currentLine.append(edge_distance+upperEdgeBoard+edge_distance+ANSI_LIGHTBLUE+upperEdgeTowers+ANSI_WHITE);
+        currentLine.append(edge_distance+upperEdgeBoard+edge_distance+ANSI_LIGHTBLUE+upperEdgeTowers+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -479,13 +483,13 @@ public class CLIBuilder implements UIActions{
         for(int i=0;i<editableRowCells;i++)
             currentLine.append(boardCellsContents[currentRow].getCellContent(i)).append(V_LINE);
         currentLine.append(edge_distance);
-        currentLine.append(ANSI_LIGHTBLUE).append(String.format(intermediateEdgeTowers, fullTowersNumber)).append(ANSI_WHITE);
+        currentLine.append(ANSI_LIGHTBLUE).append(String.format(intermediateEdgeTowers, fullTowersNumber)).append(COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
         currentRow++;
 
         //Print line 5
-        currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance+ANSI_LIGHTBLUE+lowerEdgeTowers+ANSI_WHITE);
+        currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance+ANSI_LIGHTBLUE+lowerEdgeTowers+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -494,7 +498,7 @@ public class CLIBuilder implements UIActions{
         for(int i=0;i<editableRowCells;i++)
             currentLine.append(boardCellsContents[currentRow].getCellContent(i)).append(V_LINE);
         currentLine.append(edge_distance);
-        currentLine.append(ANSI_RED+PHASE_TITLE+ANSI_WHITE);
+        currentLine.append(ANSI_RED+PHASE_TITLE+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
         currentRow++;
@@ -503,7 +507,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance);
         currentLine.append(ANSI_RED+L_THIN_T_CORNER);
         currentLine.append(H_THIN_LINE.repeat(Math.max(0, currentPhase.length() + 2)));
-        currentLine.append(R_THIN_T_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_T_CORNER+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -512,7 +516,7 @@ public class CLIBuilder implements UIActions{
         for(int i=0;i<editableRowCells;i++)
             currentLine.append(boardCellsContents[currentRow].getCellContent(i)).append(V_LINE);
         currentLine.append(edge_distance);
-        currentLine.append(ANSI_RED).append(String.format(intermediateEdgePhase, currentPhase)).append(ANSI_WHITE);
+        currentLine.append(ANSI_RED).append(String.format(intermediateEdgePhase, currentPhase)).append(COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
         currentRow++;
@@ -521,7 +525,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance);
         currentLine.append(ANSI_RED+L_THIN_B_CORNER);
         currentLine.append(H_THIN_LINE.repeat(Math.max(0, currentPhase.length() + 2)));
-        currentLine.append(R_THIN_B_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_B_CORNER+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -530,7 +534,7 @@ public class CLIBuilder implements UIActions{
         for(int i=0;i<editableRowCells;i++)
             currentLine.append(boardCellsContents[currentRow].getCellContent(i)).append(V_LINE);
         currentLine.append(edge_distance);
-        currentLine.append(ANSI_LIGHT_GREEN+MOVES_TITLE+ANSI_WHITE);
+        currentLine.append(ANSI_LIGHT_GREEN+MOVES_TITLE+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
         currentRow++;
@@ -539,7 +543,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+L_THIN_T_CORNER+H_THIN_LINE);
         currentLine.append(H_THIN_LINE.repeat(availableMoves.length()));
-        currentLine.append(R_THIN_T_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_T_CORNER+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -550,7 +554,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+V_THIN_LINE+BLANK);
         currentLine.append(availableMoves);
-        currentLine.append(V_THIN_LINE+ANSI_WHITE);
+        currentLine.append(V_THIN_LINE+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
@@ -558,14 +562,14 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+lowerEdgeBoard+edge_distance);
         currentLine.append(ANSI_LIGHT_GREEN+L_THIN_B_CORNER+H_THIN_LINE);
         currentLine.append(H_THIN_LINE.repeat(availableMoves.length()));
-        currentLine.append(R_THIN_B_CORNER+ANSI_WHITE);
+        currentLine.append(R_THIN_B_CORNER+COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 
         //Print line 14 and 15
         System.out.print(NEW_LINE+NEW_LINE);
 
-        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+waitGeneric+NEW_LINE);
+        System.out.print(COLOR_SCHEME+CLI_INPUT+ANSI_ORANGE+waitGeneric+NEW_LINE);
     }
 
     //SECTION: UI Methods
@@ -583,7 +587,7 @@ public class CLIBuilder implements UIActions{
         //Lobby Parameters
         String chosenNickname;
         int chosenLobbySize;
-        System.out.print(NEW_LINE+COLOR_MODE+String.format(WELCOME,COLOR_MODE+SANTORINI)+NEW_LINE+NEW_LINE);
+        System.out.print(NEW_LINE+COLOR_SCHEME+String.format(WELCOME, COLOR_SCHEME+SANTORINI+COLOR_SCHEME)+NEW_LINE+NEW_LINE);
         printedLinesCounter+=2;
         /*  # TITLE BOX #
             ┌──────────────────┐
@@ -597,7 +601,7 @@ public class CLIBuilder implements UIActions{
                 >
                 |
             */
-            System.out.print(COLOR_MODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+            System.out.print(COLOR_SCHEME+SERVER_IP+NEW_LINE+CLI_INPUT);
             userInputString=consoleScanner.next();
             printedLinesCounter+=2;
             while (!clientController.getSocketConnection().setServerName(userInputString)){
@@ -608,7 +612,7 @@ public class CLIBuilder implements UIActions{
                 */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_IP+COLOR_MODE+SERVER_IP+NEW_LINE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_IP+COLOR_SCHEME+SERVER_IP+NEW_LINE+CLI_INPUT);
                 userInputString=consoleScanner.next();
             }
             /*  # Setup Socket Port #
@@ -618,12 +622,12 @@ public class CLIBuilder implements UIActions{
                 We suggest you the port 1337 • >
                 |
             */
-            System.out.print(COLOR_MODE+SOCKET_PORT+NEW_LINE+ ANSI_GRAY);
-            System.out.print(PORT_SUGGESTION+ANSI_WHITE+CLI_INPUT);
+            System.out.print(COLOR_SCHEME+SOCKET_PORT+NEW_LINE+ANSI_GRAY);
+            System.out.print(PORT_SUGGESTION+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+PORT_SUGGESTION_ERROR+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+PORT_SUGGESTION_ERROR+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             userInputValue=consoleScanner.nextInt();
@@ -649,7 +653,7 @@ public class CLIBuilder implements UIActions{
                     Connection established!
                 */
                 isOperationValid=true;
-                System.out.print(ANSI_GREEN+SUCCESSFUL_HANDSHAKING+ANSI_WHITE+NEW_LINE);
+                System.out.print(ANSI_GREEN+SUCCESSFUL_HANDSHAKING+COLOR_SCHEME+NEW_LINE);
                 printedLinesCounter+=1;
             }
             else{
@@ -660,7 +664,7 @@ public class CLIBuilder implements UIActions{
                 */
                 System.out.print(String.format(CURSOR_UP,printedLinesCounter-6)); //-3 because we don't have to delete the title box and the welcome message
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+FAILED_CONNECTION+NEW_LINE+ANSI_WHITE);
+                System.out.print(ANSI_RED+FAILED_CONNECTION+NEW_LINE+COLOR_SCHEME);
                 printedLinesCounter=6;
             }
         }
@@ -675,7 +679,7 @@ public class CLIBuilder implements UIActions{
             >
             |
         */
-        System.out.print(COLOR_MODE+NICKNAME+NEW_LINE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+NICKNAME+NEW_LINE+CLI_INPUT);
         userInputString=consoleScanner.next();
         clientController.setPlayerNickname(userInputString);
         printedLinesCounter+=2;
@@ -696,7 +700,7 @@ public class CLIBuilder implements UIActions{
         while(!consoleScanner.hasNextInt()){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLOR_SCHEME+CLI_INPUT);
             consoleScanner.next();
         }
         userInputValue=consoleScanner.nextInt();
@@ -719,7 +723,7 @@ public class CLIBuilder implements UIActions{
             */
             System.out.print(String.format(CURSOR_UP,2));
             System.out.print(CLEAN);
-            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLOR_MODE+LOBBY_SIZE+NEW_LINE+CLI_INPUT);
+            System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLOR_SCHEME+LOBBY_SIZE+NEW_LINE+CLI_INPUT);
             userInputValue=consoleScanner.nextInt();
             isOperationValid= userInputValue == 2 || userInputValue == 3;
         }
@@ -748,11 +752,11 @@ public class CLIBuilder implements UIActions{
                 > |
             */
             System.out.println(ANSI_RED+ALREADY_EXISTENT_LOBBY);
-            System.out.print(ANSI_WHITE+CLI_INPUT);
+            System.out.print(COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+LOBBY_SIZE_ERROR+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             userInputValue=consoleScanner.nextInt();
@@ -778,7 +782,7 @@ public class CLIBuilder implements UIActions{
                 > |
             */
             System.out.println(ANSI_RED+NICKNAME_ERROR);
-            System.out.print(ANSI_WHITE+CLI_INPUT);
+            System.out.print(COLOR_SCHEME+CLI_INPUT);
             userInputString=consoleScanner.next();
             clientController.setPlayerNickname(userInputString);
             clientController.addPlayerRequest(clientController.getPlayerNickname(),chosenLobbySize);
@@ -788,12 +792,12 @@ public class CLIBuilder implements UIActions{
         //# Full Lobby # -> we close the client
         if(clientController.isFullLobby()){
             System.out.println(ANSI_RED+UNAVAILABLE_LOBBY);
-            System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+EXIT+COLOR_SCHEME+CLI_INPUT);
             userInputString=consoleScanner.next();
             while (!userInputString.equalsIgnoreCase("quit")){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.println(CLEAN);
-                System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+COLOR_SCHEME+CLI_INPUT);
                 userInputString=consoleScanner.next();
             }
             System.out.println(GOODBYE+NEW_LINE+CLOSING);
@@ -816,7 +820,7 @@ public class CLIBuilder implements UIActions{
             |
         */
         System.out.print(ANSI_GREEN+ SUCCESSFUL_LOBBY_ACCESS +NEW_LINE);
-        System.out.print(COLOR_MODE+CLI_INPUT+ANSI_GRAY+WAIT_START+ANSI_WHITE+NEW_LINE);
+        System.out.print(COLOR_SCHEME+CLI_INPUT+ANSI_GRAY+WAIT_START+COLOR_SCHEME+NEW_LINE);
         printedLinesCounter+=2;
     }
 
@@ -866,7 +870,7 @@ public class CLIBuilder implements UIActions{
         System.out.print(String.format(pickCardsTemplate,numberOfPlayers)+NEW_LINE);
         //Multiple extraction
         while (pickedCounter<numberOfPlayers){
-            System.out.print(ANSI_GRAY+String.format(pickChoiceTemplate,pickedCounter+1)+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+String.format(pickChoiceTemplate,pickedCounter+1)+COLOR_SCHEME+CLI_INPUT);
             userInput=consoleScanner.next().toUpperCase();
             isValidInput= clientController.getCardsDeck().getCardsNames().contains(userInput);
             if(!chosenCards.isEmpty()){
@@ -875,7 +879,7 @@ public class CLIBuilder implements UIActions{
             while (!isValidInput){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_CARD+COLOR_SCHEME+CLI_INPUT);
                 userInput=consoleScanner.next().toUpperCase();
                 isValidInput=true;
                 if(!chosenCards.isEmpty()){
@@ -913,7 +917,7 @@ public class CLIBuilder implements UIActions{
             > Wait for other players choice...
             |
          */
-        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
+        System.out.print(COLOR_SCHEME+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
         printedLinesCounter+=2;
         godPlayerRefreshHeight=printedLinesCounter;
     }
@@ -952,7 +956,7 @@ public class CLIBuilder implements UIActions{
         printedLinesCounter=0;
         renderTitleBox(ANSI_PURPLE,CHOICE_TITLE);
         renderAvailableCards(clientController);
-        System.out.print(ANSI_WHITE+CHOOSE_CARD+NEW_LINE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+CHOOSE_CARD+NEW_LINE+CLI_INPUT);
         userInput=consoleScanner.next().toUpperCase();
         if(!availableCards.contains(userInput))
             validInput=false;
@@ -967,13 +971,13 @@ public class CLIBuilder implements UIActions{
                 Choose your card for this match 🕹
                 Invalid card choice...retry! • >
             */
-            System.out.print(ANSI_RED+INVALID_CARD+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_RED+INVALID_CARD+COLOR_SCHEME+CLI_INPUT);
             userInput=consoleScanner.next().toUpperCase();
             validInput= availableCards.contains(userInput);
         }
         clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
         System.out.print(String.format(CURSOR_UP,1));
-        System.out.print(ANSI_WHITE+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
+        System.out.print(COLOR_SCHEME+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
         printedLinesCounter+=2;
     }
 
@@ -1011,7 +1015,7 @@ public class CLIBuilder implements UIActions{
         renderBoard("Choose a free cell"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+PLACEMENT_REQUEST+NEW_LINE);
+        System.out.print(COLOR_SCHEME+PLACEMENT_REQUEST+NEW_LINE);
         //Logic
         do {
             /* # ROW COORDINATE #
@@ -1020,11 +1024,11 @@ public class CLIBuilder implements UIActions{
                 * 16|Worker row • > []
                 * 17|
              */
-            System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+ROW_WORKER+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             workerRow = consoleScanner.nextInt();
@@ -1037,11 +1041,11 @@ public class CLIBuilder implements UIActions{
                  */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 workerRow = consoleScanner.nextInt();
@@ -1054,7 +1058,7 @@ public class CLIBuilder implements UIActions{
              */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+COL_WORKER+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 /* # COL COORDINATE ERROR #
                  * 14|
@@ -1064,18 +1068,18 @@ public class CLIBuilder implements UIActions{
                  */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             workerCol = consoleScanner.nextInt();
             while (workerCol<0 || workerCol>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 workerCol = consoleScanner.nextInt();
@@ -1090,7 +1094,7 @@ public class CLIBuilder implements UIActions{
                 repeat = true;
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+OCCUPIED_POSITION+ANSI_WHITE+PLACEMENT_REQUEST);
+                System.out.println(ANSI_RED+OCCUPIED_POSITION+COLOR_SCHEME+PLACEMENT_REQUEST);
             }
             else
                 repeat = false;
@@ -1136,7 +1140,7 @@ public class CLIBuilder implements UIActions{
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
         //Logic
-        System.out.print(ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+        System.out.print(COLOR_SCHEME+WORKER_SELECTION_REQUEST+NEW_LINE);
         printedLinesCounter+=1;
         do{
             do{
@@ -1146,22 +1150,22 @@ public class CLIBuilder implements UIActions{
                  * 16|Worker row • >
                  * 17|
                  */
-                System.out.print(ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_GRAY+ROW_WORKER+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 workerRow = consoleScanner.nextInt();
                 while(workerRow<0 || workerRow>4){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+COLOR_SCHEME+CLI_INPUT);
                     while(!consoleScanner.hasNextInt()){
                         System.out.print(String.format(CURSOR_UP,1));
                         System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                         consoleScanner.next();
                     }
                     workerRow = consoleScanner.nextInt();
@@ -1174,22 +1178,22 @@ public class CLIBuilder implements UIActions{
                  */
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_GRAY+COL_WORKER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_GRAY+COL_WORKER+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 workerCol = consoleScanner.nextInt();
                 while(workerCol<0 || workerCol>4){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_WORKER+COLOR_SCHEME+CLI_INPUT);
                     while(!consoleScanner.hasNextInt()){
                         System.out.print(String.format(CURSOR_UP,1));
                         System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                        System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                         consoleScanner.next();
                     }
                     workerCol = consoleScanner.nextInt();
@@ -1209,7 +1213,7 @@ public class CLIBuilder implements UIActions{
                         validSelection=false;
                         System.out.print(String.format(CURSOR_UP,2));
                         System.out.print(CLEAN);
-                        System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                        System.out.print(ANSI_RED+INVALID_SELECTION+COLOR_SCHEME+WORKER_SELECTION_REQUEST+NEW_LINE);
                     }
                 }
                 else
@@ -1223,7 +1227,7 @@ public class CLIBuilder implements UIActions{
                     validSelection=false;
                     System.out.print(String.format(CURSOR_UP,2));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+INVALID_SELECTION+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                    System.out.print(ANSI_RED+INVALID_SELECTION+COLOR_SCHEME+WORKER_SELECTION_REQUEST+NEW_LINE);
                 }
             }
             while (!validSelection);
@@ -1241,10 +1245,11 @@ public class CLIBuilder implements UIActions{
                 validWorker=false;
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_WORKER+ANSI_WHITE+WORKER_SELECTION_REQUEST+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_WORKER+COLOR_SCHEME+WORKER_SELECTION_REQUEST+NEW_LINE);
             }
         }
         while(!validWorker);
+        selectedWorkerValue=String.format(selectedWorkerCoordinatesTemplate,workerRow,workerCol);
     }
 
     /**
@@ -1282,7 +1287,7 @@ public class CLIBuilder implements UIActions{
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
+        System.out.print(COLOR_SCHEME+MOVEMENT_REQUEST+NEW_LINE);
         //Logic
         do{
                 /*  # MOVEMENT CELL ROW #
@@ -1291,22 +1296,22 @@ public class CLIBuilder implements UIActions{
                     16|Cell row • >
                     17|
                  */
-            System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+ROW_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellRow = consoleScanner.nextInt();
             while(cellRow<0 || cellRow>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellRow = consoleScanner.nextInt();
@@ -1319,22 +1324,22 @@ public class CLIBuilder implements UIActions{
                  */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+COL_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellCol = consoleScanner.nextInt();
             while(cellCol<0 || cellCol>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+COL_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellCol = consoleScanner.nextInt();
@@ -1351,7 +1356,7 @@ public class CLIBuilder implements UIActions{
                     */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_CELL+COLOR_SCHEME+MOVEMENT_REQUEST+NEW_LINE);
             }
 
         }while(!validMove);
@@ -1391,7 +1396,7 @@ public class CLIBuilder implements UIActions{
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+BUILDING_REQUEST+NEW_LINE);
+        System.out.print(COLOR_SCHEME+BUILDING_REQUEST+NEW_LINE);
         //Logic
         do{
                 /*  # BUILDING CELL ROW #
@@ -1400,22 +1405,22 @@ public class CLIBuilder implements UIActions{
                     16|Cell row • >
                     17|
                  */
-            System.out.print(ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+ROW_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellRow = consoleScanner.nextInt();
             while(cellRow<0 || cellRow>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+ROW_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellRow = consoleScanner.nextInt();
@@ -1428,22 +1433,22 @@ public class CLIBuilder implements UIActions{
                  */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+COL_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellCol = consoleScanner.nextInt();
             while(cellCol<0 || cellCol>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+COL_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+COL_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellCol = consoleScanner.nextInt();
@@ -1460,7 +1465,7 @@ public class CLIBuilder implements UIActions{
                     */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_CELL+ANSI_WHITE+BUILDING_REQUEST+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_CELL+COLOR_SCHEME+BUILDING_REQUEST+NEW_LINE);
             }
 
         }while(!validMove);
@@ -1477,7 +1482,7 @@ public class CLIBuilder implements UIActions{
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+REMOVE_REQUEST+NEW_LINE);
+        System.out.print(COLOR_SCHEME+REMOVE_REQUEST+NEW_LINE);
         //Logic
         do{
                 /*  # REMOVE TOWER CELL ROW #
@@ -1486,22 +1491,22 @@ public class CLIBuilder implements UIActions{
                     16|Tower cell row • >
                     17|
                  */
-            System.out.print(ANSI_GRAY+TOWER_ROW_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+TOWER_ROW_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellRow = consoleScanner.nextInt();
             while(cellRow<0 || cellRow>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+TOWER_ROW_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+TOWER_ROW_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellRow = consoleScanner.nextInt();
@@ -1514,22 +1519,22 @@ public class CLIBuilder implements UIActions{
                  */
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.print(ANSI_GRAY+TOWER_COL_CELL+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_GRAY+TOWER_COL_CELL+COLOR_SCHEME+CLI_INPUT);
             while(!consoleScanner.hasNextInt()){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                 consoleScanner.next();
             }
             cellCol = consoleScanner.nextInt();
             while(cellCol<0 || cellCol>4){
                 System.out.print(String.format(CURSOR_UP,1));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+TOWER_COL_CELL+ANSI_WHITE+CLI_INPUT);
+                System.out.print(ANSI_RED+INVALID_COORDINATE+ANSI_GRAY+TOWER_COL_CELL+COLOR_SCHEME+CLI_INPUT);
                 while(!consoleScanner.hasNextInt()){
                     System.out.print(String.format(CURSOR_UP,1));
                     System.out.print(CLEAN);
-                    System.out.print(ANSI_RED+NOT_A_NUMBER+ANSI_WHITE+CLI_INPUT);
+                    System.out.print(ANSI_RED+NOT_A_NUMBER+COLOR_SCHEME+CLI_INPUT);
                     consoleScanner.next();
                 }
                 cellCol = consoleScanner.nextInt();
@@ -1546,7 +1551,7 @@ public class CLIBuilder implements UIActions{
                     */
                 System.out.print(String.format(CURSOR_UP,2));
                 System.out.print(CLEAN);
-                System.out.print(ANSI_RED+INVALID_TOWER_CELL+ANSI_WHITE+MOVEMENT_REQUEST+NEW_LINE);
+                System.out.print(ANSI_RED+INVALID_TOWER_CELL+COLOR_SCHEME+MOVEMENT_REQUEST+NEW_LINE);
             }
 
         }while(!validMove);
@@ -1567,14 +1572,14 @@ public class CLIBuilder implements UIActions{
         renderBoard("Ask for skip"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+SKIP_REQUEST+NEW_LINE);
-        System.out.print(ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+SKIP_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+SKIP+COLOR_SCHEME+CLI_INPUT);
         printedLinesCounter+=1;
         userAnswer=consoleScanner.next();
         while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+COLOR_SCHEME+CLI_INPUT);
             userAnswer=consoleScanner.next();
         }
         answer= userAnswer.equalsIgnoreCase("yes");
@@ -1593,14 +1598,14 @@ public class CLIBuilder implements UIActions{
         renderBoard("Ask for repeat"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+REPEAT_REQUEST+NEW_LINE);
-        System.out.print(ANSI_GRAY+REPEAT+ANSI_WHITE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+REPEAT_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+REPEAT+COLOR_SCHEME+CLI_INPUT);
         printedLinesCounter+=1;
         userAnswer=consoleScanner.next();
         while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+ANSI_WHITE+CLI_INPUT);
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+SKIP+COLOR_SCHEME+CLI_INPUT);
             userAnswer=consoleScanner.next();
         }
         answer = userAnswer.equalsIgnoreCase("yes");
@@ -1619,13 +1624,13 @@ public class CLIBuilder implements UIActions{
         renderBoard("Take a decision"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
-        System.out.print(ANSI_WHITE+TYPE_REQUEST+NEW_LINE);
-        System.out.print(ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+TYPE_REQUEST+NEW_LINE);
+        System.out.print(ANSI_GRAY+TYPE+COLOR_SCHEME+CLI_INPUT);
         userAnswer=consoleScanner.next();
         while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.print(CLEAN);
-            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+TYPE+ANSI_WHITE+CLI_INPUT);
+            System.out.println(ANSI_RED+INVALID_INPUT+ANSI_GRAY+TYPE+COLOR_SCHEME+CLI_INPUT);
             userAnswer=consoleScanner.next();
         }
         answer = userAnswer.equalsIgnoreCase("no");
@@ -1641,12 +1646,12 @@ public class CLIBuilder implements UIActions{
     public void callError(String exceptionName) {
         String userInput;
         System.out.println(ANSI_RED+String.format(FATAL_ERROR,exceptionName));
-        System.out.print(ANSI_GRAY+EXIT_ERROR+ANSI_WHITE+CLI_INPUT);
+        System.out.print(ANSI_GRAY+EXIT_ERROR+COLOR_SCHEME+CLI_INPUT);
         userInput=consoleScanner.next();
         while (!userInput.equalsIgnoreCase("quit")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.println(CLEAN);
-            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+COLOR_SCHEME+CLI_INPUT);
             userInput=consoleScanner.next();
         }
         System.out.println(GOODBYE+NEW_LINE+ANSI_GRAY+CLOSING);
@@ -1660,13 +1665,13 @@ public class CLIBuilder implements UIActions{
     @Override
     public void callMatchResult(String result) {
         String userInput;
-        System.out.print(ANSI_WHITE+"RESULT:"+BLANK+result+NEW_LINE);
-        System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+        System.out.print(COLOR_SCHEME+"RESULT:"+BLANK+result+NEW_LINE);
+        System.out.print(ANSI_GRAY+EXIT+COLOR_SCHEME+CLI_INPUT);
         userInput=consoleScanner.next();
         while (!userInput.equalsIgnoreCase("quit") && !userInput.equalsIgnoreCase("restart")){
             System.out.print(String.format(CURSOR_UP,1));
             System.out.println(CLEAN);
-            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+COLOR_SCHEME+CLI_INPUT);
             userInput=consoleScanner.next();
         }
         if(userInput.equalsIgnoreCase("quit")){
@@ -1682,5 +1687,6 @@ public class CLIBuilder implements UIActions{
 
     public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
     public void setOperationRepeated(){this.operationRepeated= !operationRepeated;}
+    public void resetSelectedWorker(){this.selectedWorkerValue= "Nobody";}
 
 }

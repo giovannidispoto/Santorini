@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class CLIDataObject {
 
+    private static String COLOR_SCHEME;
+
     //------------------ # ANSI Colors 256 bit # ------------------
     private static final String CODE_BLUE = "33";
     private static final String CODE_LIGHTBLUE = "75";
@@ -26,8 +28,8 @@ public class CLIDataObject {
 
     //------------------ # Game Objects # ------------------
     protected static final String WORKER = "✲";
-    protected static final String DOME = ANSI_LIGHTBLUE+"◉"+ANSI_WHITE;
-    protected static final String GRASS = ANSI_GREEN+"☘"+ANSI_WHITE;
+    protected static final String DOME = ANSI_LIGHTBLUE+"◉";
+    protected static final String GRASS = ANSI_GREEN+"☘";
 
     //Data
     private static final String cellDataTemplate = "%s %s";
@@ -39,22 +41,23 @@ public class CLIDataObject {
     /**
      * Class Constructor
      */
-    public CLIDataObject() {
+    public CLIDataObject(String cliColor) {
         this.cellsData = new String[5];
         this.towersInformation = new HashMap<>();
         this.colorsInformation = new HashMap<>();
+        COLOR_SCHEME=cliColor;
         for(int i=0;i<5;i++){
             String data = new String(freeCellTemplate);
             cellsData[i]=data;
         }
-        towersInformation.put(Block.GROUND,GRASS);
-        towersInformation.put(Block.LEVEL_1,ANSI_WHITE+"1");
-        towersInformation.put(Block.LEVEL_2,ANSI_WHITE+"2");
-        towersInformation.put(Block.LEVEL_3,ANSI_WHITE+"3");
-        towersInformation.put(Block.DOME,DOME);
-        colorsInformation.put(Color.BLUE,ANSI_BLUE+WORKER+ANSI_WHITE);
-        colorsInformation.put(Color.BROWN,ANSI_BROWN+WORKER+ANSI_WHITE);
-        colorsInformation.put(Color.GREY,ANSI_GRAY+WORKER+ANSI_WHITE);
+        towersInformation.put(Block.GROUND,GRASS+COLOR_SCHEME);
+        towersInformation.put(Block.LEVEL_1,COLOR_SCHEME+"1");
+        towersInformation.put(Block.LEVEL_2,COLOR_SCHEME+"2");
+        towersInformation.put(Block.LEVEL_3,COLOR_SCHEME+"3");
+        towersInformation.put(Block.DOME,DOME+COLOR_SCHEME);
+        colorsInformation.put(Color.BLUE,ANSI_BLUE+WORKER+COLOR_SCHEME);
+        colorsInformation.put(Color.BROWN,ANSI_BROWN+WORKER+COLOR_SCHEME);
+        colorsInformation.put(Color.GREY,ANSI_GRAY+WORKER+COLOR_SCHEME);
     }
 
     //DONE: Methods

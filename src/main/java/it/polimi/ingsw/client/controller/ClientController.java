@@ -16,7 +16,6 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPha
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SetStartTurnInterface;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.FileHandler;
@@ -72,6 +71,8 @@ public class ClientController {
         this.loggerIO = start_IO_Logger();
     }
 
+    //------    VIEW - UTILS
+
     /**
      * Show the battlefield to the user (regardless of the graphic interface chosen)
      */
@@ -101,7 +102,7 @@ public class ClientController {
         this.serverHandler = serverHandler;
     }
 
-    //------    Error management / Normal execution interruption
+    //------    ERROR|EXCEPTION MANAGEMENT / Normal Execution Interruption
 
     /**
      * If you use a different thread to invoke the functions of the controller,
@@ -115,24 +116,36 @@ public class ClientController {
         this.controllerThread = controllerThread;
     }
 
-    /** Set an error code ("string") in the exception
-     *  It is good to do this before calling launchError,
-     *  so as not to have a default error
-     *  N.B:    It is recommended to use ExceptionMessages.java to choose error messages
+    /** Set an error code ("string") in the exception,
+     *  It is the easiest way to throw an exception to the client via the controller
+     *  You can pass a null in place of the error string, to keep the default error or the previous exception
      *
-     * @param errorMessage  String representing the error (from ExceptionMessages-class)
+     *  N.B:    It is recommended to use ExceptionMessages to choose error messages
+     *
+     * @param errorMessage  String representing the error (Recommended to take it from ExceptionMessages-class)
+     * @param gameState     State in which the game will go
+     * @param interruptExecution   If true the game will be blocked from its normal execution and will have to handle the exception
      */
-    public void setGameExceptionMessage(String errorMessage) {
-        if(gameState != GameState.ERROR && gameState != GameState.FINISH)
-            this.gameException = new SantoriniException(errorMessage);
+    public void setGameExceptionMessage(String errorMessage, GameState gameState, boolean interruptExecution) {
+        //Check if the game is already in an error or final state, it is useless to throw another exception
+        if(getGameState() != GameState.ERROR && getGameState() != GameState.FINISH) {
+            if(null != errorMessage)
+                this.gameException = new SantoriniException(errorMessage);
+
+            this.setGameState(gameState);
+
+            if(interruptExecution)
+                this.interruptNormalThreadExecution();
+        }
     }
 
     /**
      * Interrupts the thread that started the controller first and
-     * therefore started executing the program (usually main)
+     * therefore started executing the program (controllerThread)
      */
-    public void interruptNormalExecution(){
-        controllerThread.interrupt();
+    public void interruptNormalThreadExecution(){
+        if(null != controllerThread && !controllerThread.isInterrupted())
+            controllerThread.interrupt();
     }
 
     //------    WAIT REQUESTS to Controller
@@ -514,7 +527,16 @@ public class ClientController {
         this.gameState = gameState;
     }
 
-    //-- DEBUG -- LOGGER
+    //------    DEBUG / LOGGER
+
+    /**
+     *  Initializes a new logger, which writes a file to the root where the jar / executable is run,
+     *  The log file is unique and in TXT format,
+     *
+     *  If it is impossible to create a new log file, execution continues with an error
+     *
+     * @return  Logger interface on which messages can be sent (info, severe etc.)
+     */
     public Logger start_IO_Logger(){
         Logger logger = Logger.getLogger("SantoriniClientLogger");
         FileHandler fileHandler;
@@ -536,17 +558,24 @@ public class ClientController {
             // Start first message
             logger.info("Started Santorini Client Logger\n");
 
-        } catch (SecurityException | IOException e) {
-            this.loggerIO.severe("FAILED-LOADING-LOGGER\n");
+        } catch (Exception e) {
+            System.out.println("FAILED-LOADING-LOGGER\n");
         }
         return logger;
     }
 
-    //-- PING MANAGEMENT
+    //------     PING MANAGEMENT
+
+    /**
+     * Responds to the server ping message
+     */
     public void sendPingResponse() {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("pong")));
     }
 
+    /**
+     * Clear the ping timer and reset it
+     */
     public void resetPingTimer() {
         serverHandler.resetServerTimeout();
     }
