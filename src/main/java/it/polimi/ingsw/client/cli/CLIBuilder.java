@@ -35,7 +35,6 @@ public class CLIBuilder implements UIActions{
     private static final String ANSI_BLUE = ANSI_PREFIX+CODE_BLUE+"m";
     private static final String ANSI_LIGHTBLUE = ANSI_PREFIX+CODE_LIGHTBLUE+"m";
     private static final String ANSI_GRAY = ANSI_PREFIX+CODE_GRAY+"m";
-    private static final String ANSI_LIGHT_GRAY = ANSI_PREFIX+CODE_LIGHT_GRAY+"m";
     private static final String ANSI_GREEN = ANSI_PREFIX+CODE_GREEN+"m";
     private static final String ANSI_LIGHT_GREEN = ANSI_PREFIX+CODE_LIGHT_GREEN+"m";
     private static final String ANSI_BROWN = ANSI_PREFIX+CODE_BROWN+"m";
@@ -88,6 +87,7 @@ public class CLIBuilder implements UIActions{
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
     private static final String MOVES_TITLE = "PLAYER MOVES 🎮";
     private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
+    private static final String SELECTED_WORKER = "SELECTED WORKER 👷🏻 ‍• ";
 
     //------------------ # UI Data # ------------------
     private HashMap<Color,String> WorkerColorsMap;
@@ -97,6 +97,7 @@ public class CLIBuilder implements UIActions{
     private int fullTowersNumber;
     private boolean operationRepeated=false;
     private HashMap<Integer,String> phasesMap;
+    private String selectedWorkerValue ="Nobody";
 
     //------------------ # Titles # ------------------
     private static final String SETUP_TITLE = "Setup Connection";
@@ -172,7 +173,7 @@ public class CLIBuilder implements UIActions{
     private static final String INVALID_CARD = "Invalid card choice...retry! • ";
 
     //Fatal
-    private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s 🔥";
+    private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s ⚠️";
     private static final String EXIT_ERROR = "Type [quit] to close the program • ";
     private static final String EXIT = "Type [quit] or [restart] to close|restart the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
@@ -204,6 +205,7 @@ public class CLIBuilder implements UIActions{
 
     //Moves
     private static final String playerMoveTemplate = "[%s|%s]";
+    private static final String selectedWorkerCoordinatesTemplate = "%s|%s";
 
     //Data Box
     private static final String playerDataTemplate = "%s %s | %s";
@@ -239,6 +241,7 @@ public class CLIBuilder implements UIActions{
                     H_LINE+H_LINE+H_LINE+LO_LAT_SEPARATOR+
                     H_LINE+H_LINE+H_LINE+R_B_CORNER;
     private static final String edge_distance = BLANK+BLANK+BLANK;
+    private static final String edge_selected_player = BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK+BLANK;
 
     //Full Towers Box Preconfigured Elements
     private static final String upperEdgeTowers = L_THIN_T_CORNER+H_THIN_LINE+H_THIN_LINE+H_THIN_LINE+R_THIN_T_CORNER;
@@ -457,6 +460,7 @@ public class CLIBuilder implements UIActions{
         //Print line 0
         currentLine.append(BLANK.repeat(boardTitleEdgeDistance));
         currentLine.append(ANSI_WHITE+BOARD_TITLE);
+        currentLine.append(edge_selected_player).append(SELECTED_WORKER).append(selectedWorkerValue);
         System.out.print(currentLine+NEW_LINE);
         System.out.print(NEW_LINE);
         currentLine.setLength(0);
@@ -1245,6 +1249,7 @@ public class CLIBuilder implements UIActions{
             }
         }
         while(!validWorker);
+        selectedWorkerValue=String.format(selectedWorkerCoordinatesTemplate,workerRow,workerCol);
     }
 
     /**
@@ -1682,5 +1687,6 @@ public class CLIBuilder implements UIActions{
 
     public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
     public void setOperationRepeated(){this.operationRepeated= !operationRepeated;}
+    public void resetSelectedWorker(){this.selectedWorkerValue= "Nobody";}
 
 }

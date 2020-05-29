@@ -133,6 +133,7 @@ public class CLIController implements View {
                 else {
                     commandLine.setOperationRepeated();
                     commandLine.setCurrentPhase("Opponent's Turn");
+                    commandLine.resetSelectedWorker();
                     commandLine.renderBoard(moveMessages.get(0));
                 }
 
