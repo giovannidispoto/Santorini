@@ -16,7 +16,6 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPha
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPhase.SetStartTurnInterface;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.FileHandler;
@@ -72,6 +71,8 @@ public class ClientController {
         this.loggerIO = start_IO_Logger();
     }
 
+    //------    VIEW - UTILS
+
     /**
      * Show the battlefield to the user (regardless of the graphic interface chosen)
      */
@@ -101,7 +102,7 @@ public class ClientController {
         this.serverHandler = serverHandler;
     }
 
-    //------    Error management / Normal execution interruption
+    //------    ERROR|EXCEPTION MANAGEMENT / Normal Execution Interruption
 
     /**
      * If you use a different thread to invoke the functions of the controller,
@@ -526,7 +527,16 @@ public class ClientController {
         this.gameState = gameState;
     }
 
-    //-- DEBUG -- LOGGER
+    //------    DEBUG / LOGGER
+
+    /**
+     *  Initializes a new logger, which writes a file to the root where the jar / executable is run,
+     *  The log file is unique and in TXT format,
+     *
+     *  If it is impossible to create a new log file, execution continues with an error
+     *
+     * @return  Logger interface on which messages can be sent (info, severe etc.)
+     */
     public Logger start_IO_Logger(){
         Logger logger = Logger.getLogger("SantoriniClientLogger");
         FileHandler fileHandler;
@@ -548,17 +558,24 @@ public class ClientController {
             // Start first message
             logger.info("Started Santorini Client Logger\n");
 
-        } catch (SecurityException | IOException e) {
-            this.loggerIO.severe("FAILED-LOADING-LOGGER\n");
+        } catch (Exception e) {
+            System.out.println("FAILED-LOADING-LOGGER\n");
         }
         return logger;
     }
 
-    //-- PING MANAGEMENT
+    //------     PING MANAGEMENT
+
+    /**
+     * Responds to the server ping message
+     */
     public void sendPingResponse() {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("pong")));
     }
 
+    /**
+     * Clear the ping timer and reset it
+     */
     public void resetPingTimer() {
         serverHandler.resetServerTimeout();
     }
