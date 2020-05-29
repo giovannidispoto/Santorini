@@ -120,7 +120,7 @@ public class ClientController {
      *  so as not to have a default error
      *  N.B:    It is recommended to use ExceptionMessages.java to choose error messages
      *
-     * @param errorMessage  String representing the error
+     * @param errorMessage  String representing the error (from ExceptionMessages-class)
      */
     public void setGameExceptionMessage(String errorMessage) {
         if(gameState != GameState.ERROR && gameState != GameState.FINISH)
