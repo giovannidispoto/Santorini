@@ -16,8 +16,8 @@ public class ServerErrorCommand implements Command {
 
     @Override
     public void execute(ClientController clientController) {
-        clientController.setGameExceptionMessage(Objects.requireNonNullElse(this.errorMessage, ExceptionMessages.defaultServerError));
-        clientController.setGameState(GameState.ERROR);
-        clientController.interruptNormalExecution();
+        clientController.setGameExceptionMessage(
+                Objects.requireNonNullElse(this.errorMessage, ExceptionMessages.defaultServerError),
+                GameState.ERROR, true);
     }
 }

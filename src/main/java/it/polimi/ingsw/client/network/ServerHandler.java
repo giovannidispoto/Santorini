@@ -38,9 +38,7 @@ public class ServerHandler{
             CommandFactory.from(m).execute(this.clientController);
 
         }catch(JsonParseException e) {
-            clientController.setGameExceptionMessage(ExceptionMessages.jsonError);
-            clientController.setGameState(GameState.ERROR);
-            clientController.interruptNormalExecution();
+            clientController.setGameExceptionMessage(ExceptionMessages.jsonError, GameState.ERROR, true);
             clientController.loggerIO.severe("JSON-PARSING ERROR" + e.getMessage() + "\n");
         }
     }
@@ -59,9 +57,7 @@ public class ServerHandler{
 
             @Override
             public void run() {
-                clientController.setGameExceptionMessage(ExceptionMessages.pingSocketError);
-                clientController.setGameState(GameState.ERROR);
-                clientController.interruptNormalExecution();
+                clientController.setGameExceptionMessage(ExceptionMessages.pingSocketError, GameState.ERROR, true);
                 clientController.loggerIO.severe("NO-PING-ERROR\n");
             }
 

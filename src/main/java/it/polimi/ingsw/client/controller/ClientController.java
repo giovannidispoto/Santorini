@@ -115,24 +115,36 @@ public class ClientController {
         this.controllerThread = controllerThread;
     }
 
-    /** Set an error code ("string") in the exception
-     *  It is good to do this before calling launchError,
-     *  so as not to have a default error
-     *  N.B:    It is recommended to use ExceptionMessages.java to choose error messages
+    /** Set an error code ("string") in the exception,
+     *  It is the easiest way to throw an exception to the client via the controller
+     *  You can pass a null in place of the error string, to keep the default error or the previous exception
      *
-     * @param errorMessage  String representing the error (from ExceptionMessages-class)
+     *  N.B:    It is recommended to use ExceptionMessages to choose error messages
+     *
+     * @param errorMessage  String representing the error (Recommended to take it from ExceptionMessages-class)
+     * @param gameState     State in which the game will go
+     * @param interruptExecution   If true the game will be blocked from its normal execution and will have to handle the exception
      */
-    public void setGameExceptionMessage(String errorMessage) {
-        if(gameState != GameState.ERROR && gameState != GameState.FINISH)
-            this.gameException = new SantoriniException(errorMessage);
+    public void setGameExceptionMessage(String errorMessage, GameState gameState, boolean interruptExecution) {
+        //Check if the game is already in an error or final state, it is useless to throw another exception
+        if(getGameState() != GameState.ERROR && getGameState() != GameState.FINISH) {
+            if(null != errorMessage)
+                this.gameException = new SantoriniException(errorMessage);
+
+            this.setGameState(gameState);
+
+            if(interruptExecution)
+                this.interruptNormalThreadExecution();
+        }
     }
 
     /**
      * Interrupts the thread that started the controller first and
-     * therefore started executing the program (usually main)
+     * therefore started executing the program (controllerThread)
      */
-    public void interruptNormalExecution(){
-        controllerThread.interrupt();
+    public void interruptNormalThreadExecution(){
+        if(null != controllerThread && !controllerThread.isInterrupted())
+            controllerThread.interrupt();
     }
 
     //------    WAIT REQUESTS to Controller

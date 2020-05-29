@@ -8,8 +8,6 @@ import it.polimi.ingsw.client.network.commands.Command;
 public class WinCommand implements Command {
     @Override
     public void execute(ClientController clientController) {
-        clientController.setGameExceptionMessage(ExceptionMessages.winMessage);
-        clientController.setGameState(GameState.FINISH);
-        clientController.interruptNormalExecution();
+        clientController.setGameExceptionMessage(ExceptionMessages.winMessage, GameState.FINISH, true);
     }
 }
