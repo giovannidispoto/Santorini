@@ -45,11 +45,6 @@ public class Player2Test {
             else {
                 userInterface.callErrorMessage(e.getMessage());
             }
-
-            if(Thread.interrupted()){
-                clientController.loggerIO.severe("Thread interrupted but now ready (test)\n");
-            }
-
         }
     }
 

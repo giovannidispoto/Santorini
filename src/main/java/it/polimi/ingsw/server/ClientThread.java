@@ -45,21 +45,20 @@ public class ClientThread implements Runnable {
             //Start Ping to Client after setting in & out
             clientHandler.setTimer();
             //read from and write to the connection until shutdown (from server)
-            while (!socketShutdown) {
+            while (isNotSocketShutdown()) {
                 String line = in.nextLine();
-                if (!socketShutdown) {
+                if (isNotSocketShutdown()) {
                     clientHandler.process(line);
                     /*if(!line.contains("pong"))
                          System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
-
                      */
                 }
             }
         }catch (IOException | NoSuchElementException e){
-            if(!socketShutdown)
+            if(isNotSocketShutdown() && !clientHandler.isMustStopExecution())
                 clientHandler.playerDisconnected();
         }
-        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
+        socketShutdown();
     }
 
     /**
@@ -83,16 +82,26 @@ public class ClientThread implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
         }
+        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
     }
 
     /**
      * Close the socket and delete all references, it also isolates ClientThread
      */
     public void socketShutdown() {
-        this.socketShutdown = true;
-        closeSocket();
-        clientHandler = null;
+        if(isNotSocketShutdown()) {
+            this.socketShutdown = true;
+            closeSocket();
+            clientHandler = null;
+        }
+    }
+
+    /**
+     * Check Socket Client Status
+     * @return true if the socket has not been shutdown
+     */
+    public boolean isNotSocketShutdown() {
+        return !socketShutdown;
     }
 }
