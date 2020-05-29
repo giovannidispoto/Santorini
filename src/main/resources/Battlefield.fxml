@@ -7,11 +7,6 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1080" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
     <children>
-      <ImageView id="blurResult" disable="true" fitHeight="617.0" fitWidth="1097.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@Images/Decorations/Blur.png" />
-         </image>
-      </ImageView>
         <ImageView fitHeight="617.0" fitWidth="1100.0" layoutX="-8.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@Images/BoardElements/Board.png" />
@@ -60,5 +55,10 @@
                 </Button>
             <VBox id="playersVBox" layoutX="21.0" layoutY="55.0" prefHeight="200.0" prefWidth="144.0" spacing="10.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="55.0" />
             </children></AnchorPane>
+      <ImageView id="blurResult" fitHeight="617.0" fitWidth="1097.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@Images/Decorations/BlurBoard.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

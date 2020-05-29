@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="380.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="META-INF.ConnectionError">
+   <children>
+      <ImageView fitHeight="128.0" fitWidth="113.0" layoutX="134.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="162.68650817871094" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="133.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@Images/Decorations/Error.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="21.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0">
+         <image>
+            <Image url="@Images/Decorations/ErrorCloudSX.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="273.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="10.0">
+         <image>
+            <Image url="@Images/Decorations/ErrorCloudDX.png" />
+         </image>
+      </ImageView>
+      <AnchorPane id="resultBox" layoutX="50.0" layoutY="101.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="101.0">
+         <children>
+            <Button id="exitButton" layoutX="90.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="103.0" />
+            <Label id="errorLabel" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="46.0" prefWidth="271.0" stylesheets="@CSS/SantoriniLabel.css" text="Something went wrong!" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="34.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-20.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0">
+               <image>
+                  <Image url="@Images/Decorations/ErrorCloudSX.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.rightAnchor="-10.0">
+               <image>
+                  <Image url="@Images/Decorations/ErrorCloudDX.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -11,9 +11,9 @@
             <Image url="@Images/Decorations/Trophy.png" />
          </image>
       </ImageView>
-      <AnchorPane id="resultBox" layoutX="40.0" layoutY="119.0" prefHeight="160.0" prefWidth="303.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+      <AnchorPane id="resultBox" layoutX="40.0" layoutY="119.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
          <children>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="-27.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0">
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-27.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0">
                <image>
                   <Image url="@Images/Decorations/CloudDX.png" />
                </image>
@@ -23,7 +23,7 @@
                   <Image url="@Images/Decorations/CloudDX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="222.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-30.0">
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="222.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-30.0">
                <image>
                   <Image url="@Images/Decorations/CloudRX.png" />
                </image>
@@ -33,8 +33,8 @@
                   <Image url="@Images/Decorations/CloudRX.png" />
                </image>
             </ImageView>
-            <Button id="exitButton" layoutX="92.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" />
-            <Label id="resultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="24.0" stylesheets="@CSS/SantoriniLabel.css" text="You Win!" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="25.0" />
+            <Button id="exitButton" layoutX="90.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="103.0" />
+            <Label id="resultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="24.0" stylesheets="@CSS/SantoriniLabel.css" text="You Win!" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="25.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

@@ -49,3 +49,8 @@
     -fx-font-size: 30;
 }
 
+#errorLabel{
+    -fx-text-fill: #626262;
+    -fx-font-size: 24;
+}
+
