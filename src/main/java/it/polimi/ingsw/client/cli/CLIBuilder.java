@@ -173,9 +173,11 @@ public class CLIBuilder implements UIActions{
 
     //Fatal
     private static final String FATAL_ERROR = "Something broke down! • PROBLEM: %s 🔥";
-    private static final String EXIT = "Type [quit] to close the program • ";
+    private static final String EXIT_ERROR = "Type [quit] to close the program • ";
+    private static final String EXIT = "Type [quit] or [restart] to close|restart the program • ";
     private static final String GOODBYE = "Goodbye...hope to see you soon 😪";
     private static final String CLOSING = "Closing the program...";
+    private static final String RESTART = "Restarting the program...";
 
     //Worker Placement
     private static final String OCCUPIED_POSITION = "Already occupied cell...retry! • ";
@@ -1639,7 +1641,7 @@ public class CLIBuilder implements UIActions{
     public void callError(String exceptionName) {
         String userInput;
         System.out.println(ANSI_RED+String.format(FATAL_ERROR,exceptionName));
-        System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+        System.out.print(ANSI_GRAY+EXIT_ERROR+ANSI_WHITE+CLI_INPUT);
         userInput=consoleScanner.next();
         while (!userInput.equalsIgnoreCase("quit")){
             System.out.print(String.format(CURSOR_UP,1));
@@ -1657,9 +1659,25 @@ public class CLIBuilder implements UIActions{
      */
     @Override
     public void callMatchResult(String result) {
+        String userInput;
         System.out.print(ANSI_WHITE+"RESULT:"+BLANK+result+NEW_LINE);
-        System.out.println(ANSI_GRAY+CLOSING);
-        System.exit(0);
+        System.out.print(ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+        userInput=consoleScanner.next();
+        while (!userInput.equalsIgnoreCase("quit") && !userInput.equalsIgnoreCase("restart")){
+            System.out.print(String.format(CURSOR_UP,1));
+            System.out.println(CLEAN);
+            System.out.print(ANSI_RED+INVALID_INPUT+ANSI_GRAY+EXIT+ANSI_WHITE+CLI_INPUT);
+            userInput=consoleScanner.next();
+        }
+        if(userInput.equalsIgnoreCase("quit")){
+            System.out.println(ANSI_GRAY+CLOSING);
+            System.exit(0);
+        }
+        else{
+            System.out.println(ANSI_GRAY+RESTART);
+            System.exit(0);
+        }
+
     }
 
     public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
