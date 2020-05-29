@@ -40,6 +40,8 @@ public class GUIBuilder extends Application {
     }
 
 
+
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
@@ -63,7 +65,6 @@ public class GUIBuilder extends Application {
     public void changeView(Optional<ViewState> view) {
         Parent root = null;
         ExecutorService executorService = Executors.newFixedThreadPool(1);
-        Future f;
 
         if(view.isPresent())
             state = view.get();
@@ -157,6 +158,30 @@ public class GUIBuilder extends Application {
 
         mainStage.setScene(mainScene);
         mainStage.show();
+
+    }
+
+    public void showWin() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/WinMessage.fxml"));
+            mainStage.setScene(new WinView(root,this));
+            mainStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showLose(){
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/LoseMessage.fxml"));
+            mainStage.setScene(new LoseView(root, this));
+            mainStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

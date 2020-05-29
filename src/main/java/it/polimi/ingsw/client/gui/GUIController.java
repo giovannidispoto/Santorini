@@ -2,8 +2,11 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import javafx.scene.layout.GridPane;
+
+import java.util.concurrent.Callable;
 
 public class GUIController implements View {
     private static  ClientController clientController;
@@ -17,9 +20,16 @@ public class GUIController implements View {
     @Override
     public void startGame() {
         GUIBuilder guiBuilder = new GUIBuilder();
+
+
+
         //guiBuilder.setGUIController(this);
         GUIBuilder.setGUIController(this);
         guiBuilder.launchGUI(this);
+
+
+
+
 
 
         //test
@@ -49,7 +59,7 @@ public class GUIController implements View {
 
     @Override
     public void callMatchResult(String message) {
-
+        System.out.println(message);
     }
 
 }

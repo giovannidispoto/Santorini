@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Step;
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.component.*;
@@ -29,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
 
 public class BattlefieldView extends Scene {
@@ -39,14 +41,20 @@ public class BattlefieldView extends Scene {
     private ExecutorService executor;
     private Task<Void> startTurn;
     private Task<Void> req;
+    private Label actionLabel;
+    private List<Exception> exceptions;
+    private Parent root;
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
 
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
-
-        ((Label) root.lookup("#phaseLabel")).setText("Waiting your turn");
+        this.root = root;
+        actionLabel = (Label) root.lookup("#phaseLabel");
+        exceptions = new ArrayList<>();
+        actionLabel.setText("Waiting your turn");
         executor = Executors.newSingleThreadExecutor();
+
         battlefieldMap = new HashMap<>();
 
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
@@ -63,18 +71,23 @@ public class BattlefieldView extends Scene {
          * */
 
 
-        ((Label) root.lookup("#phaseLabel")).setText("Wait your turn");
         root.lookup("#skipButton").setDisable(true);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
         guiBuilder.GUIController().addBattlefield(this);
 
+
+
         Task<Void> wait = new Task<Void>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call()  {
+                try {
                 GUIController.getController().waitSetWorkersPosition();
                 GUIController.getController().getPlayersRequest();
                 GUIController.getController().getBattlefieldRequest();
+            }catch(SantoriniException e){
+                    System.out.println("Error");
+                }
                 return null;
             }
         };
@@ -93,7 +106,9 @@ public class BattlefieldView extends Scene {
             renderBattlefieldMap();
         });
 
-        executor.submit(wait);
+
+        executor.execute(wait);
+
 
 
 
@@ -105,28 +120,72 @@ public class BattlefieldView extends Scene {
 
         restartTurn();
 
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (this){
+                    try{
+                        wait();
+                    }catch( InterruptedException e){
+                        if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
+                            Platform.runLater(() -> guiBuilder.showWin());
+                        }else{
+                            Platform.runLater(() -> guiBuilder.showLose());
+                        }
+                        executor.shutdown();
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        });
+
+
+        t.start();
+        GUIController.getController().registerControllerThread(t);
+
 
     }
+
+    private void startBattlefieldPhase(){
+        positions = new ArrayList<>();
+        workersId = new LinkedList<>(GUIController.getController().getWorkersID());
+        Platform.runLater(()-> ((Label) root.lookup("#phaseLabel")).setText("Workers Placement"));
+        List<String> players = GUIController.getController().getPlayers().stream().map(PlayerInterface::getPlayerNickname).collect(Collectors.toList());
+        for(String player : players){
+            Label p = new Label(player);
+            Platform.runLater(()-> ( (VBox) root.lookup("#playersVBox")).getChildren().add(p));
+        }
+        // populateBattlefield();
+        populateBattlefieldMap();
+        renderBattlefieldMap();
+    }
+
+
 
     private void callRenderWorkerView(){
         req = new Task<Void>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                // System.out.println("Waiting Worker View Update");
-                GUIController.getController().waitWorkerViewUpdate();
-               // System.out.println("Worker View Update");
+                try {
+                    GUIController.getController().waitWorkerViewUpdate();
+                } catch (SantoriniException e) {
+                    System.out.println(e.getMessage());
+                }
+                // System.out.println("Worker View Update");
                 return null;
             }
         };
 
         req.setOnSucceeded(e->{
-            System.out.println("Start Rendering");
+          //  System.out.println("Start Rendering");
             populateWorkerViewMap();
             renderWorkerView();
-            System.out.println("Rendering");
+           // System.out.println("Rendering");
         });
 
-        executor.submit(req);
+        executor.execute(req);
+
     }
 
     private void populateBattlefieldMap(){
@@ -171,13 +230,13 @@ public class BattlefieldView extends Scene {
                         }
                     });
 
-                    battlefieldGrid.getChildren().add(ac);
+                    Platform.runLater(()->battlefieldGrid.getChildren().add(ac));
                 }else if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor() != null){
                     WorkerComponent worker = new WorkerComponent(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor());
                     battlefieldMap.get(new Pair<>(i, j)).setWc(worker);
                     GridPane.setRowIndex(worker, i);
                     GridPane.setColumnIndex(worker, j);
-                    battlefieldGrid.getChildren().add(worker);
+                    Platform.runLater(()->battlefieldGrid.getChildren().add(worker));
                 }
             }
         }
@@ -186,16 +245,30 @@ public class BattlefieldView extends Scene {
     private void restartTurn(){
         startTurn = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 //System.out.println("I'm listening");
+                Platform.runLater(() -> actionLabel.setText("Waiting your turn"));
 
                 do {
-                    GUIController.getController().waitActualPlayer();
+                    try {
+                        GUIController.getController().waitActualPlayer();
+                    } catch (SantoriniException e) {
+                        System.out.println("e.getMessage()");
+                    }
                 } while (!GUIController.getController().getActualPlayer().equals(GUIController.getController().getPlayerNickname()));
                 //Starting basic turn
                 resetBattlefieldMap();
-                GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), true);
-                GUIController.getController().getBattlefieldRequest();
+                try {
+                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), true);
+                } catch (SantoriniException e) {
+                    System.out.println(e.getMessage());
+                }
+                Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                try {
+                    GUIController.getController().getBattlefieldRequest();
+                } catch (SantoriniException e) {
+                    System.out.println("e.getMessage()");
+                }
                 // System.out.println("Your Turn");
                 return null;
             }
@@ -215,12 +288,13 @@ public class BattlefieldView extends Scene {
                                     node.setOnMouseClicked(event -> {
                                         try {
                                            // executor.submit(req);
+                                            Platform.runLater(() -> actionLabel.setText("Move"));
                                             GUIController.getController().selectWorkerRequest(GUIController.getController().getPlayerNickname(), finalI, finalJ);
-                                             populateWorkerViewMap();
+                                            populateWorkerViewMap();
                                              renderWorkerView();
 
                                         } catch (SantoriniException e) {
-                                            e.printStackTrace();
+                                            System.out.println(e.getMessage());
                                         }
                                     });
                                 }
@@ -231,6 +305,13 @@ public class BattlefieldView extends Scene {
             }
         });
         executor.submit(startTurn);
+//
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     private void handleWorkerViewselection(int i, int j){
@@ -238,20 +319,18 @@ public class BattlefieldView extends Scene {
             GUIController.getController().playStepRequest(i, j);
             removeWorkerAvailableCell();
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
-                // renderOnUpdate();
-                //populateWorkerViewMap();
+                actionLabel.setText("Build");
+
                 callRenderWorkerView();
-               // reloadBattlefield();
-                // renderWorkerView();
+
             }
             if(GUIController.getController().getCurrentStep() == Step.END) {
                 removeWorkerAvailableCell();
                 reloadBattlefield();
                 restartTurn();
-                System.out.println("Waiting new turn");
             }
         } catch (SantoriniException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -260,7 +339,6 @@ public class BattlefieldView extends Scene {
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
                 if (GUIController.getController().getWorkerViewCell(i,j) && GUIController.getController().getWorkerView()[i][j]) {
-                    System.out.println("("+i+","+j+")");
                     WorkerViewCellAvailable ac = new WorkerViewCellAvailable();
                     battlefieldMap.get(new Pair<>(i,j)).setWvcl(ac);
                 }else{
@@ -271,14 +349,13 @@ public class BattlefieldView extends Scene {
     }
 
     private void renderWorkerView(){
-        System.out.println("2");
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
                 if (battlefieldMap.get(new Pair<>(i,j)).getWvcl() != null) {
                     WorkerViewCellAvailable ac = battlefieldMap.get(new Pair<>(i,j)).getWvcl();
                     GridPane.setRowIndex(ac, i);
                     GridPane.setColumnIndex(ac, j);
-                    battlefieldGrid.getChildren().add(ac);
+                    Platform.runLater(()->battlefieldGrid.getChildren().add(ac));
                     int finalI = i;
                     int finalJ = j;
                     ac.setOnMouseClicked(event -> {
