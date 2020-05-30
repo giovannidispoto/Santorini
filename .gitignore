@@ -22,6 +22,10 @@
 !DELIVERABLES/
 !DELIVERABLES/*
 
+#Windows10/     (rules = 2) (You can do everything here, this folder has it's own gitignore)
+!windows10/
+!windows10/*
+
 #src/	(rules = 7)
 !src/
 !src/*.json
