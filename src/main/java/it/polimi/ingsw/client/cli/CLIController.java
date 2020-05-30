@@ -85,7 +85,8 @@ public class CLIController implements View {
                 clientController.setStartTurn(clientController.getPlayerNickname(), false);
             }
             //Woke up by: SetStartTurnResponse
-
+            commandLine.resetScreen();
+            commandLine.renderPlayersInfo(clientController);
             commandLine.selectWorker(clientController);
 
             //do all steps
