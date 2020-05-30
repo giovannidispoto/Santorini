@@ -7,7 +7,7 @@
 
 <AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="380.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="META-INF.ConnectionError">
    <children>
-      <ImageView fitHeight="128.0" fitWidth="113.0" layoutX="134.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="162.68650817871094" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="133.0" AnchorPane.topAnchor="14.0">
+      <ImageView fitHeight="152.0" fitWidth="133.0" layoutX="124.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="154.86111450195312" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Decorations/Error.png" />
          </image>

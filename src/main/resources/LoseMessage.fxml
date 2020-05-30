@@ -11,26 +11,26 @@
             <Image url="@Images/Decorations/Lose.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="62.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0">
+         <image>
+            <Image url="@Images/Decorations/ErrorCloudSX.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="62.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="10.0">
+         <image>
+            <Image url="@Images/Decorations/ErrorCloudDX.png" />
+         </image>
+      </ImageView>
       <AnchorPane id="resultBox" layoutX="40.0" layoutY="101.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="101.0">
          <children>
-            <ImageView fitHeight="62.0" fitWidth="95.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-10.0">
                <image>
-                  <Image url="@Images/Decorations/CloudDX.png" />
+                  <Image url="@Images/Decorations/ErrorCloudSX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="10.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="218.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-10.0">
                <image>
-                  <Image url="@Images/Decorations/CloudDX.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="238.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-30.0">
-               <image>
-                  <Image url="@Images/Decorations/CloudRX.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="218.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="10.0">
-               <image>
-                  <Image url="@Images/Decorations/CloudRX.png" />
+                  <Image url="@Images/Decorations/ErrorCloudDX.png" />
                </image>
             </ImageView>
             <Button id="exitButton" layoutX="90.0" layoutY="103.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="120.0" stylesheets="@CSS/SantoriniButton.css" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="103.0" />
