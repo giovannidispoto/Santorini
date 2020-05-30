@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
+import it.polimi.ingsw.client.clientModel.basic.Block;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
@@ -42,19 +43,18 @@ public class BattlefieldView extends Scene {
     private Task<Void> startTurn;
     private Task<Void> req;
     private Label actionLabel;
-    private List<Exception> exceptions;
     private Parent root;
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
+    private Map<Step, String> messageStep;
 
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
         this.root = root;
         actionLabel = (Label) root.lookup("#phaseLabel");
-        exceptions = new ArrayList<>();
         actionLabel.setText("Waiting your turn");
         executor = Executors.newSingleThreadExecutor();
-
+        //Battlefield Map
         battlefieldMap = new HashMap<>();
 
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
@@ -65,6 +65,15 @@ public class BattlefieldView extends Scene {
 
         battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
         guiBuilder.GUIController().addBattlefield(this);
+
+        /* Message Map */
+        messageStep = new HashMap<>();
+        messageStep.put(Step.MOVE, "Move");
+        messageStep.put(Step.MOVE_SPECIAL, "Move");
+        messageStep.put(Step.MOVE_UNTIL, "Move");
+        messageStep.put(Step.BUILD, "Build");
+        messageStep.put(Step.BUILD_SPECIAL, "Build");
+        messageStep.put(Step.REMOVE, "Remove");
 
         /*
          * Adding Workers to Battlefield Phase
@@ -110,8 +119,6 @@ public class BattlefieldView extends Scene {
         executor.execute(wait);
 
 
-
-
         /*
          * Starting Turn
          * Waiting turn
@@ -120,6 +127,9 @@ public class BattlefieldView extends Scene {
 
         restartTurn();
 
+        /*
+        * Interrupt thread used for catching end of the game
+        * */
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -127,6 +137,7 @@ public class BattlefieldView extends Scene {
                     try{
                         wait();
                     }catch( InterruptedException e){
+                        //If the user if winner show relative view
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
                             Platform.runLater(() -> guiBuilder.showWin());
                         }else{
@@ -165,22 +176,24 @@ public class BattlefieldView extends Scene {
         req = new Task<Void>() {
             @Override
             protected Void call() {
-               // System.out.println("Waiting Worker View Update");
+
                 try {
+                    System.out.println("Waiting");
                     GUIController.getController().waitWorkerViewUpdate();
+                    System.out.println("End waiting");
                 } catch (SantoriniException e) {
                     System.out.println(e.getMessage());
                 }
-                // System.out.println("Worker View Update");
+
                 return null;
             }
         };
 
         req.setOnSucceeded(e->{
-          //  System.out.println("Start Rendering");
+            System.out.println("Start Populating");
             populateWorkerViewMap();
             renderWorkerView();
-           // System.out.println("Rendering");
+            System.out.println("End Populating");
         });
 
         executor.execute(req);
@@ -210,7 +223,7 @@ public class BattlefieldView extends Scene {
                         Node source = (Node) event.getSource();
                         Integer rowIndex = GridPane.getRowIndex(source);
                         Integer colIndex = GridPane.getColumnIndex(source);
-                        System.out.println("Adding worker to: "+rowIndex+", "+colIndex);
+
                         if(BattlefieldClient.getBattlefieldInstance().isCellOccupied(rowIndex,colIndex) == false && workersId.size() > 0){
                             battlefieldGrid.getChildren().remove(event.getSource());
                             WorkerComponent worker = new WorkerComponent(GUIController.getController().getPlayerColor());
@@ -221,7 +234,7 @@ public class BattlefieldView extends Scene {
                             positions.add(new WorkerPositionInterface(workersId.get(0), rowIndex, colIndex));
                             workersId.remove(0);
                         }
-
+                        /* If number of workers remaming is 0, go on*/
                         if(workersId.size() == 0) {
                             GUIController.getController().setWorkersPositionRequest(GUIController.getController().getPlayerNickname(), positions);
                             GUIController.getController().setGameState(GameState.MATCH);
@@ -245,7 +258,7 @@ public class BattlefieldView extends Scene {
         startTurn = new Task<>() {
             @Override
             protected Void call() {
-                //System.out.println("I'm listening");
+
                 Platform.runLater(() -> actionLabel.setText("Waiting your turn"));
 
                 do {
@@ -255,20 +268,21 @@ public class BattlefieldView extends Scene {
                         System.out.println("e.getMessage()");
                     }
                 } while (!GUIController.getController().getActualPlayer().equals(GUIController.getController().getPlayerNickname()));
-                //Starting basic turn
+
                 resetBattlefieldMap();
+
                 try {
-                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), true);
+                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), false);
                 } catch (SantoriniException e) {
                     System.out.println(e.getMessage());
                 }
                 Platform.runLater(() -> actionLabel.setText("Select Worker"));
+
                 try {
                     GUIController.getController().getBattlefieldRequest();
                 } catch (SantoriniException e) {
                     System.out.println("e.getMessage()");
                 }
-                // System.out.println("Your Turn");
                 return null;
             }
         };
@@ -286,11 +300,15 @@ public class BattlefieldView extends Scene {
                                     int finalJ = j;
                                     node.setOnMouseClicked(event -> {
                                         try {
-                                           // executor.submit(req);
-                                            Platform.runLater(() -> actionLabel.setText("Move"));
+
+                                            Platform.runLater(() -> actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
                                             GUIController.getController().selectWorkerRequest(GUIController.getController().getPlayerNickname(), finalI, finalJ);
+
                                             populateWorkerViewMap();
-                                             renderWorkerView();
+                                            renderWorkerView();
+
+                                            //disable button
+                                            node.setDisable(true);
 
                                         } catch (SantoriniException e) {
                                             System.out.println(e.getMessage());
@@ -304,30 +322,40 @@ public class BattlefieldView extends Scene {
             }
         });
         executor.submit(startTurn);
-//
-//        Thread t = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
     }
 
     private void handleWorkerViewselection(int i, int j){
         try {
             GUIController.getController().playStepRequest(i, j);
-            removeWorkerAvailableCell();
-            if(GUIController.getController().getCurrentStep() == Step.BUILD) {
-                actionLabel.setText("Build");
-
+            if(GUIController.getController().getCurrentStep() == Step.MOVE){
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
-
+            }
+            if(GUIController.getController().getCurrentStep() == Step.MOVE_SPECIAL){
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                callRenderWorkerView();
+            }
+            if(GUIController.getController().getCurrentStep() == Step.MOVE_UNTIL){
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                callRenderWorkerView();
+            }
+            if(GUIController.getController().getCurrentStep() == Step.BUILD_SPECIAL){
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                callRenderWorkerView();
+            }
+            if(GUIController.getController().getCurrentStep() == Step.BUILD) {
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                callRenderWorkerView();
+            }
+            if(GUIController.getController().getCurrentStep() == Step.REMOVE){
+                //code for remove
             }
             if(GUIController.getController().getCurrentStep() == Step.END) {
                 removeWorkerAvailableCell();
                 reloadBattlefield();
                 restartTurn();
             }
+            removeWorkerAvailableCell();
         } catch (SantoriniException e) {
             System.out.println(e.getMessage());
         }
@@ -439,16 +467,25 @@ public class BattlefieldView extends Scene {
                 if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight() > 0){
                     switch(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight()){
                         case 1:
-                            battlefieldMap.get(new Pair<>(i,j)).setLvl1(new Level1());
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME)
+                                battlefieldMap.get(new Pair<>(i,j)).setDome(new Dome());
+                            else
+                                battlefieldMap.get(new Pair<>(i,j)).setLvl1(new Level1());
                             break;
                         case 2:
                             battlefieldMap.get(new Pair<>(i,j)).setLvl1(new Level1());
-                            battlefieldMap.get(new Pair<>(i,j)).setLvl2(new Level2());
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME)
+                                battlefieldMap.get(new Pair<>(i,j)).setDome(new Dome());
+                            else
+                                battlefieldMap.get(new Pair<>(i,j)).setLvl2(new Level2());
                             break;
                         case 3:
                             battlefieldMap.get(new Pair<>(i,j)).setLvl1(new Level1());
                             battlefieldMap.get(new Pair<>(i,j)).setLvl2(new Level2());
-                            battlefieldMap.get(new Pair<>(i,j)).setLvl3(new Level3());
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME)
+                                battlefieldMap.get(new Pair<>(i,j)).setDome(new Dome());
+                            else
+                                battlefieldMap.get(new Pair<>(i,j)).setLvl3(new Level3());
                             break;
                         case 4:
                             battlefieldMap.get(new Pair<>(i,j)).setLvl1(new Level1());
@@ -461,7 +498,9 @@ public class BattlefieldView extends Scene {
             }
         }
 
-
+        /*
+        * Redraw all the battlefield
+        * */
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++){
                 /**
@@ -475,34 +514,57 @@ public class BattlefieldView extends Scene {
                     Dome dome;
                     switch(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight()){
                         case 1:
-                            lvl1 = battlefieldMap.get(new Pair<>(i,j)).getLvl1();
-                            GridPane.setRowIndex(lvl1,i);
-                            GridPane.setColumnIndex(lvl1, j);
-                            Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl1));
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME) {
+                                dome = battlefieldMap.get(new Pair<>(i, j)).getDome();
+                                GridPane.setRowIndex(dome,i);
+                                GridPane.setColumnIndex(dome, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(dome));
+                            }else {
+                                lvl1 = battlefieldMap.get(new Pair<>(i, j)).getLvl1();
+                                GridPane.setRowIndex(lvl1,i);
+                                GridPane.setColumnIndex(lvl1, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl1));
+                            }
                             break;
                         case 2:
                             lvl1 = battlefieldMap.get(new Pair<>(i,j)).getLvl1();
-                            lvl2 = battlefieldMap.get(new Pair<>(i,j)).getLvl2();
                             GridPane.setRowIndex(lvl1,i);
                             GridPane.setColumnIndex(lvl1, j);
                             Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl1));
-                            GridPane.setRowIndex(lvl2,i);
-                            GridPane.setColumnIndex(lvl2, j);
-                            Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl2));
+
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME) {
+                                dome = battlefieldMap.get(new Pair<>(i, j)).getDome();
+                                GridPane.setRowIndex(dome,i);
+                                GridPane.setColumnIndex(dome, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(dome));
+                            }else {
+                                lvl2 = battlefieldMap.get(new Pair<>(i, j)).getLvl2();
+                                GridPane.setRowIndex(lvl2,i);
+                                GridPane.setColumnIndex(lvl2, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl2));
+                            }
                             break;
                         case 3:
                             lvl1 = battlefieldMap.get(new Pair<>(i,j)).getLvl1();
                             lvl2 = battlefieldMap.get(new Pair<>(i,j)).getLvl2();
-                            lvl3 = battlefieldMap.get(new Pair<>(i,j)).getLvl3();
                             GridPane.setRowIndex(lvl1,i);
                             GridPane.setColumnIndex(lvl1, j);
                             Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl1));
                             GridPane.setRowIndex(lvl2,i);
                             GridPane.setColumnIndex(lvl2, j);
                             Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl2));
-                            GridPane.setRowIndex(lvl3,i);
-                            GridPane.setColumnIndex(lvl3, j);
-                            Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl3));
+
+                            if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getLastBlock() == Block.DOME) {
+                                dome = battlefieldMap.get(new Pair<>(i, j)).getDome();
+                                GridPane.setRowIndex(dome,i);
+                                GridPane.setColumnIndex(dome, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(dome));
+                            }else {
+                                lvl3 = battlefieldMap.get(new Pair<>(i, j)).getLvl3();
+                                GridPane.setRowIndex(lvl3,i);
+                                GridPane.setColumnIndex(lvl3, j);
+                                Platform.runLater(() ->  battlefieldGrid.getChildren().add(lvl3));
+                            }
                             break;
                         case 4:
                             lvl1 = battlefieldMap.get(new Pair<>(i,j)).getLvl1();

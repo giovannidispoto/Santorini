@@ -108,7 +108,7 @@ public class PlayerTurn {
             updateBuildingMatrix();
         }
 
-        if(steps.get(0) == Step.MOVE) {
+        if(steps.get(0) == Step.MOVE || steps.get(0) == Step.MOVE_SPECIAL) {
             updateMovmentMatrix();
         }
 
@@ -158,6 +158,10 @@ public class PlayerTurn {
         currentTurn.buildBlock(w,x,y);
         //generate remove matrix if is necessary
         steps.remove(0);
+
+        //build special
+        if(steps.get(0) == Step.BUILD_SPECIAL)
+            updateBuildingMatrix();
 
         //for turn that have a build before a move
         if(steps.get(0) == Step.MOVE)

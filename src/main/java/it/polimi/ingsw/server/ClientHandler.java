@@ -172,7 +172,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     @Override
     public void update(CellInterface[][] cellInterfaces) {
         response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
-        //System.out.println("Battlefield Updated!");
+       // System.out.println("Battlefield Updated!");
 
     }
 
@@ -183,7 +183,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     @Override
     public void update(boolean[][] workerView) {
         response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
-        //System.out.println("WorkerView Updated!");
+        System.out.println("WorkerView Updated!");
     }
 
     /**
