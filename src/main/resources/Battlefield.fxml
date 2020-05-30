@@ -60,5 +60,6 @@
             <Image url="@Images/Decorations/BlurBoard.png" />
          </image>
       </ImageView>
+      <BorderPane id="paneResult" layoutX="350.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" visible="false"/>
     </children>
 </AnchorPane>

@@ -143,7 +143,6 @@ public class BattlefieldView extends Scene {
         t.start();
         GUIController.getController().registerControllerThread(t);
 
-
     }
 
     private void startBattlefieldPhase(){

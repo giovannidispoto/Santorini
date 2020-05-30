@@ -41,18 +41,18 @@ public class SelectCardView extends Scene {
 
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
-
+        /* If player is god player start picking card  */
         if(god){
             ObservableList<String> deck =  FXCollections.emptyObservableList();
+
                 map = new HashMap<>();
 
-                //  ObservableList<String> selectedCard = FXCollections.observableArrayList(cardS);
                 ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
+
                 listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        //listView.getSelectionModel().get
-                        if (map.values().stream().filter(e -> e == true).count() < 2)
+                        if (map.values().stream().filter(e -> e == true).count() < GUIController.getController().getCurrentLobbySize())
                             map.put(t1, true);
                         listView.refresh();
                     }
@@ -79,6 +79,7 @@ public class SelectCardView extends Scene {
             };
 
             wait.setOnSucceeded(s->{
+                /* Show cards inside ListView*/
                 listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getCardsDeck().getAllCards().stream().map(card->card.getCardName()).collect(Collectors.toList()))));
                 for (int i = 0; i < listView.getItems().size(); i++)
                     map.put(listView.getItems().get(i), false);
@@ -87,17 +88,15 @@ public class SelectCardView extends Scene {
 
             executor.submit(wait);
         }else{
-           // ObservableList<String> deck = FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards()));
                 map = new HashMap<>();
 
-                //  ObservableList<String> selectedCard = FXCollections.observableArrayList(cardS);
                 ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
                 listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        //listView.getSelectionModel().get
                         if (map.values().stream().filter(e -> e == true).count() == 0)
                             map.put(t1, true);
+                        //refresh list
                         listView.refresh();
                     }
                 });
@@ -133,6 +132,8 @@ public class SelectCardView extends Scene {
             executor.submit(wait1);
         }
     }
+
+    /* Create custom ListView for showing cards*/
 
     private class BuildCell extends ListCell<String> {
         private ImageView imageView = new ImageView();

@@ -12,7 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -68,46 +70,6 @@ public class GUIBuilder extends Application {
 
         if(view.isPresent())
             state = view.get();
-    /*
-        switch(state){
-            case SELECT_CARD:
-                try {
-                   f = executorService.submit(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                GUIController.getController().waitSetPlayerCard();
-                            } catch (SantoriniException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                   f.get();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case SELECT_GOD_CARD:
-               f =  executorService.submit(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            GUIController.getController().getDeckRequest();
-                        } catch (SantoriniException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                try {
-                    f.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                break;
-        }*/
 
         switch(state){
             case CONNECTION:
@@ -165,8 +127,11 @@ public class GUIBuilder extends Application {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/WinMessage.fxml"));
-            mainStage.setScene(new WinView(root,this));
-            mainStage.show();
+            Scene actual = mainStage.getScene();
+            actual.lookup("#blurResult").setVisible(true);
+            ((BorderPane) actual.lookup("#paneResult")).setCenter(root);
+            ((BorderPane) actual.lookup("#paneResult")).setVisible(true);
+            (root.lookup("#exitButton")).setOnMouseClicked(event->System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -177,8 +142,11 @@ public class GUIBuilder extends Application {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/LoseMessage.fxml"));
-            mainStage.setScene(new LoseView(root, this));
-            mainStage.show();
+            Scene actual = mainStage.getScene();
+            actual.lookup("#blurResult").setVisible(true);
+            ((BorderPane) actual.lookup("#paneResult")).setCenter(root);
+            ((BorderPane) actual.lookup("#paneResult")).setVisible(true);
+            (root.lookup("#exitButton")).setOnMouseClicked(event->System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
