@@ -52,7 +52,7 @@ public class BattlefieldView extends Scene {
         super(root);
         this.root = root;
         actionLabel = (Label) root.lookup("#phaseLabel");
-        actionLabel.setText("Waiting your turn");
+        actionLabel.setText("Wait your turn");
         executor = Executors.newSingleThreadExecutor();
         //Battlefield Map
         battlefieldMap = new HashMap<>();
@@ -69,11 +69,11 @@ public class BattlefieldView extends Scene {
         /* Message Map */
         messageStep = new HashMap<>();
         messageStep.put(Step.MOVE, "Move");
-        messageStep.put(Step.MOVE_SPECIAL, "Move");
-        messageStep.put(Step.MOVE_UNTIL, "Move");
+        messageStep.put(Step.MOVE_SPECIAL, "Move Special");
+        messageStep.put(Step.MOVE_UNTIL, "Move Special");
         messageStep.put(Step.BUILD, "Build");
-        messageStep.put(Step.BUILD_SPECIAL, "Build");
-        messageStep.put(Step.REMOVE, "Remove");
+        messageStep.put(Step.BUILD_SPECIAL, "Build Special");
+        messageStep.put(Step.REMOVE, "Removal");
 
         /*
          * Adding Workers to Battlefield Phase
@@ -104,7 +104,6 @@ public class BattlefieldView extends Scene {
         wait.setOnSucceeded(s->{
             positions = new ArrayList<>();
             workersId = new LinkedList<>(GUIController.getController().getWorkersID());
-            ((Label) root.lookup("#phaseLabel")).setText("Workers Placement");
             List<String> players = GUIController.getController().getPlayers().stream().map(PlayerInterface::getPlayerNickname).collect(Collectors.toList());
             for(String player : players){
                 Label p = new Label(player);
@@ -259,7 +258,7 @@ public class BattlefieldView extends Scene {
             @Override
             protected Void call() {
 
-                Platform.runLater(() -> actionLabel.setText("Waiting your turn"));
+                Platform.runLater(() -> actionLabel.setText("Wait your turn"));
 
                 do {
                     try {
@@ -328,29 +327,36 @@ public class BattlefieldView extends Scene {
         try {
             GUIController.getController().playStepRequest(i, j);
             if(GUIController.getController().getCurrentStep() == Step.MOVE){
+                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_SPECIAL){
+                root.lookup("#skipButton").setDisable(false);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_UNTIL){
+                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD_SPECIAL){
+                root.lookup("#skipButton").setDisable(false);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
+                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.REMOVE){
+                root.lookup("#skipButton").setDisable(false);
                 //code for remove
             }
             if(GUIController.getController().getCurrentStep() == Step.END) {
+                root.lookup("#skipButton").setDisable(true);
                 removeWorkerAvailableCell();
                 reloadBattlefield();
                 restartTurn();
