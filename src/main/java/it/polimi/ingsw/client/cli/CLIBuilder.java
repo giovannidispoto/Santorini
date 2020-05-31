@@ -1361,6 +1361,7 @@ public class CLIBuilder implements UIActions{
 
         }while(!validMove);
         printedLinesCounter+=1;
+        selectedWorkerValue=String.format(selectedWorkerCoordinatesTemplate,cellRow,cellCol);
         clientController.playStepRequest(cellRow,cellCol);
     }
 
