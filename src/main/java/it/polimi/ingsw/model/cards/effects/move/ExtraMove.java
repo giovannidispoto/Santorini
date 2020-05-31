@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards.effects.move;
 
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Block;
+import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.model.Worker;
 
@@ -13,6 +14,9 @@ import java.util.List;
  * ExtraMove class represents the effect that allows the player to do an extra move
  */
 public class ExtraMove extends MoveEffect {
+    int oldRow;
+    int oldCol;
+
     /**
      * Class Constructor
      */
@@ -38,21 +42,23 @@ public class ExtraMove extends MoveEffect {
 
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //Save actual position
-        int oldRow = selectedWorker.getRowWorker();
-        int oldCol = selectedWorker.getColWorker();
+        this.oldRow = selectedWorker.getRowWorker();
+        this.oldCol = selectedWorker.getColWorker();
         //check towers levels
         int lvl_b = battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight();
         int lvl_a = battlefield.getCell(newRow, newCol).getTower().getHeight();
 
-        if(movesLeft>0){
+        if(movesLeft > 1){
+            //Regular Move
             selectedWorker.changeWorkerPosition(newRow,newCol);
-
+            //Set WorkerView for Special Move (No previous cell, ,No taller than 1 of the worker, No Workers Cells, No Domes)
             selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                     && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
-                    && !cell.equals(battlefield.getCell(oldRow,oldCol))
+                    && !cell.equals(battlefield.getCell(this.oldRow, this.oldCol))
                     && !(cell.getTower().getLastBlock() == Block.DOME)));
         }
-        else{
+        else if (movesLeft == 1){
+            //Special Move
             selectedWorker.changeWorkerPosition(newRow,newCol);
         }
         //set win
@@ -60,5 +66,20 @@ public class ExtraMove extends MoveEffect {
             reachedLevel3 = true;
 
         movesLeft--;
+    }
+
+    @Override
+    public Cell[][] generateMovementMatrix(Worker selectedWorker) {
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //Special Move
+        if(movesLeft == 1){
+            //Set WorkerView for Special Move (No previous cell, ,No taller than 1 of the worker, No Workers Cells, No Domes)
+            return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                    && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() + 1 >= cell.getTower().getHeight()
+                    && !cell.equals(battlefield.getCell(this.oldRow, this.oldCol))
+                    && !(cell.getTower().getLastBlock() == Block.DOME));
+        }
+        //Regular Move
+        return super.generateMovementMatrix(selectedWorker);
     }
 }

@@ -10,25 +10,31 @@ import it.polimi.ingsw.model.Worker;
 public class NoLevelUpCondition extends GlobalEffect {
 
     private boolean changeLevel;
-    private static NoLevelUpCondition instance = null;
 
+    /**
+     * Class constructor
+     * */
+    private NoLevelUpCondition(){
+        this.changeLevel = false;
+    }
 
+    private static final ThreadLocal<NoLevelUpCondition> NO_LEVEL_UP_CONDITION_THREAD_LOCAL = ThreadLocal.withInitial(NoLevelUpCondition::new);
+
+    /**
+     * Factory method that returns the NoLevelUpCondition instance (Singleton per Thread)
+     * @return NoLevelUpCondition object
+     */
     public static NoLevelUpCondition getInstance(){
-        if(instance == null)
-            instance = new NoLevelUpCondition();
-        return instance;
+        return NO_LEVEL_UP_CONDITION_THREAD_LOCAL.get();
     }
 
     /**
-     *
-     * @param changeLevel
+     * Informs NoLevelUpCondition, what kind of move was made,
+     * in particular it informs through the parameter if the worker has made a level up
+     * @param changeLevel   true, if the worker has leveled up, false if he has not leveled up
      */
     public void setChangeLevel(boolean changeLevel){
         this.changeLevel = changeLevel;
-    }
-
-    private NoLevelUpCondition(){
-        this.changeLevel = false;
     }
 
     /**

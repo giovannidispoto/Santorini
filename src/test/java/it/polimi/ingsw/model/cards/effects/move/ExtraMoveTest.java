@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,13 +45,14 @@ class ExtraMoveTest {
         //2. Generate Movement Matrix
         w1.setWorkerView(t.generateMovementMatrix(w1));
         //3. Move()
+        assertEquals(t.getMovesLeft(), 2);
         t.moveWorker(m.getSelectedWorker(),2,2);
+        assertEquals(t.getMovesLeft(), 1);
         //4. Move () again
         t.moveWorker(m.getSelectedWorker(),3,3);
-        //5. Move () again and again
-        t.moveWorker(m.getSelectedWorker(),4,4);
-        //ASSERT : We expect that the worker has reached the cell[3][3]
-        assertEquals(battlefield.getCell(4, 4).getWorker(), w1);
+        assertEquals(t.getMovesLeft(), 0);
+        //ASSERT: illegal move, movesLeft = 0
+        assertThrows(RuntimeException.class, ()-> t.moveWorker(m.getSelectedWorker(),4,4));
 
         battlefield.cleanField();
     }

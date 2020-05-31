@@ -8,8 +8,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiBLUE;
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
+import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
 
 /**
  *
@@ -49,9 +48,9 @@ public class ClientThread implements Runnable {
                 String line = in.nextLine();
                 if (isNotSocketShutdown()) {
                     clientHandler.process(line);
-                    /*if(!line.contains("pong"))
+
+                    if(printDebugInfo && !line.contains("pong"))
                          System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
-                     */
                 }
             }
         }catch (IOException | NoSuchElementException e){

@@ -328,7 +328,8 @@ public class Controller {
         for(Worker w : getPlayerFromString(player).getPlayerWorkers())
             w.attach(handler);
 
-        this.turn.updateMovmentMatrix();
+        this.turn.sendMovementMatrix();
+
         boolean[][] workerView = new boolean[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
 
         for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){

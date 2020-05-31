@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class PlayerTurn {
 
-    private List<Step> steps;
-    private Match match;
-    private Turn currentTurn;
+    private final List<Step> steps;
+    private final Match match;
+    private final Turn currentTurn;
 
     /**
      * Create PlayerTurn of a turn
@@ -29,50 +29,63 @@ public class PlayerTurn {
 
         //Check if first step is a move or a build, then update the correct matrix
         if(steps.get(0) == Step.MOVE || steps.get(0) == Step.MOVE_SPECIAL )
-             updateMovmentMatrix();
+             updateMovementMatrix(steps.get(0));
         else if(steps.get(0) == Step.BUILD || steps.get(0) == Step.BUILD_SPECIAL)
-            updateBuildingMatrix();
+            updateBuildingMatrix(steps.get(0));
     }
 
     /**
-     * Update movement matrix when a new currentWorker is selected
-     * For global effect, add here..
+     * Update movement matrix when a new currentWorker is selected,
+     * No (LOSE CHECK + NULL CHECK (skip))
      */
-    public void updateMovmentMatrix(){
+    public void sendMovementMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
         match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
         match.getSelectedWorker().notifyUpdate();
     }
 
-    public boolean isLoser(){
-        List<Cell[][]> workerViews = new ArrayList<>();
-        boolean looser = true;
-        for(Worker w: match.getCurrentPlayer().getPlayerWorkers()){
-            workerViews.add(currentTurn.generateMovementMatrix(w));
-        }
+    /**
+     * Update movement matrix,
+     * LOSE CHECK + NULL CHECK (skip)
+     */
+    public void updateMovementMatrix(Step currentStep){
+        match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
+        match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
 
-        for(Cell[][] workerView: workerViews){
-            for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
-                for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
-                    if(workerView[i][j] != null)
-                        looser = false;
-                }
+        if(match.getSelectedWorker().isInvalidWorkerView()) {
+            if(currentStep == Step.MOVE_SPECIAL){
+                this.skip();
+            }else {
+                //TODO: Player LOSE
             }
         }
-
-        return looser;
+        else {
+            match.getSelectedWorker().notifyUpdate();
+        }
     }
 
     /**
-     * Update building matrix
+     * Update building matrix,
+     * LOSE CHECK + NULL CHECK (skip)
      */
-    public void updateBuildingMatrix(){
+    public void updateBuildingMatrix(Step currentStep){
         match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
-        match.getSelectedWorker().notifyUpdate();
+
+        if(match.getSelectedWorker().isInvalidWorkerView()) {
+            if(currentStep == Step.BUILD_SPECIAL){
+                this.skip();
+            }else {
+                //TODO: Player LOSE
+            }
+        }
+        else {
+            match.getSelectedWorker().notifyUpdate();
+        }
     }
 
     /**
-     * Update remove matrix
+     * Update remove matrix,
+     * NULL CHECK (skip)
      */
     private void updateRemoveMatrix(){
         //Change Selected Worker
@@ -85,6 +98,25 @@ public class PlayerTurn {
         else {
             match.getSelectedWorker().notifyUpdate();
         }
+    }
+
+    public boolean isLoser(){
+        List<Cell[][]> workerViews = new ArrayList<>();
+
+        for(Worker w: match.getCurrentPlayer().getPlayerWorkers()){
+            workerViews.add(currentTurn.generateMovementMatrix(w));
+        }
+
+        for(Cell[][] workerView: workerViews){
+            for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
+                for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
+                    if(workerView[i][j] != null)
+                        return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -105,18 +137,18 @@ public class PlayerTurn {
         //Build
 
         if(steps.get(0) == Step.BUILD){
-            updateBuildingMatrix();
+            updateBuildingMatrix(steps.get(0));
         }
 
         if(steps.get(0) == Step.MOVE || steps.get(0) == Step.MOVE_SPECIAL) {
-            updateMovmentMatrix();
+            updateMovementMatrix(steps.get(0));
         }
 
         if(steps.get(0) == Step.MOVE_UNTIL){
             //Check if the worker with the previous move has left the perimeter (skip action)
             if(Battlefield.getBattlefieldInstance().getPerimeterCells().contains(Battlefield.getBattlefieldInstance().getCell(x,y))){
                 //Continue move until action
-                updateMovmentMatrix();
+                updateMovementMatrix(steps.get(0));
             }
             else{
                 //No longer in the perimeter
@@ -144,7 +176,7 @@ public class PlayerTurn {
 
         //update matrix
         if(steps.get(0) == Step.BUILD)
-            updateBuildingMatrix();
+            updateBuildingMatrix(steps.get(0));
     }
 
     /**
@@ -161,11 +193,11 @@ public class PlayerTurn {
 
         //build special
         if(steps.get(0) == Step.BUILD_SPECIAL)
-            updateBuildingMatrix();
+            updateBuildingMatrix(steps.get(0));
 
         //for turn that have a build before a move
         if(steps.get(0) == Step.MOVE)
-            updateMovmentMatrix();
+            updateMovementMatrix(steps.get(0));
 
         //for turn that have remove after build
         if(steps.get(0) == Step.REMOVE)
