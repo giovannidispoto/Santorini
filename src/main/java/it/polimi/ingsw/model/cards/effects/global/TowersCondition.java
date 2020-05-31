@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.Player;
  */
 public class TowersCondition extends GlobalWinCondition {
 
-    private int numberOfFullTowers;
+    private final int numberOfFullTowers;
 
     /**
      * Class constructor

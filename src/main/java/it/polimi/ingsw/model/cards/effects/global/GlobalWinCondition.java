@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Player;
 
 public abstract class GlobalWinCondition {
-    private Player subject;
-    private Match match;
+    private final Player subject;
+    private final Match match;
 
     /**
      * Class Constructor
