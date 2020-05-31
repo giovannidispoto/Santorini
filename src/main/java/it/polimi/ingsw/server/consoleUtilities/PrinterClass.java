@@ -10,4 +10,7 @@ public final class PrinterClass {
 
     public static final String CLEAN = "\u001b[0J";
     public static final String INITIALIZE_SCREEN = "\033[0;0H";
+
+    //Variable used in case of debugging, must be set to false in case of publication of the program
+    public static boolean printDebugInfo = false;
 }
