@@ -437,6 +437,11 @@ public class ClientController {
         return playerCardName;
     }
 
+    /**
+     * Getter to get the current worker who will have to make the action,
+     * N.B: It can be null, if it is not your turn
+     * @return  SelectedWorker object
+     */
     public SelectedWorker getCurrentWorker() {
         return currentWorker;
     }

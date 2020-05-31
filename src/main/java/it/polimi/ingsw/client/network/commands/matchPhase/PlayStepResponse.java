@@ -14,7 +14,12 @@ public class PlayStepResponse implements Command {
     @Override
     public void execute(ClientController clientController) {
         clientController.setCurrentStep(this.nextStep);
-        clientController.setCurrentWorker(new SelectedWorker(x, y));
+        //If the turn is Ended the current worker position is no longer valid
+        if(nextStep == Step.END) {
+            clientController.setCurrentWorker(null);
+        }else {
+            clientController.setCurrentWorker(new SelectedWorker(x, y));
+        }
         //Awakens who was waiting Server Response
         synchronized (WaitManager.waitPlayStepResponse){
             WaitManager.waitPlayStepResponse.setUsed();
