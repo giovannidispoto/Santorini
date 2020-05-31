@@ -48,5 +48,19 @@ public class ExtraBlockPerimetral extends BuildEffect {
         blocksLeft--;
     }
 
+    @Override
+    public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //Special Build
+        if(blocksLeft == 1){
+            //Set WorkerView for Special Build (No Perimeter Cells, No Workers Cells, No Domes)
+            return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                    && !battlefield.getPerimeterCells().contains(cell)
+                    && !(cell.getTower().getLastBlock() == Block.DOME));
+        }
+        //Regular Build
+        return super.generateBuildingMatrix(selectedWorker);
+    }
+
 
 }

@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExtraBlockAbove extends BuildEffect{
-    private boolean buildInSameCell;
+    private final boolean buildInSameCell;
+    private int lastBuiltBlockRow_SameCell;
+    private int lastBuiltBlockCol_SameCell;
+    private int lastBuiltBlockRow_NotSameCell;
+    private int lastBuiltBlockCol_NotSameCell;
+
     /**
      * Class Constructor
      * @param buildInSameCell boolean to split the effects
@@ -34,6 +39,8 @@ public class ExtraBlockAbove extends BuildEffect{
             if(blocksLeft > 1){
                 //Regular Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+                this.lastBuiltBlockRow_SameCell = newBlockRow;
+                this.lastBuiltBlockCol_SameCell = newBlockCol;
                 //Set WorkerView for Special Build (Same cell where has built now, but can't build a dome, so no towerLv3)
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(newBlockRow,newBlockCol))
                         && !(cell.getTower().getHeight() > 2)
@@ -49,6 +56,8 @@ public class ExtraBlockAbove extends BuildEffect{
             if(blocksLeft > 1){
                 //Regular Build
                 Battlefield.getBattlefieldInstance().getTower(newBlockRow,newBlockCol).addNextBlock();
+                this.lastBuiltBlockRow_NotSameCell = newBlockRow;
+                this.lastBuiltBlockCol_NotSameCell = newBlockCol;
                 //Remove in the WorkerMatrix the cell where you've build now, Banned Cells with: dome, worker
                 selectedWorker.setWorkerView(battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                         && !cell.equals(battlefield.getCell(newBlockRow,newBlockCol))
@@ -61,6 +70,30 @@ public class ExtraBlockAbove extends BuildEffect{
         }
 
         blocksLeft--;
+    }
+
+    @Override
+    public Cell[][] generateBuildingMatrix(Worker selectedWorker) {
+        Battlefield battlefield = Battlefield.getBattlefieldInstance();
+        //Special Build
+        if(blocksLeft == 1){
+            //HEPHAESTUS
+            if(buildInSameCell){
+                //Set WorkerView for Special Build (Same cell where has built now, but can't build a dome, so no towerLv3)
+                return battlefield.getWorkerView(selectedWorker, (cell)->cell.equals(battlefield.getCell(this.lastBuiltBlockRow_SameCell,this.lastBuiltBlockCol_SameCell))
+                        && !(cell.getTower().getHeight() > 2)
+                        && !(cell.getTower().getLastBlock() == Block.DOME));
+            }
+            //DEMETER
+            else{
+                //Remove in the WorkerMatrix the cell where you've build now, Banned Cells with: dome, worker
+                return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
+                        && !cell.equals(battlefield.getCell(this.lastBuiltBlockRow_NotSameCell,this.lastBuiltBlockCol_NotSameCell))
+                        && !(cell.getTower().getLastBlock() == Block.DOME));
+            }
+        }
+        //Regular Build
+        return super.generateBuildingMatrix(selectedWorker);
     }
 
 
