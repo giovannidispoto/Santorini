@@ -294,6 +294,9 @@ public class CLIBuilder implements UIActions{
         phasesMap.put(3,"Building");
         phasesMap.put(4,"Removal");
         phasesMap.put(5,"Type");
+        phasesMap.put(6,"Special Building");
+        phasesMap.put(7,"Special Movement");
+        phasesMap.put(8,"Looped Movement");
     }
 
     //SECTION: Support Methods
@@ -1283,7 +1286,6 @@ public class CLIBuilder implements UIActions{
         boolean skipChosen = false;
         boolean validMove = false;
         int cellRow=0,cellCol=0;
-        currentPhase=phasesMap.get(2);
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1393,7 +1395,6 @@ public class CLIBuilder implements UIActions{
         //Local Variables
         boolean validMove=false;
         int cellRow=0,cellCol=0;
-        currentPhase=phasesMap.get(3);
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1479,7 +1480,6 @@ public class CLIBuilder implements UIActions{
         //Local Variables
         boolean validMove=false;
         int cellRow=0,cellCol=0;
-        currentPhase=phasesMap.get(4);
         renderBoard(decomposeWorkerView(clientController));
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1569,7 +1569,6 @@ public class CLIBuilder implements UIActions{
     public boolean askForSkip() {
         boolean answer;
         String userAnswer;
-        currentPhase=phasesMap.get(2);
         renderBoard("Ask for skip"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1595,7 +1594,6 @@ public class CLIBuilder implements UIActions{
     public boolean askForRepeat() {
         boolean answer;
         String userAnswer;
-        currentPhase=phasesMap.get(2);
         renderBoard("Ask for repeat"+BLANK);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(CLEAN);
@@ -1689,5 +1687,6 @@ public class CLIBuilder implements UIActions{
     public void setCurrentPhase(String currentPhase){this.currentPhase=currentPhase;}
     public void setOperationRepeated(){this.operationRepeated= !operationRepeated;}
     public void resetSelectedWorker(){this.selectedWorkerValue= "Nobody";}
+    public String getPhase(int code){return phasesMap.get(code);}
 
 }

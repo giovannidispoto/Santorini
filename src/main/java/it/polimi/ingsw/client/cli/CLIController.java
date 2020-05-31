@@ -94,34 +94,38 @@ public class CLIController implements View {
 
                 switch (clientController.getCurrentStep()){
                     case MOVE:
+                        commandLine.setCurrentPhase(commandLine.getPhase(2));
                         commandLine.moveWorker(clientController);
                         break;
                     case BUILD:
+                        commandLine.setCurrentPhase(commandLine.getPhase(3));
                         commandLine.buildBlock(clientController);
                         break;
                     case END:
                         break;
                     case MOVE_SPECIAL:
+                        commandLine.setCurrentPhase(commandLine.getPhase(7));
                         if(commandLine.askForSkip())
                             clientController.skipStepRequest();
                         else
                             commandLine.moveWorker(clientController);
                         break;
                     case BUILD_SPECIAL:
+                        commandLine.setCurrentPhase(commandLine.getPhase(6));
                         if(commandLine.askForSkip())
                             clientController.skipStepRequest();
                         else
                             commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
-                        if (commandLine.askForRepeat()) {
+                        commandLine.setCurrentPhase(commandLine.getPhase(8));
+                        if (commandLine.askForRepeat())
                             commandLine.moveWorker(clientController);
-                        }
-                        else {
+                        else
                             clientController.skipStepRequest();
-                        }
                         break;
                     case REMOVE:
+                        commandLine.setCurrentPhase(commandLine.getPhase(4));
                         if(commandLine.askForSkip())
                             clientController.skipStepRequest();
                         else
