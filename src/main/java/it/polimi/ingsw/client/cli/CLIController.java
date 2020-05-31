@@ -108,7 +108,10 @@ public class CLIController implements View {
                             commandLine.moveWorker(clientController);
                         break;
                     case BUILD_SPECIAL:
-                        commandLine.buildBlock(clientController);
+                        if(commandLine.askForSkip())
+                            clientController.skipStepRequest();
+                        else
+                            commandLine.buildBlock(clientController);
                         break;
                     case MOVE_UNTIL:
                         if (commandLine.askForRepeat()) {
