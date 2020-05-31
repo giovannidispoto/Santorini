@@ -125,6 +125,7 @@ public class CLIController implements View {
                             clientController.skipStepRequest();
                         break;
                     case REMOVE:
+                        commandLine.setSelectedWorker(clientController);
                         commandLine.setCurrentPhase(commandLine.getPhase(4));
                         if(commandLine.askForSkip())
                             clientController.skipStepRequest();

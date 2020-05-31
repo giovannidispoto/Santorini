@@ -1688,5 +1688,6 @@ public class CLIBuilder implements UIActions{
     public void setOperationRepeated(){this.operationRepeated= !operationRepeated;}
     public void resetSelectedWorker(){this.selectedWorkerValue= "Nobody";}
     public String getPhase(int code){return phasesMap.get(code);}
+    public void setSelectedWorker(ClientController clientController){this.selectedWorkerValue=String.format(selectedWorkerCoordinatesTemplate,clientController.getCurrentWorker().getRow(),clientController.getCurrentWorker().getColumn());}
 
 }
