@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.network.commands.matchPhase;
 
+import it.polimi.ingsw.client.clientModel.basic.SelectedWorker;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
@@ -13,6 +14,7 @@ public class PlayStepResponse implements Command {
     @Override
     public void execute(ClientController clientController) {
         clientController.setCurrentStep(this.nextStep);
+        clientController.setCurrentWorker(new SelectedWorker(x, y));
         //Awakens who was waiting Server Response
         synchronized (WaitManager.waitPlayStepResponse){
             WaitManager.waitPlayStepResponse.setUsed();

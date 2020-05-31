@@ -10,9 +10,9 @@ import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
  * PlayStepCommand represent playStp action from the client
  */
 public class PlayStepCommand implements Command {
-    private int x;
-    private int y;
-    private Step nextStep;
+    int x;
+    int y;
+    Step nextStep;
 
     /**
      * Create new PlayStep
@@ -32,6 +32,8 @@ public class PlayStepCommand implements Command {
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         nextStep = controller.playStep(x,y);
+        x = controller.getSelectedWorkerRow();
+        y = controller.getSelectedWorkerColumn();
         handler.responseQueue(new Gson().toJson(new BasicMessageResponse("playStepResponse", this)));
         handler.sendMessageQueue();
     }
