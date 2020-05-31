@@ -37,6 +37,22 @@ public class Controller {
     private int lobbySize;
 
     /**
+     * Returns the [Row] of the currently selected worker
+     * @return  Integer [Row], of the selected worker
+     */
+    public int getSelectedWorkerRow(){
+        return match.getSelectedWorker().getRowWorker();
+    }
+
+    /**
+     * Returns the [Column] of the currently selected worker
+     * @return  Integer [Column], of the selected worker
+     */
+    public int getSelectedWorkerColumn(){
+        return match.getSelectedWorker().getColWorker();
+    }
+
+    /**
      * Create controller
      */
     public Controller() {

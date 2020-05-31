@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Deck;
+import it.polimi.ingsw.client.clientModel.basic.SelectedWorker;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.network.ClientSocketConnection;
 import it.polimi.ingsw.client.network.ServerHandler;
@@ -32,6 +33,7 @@ public class ClientController {
     private String playerCardName;
     private boolean[][] workerView;
     private List<Integer> workersID;
+    private SelectedWorker currentWorker;
     private Step currentStep;
     //--    Match
     private String actualPlayer;
@@ -326,6 +328,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
         //Wait Server Response
         waitWorkerViewUpdate();
+        this.currentWorker = new SelectedWorker(row,col);
     }
 
     /** Client notifies the server of the action requested by the player for the current step
@@ -434,6 +437,10 @@ public class ClientController {
         return playerCardName;
     }
 
+    public SelectedWorker getCurrentWorker() {
+        return currentWorker;
+    }
+
         //--    WORKER-VIEW
 
     public synchronized boolean[][] getWorkerView() {
@@ -525,6 +532,10 @@ public class ClientController {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public void setCurrentWorker(SelectedWorker currentWorker) {
+        this.currentWorker = currentWorker;
     }
 
     //------    DEBUG / LOGGER
