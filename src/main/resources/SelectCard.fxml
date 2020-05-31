@@ -19,5 +19,10 @@
       </Button>
       <ListView id="listView" layoutX="25.0" layoutY="24.0" orientation="HORIZONTAL" prefHeight="322.0" prefWidth="690.0" stylesheets="@CSS/SantoriniListView.css" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
       </ListView>
+      <AnchorPane id="waitBox" layoutX="230.0" layoutY="141.0" prefHeight="73.0" prefWidth="295.0" stylesheets="@CSS/BeigeBox.css" visible="false" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="141.0">
+         <children>
+            <Label id="waitLabelCards" alignment="CENTER" layoutX="47.0" layoutY="41.0" prefHeight="46.0" prefWidth="202.0" stylesheets="@CSS/SantoriniLabel.css" text="Wait your Turn" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

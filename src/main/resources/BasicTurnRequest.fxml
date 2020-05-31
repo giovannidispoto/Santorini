@@ -4,23 +4,23 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="basicTurnRoot" prefHeight="197.0" prefWidth="300.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BasicTurnRequest">
+<AnchorPane id="basicTurnRoot" prefHeight="124.0" prefWidth="281.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BasicTurnRequest">
    <children>
-      <AnchorPane id="popUpBox" layoutX="10.0" layoutY="55.0" prefHeight="120.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane id="popUpBox" layoutX="5.0" layoutY="10.0" prefHeight="120.0" prefWidth="291.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
          <children>
-            <ImageView blendMode="SRC_ATOP" fitHeight="120.0" fitWidth="113.0" layoutX="-41.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-30.0" AnchorPane.leftAnchor="-20.0">
+            <ImageView blendMode="SRC_ATOP" fitHeight="107.0" fitWidth="96.0" layoutX="-13.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-23.953018188476562" AnchorPane.leftAnchor="-13.0">
                <image>
                   <Image url="@Images/Decorations/PowerOne.png" />
                </image>
             </ImageView>
-            <ImageView blendMode="SRC_ATOP" fitHeight="120.0" fitWidth="113.0" layoutX="-10.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-30.0" AnchorPane.rightAnchor="-20.0">
+            <ImageView blendMode="SRC_ATOP" fitHeight="114.0" fitWidth="81.0" layoutX="-10.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-24.0" AnchorPane.rightAnchor="-19.0">
                <image>
                   <Image url="@Images/Decorations/PowerTwo.png" />
                </image>
             </ImageView>
             <Button id="booleanButtonYes" layoutX="113.0" layoutY="131.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="70.0" />
             <Button id="booleanButtonNo" layoutX="140.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="70.0" />
-            <Label id="basicTurnLabel" alignment="CENTER" layoutX="37.0" layoutY="18.0" prefHeight="37.0" prefWidth="228.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power ?" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="18.0" />
+            <Label id="basicTurnLabel" alignment="CENTER" layoutX="37.0" layoutY="18.0" prefHeight="37.0" prefWidth="228.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power " AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="18.0" />
          </children>
       </AnchorPane>
    </children>

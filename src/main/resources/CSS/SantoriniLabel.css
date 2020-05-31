@@ -54,3 +54,8 @@
     -fx-font-size: 24;
 }
 
+#waitLabelCards{
+    -fx-text-fill: #626262;
+    -fx-font-size: 24;
+}
+
