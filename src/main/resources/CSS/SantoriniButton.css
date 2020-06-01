@@ -39,3 +39,10 @@
     -fx-background-radius: 10;
 }
 
+#acceptButton, #refuseButton{
+    -fx-font-size: 12;
+    -fx-pref-height: 20;
+    -fx-pref-width: 60;
+    -fx-background-radius: 10;
+}
+
