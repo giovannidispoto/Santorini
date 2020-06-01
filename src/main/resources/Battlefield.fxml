@@ -61,7 +61,7 @@
          </image>
       </ImageView>
       <BorderPane id="paneResult" layoutX="350.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" visible="false" />
-      <AnchorPane id="godPowerBox" prefHeight="151.0" prefWidth="181.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="446.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <AnchorPane id="godPowerBox" prefHeight="151.0" prefWidth="181.0" stylesheets="@CSS/BeigeBox.css" visible="false" AnchorPane.bottomAnchor="446.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
             <ImageView blendMode="SRC_ATOP" fitHeight="112.0" fitWidth="103.0" layoutX="-9.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-14.0">
                <image>
