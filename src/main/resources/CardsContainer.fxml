@@ -3,8 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="372.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardsContainer">
+<AnchorPane prefHeight="372.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
       <ImageView fitHeight="372.0" fitWidth="395.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -12,5 +13,10 @@
          </image>
       </ImageView>
       <ListView id="cardsList" layoutX="35.0" layoutY="30.0" prefHeight="322.0" prefWidth="345.0" stylesheets="@CSS/SantoriniListView.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <Button id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="316.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Close" textFill="WHITE">
+         <font>
+            <Font name="Mistral" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

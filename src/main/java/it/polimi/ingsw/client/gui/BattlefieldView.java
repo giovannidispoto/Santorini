@@ -9,7 +9,6 @@ import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.component.*;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
-import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Node;
@@ -17,26 +16,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
-import org.w3c.dom.events.MouseEvent;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class BattlefieldView extends Scene {
 
     private GridPane battlefieldGrid;
+    private Label numberOfTower;
     private List<Integer> workersId;
     private List<WorkerPositionInterface> positions;
     private ExecutorService executor;
@@ -46,13 +39,16 @@ public class BattlefieldView extends Scene {
     private Parent root;
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
     private Map<Step, String> messageStep;
+    private Button showCardButton;
 
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
         this.root = root;
         actionLabel = (Label) root.lookup("#phaseLabel");
-        actionLabel.setText("Wait your turn");
+        numberOfTower = (Label) root.lookup("#fullTowersLabel");
+        showCardButton = (Button) root.lookup("#cardsButton");
+        actionLabel.setText("Waiting your turn");
         executor = Executors.newSingleThreadExecutor();
         //Battlefield Map
         battlefieldMap = new HashMap<>();
@@ -69,11 +65,11 @@ public class BattlefieldView extends Scene {
         /* Message Map */
         messageStep = new HashMap<>();
         messageStep.put(Step.MOVE, "Move");
-        messageStep.put(Step.MOVE_SPECIAL, "Move Special");
-        messageStep.put(Step.MOVE_UNTIL, "Move Special");
+        messageStep.put(Step.MOVE_SPECIAL, "Move");
+        messageStep.put(Step.MOVE_UNTIL, "Move");
         messageStep.put(Step.BUILD, "Build");
-        messageStep.put(Step.BUILD_SPECIAL, "Build Special");
-        messageStep.put(Step.REMOVE, "Removal");
+        messageStep.put(Step.BUILD_SPECIAL, "Build");
+        messageStep.put(Step.REMOVE, "Remove");
 
         /*
          * Adding Workers to Battlefield Phase
@@ -81,6 +77,7 @@ public class BattlefieldView extends Scene {
 
 
         root.lookup("#skipButton").setDisable(true);
+        root.lookup("#blurResult").setVisible(true);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
         guiBuilder.GUIController().addBattlefield(this);
@@ -91,10 +88,10 @@ public class BattlefieldView extends Scene {
             @Override
             protected Void call()  {
                 try {
-                GUIController.getController().waitSetWorkersPosition();
-                GUIController.getController().getPlayersRequest();
-                GUIController.getController().getBattlefieldRequest();
-            }catch(SantoriniException e){
+                    GUIController.getController().waitSetWorkersPosition();
+                    GUIController.getController().getPlayersRequest();
+                    GUIController.getController().getBattlefieldRequest();
+                }catch(SantoriniException e){
                     System.out.println("Error");
                 }
                 return null;
@@ -102,8 +99,10 @@ public class BattlefieldView extends Scene {
         };
 
         wait.setOnSucceeded(s->{
+            root.lookup("#blurResult").setVisible(false);
             positions = new ArrayList<>();
             workersId = new LinkedList<>(GUIController.getController().getWorkersID());
+            ((Label) root.lookup("#phaseLabel")).setText("Workers Placement");
             List<String> players = GUIController.getController().getPlayers().stream().map(PlayerInterface::getPlayerNickname).collect(Collectors.toList());
             for(String player : players){
                 Label p = new Label(player);
@@ -127,8 +126,8 @@ public class BattlefieldView extends Scene {
         restartTurn();
 
         /*
-        * Interrupt thread used for catching end of the game
-        * */
+         * Interrupt thread used for catching end of the game
+         * */
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -139,8 +138,10 @@ public class BattlefieldView extends Scene {
                         //If the user if winner show relative view
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
                             Platform.runLater(() -> guiBuilder.showWin());
-                        }else{
+                        }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
                             Platform.runLater(() -> guiBuilder.showLose());
+                        }else{
+                            System.out.println("Generic Error");
                         }
                         executor.shutdown();
                         Thread.currentThread().interrupt();
@@ -152,6 +153,10 @@ public class BattlefieldView extends Scene {
 
         t.start();
         GUIController.getController().registerControllerThread(t);
+
+        showCardButton.setOnMouseClicked(event->{
+            guiBuilder.showCards();
+        });
 
     }
 
@@ -177,9 +182,7 @@ public class BattlefieldView extends Scene {
             protected Void call() {
 
                 try {
-                    System.out.println("Waiting");
                     GUIController.getController().waitWorkerViewUpdate();
-                    System.out.println("End waiting");
                 } catch (SantoriniException e) {
                     System.out.println(e.getMessage());
                 }
@@ -189,10 +192,8 @@ public class BattlefieldView extends Scene {
         };
 
         req.setOnSucceeded(e->{
-            System.out.println("Start Populating");
             populateWorkerViewMap();
             renderWorkerView();
-            System.out.println("End Populating");
         });
 
         executor.execute(req);
@@ -257,46 +258,86 @@ public class BattlefieldView extends Scene {
         startTurn = new Task<>() {
             @Override
             protected Void call() {
+                //default no basic turn
 
-                Platform.runLater(() -> actionLabel.setText("Wait your turn"));
+                Platform.runLater(() -> actionLabel.setText("Waiting your turn"));
 
                 do {
                     try {
                         GUIController.getController().waitActualPlayer();
+                        GUIController.getController().getPlayersRequest();
+                        GUIController.getController().getDeckRequest();
                     } catch (SantoriniException e) {
                         System.out.println("e.getMessage()");
                     }
                 } while (!GUIController.getController().getActualPlayer().equals(GUIController.getController().getPlayerNickname()));
 
                 resetBattlefieldMap();
-
-                try {
-                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), false);
-                } catch (SantoriniException e) {
-                    System.out.println(e.getMessage());
-                }
-                Platform.runLater(() -> actionLabel.setText("Select Worker"));
-
-                try {
-                    GUIController.getController().getBattlefieldRequest();
-                } catch (SantoriniException e) {
-                    System.out.println("e.getMessage()");
-                }
                 return null;
             }
         };
 
 
         startTurn.setOnSucceeded(s -> {
+            AtomicBoolean basicTurn = new AtomicBoolean(false);
+            boolean requestInteraction = GUIController.getController().getCardsDeck().getDivinityCard(GUIController.getController().getPlayerCardName()).isChooseBasic();
+
+            if(requestInteraction){
+                //Request to user
+                root.lookup("#godPowerBox").setVisible(true);
+                ((Button) root.lookup("#acceptButton")).setOnMouseClicked(event->{
+                    basicTurn.set(false);
+                    root.lookup("#godPowerBox").setVisible(false);
+
+                    try {
+                        GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), basicTurn.get());
+                    } catch (SantoriniException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                    enableClick();
+
+                });
+
+                ((Button) root.lookup("#refuseButton")).setOnMouseClicked(event->{
+                    basicTurn.set(true);
+                    root.lookup("#godPowerBox").setVisible(false);
+
+                    try {
+                        GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), basicTurn.get());
+                    } catch (SantoriniException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                    enableClick();
+
+                });
+
+            }else{
+                try {
+                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), false);
+                } catch (SantoriniException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                Platform.runLater(() -> actionLabel.setText("Select Worker"));
+            }
+
+
+
             for (int i = 0; i < BattlefieldClient.N_ROWS; i++) {
                 for (int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
                     for (Node node : battlefieldGrid.getChildren()) {
                         if (GridPane.getColumnIndex(node) == j && GridPane.getRowIndex(node) == i) {
                             if (node instanceof WorkerComponent) {
                                 if (BattlefieldClient.getBattlefieldInstance().getCell(i, j).getWorkerColor().equals(GUIController.getController().getPlayerColor())) {
-                                    // System.out.println(i+","+j+": "+BattlefieldClient.getBattlefieldInstance().getCell(i,j).getWorkerColor());
                                     int finalI = i;
                                     int finalJ = j;
+                                    //if request interaction, disable click on workers
+                                   if(requestInteraction)
+                                       node.setDisable(true);
                                     node.setOnMouseClicked(event -> {
                                         try {
 
@@ -323,40 +364,49 @@ public class BattlefieldView extends Scene {
         executor.submit(startTurn);
     }
 
+    private void enableClick(){
+        for (int i = 0; i < BattlefieldClient.N_ROWS; i++) {
+            for (int j = 0; j < BattlefieldClient.N_COLUMNS; j++) {
+                for (Node node : battlefieldGrid.getChildren()) {
+                    if (GridPane.getColumnIndex(node) == j && GridPane.getRowIndex(node) == i) {
+                        if (node instanceof WorkerComponent) {
+                            if (BattlefieldClient.getBattlefieldInstance().getCell(i, j).getWorkerColor().equals(GUIController.getController().getPlayerColor())) {
+                                node.setDisable(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void handleWorkerViewselection(int i, int j){
         try {
             GUIController.getController().playStepRequest(i, j);
             if(GUIController.getController().getCurrentStep() == Step.MOVE){
-                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_SPECIAL){
-                root.lookup("#skipButton").setDisable(false);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_UNTIL){
-                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD_SPECIAL){
-                root.lookup("#skipButton").setDisable(false);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
-                root.lookup("#skipButton").setDisable(true);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.REMOVE){
-                root.lookup("#skipButton").setDisable(false);
                 //code for remove
             }
             if(GUIController.getController().getCurrentStep() == Step.END) {
-                root.lookup("#skipButton").setDisable(true);
                 removeWorkerAvailableCell();
                 reloadBattlefield();
                 restartTurn();
@@ -458,8 +508,8 @@ public class BattlefieldView extends Scene {
 
         if(GUIController.getController().getCurrentStep() == Step.BUILD){
             //callRenderWorkerView();
-             removeWorkerAvailableCell();
-             //populateWorkerViewMap();
+            removeWorkerAvailableCell();
+            //populateWorkerViewMap();
         }
 
 
@@ -505,8 +555,8 @@ public class BattlefieldView extends Scene {
         }
 
         /*
-        * Redraw all the battlefield
-        * */
+         * Redraw all the battlefield
+         * */
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++){
                 /**
@@ -619,9 +669,8 @@ public class BattlefieldView extends Scene {
             }
         }
 
-
-
-
+        //Set number of tower
+        Platform.runLater(() -> numberOfTower.setText(BattlefieldClient.getBattlefieldInstance().countFullTowers()+""));
     }
 
 }

@@ -6,12 +6,16 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +29,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.io.File;
+import java.util.stream.Collectors;
 
 public class GUIBuilder extends Application {
 
@@ -153,7 +158,68 @@ public class GUIBuilder extends Application {
 
     }
 
+
     public GUIController GUIController(){
         return controller;
+    }
+
+    public void showCards() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/CardsContainer.fxml"));
+            Scene actual = mainStage.getScene();
+            actual.lookup("#blurResult").setVisible(true);
+            ((BorderPane) actual.lookup("#paneResult")).setCenter(root);
+            ((BorderPane) actual.lookup("#paneResult")).setVisible(true);
+            ListView<String> listView = ((ListView<String>) root.lookup("#cardsList"));
+            listView.setCellFactory(param -> new BuildCell());
+            listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getPlayers().stream().map(plauer->plauer.getCard()).collect(Collectors.toList()))));
+            //Hide
+            ((Button) actual.lookup("#closeButton")).setOnMouseClicked(event->{
+                actual.lookup("#blurResult").setVisible(false);
+                ((BorderPane) actual.lookup("#paneResult")).setCenter(null);
+                ((BorderPane) actual.lookup("#paneResult")).setVisible(false);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private class BuildCell extends ListCell<String> {
+        private ImageView imageView = new ImageView();
+        private Parent root;
+
+        protected void update(String item){
+            super.updateItem(item, false);
+            try {
+                root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
+                ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setGraphic(root);
+        }
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                imageView.setImage(null);
+
+                setGraphic(null);
+                setText(null);
+            } else {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
+                    ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                setGraphic(root);
+
+            }
+        }
+
     }
 }
