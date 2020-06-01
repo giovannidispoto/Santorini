@@ -29,13 +29,12 @@ public class CommandDeserializer implements JsonDeserializer<Command> {
         //Pick correct Deserialization  & Return Specific Command
         if(null == deserializerHashMap.getMapCommand(action))
         {
+            //If the message is not recognized by the client but consists of "action:", the error is written on the logger
             c = new NotExistCommand(action);
-            //TODO: only for debug??
         }else {
             c = deserializerHashMap.getMapCommand(action).command(jsonElement);
         }
-
-        //TODO: Remove NotExistCommand after debug & move return at commandMap line (now 35)
+        
         return c;
     }
 }

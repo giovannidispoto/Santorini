@@ -215,7 +215,6 @@ public class  DeserializerHashMap  {
         });
     }
 
-    //TODO: check
     //16
     private void loadServerError(){
         this.commandMap.put("serverError", new ProcessingCommand() {
