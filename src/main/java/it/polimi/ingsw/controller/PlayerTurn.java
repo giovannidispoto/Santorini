@@ -88,11 +88,13 @@ public class PlayerTurn {
      * NULL CHECK (skip)
      */
     private void updateRemoveMatrix(){
+        Worker previousWorker = match.getSelectedWorker();
         //Change Selected Worker
         match.setSelectedWorker(currentTurn.changeWorkerPlayer(match.getSelectedWorker()));
         match.getSelectedWorker().setWorkerView(currentTurn.generateRemoveMatrix(match.getSelectedWorker()));
 
-        if(match.getSelectedWorker().isInvalidWorkerView()) {
+        //If the worker cannot remove, or, the player's worker is always the same, skip
+        if(match.getSelectedWorker().isInvalidWorkerView() || previousWorker == match.getSelectedWorker()) {
             this.skip();
         }
         else {

@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.Worker;
  * NoLevelUpCondition Class describes a global effect
  */
 public class NoLevelUpCondition extends GlobalEffect {
-
+    private static final String associatedEffect = "NoMoveUp";
     private boolean changeLevel;
 
     /**
@@ -47,10 +47,23 @@ public class NoLevelUpCondition extends GlobalEffect {
     @Override
     public Cell[][] applyEffect(Worker w) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        if(changeLevel) {
-            //deny only level up
-            //TODO: Modify condition
-            return battlefield.getWorkerView(w, (cell) -> battlefield.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight() >= cell.getTower().getHeight());
+        //If the effect is active, we check that the effect is not called on the card associated with the effect
+        if(changeLevel && !w.getOwnerWorker().getPlayerCard().getCardEffect().equalsIgnoreCase(associatedEffect)) {
+            Cell [][] workerView = w.getWorkerView();
+            int currentWorkerHeight = battlefield.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight();
+            //Deny only level up
+            for(int row=0; row < Battlefield.N_ROWS; row++){
+                for(int col=0; col < Battlefield.N_COLUMNS; col++){
+                    /*Scroll the already created workerView, we will only modify it, checking only the non-null cells,
+                      if the height of the tower is greater than the current where the worker is, it will be made null (the worker cannot go up)
+                      if the height is equal or lower we do not change anything, it is assumed that it has already been correctly generated
+                     */
+                    if(null != workerView[row][col] && workerView[row][col].getTower().getHeight() > currentWorkerHeight){
+                        workerView[row][col] = null;
+                    }
+                }
+            }
+            return workerView;
         }
         //in case applyEffect is called even if changeLevel==false
         else{

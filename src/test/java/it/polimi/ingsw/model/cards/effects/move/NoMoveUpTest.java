@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ class NoMoveUpTest {
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
         p1.setPlayerCard(d.getDivinityCard("ATHENA"));
-        p2.setPlayerCard(d.getDivinityCard("ATHENA"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
 
         players.add(p1);
         players.add(p2);
@@ -92,7 +91,7 @@ class NoMoveUpTest {
         List<Player> players = new ArrayList<>();
         Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
         p1.setPlayerCard(d.getDivinityCard("ATHENA"));
-        p2.setPlayerCard(d.getDivinityCard("ATHENA"));
+        p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
         players.add(p2);
         List<Worker> workers = new ArrayList<>();

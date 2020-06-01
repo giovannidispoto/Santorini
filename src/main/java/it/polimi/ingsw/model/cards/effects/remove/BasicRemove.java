@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards.effects.remove;
 
-import it.polimi.ingsw.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import it.polimi.ingsw.model.Battlefield;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.Turn;
+import it.polimi.ingsw.model.Worker;
 
 public abstract class BasicRemove extends Turn {
     /**
