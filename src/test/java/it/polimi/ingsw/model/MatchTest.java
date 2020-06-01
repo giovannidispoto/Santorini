@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,7 @@ class MatchTest {
         w1.setWorkerPosition(0,0);
         w2.setWorkerPosition(0,4);
 
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Play Pippo
@@ -97,7 +96,7 @@ class MatchTest {
         w1.setWorkerPosition(0,0);
         w2.setWorkerPosition(0,4);
 
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         m.setSelectedWorker(w1);
 
@@ -145,7 +144,7 @@ class MatchTest {
         p2.setPlayerCard(d.getDivinityCard("APOLLO"));
 
         List<Player> players = new ArrayList<>();
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         List<Worker> workers = new ArrayList<>();
         workers.add(w1);
         workers.add(w3);

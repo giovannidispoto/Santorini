@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ class ExtraBlockAboveTestTrue {
         Battlefield.getBattlefieldInstance().getCell(0,0).getTower().addBlock(Block.LEVEL_1);
         Battlefield.getBattlefieldInstance().getCell(0,0).getTower().addBlock(Block.LEVEL_2);
         Battlefield.getBattlefieldInstance().getCell(0,0).getTower().addBlock(Block.LEVEL_3);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - PlayerHEPHAESTUS
@@ -100,7 +99,7 @@ class ExtraBlockAboveTestTrue {
         workers.add(w1);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - PlayerHEPHAESTUS

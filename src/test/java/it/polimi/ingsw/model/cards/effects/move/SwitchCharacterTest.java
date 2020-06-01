@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,7 @@ class SwitchCharacterTest {
         w1.setWorkerPosition(1,1);
         w2.setWorkerPosition(1,0);
         w3.setWorkerPosition(1,2);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
@@ -79,7 +78,7 @@ class SwitchCharacterTest {
         w1.setWorkerPosition(1,1);
         w2.setWorkerPosition(1,0);
         w3.setWorkerPosition(1,2);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
@@ -118,7 +117,7 @@ class SwitchCharacterTest {
         w1.setWorkerPosition(1,1);
         w2.setWorkerPosition(1,0);
         w3.setWorkerPosition(1,2);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Ferruccio Resta
@@ -169,7 +168,7 @@ class SwitchCharacterTest {
         Battlefield.getBattlefieldInstance().getCell(0,2).getTower().addBlock(Block.LEVEL_3);
         //Dome
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦══╦══════╦══════╦════╗

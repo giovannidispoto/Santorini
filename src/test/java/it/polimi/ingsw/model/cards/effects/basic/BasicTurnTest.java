@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +36,7 @@ class BasicTurnTest {
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
         w2.setWorkerPosition(0,0);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Bill Gates
@@ -74,7 +73,7 @@ class BasicTurnTest {
         workers.add(w1);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Bill Gates
@@ -105,7 +104,7 @@ class BasicTurnTest {
         workers.add(w1);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Bill Gates

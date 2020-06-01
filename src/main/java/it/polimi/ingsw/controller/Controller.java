@@ -272,7 +272,7 @@ public class Controller {
      * @param callingPlayer player who call the method, used for choosing if the message should be inserted in the stack or sent
      */
     public void startMatch(String callingPlayer){
-        match = new Match(players,cards);
+        match = new Match(players);
         match.setCurrentPlayer(getPlayerFromString(firstPlayer));
         for(Player p : players) {
             if (p.getPlayerNickname().equals(callingPlayer)) {
@@ -364,36 +364,42 @@ public class Controller {
      * @param y col
      */
     public Step playStep(int x, int y){
+        boolean winner=false;
+
         switch(turn.getCurrentState()){
             case MOVE:
             case MOVE_SPECIAL:
             case MOVE_UNTIL:
-               boolean winner = turn.move(match.getSelectedWorker(),x,y);
-                if(winner){
-                    delcareWinner(match.getWinner());
-                    System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
-                }
+                winner = turn.move(match.getSelectedWorker(),x,y);
                 break;
             case BUILD:
             case BUILD_SPECIAL:
-                turn.build(match.getSelectedWorker(),x,y);
+                winner = turn.build(match.getSelectedWorker(),x,y);
                 break;
             case REMOVE:
-                turn.remove(match.getSelectedWorker(),x,y);
+                winner = turn.remove(match.getSelectedWorker(),x,y);
                 break;
         }
-        if(turn.getCurrentState() == Step.END) {
+
+        if(!winner && turn.getCurrentState() == Step.END) {
             turn.passTurn();
             handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+        }
+        else if(winner){
+            declareWinner(match.getWinner());
+            System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
+            //TODO: END GAME
+            //For security, lock the current player
+            return Step.END;
         }
 
         return turn.getCurrentState();
     }
 
-    private void delcareWinner(Player winner) {
+    private void declareWinner(Player winner) {
         for(Player p : match.getMatchPlayers()){
             if(p.getPlayerNickname().equals(winner.getPlayerNickname()))
-                handlers.get(p.getPlayerNickname()).responseQueue(new Gson().toJson(new BasicMessageResponse("youWin", null)));
+                handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youWin", null)));
             else
                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
         }

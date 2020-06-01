@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ class PushCharacterTest {
         Battlefield.getBattlefieldInstance().getCell(4,0).getTower().addBlock(Block.LEVEL_3);
         Battlefield.getBattlefieldInstance().getCell(4,1).getTower().addBlock(Block.LEVEL_1);
         Battlefield.getBattlefieldInstance().getCell(4,1).getTower().addBlock(Block.LEVEL_2);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -87,7 +86,7 @@ class PushCharacterTest {
         Battlefield.getBattlefieldInstance().getCell(1,3).getTower().addBlock(Block.LEVEL_3);
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.LEVEL_1);
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.LEVEL_2);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -132,7 +131,7 @@ class PushCharacterTest {
         w2.setWorkerPosition(0, 0);
         //enemy
         w3.setWorkerPosition(0, 1);
-        Match m = new Match(players, new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -174,7 +173,7 @@ class PushCharacterTest {
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(4, 3);
         w3.setWorkerPosition(4, 4);
-        Match m = new Match(players, new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -215,7 +214,7 @@ class PushCharacterTest {
         w3.setWorkerPosition(2, 1);
         //Add blocks
         Battlefield.getBattlefieldInstance().getCell(2,0).getTower().addBlock(Block.DOME);
-        Match m = new Match(players, new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -270,7 +269,7 @@ class PushCharacterTest {
         Battlefield.getBattlefieldInstance().getCell(0,2).getTower().addBlock(Block.LEVEL_3);
         //Dome
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦══╦══════╦══════╦════╗
@@ -465,7 +464,7 @@ class PushCharacterTest {
         Battlefield.getBattlefieldInstance().getCell(0,2).getTower().addBlock(Block.LEVEL_3);
         //Dome
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦══╦══════╦══════╦══════╗

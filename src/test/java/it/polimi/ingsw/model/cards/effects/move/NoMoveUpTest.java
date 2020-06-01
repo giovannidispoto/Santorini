@@ -41,7 +41,7 @@ class NoMoveUpTest {
         //Add blocks
         Battlefield.getBattlefieldInstance().getCell(0,4).getTower().addBlock(Block.LEVEL_1);
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.LEVEL_1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1
@@ -107,7 +107,7 @@ class NoMoveUpTest {
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.LEVEL_1);
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.LEVEL_2);
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.LEVEL_3);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - Player1

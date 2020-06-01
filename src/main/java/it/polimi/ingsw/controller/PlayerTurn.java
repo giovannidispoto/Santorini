@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 import it.polimi.ingsw.server.Step;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class PlayerTurn {
 
         //Check if first step is a move or a build, then update the correct matrix
         if(steps.get(0) == Step.MOVE || steps.get(0) == Step.MOVE_SPECIAL )
-             updateMovementMatrix(steps.get(0));
+            updateMovementMatrix(steps.get(0));
         else if(steps.get(0) == Step.BUILD || steps.get(0) == Step.BUILD_SPECIAL)
             updateBuildingMatrix(steps.get(0));
     }
@@ -40,7 +39,7 @@ public class PlayerTurn {
      */
     public void sendMovementMatrix(){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
-        match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
+        match.checkMatchGlobalEffects(match.getSelectedWorker());
         match.getSelectedWorker().notifyUpdate();
     }
 
@@ -48,27 +47,29 @@ public class PlayerTurn {
      * Update movement matrix,
      * LOSE CHECK + NULL CHECK (skip)
      */
-    public void updateMovementMatrix(Step currentStep){
+    public boolean updateMovementMatrix(Step currentStep){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
-        match.getSelectedWorker().setWorkerView(NoLevelUpCondition.getInstance().applyEffect(match.getSelectedWorker()));
+        match.checkMatchGlobalEffects(match.getSelectedWorker());
 
         if(match.getSelectedWorker().isInvalidWorkerView()) {
             if(currentStep == Step.MOVE_SPECIAL){
                 this.skip();
             }else {
                 //TODO: Player LOSE
+                return false;
             }
         }
         else {
             match.getSelectedWorker().notifyUpdate();
         }
+        return true;
     }
 
     /**
      * Update building matrix,
      * LOSE CHECK + NULL CHECK (skip)
      */
-    public void updateBuildingMatrix(Step currentStep){
+    public boolean updateBuildingMatrix(Step currentStep){
         match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
 
         if(match.getSelectedWorker().isInvalidWorkerView()) {
@@ -76,11 +77,13 @@ public class PlayerTurn {
                 this.skip();
             }else {
                 //TODO: Player LOSE
+                return false;
             }
         }
         else {
             match.getSelectedWorker().notifyUpdate();
         }
+        return true;
     }
 
     /**
@@ -187,11 +190,16 @@ public class PlayerTurn {
      * @param x row
      * @param y col
      */
-    public void build(Worker w, int x, int y){
+    public boolean build(Worker w, int x, int y){
         //build
         currentTurn.buildBlock(w,x,y);
         //generate remove matrix if is necessary
         steps.remove(0);
+
+        //Check GlobalConditions && Winner
+        match.checkMatchGlobalConditions();
+        if(match.getWinner() != null)
+            return true;
 
         //build special
         if(steps.get(0) == Step.BUILD_SPECIAL)
@@ -204,6 +212,8 @@ public class PlayerTurn {
         //for turn that have remove after build
         if(steps.get(0) == Step.REMOVE)
             updateRemoveMatrix();
+
+        return false;
     }
 
     /**
@@ -212,10 +222,12 @@ public class PlayerTurn {
      * @param x row
      * @param y col
      */
-    public void remove(Worker w,int x, int y){
+    public boolean remove(Worker w,int x, int y){
         //remove
         currentTurn.removeBlock(w,x,y);
         steps.remove(0);
+        //return true if there is a winner
+        return match.getWinner() != null;
     }
 
     /**

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.effects.global.TowersCondition;
 import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.ServerMain;
-import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.cards.effects.basic.BasicTurn;
 import it.polimi.ingsw.model.cards.effects.global.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
@@ -17,24 +17,40 @@ import java.util.*;
  * Match class represents a match performed by a small group of players (2 or 3)
  */
 public class Match {
-    private Battlefield matchBoard;
     /* Circle List */
-    private List<Player> matchPlayers;
+    private final List<Player> matchPlayers;
     private List<Turn> matchTurn;
     private Worker selectedWorker;
-    private List<GlobalWinCondition> matchGlobalConditions;
-    private List<GlobalEffect> matchGlobalEffects;
-    private Map<Player,Turn> playerTurn;
+    private final List<GlobalWinCondition> matchGlobalConditions;
+    private final List<GlobalEffect> matchGlobalEffects;
+    private final Map<Player,Turn> playerTurn;
     private Player currentPlayer;
     public Player winner; //debug for testing
 
     /**
      * Class Constructor
      * @param matchPlayers are the players who take part in the game
-     * @param matchCards are the cards picked for this game match
      */
-    public Match(List<Player> matchPlayers, List<DivinityCard> matchCards){
-        this.matchBoard = Battlefield.getBattlefieldInstance();
+    public Match(List<Player> matchPlayers){
+        //Set GlobalConditions
+        this.matchGlobalConditions = new ArrayList<>();
+        matchPlayers.forEach((player) -> {
+            if(player.getPlayerCard().getCardName().equalsIgnoreCase("CHRONUS")){
+                this.matchGlobalConditions.add(new TowersCondition(player, this,5));
+            }
+        });
+        //Set GlobalEffects
+        this.matchGlobalEffects = new ArrayList<>();
+        matchPlayers.forEach((player) -> {
+            if(player.getPlayerCard().getCardName().equalsIgnoreCase("ATHENA")){
+                NoLevelUpCondition.getInstance().restoreEffect();
+                NoLevelUpCondition.getInstance().setAssociatedPlayer(player);
+                this.matchGlobalEffects.add(NoLevelUpCondition.getInstance());
+            }
+        });
+
+        //Set Match
+        Battlefield.getBattlefieldInstance();
         this.matchPlayers = new ArrayList<> (matchPlayers);
         this.playerTurn = new HashMap<>();
         DivinityEffectReader reader = new DivinityEffectReader();
@@ -48,12 +64,29 @@ public class Match {
         }catch(Exception e){
            e.printStackTrace();
         }
-        NoLevelUpCondition.getInstance().restoreEffect();
+    }
+
+    /**
+     * Check the Global conditions
+     */
+    public void checkMatchGlobalConditions() {
+        if(matchGlobalConditions.size() != 0)
+            matchGlobalConditions.forEach(GlobalWinCondition::checkWinCondition);
+    }
+
+    /**
+     * Check and apply the global effects on the player passed by parameter,
+     * remember the effects are applied on the workerView
+     * @param selectedWorker The worker to apply the effects to
+     */
+    public void checkMatchGlobalEffects(Worker selectedWorker) {
+        if(matchGlobalEffects.size() != 0)
+            matchGlobalEffects.forEach(globalEffect -> selectedWorker.setWorkerView(globalEffect.applyEffect(selectedWorker)));
     }
 
     /**
      * Gets winner
-     * @return
+     * @return Player object = Winner
      */
     public Player getWinner() {
         return winner;

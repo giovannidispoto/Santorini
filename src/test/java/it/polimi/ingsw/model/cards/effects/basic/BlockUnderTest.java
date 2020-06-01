@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ class BlockUnderTest {
         workers.add(w1);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - PlayerZEUS
@@ -65,7 +64,7 @@ class BlockUnderTest {
         workers.add(w1);
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,1);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
 
         //Simulation : CURRENT PLAYER - PlayerZEUS
@@ -116,7 +115,7 @@ class BlockUnderTest {
         Battlefield.getBattlefieldInstance().getCell(0,2).getTower().addBlock(Block.LEVEL_3);
         //Dome
         Battlefield.getBattlefieldInstance().getCell(2,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦══╦══════╦══════╦════╗

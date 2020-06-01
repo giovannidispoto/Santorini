@@ -2,14 +2,23 @@ package it.polimi.ingsw.model.cards.effects.global;
 
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 /**
  * NoLevelUpCondition Class describes a global effect
  */
 public class NoLevelUpCondition extends GlobalEffect {
-    private static final String associatedEffect = "NoMoveUp";
+    private Player associatedPlayer;
     private boolean changeLevel;
+
+    /**
+     * Allows you to link the effect with the player who owns the card
+     * @param associatedPlayer  player who owns the card
+     */
+    public void setAssociatedPlayer(Player associatedPlayer) {
+        this.associatedPlayer = associatedPlayer;
+    }
 
     /**
      * Class constructor
@@ -22,6 +31,7 @@ public class NoLevelUpCondition extends GlobalEffect {
 
     /**
      * Factory method that returns the NoLevelUpCondition instance (Singleton per Thread)
+     * , !!! Remember to set the player that has this effect with: setAssociatedPlayer !!!
      * @return NoLevelUpCondition object
      */
     public static NoLevelUpCondition getInstance(){
@@ -48,7 +58,7 @@ public class NoLevelUpCondition extends GlobalEffect {
     public Cell[][] applyEffect(Worker w) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         //If the effect is active, we check that the effect is not called on the card associated with the effect
-        if(changeLevel && !w.getOwnerWorker().getPlayerCard().getCardEffect().equalsIgnoreCase(associatedEffect)) {
+        if(changeLevel && !(w.getOwnerWorker() == associatedPlayer)) {
             Cell [][] workerView = w.getWorkerView();
             int currentWorkerHeight = battlefield.getCell(w.getRowWorker(), w.getColWorker()).getTower().getHeight();
             //Deny only level up

@@ -2,18 +2,15 @@ package it.polimi.ingsw.model.cards.effects.global;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
-import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
-import it.polimi.ingsw.model.cards.effects.global.TowersCondition;
 import it.polimi.ingsw.model.parser.DeckReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TowersConditionTest {
     final Player p1 = new Player("Player1",  Color.BLUE);
@@ -38,7 +35,7 @@ class TowersConditionTest {
         battlefield.setWorkersInGame(workers);
         w1.setWorkerPosition(1,3);
         w3.setWorkerPosition(3,3);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         //Add blocks
         //fullTower1

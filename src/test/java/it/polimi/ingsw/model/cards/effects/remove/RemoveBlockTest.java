@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ class RemoveBlockTest {
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.LEVEL_3);
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.DOME);
         Battlefield.getBattlefieldInstance().getCell(4,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦════╦═══╦══════╦═══╗
@@ -204,7 +203,7 @@ class RemoveBlockTest {
         Battlefield.getBattlefieldInstance().getCell(4,4).getTower().addBlock(Block.DOME);
         //Dome in 4,2
         Battlefield.getBattlefieldInstance().getCell(4,2).getTower().addBlock(Block.DOME);
-        Match m = new Match(players,new ArrayList<>());
+        Match m = new Match(players);
         m.setCurrentPlayer(p1);
         /* Battlefield
         ╔══╦════╦═══╦══════╦═══╗
