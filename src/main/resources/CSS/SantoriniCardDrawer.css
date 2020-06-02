@@ -9,7 +9,8 @@
     -fx-faint-focus-color: transparent;
     -fx-background-insets: 0, 0 0 0 0, 0;
     -fx-inner-border: transparent;
-    -fx-pref-width: 704;
+    -fx-pref-width: 360;
+    -fx-pref-height: 322;
     -fx-background-color: transparent;
 }
 
@@ -85,9 +86,4 @@
     -fx-animated: false;
     -fx-pref-width: 176;
     -fx-background-color: transparent;
-}
-
-#cardList{
-    -fx-pref-width: 360;
-    -fx-pref-height: 322;
 }

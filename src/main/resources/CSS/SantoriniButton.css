@@ -46,3 +46,10 @@
     -fx-background-radius: 10;
 }
 
+#cardsButton{
+    -fx-background-radius: 10;
+}
+
+#closeButton{
+    -fx-background-radius: 10;
+}

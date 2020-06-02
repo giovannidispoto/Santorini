@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="444.0" fitWidth="754.0" layoutX="14.0" layoutY="294.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@Images/Cards/PickerBackground.png" />
+            <Image url="@CSS/PickerBackground.png" />
          </image>
       </ImageView>
       <Button id="selectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="388.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Confirm Choice" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="290.0">

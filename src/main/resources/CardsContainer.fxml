@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="372.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane prefHeight="530.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="372.0" fitWidth="395.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@Images/Cards/PickerBackground.png" />
-         </image>
-      </ImageView>
-      <ListView id="cardsList" layoutX="35.0" layoutY="30.0" prefHeight="322.0" prefWidth="345.0" stylesheets="@CSS/SantoriniListView.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-      <Button id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="316.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Close" textFill="WHITE">
+      <ListView id="cardsList" blendMode="SRC_ATOP" fixedCellSize="0.0" layoutX="19.0" layoutY="14.0" orientation="HORIZONTAL" prefHeight="322.0" prefWidth="360.0" stylesheets="@CSS/SantoriniCardDrawer.css" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <Button id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="467.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="136.0">
          <font>
             <Font name="Mistral" size="22.0" />
          </font>
       </Button>
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </AnchorPane>
