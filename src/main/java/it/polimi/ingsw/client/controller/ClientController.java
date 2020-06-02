@@ -18,6 +18,7 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.matchPha
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -512,7 +513,7 @@ public class ClientController {
     }
 
     public void setPlayerNickname(String playerNickname) {
-        this.playerNickname = playerNickname;
+        this.playerNickname = playerNickname.toLowerCase(Locale.ROOT);
     }
 
     public void setPlayers(List<PlayerInterface> players){

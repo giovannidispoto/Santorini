@@ -92,6 +92,7 @@ public class PlayerTurn {
                 this.skip();
             }else {
                 //TODO: Player LOSE
+                match.removePlayer(match.getCurrentPlayer());
                 return false;
             }
         }
