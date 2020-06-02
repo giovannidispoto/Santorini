@@ -26,7 +26,7 @@ public class CantLevelUp extends BasicTurn {
     @Override
     public Cell[][] generateMovementMatrix(Worker selectedWorker) {
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
-        //Basic movement: Banned Cells = workers, higher than 1 than the worker, Dome
+        //Basic movement: Banned Cells = workers, higher than the worker (same level or down), Dome
         return battlefield.getWorkerView(selectedWorker, (cell)->!cell.isWorkerPresent()
                 && battlefield.getCell(selectedWorker.getRowWorker(), selectedWorker.getColWorker()).getTower().getHeight() >= cell.getTower().getHeight()
                 && !(cell.getTower().getLastBlock() == Block.DOME));

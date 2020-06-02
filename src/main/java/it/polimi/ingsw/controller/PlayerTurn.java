@@ -34,13 +34,28 @@ public class PlayerTurn {
     }
 
     /**
-     * Update movement matrix when a new currentWorker is selected,
+     * Update the first Step matrix when a new Worker is selected,
      * No (LOSE CHECK + NULL CHECK (skip))
      */
-    public void sendMovementMatrix(){
-        match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
-        match.checkMatchGlobalEffects(match.getSelectedWorker());
-        match.getSelectedWorker().notifyUpdate();
+    public void sendFirstStepMatrix(){
+        switch (getCurrentStep()){
+            case MOVE:
+            case MOVE_UNTIL:
+            case MOVE_SPECIAL:
+                match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
+                match.checkMatchGlobalEffects(match.getSelectedWorker());
+                match.getSelectedWorker().notifyUpdate();
+                break;
+            case BUILD:
+            case BUILD_SPECIAL:
+                match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
+                match.getSelectedWorker().notifyUpdate();
+                break;
+            case REMOVE:
+                match.getSelectedWorker().setWorkerView(currentTurn.generateRemoveMatrix(match.getSelectedWorker()));
+                match.getSelectedWorker().notifyUpdate();
+                break;
+        }
     }
 
     /**
@@ -242,7 +257,7 @@ public class PlayerTurn {
      * Gets current step of the turn
      * @return current step of the turn
      */
-    public Step getCurrentState(){
+    public Step getCurrentStep(){
         return this.steps.get(0);
     }
     

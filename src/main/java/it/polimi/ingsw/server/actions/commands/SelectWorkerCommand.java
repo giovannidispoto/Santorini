@@ -32,7 +32,6 @@ public class SelectWorkerCommand implements Command{
     @Override
     public void execute(Controller controller, ClientHandler handler) {
         controller.selectWorker(playerNickname,handler,x,y);
-       // handler.responseQueue(new Gson().toJson(new BasicMessageInterface("selectWorkerResponse", this)));
         handler.sendMessageQueue();
     }
 

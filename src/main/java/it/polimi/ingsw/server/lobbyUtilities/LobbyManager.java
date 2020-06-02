@@ -34,7 +34,7 @@ public class LobbyManager {
 
 
     /**
-     * Request function to add player to a lobby, check that the nickname is unique,
+     * Request function to add player to a lobby, check that the nickname is unique and at least length 1,
      * that the size of the chosen lobby is implemented on the server (this function does not differentiate the two errors,
      * if it returns false it can only be said that the player has not been added to the lobby),
      * the handler and nickname are linked and uniquely represent a player.
@@ -45,6 +45,11 @@ public class LobbyManager {
      * @return  true, if it has been added correctly, false if it has not been added for wrong lobbySize or for nickName already present
      */
     public boolean addPlayer(int lobbySize, String nickName, ClientHandler playerHandler){
+        //Input string treatment at least length == 1
+        if(nickName.length() >=1)
+            nickName = nickName.toLowerCase(Locale.ROOT);
+        else
+            return false;
         //Check if the nickname has already been registered
         if(null == playersNickNameMap.get(nickName) && isValidLobbySize(lobbySize)){
             this.playersNickNameMap.put(nickName, playerHandler);

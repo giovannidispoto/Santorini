@@ -326,7 +326,7 @@ public class Controller {
      * @param x row
      * @param y column
      */
-    public boolean[][] selectWorker(String player, ClientHandler handler,int x, int y){
+    public void selectWorker(String player, ClientHandler handler,int x, int y){
         if(!Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().getOwnerWorker().getPlayerNickname().equalsIgnoreCase(player))
             throw new RuntimeException("Not Your Worker");
 
@@ -339,18 +339,7 @@ public class Controller {
         for(Worker w : getPlayerFromString(player).getPlayerWorkers())
             w.attach(handler);
 
-        this.turn.sendMovementMatrix();
-
-        boolean[][] workerView = new boolean[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
-
-        for(int i = 0; i < Battlefield.N_ROWS_VIEW; i++){
-            for(int j = 0; j < Battlefield.N_COLUMNS_VIEW; j++){
-                workerView[i][j] = match.getSelectedWorker().getWorkerView()[i][j] != null;
-            }
-        }
-
-
-        return workerView;
+        this.turn.sendFirstStepMatrix();
     }
 
     /**
@@ -361,7 +350,7 @@ public class Controller {
     public Step playStep(int x, int y){
         boolean winner=false;
 
-        switch(turn.getCurrentState()){
+        switch(turn.getCurrentStep()){
             case MOVE:
             case MOVE_SPECIAL:
             case MOVE_UNTIL:
@@ -376,7 +365,7 @@ public class Controller {
                 break;
         }
 
-        if(!winner && turn.getCurrentState() == Step.END) {
+        if(!winner && turn.getCurrentStep() == Step.END) {
             turn.passTurn();
             handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
         }
@@ -386,7 +375,7 @@ public class Controller {
             //For security, lock the current player
         }
 
-        return turn.getCurrentState();
+        return turn.getCurrentStep();
     }
 
     private void declareWinner(Player winner) {
@@ -406,7 +395,7 @@ public class Controller {
      * @return step state
      */
     public Step getStepState(){
-        return turn.getCurrentState();
+        return turn.getCurrentStep();
     }
 
     /**
@@ -415,12 +404,12 @@ public class Controller {
     public Step skipStep(){
         turn.skip();
         //if no move left, end the turn
-        if(turn.getCurrentState() == Step.END) {
+        if(turn.getCurrentStep() == Step.END) {
             turn.passTurn();
             handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
         }
 
-        return turn.getCurrentState();
+        return turn.getCurrentStep();
     }
 
     /**
