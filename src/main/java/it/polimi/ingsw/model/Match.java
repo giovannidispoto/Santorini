@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.cards.effects.global.GlobalEffect;
 import it.polimi.ingsw.model.cards.effects.global.GlobalWinCondition;
 import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 import it.polimi.ingsw.model.parser.DivinityEffectReader;
+import it.polimi.ingsw.server.observers.ObserverPlayers;
+import it.polimi.ingsw.server.observers.SubjectPlayers;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,10 +18,11 @@ import java.util.*;
 /**
  * Match class represents a match performed by a small group of players (2 or 3)
  */
-public class Match {
+public class Match implements SubjectPlayers {
     /* Circle List */
     private final List<Player> matchPlayers;
     private List<Turn> matchTurn;
+    private List<ObserverPlayers> observerPlayers;
     private Worker selectedWorker;
     private final List<GlobalWinCondition> matchGlobalConditions;
     private final List<GlobalEffect> matchGlobalEffects;
@@ -32,6 +35,7 @@ public class Match {
      * @param matchPlayers are the players who take part in the game
      */
     public Match(List<Player> matchPlayers){
+        observerPlayers = new ArrayList<>();
         //Set GlobalConditions
         this.matchGlobalConditions = new ArrayList<>();
         matchPlayers.forEach((player) -> {
@@ -126,6 +130,8 @@ public class Match {
     public void removePlayer(Player chosenPlayer) {
         Battlefield.getBattlefieldInstance().removeWorkers(chosenPlayer);   //clean battlefield
         matchPlayers.remove(chosenPlayer);  //clean match
+
+        notify(chosenPlayer);
     }
 
     /**
@@ -170,4 +176,27 @@ public class Match {
         return this.currentPlayer;
     }
 
+    /*
+    * Observer Pattern on players
+    * */
+    @Override
+    public void attach(ObserverPlayers o) {
+        observerPlayers.add(o);
+    }
+
+    @Override
+    public void detach(ObserverPlayers o) {
+        observerPlayers.remove(o);
+    }
+
+    @Override
+    public void detachAll() {
+        observerPlayers.clear();
+    }
+
+    @Override
+    public void notify(Player removedPlayer) {
+        for(ObserverPlayers o : observerPlayers)
+            o.update(removedPlayer);
+    }
 }

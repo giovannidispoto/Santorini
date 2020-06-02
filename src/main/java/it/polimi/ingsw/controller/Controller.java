@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.*;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
+import it.polimi.ingsw.server.observers.ObserverPlayers;
 
 import java.io.*;
 import java.util.*;
@@ -23,7 +24,7 @@ import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
 /**
  * Controller Class
  */
-public class Controller {
+public class Controller implements ObserverPlayers {
     private Match match;
     private PlayerTurn turn;
     private final List<Player> players;
@@ -269,6 +270,9 @@ public class Controller {
     public void startMatch(String callingPlayer){
         match = new Match(players);
         match.setCurrentPlayer(getPlayerFromString(firstPlayer));
+        //adding observer
+        match.attach(this);
+
         for(Player p : players) {
             if (p.getPlayerNickname().equals(callingPlayer)) {
                 handlers.get(callingPlayer).responseQueue(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
@@ -515,5 +519,16 @@ public class Controller {
             }
         }
         return battlefieldInterface;
+    }
+
+    /*Notify client who lose */
+    @Override
+    public void update(Player removedPlayer) {
+        for(String nickname : handlers.keySet()){
+            if(removedPlayer.getPlayerNickname().equals(nickname))
+                 handlers.get(nickname).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+            else
+                handlers.get(nickname).response(new Gson().toJson(new BasicMessageResponse("removedPlayer", new ActualPlayerResponse(removedPlayer.getPlayerNickname()))));
+        }
     }
 }
