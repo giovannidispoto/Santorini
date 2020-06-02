@@ -28,6 +28,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     private final ClientThread clientThread;
     private final Stack<String> messageQueue;
     private Timer clientTimeoutTimer;
+    private Timer clockPingTimer;
     private boolean mustStopExecution;
 
     /**
@@ -48,18 +49,28 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * Execute ping to the client, expecting a feedback before timeout
      * If the timer expires the client is considered disconnected
      */
-    public void setTimer(){
+    public void setTimer(int milliSeconds){
+        if(milliSeconds <= 0)
+            milliSeconds = 5000;
+
         ClientHandler playerHandler = this;
         clientTimeoutTimer = new Timer();
-        response(new Gson().toJson(new BasicMessageResponse("ping", null)));
+        clockPingTimer = new Timer();
 
-        clientTimeoutTimer.schedule(new TimerTask() {
+        clockPingTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                    System.out.println(ansiRED + "Timeout_" + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution() + ansiRESET);
-                    playerDisconnected();
+                response(new Gson().toJson(new BasicMessageResponse("ping", null)));
+
+                clientTimeoutTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
+                        playerDisconnected();
+                    }
+                }, 10000);
             }
-        }, 6000);
+        }, milliSeconds);
     }
 
     /**
@@ -67,6 +78,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     public void resetTimeout(){
         clientTimeoutTimer.cancel();
+        clockPingTimer.cancel();
     }
 
     /**
@@ -108,7 +120,6 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     public void playerIsEliminated(){
         setMustStopExecution();
-        resetTimeout();
         System.out.println(ansiBLUE+"Player: "+lobbyManager.getPlayerNickName(this)+" Eliminated from the game: "+lobbyID+ansiRESET);
     }
 
@@ -126,8 +137,8 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     private void stopClient(){
         setMustStopExecution();
-        resetTimeout();
         clientThread.socketShutdown();
+        resetTimeout();
     }
 
     /**
@@ -138,7 +149,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         if(!isMustStopExecution()) {
             synchronized (lobbyManager) {
                 try {
-                    if ((m.contains("addPlayer") && !isLobbyStarted()) || m.contains("pong")) {
+                    if ((m.contains("addPlayer") && !isLobbyStarted()) || m.contains("{\"action\":\"pong\"}")) {
                         CommandFactory.from(m).execute(null, this);
 
                     } else if (isLobbyStarted()) {

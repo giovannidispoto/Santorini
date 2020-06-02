@@ -9,7 +9,7 @@ public class PongCommand implements Command {
     public void execute(Controller controller, ClientHandler handler) {
         if(!handler.isMustStopExecution()) {
             handler.resetTimeout();
-            handler.setTimer();
+            handler.setTimer(0);
         }
     }
 }

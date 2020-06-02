@@ -61,7 +61,7 @@ public class ServerHandler{
                 clientController.loggerIO.severe("NO-PING-ERROR\n");
             }
 
-        },5000);
+        },10000);
     }
 
     public void resetServerTimeout(){

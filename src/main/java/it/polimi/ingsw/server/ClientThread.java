@@ -42,15 +42,20 @@ public class ClientThread implements Runnable {
             this.in = new Scanner(socket.getInputStream());
             this.out = new PrintWriter(socket.getOutputStream());
             //Start Ping to Client after setting in & out
-            clientHandler.setTimer();
+            clientHandler.setTimer(10);
             //read from and write to the connection until shutdown (from server)
             while (isNotSocketShutdown()) {
                 String line = in.nextLine();
                 if (isNotSocketShutdown()) {
-                    clientHandler.process(line);
+                    if(line.contains("{\"action\":\"pong\"}")){
+                        clientHandler.resetTimeout();
+                        clientHandler.setTimer(0);
+                    }else {
+                        clientHandler.process(line);
+                        if(printDebugInfo)
+                            System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
+                    }
 
-                    if(printDebugInfo && !line.contains("pong"))
-                         System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
                 }
             }
         }catch (IOException | NoSuchElementException e){
@@ -73,8 +78,6 @@ public class ClientThread implements Runnable {
      * Close the socket input and output and close socket
      */
     private void closeSocket(){
-        in.close();
-        out.close();
         if(!socket.isClosed()){
             try {
                 socket.close();
@@ -82,6 +85,8 @@ public class ClientThread implements Runnable {
                 e.printStackTrace();
             }
         }
+        in.close();
+        out.close();
         System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
     }
 

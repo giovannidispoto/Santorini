@@ -50,6 +50,7 @@ public class LobbyManager {
             this.playersNickNameMap.put(nickName, playerHandler);
             this.playersHandlerMap.put(playerHandler, nickName);
             this.putPlayerInLobby(lobbySize, nickName, playerHandler);
+            System.out.println(ansiGREEN + "Player_Registered: " + nickName + ansiRESET);
             return true;
         }
         else {
@@ -134,6 +135,7 @@ public class LobbyManager {
      */
     public void gameEnded(UUID lobbyID){
         this.lobbyLiveMap.get(lobbyID).getPlayersHandlerInLobby().forEach((nick, handler) -> handler.gameEnded());
+        System.out.println(ansiGREEN + "Game-Finished_Lobby_ID: " + lobbyID + ansiRESET);
         this.deleteLobby(lobbyID);
     }
 
