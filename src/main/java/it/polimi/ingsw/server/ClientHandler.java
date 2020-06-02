@@ -81,9 +81,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
                 if (isLobbyStarted()) {
                     //end game for all in the lobby
-                    lobbyManager.getControllerByLobbyID(lobbyID).clientDisconnected();
-                    lobbyManager.deleteLobby(lobbyID);
-                    System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
+                    lobbyManager.clientDisconnected(lobbyID);
 
                 } else {
                     //remove from lobby
@@ -115,6 +113,15 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     }
 
     /**
+     * Notifies the handler that the game has ended successfully,
+     * blocks any incoming and outgoing requests for the handler (including ping) & shutdown it's Net-Thread (the client will have to reconnect)
+     */
+    public void gameEnded(){
+        stopClient();
+        System.out.println(ansiRED+"GameEnd_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
+    }
+
+    /**
      * Stop the ping, the handler and the thread that manages the client
      */
     private void stopClient(){
@@ -136,7 +143,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
                     } else if (isLobbyStarted()) {
 
-                        this.lobbyManager.getLobbyThreadByLobbyID(this.lobbyID).getLobbyExecutorService().execute(
+                        this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute(
                                 () -> CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this));
                     }
 
@@ -152,7 +159,8 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * @param m message
      */
     public void response(String m){
-        this.clientThread.send(m);
+        if(!isMustStopExecution())
+            this.clientThread.send(m);
     }
 
     /**
@@ -171,7 +179,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     @Override
     public void update(CellInterface[][] cellInterfaces) {
-        response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
+        this.response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
 
         if(printDebugInfo)  System.out.println("Battlefield Updated!");
     }
@@ -182,7 +190,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     @Override
     public void update(boolean[][] workerView) {
-        response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
+        this.response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
 
         if(printDebugInfo)  System.out.println("WorkerView Updated!");
     }
