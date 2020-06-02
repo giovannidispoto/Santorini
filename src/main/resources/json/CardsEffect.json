@@ -24,7 +24,7 @@
 		"Effect":{"effectName":"JumpEffect", "minJumpHeight":2, "turnStructure": ["MOVE", "BUILD", "END"]}
 	},
 	{ 	"cardName":"PROMETHEUS",
-		"Effect":{"effectName":"CantLevelUp", "buildBeforeMove":true, "buildAfterMove":true, "turnStructure": ["BUILD_SPECIAL","MOVE", "BUILD", "END"]}
+		"Effect":{"effectName":"CantLevelUp", "buildBeforeMove":true, "buildAfterMove":true, "turnStructure": ["BUILD","MOVE", "BUILD", "END"]}
 	},
 	{	"cardName" : "ZEUS",
 		"Effect": {"effectName": "BlockUnder", "turnStructure": ["MOVE", "BUILD", "END"]}

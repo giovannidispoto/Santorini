@@ -52,8 +52,7 @@ public class ClientThread implements Runnable {
                         clientHandler.setTimer(0);
                     }else {
                         clientHandler.process(line);
-                        if(printDebugInfo)
-                            System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
+                        if(printDebugInfo) System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
                     }
 
                 }

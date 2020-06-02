@@ -46,17 +46,18 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     }
 
     /**
-     * Execute ping to the client, expecting a feedback before timeout
+     * Execute ping to the client (with a certain cadence: pingDelay), expecting a feedback from client before timeout,
      * If the timer expires the client is considered disconnected
+     * @param pingDelay milliseconds after which to ping (clockPingTimer), if <= 0 : set to default value = 5000
      */
-    public void setTimer(int milliSeconds){
-        if(milliSeconds <= 0)
-            milliSeconds = 5000;
-
+    public void setTimer(int pingDelay){
         ClientHandler playerHandler = this;
         clientTimeoutTimer = new Timer();
         clockPingTimer = new Timer();
-
+        //check if it is necessary to set the default value
+        if(pingDelay <= 0)
+            pingDelay = 5000;
+        //ping after waiting for : pingDelay (ms)
         clockPingTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -70,11 +71,11 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     }
                 }, 10000);
             }
-        }, milliSeconds);
+        }, pingDelay);
     }
 
     /**
-     * Reset timeout set by ping request
+     * Reset Timeout set by ping request
      */
     public void resetTimeout(){
         clientTimeoutTimer.cancel();
@@ -142,14 +143,15 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     }
 
     /**
-     * Process command received from socket
+     * Process command received from socket, only if the client is not blocked by the server<br>
+     * (Do not send the ping / pong message)
      * @param m message
      */
     public void process(String m){
         if(!isMustStopExecution()) {
             synchronized (lobbyManager) {
                 try {
-                    if ((m.contains("addPlayer") && !isLobbyStarted()) || m.contains("{\"action\":\"pong\"}")) {
+                    if (m.contains("addPlayer") && !isLobbyStarted()) {
                         CommandFactory.from(m).execute(null, this);
 
                     } else if (isLobbyStarted()) {
@@ -159,14 +161,14 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     }
 
                 } catch (JsonParseException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(ansiRED+"FAILED-JsonParse"+ansiRESET);
                 }
             }
         }
     }
 
     /**
-     * Send message to client
+     * Send message to client, only if the client is not blocked by the server
      * @param m message
      */
     public void response(String m){
@@ -175,7 +177,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     }
 
     /**
-     * Send all message in queue
+     * Send all message in queue, only if the client is not blocked by the server
      */
     public void sendMessageQueue(){
        while(!messageQueue.empty())
@@ -185,7 +187,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
 
     /**
-     * Send Battlefield when observer notify change
+     * Send Battlefield when observer notify change, only if the client is not blocked by the server
      * @param cellInterfaces matrix
      */
     @Override
@@ -196,7 +198,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     }
 
     /**
-     * Send worker view when observer notify change
+     * Send worker view when observer notify change, only if the client is not blocked by the server
      * @param workerView workerView
      */
     @Override
