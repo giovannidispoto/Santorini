@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.parser.DeckReader;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.*;
+import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 
 import java.io.*;
 import java.util.*;
@@ -35,6 +36,8 @@ public class Controller {
     private final List<Color> colors;
     private final GameState gameState;
     private int lobbySize;
+    private UUID lobbyID;
+    private LobbyManager lobbyManager;
 
     /**
      * Returns the [Row] of the currently selected worker
@@ -90,11 +93,13 @@ public class Controller {
      * @param playersInLobby list containing the nicknames of the players
      * @param handlerMap a map that uniquely links their handler to each nickname
      */
-    public void lobbyIsReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap) {
+    public void lobbyIsReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap, UUID lobbyID, LobbyManager lobbyManager) {
         //Set Lobby Data in Controller
         this.lobbySize = lobbySize;
         this.handlers = handlerMap;
         this.playersInLobby = playersInLobby;
+        this.lobbyID = lobbyID;
+        this.lobbyManager = lobbyManager;
         //Notify Lobby Ready to Handlers
         this.handlers.forEach((nickName, handler) -> handler.setLobbyStart());
         //Match Start
@@ -109,16 +114,6 @@ public class Controller {
         }
         //go to next game state
         gameState.nextState();
-    }
-
-    /**
-     * Call when a player first disconnects (can only be called once per game)
-     * Its job is to remove all handlers from the server
-     * @return  true after task
-     */
-    public boolean clientDisconnected(){
-        this.handlers.forEach((nickName, handler) -> handler.disconnectionShutDown());
-        return true;
     }
 
     //-----------------------------------------------------------
@@ -387,10 +382,8 @@ public class Controller {
         }
         else if(winner){
             declareWinner(match.getWinner());
-            System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
             //TODO: END GAME
             //For security, lock the current player
-            return Step.END;
         }
 
         return turn.getCurrentState();
@@ -404,6 +397,8 @@ public class Controller {
                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
         }
 
+        System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
+        this.lobbyManager.gameEnded(this.lobbyID);
     }
 
     /**
