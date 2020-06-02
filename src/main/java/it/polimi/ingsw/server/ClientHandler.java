@@ -54,27 +54,30 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         ClientHandler playerHandler = this;
         clientTimeoutTimer = new Timer();
         clockPingTimer = new Timer();
+        //check if it is necessary to set the default value
+        if (pingDelay <= 0)
+            pingDelay = 5000;
         try {
-            //check if it is necessary to set the default value
-            if (pingDelay <= 0)
-                pingDelay = 5000;
             //ping after waiting for : pingDelay (ms)
             clockPingTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     response(new Gson().toJson(new BasicMessageResponse("ping", null)));
-
-                    clientTimeoutTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
-                            playerDisconnected();
-                        }
-                    }, 10000);
+                    try {
+                        clientTimeoutTimer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
+                                playerDisconnected();
+                            }
+                        }, 10000);
+                    }catch (IllegalStateException e){
+                        System.out.println(ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET);
+                    }
                 }
             }, pingDelay);
 
-        }catch (Exception e){
+        }catch (IllegalStateException e){
             System.out.println(ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET);
         }
     }
