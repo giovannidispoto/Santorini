@@ -524,7 +524,8 @@ public class Controller implements ObserverPlayers {
     /*Notify client who lose */
     @Override
     public void update(Player removedPlayer) {
+        checkDeclareWinner();
         handlers.get(removedPlayer.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
-
+        handlers.get(removedPlayer.getPlayerNickname()).playerIsEliminated();
     }
 }
