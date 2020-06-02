@@ -62,7 +62,7 @@ public class CLIController implements View {
             workersPosition.add(commandLine.placeWorkers(clientController, workerID));
         }
 
-        clientController.setWorkersPositionRequest(clientController.getPlayerNickname(), workersPosition);
+        clientController.setWorkersPositionRequest(workersPosition);
 
         clientController.setGameState(GameState.MATCH);
 
@@ -78,11 +78,11 @@ public class CLIController implements View {
 
             //It's your Turn, check if you can choose type of turn (basic or not)
             if(clientController.getCardsDeck().getDivinityCard(clientController.getPlayerCardName()).isChooseBasic()) {
-                clientController.setStartTurn(clientController.getPlayerNickname(), commandLine.askForBasicTurn());
+                clientController.setStartTurn(commandLine.askForBasicTurn());
             }
             else {
                 //can't choose basic turn
-                clientController.setStartTurn(clientController.getPlayerNickname(), false);
+                clientController.setStartTurn(false);
             }
             //Woke up by: SetStartTurnResponse
             commandLine.resetScreen();

@@ -207,7 +207,8 @@ public class ClientController {
 
         //--  REQUESTS IN LOBBY
 
-    /** Communicates to the server the intention to join the game
+    /** Communicates to the server the intention to join the game, <br>
+     *  Nickname on the server according to the convention, (lowercase, no special char)
      *  N.B: Blocking request until a response is received
      *
      * @param playerNickname    NickName Choose by the player
@@ -215,7 +216,10 @@ public class ClientController {
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
     public void addPlayerRequest(String playerNickname, int lobbySize) throws SantoriniException {
-        AddPlayerInterface data = new AddPlayerInterface(playerNickname, lobbySize);
+        //Set In the Controller
+        this.setPlayerNickname(playerNickname);
+        //Send the Request
+        AddPlayerInterface data = new AddPlayerInterface(this.playerNickname, lobbySize);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("addPlayer", data)));
         //Wait Server Response
         synchronized (WaitManager.waitAddPlayer){
@@ -249,13 +253,12 @@ public class ClientController {
     /** Communicate to the server the card chosen by the Player & save it in the ClientController
      *  (choice between possible cards sent by the server with the mirror command)
      *
-     * @param playerNickname    NickName Choose by the player
      * @param cardName  name of the chosen card
      */
-    public void setPlayerCardRequest(String playerNickname, String cardName){
+    public void setPlayerCardRequest(String cardName){
         this.playerCardName = cardName;
         //send to server
-        SetPlayerCardInterface data = new SetPlayerCardInterface(playerNickname, cardName);
+        SetPlayerCardInterface data = new SetPlayerCardInterface(this.playerNickname, cardName);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPlayerCard", data)));
     }
 
@@ -289,11 +292,10 @@ public class ClientController {
      *  with this method the client chooses where to put the workers on the board (one at a time)
      *  checking not to put it on another player
      *
-     * @param playerNickname    NickName Choose by the player
      * @param workersPosition   List containing the ID and position of each worker
      */
-    public void setWorkersPositionRequest(String playerNickname, List<WorkerPositionInterface> workersPosition){
-        SetWorkersPositionInterface data = new SetWorkersPositionInterface(playerNickname, workersPosition);
+    public void setWorkersPositionRequest(List<WorkerPositionInterface> workersPosition){
+        SetWorkersPositionInterface data = new SetWorkersPositionInterface(this.playerNickname, workersPosition);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setWorkersPosition", data)));
     }
 
@@ -302,12 +304,11 @@ public class ClientController {
     /** Client asks the server to start a turn, based on basicTurn decision
      *  N.B: Blocking request until a response is received
      *
-     * @param playerNickname    NickName Choose by the player
      * @param basicTurn     true: turn without effects, false: turn with effects from your card
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
-    public void setStartTurn(String playerNickname, boolean basicTurn) throws SantoriniException {
-        SetStartTurnInterface data = new SetStartTurnInterface(playerNickname, basicTurn);
+    public void setStartTurn(boolean basicTurn) throws SantoriniException {
+        SetStartTurnInterface data = new SetStartTurnInterface(this.playerNickname, basicTurn);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setStartTurn", data)));
         //Wait Server Response
         synchronized (WaitManager.waitStartTurn){
@@ -319,13 +320,12 @@ public class ClientController {
      *  expecting his workerView as server response
      *  N.B: Blocking request until a response is received
      *
-     * @param playerNickname    NickName Choose by the player
      * @param row     selected worker battlefield row coordinate
      * @param col     selected worker battlefield column coordinate
      * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
      */
-    public void selectWorkerRequest(String playerNickname, int row, int col) throws SantoriniException {
-        SelectWorkerInterface data = new SelectWorkerInterface(playerNickname, row, col);
+    public void selectWorkerRequest(int row, int col) throws SantoriniException {
+        SelectWorkerInterface data = new SelectWorkerInterface(this.playerNickname, row, col);
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("selectWorker", data)));
         //Wait Server Response
         waitWorkerViewUpdate();
@@ -512,6 +512,10 @@ public class ClientController {
         this.currentLobbySize = currentLobbySize;
     }
 
+    /**
+     * Set the nickname on the server according to the convention, lowercase
+     * @param playerNickname String NickName
+     */
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname.toLowerCase(Locale.ROOT);
     }

@@ -270,7 +270,7 @@ public class BattlefieldView extends Scene {
                         }
                         /* If number of workers remaming is 0, go on*/
                         if(workersId.size() == 0) {
-                            GUIController.getController().setWorkersPositionRequest(GUIController.getController().getPlayerNickname(), positions);
+                            GUIController.getController().setWorkersPositionRequest(positions);
                             GUIController.getController().setGameState(GameState.MATCH);
                             cleanBattlefield();
                         }
@@ -324,7 +324,7 @@ public class BattlefieldView extends Scene {
                     root.lookup("#godPowerBox").setVisible(false);
 
                     try {
-                        GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), basicTurn.get());
+                        GUIController.getController().setStartTurn(basicTurn.get());
                     } catch (SantoriniException e) {
                         System.out.println(e.getMessage());
                     }
@@ -339,7 +339,7 @@ public class BattlefieldView extends Scene {
                     root.lookup("#godPowerBox").setVisible(false);
 
                     try {
-                        GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), basicTurn.get());
+                        GUIController.getController().setStartTurn(basicTurn.get());
                     } catch (SantoriniException e) {
                         System.out.println(e.getMessage());
                     }
@@ -351,7 +351,7 @@ public class BattlefieldView extends Scene {
 
             }else{
                 try {
-                    GUIController.getController().setStartTurn(GUIController.getController().getPlayerNickname(), false);
+                    GUIController.getController().setStartTurn(false);
                 } catch (SantoriniException e) {
                     System.out.println(e.getMessage());
                 }
@@ -376,7 +376,7 @@ public class BattlefieldView extends Scene {
                                         try {
 
                                             Platform.runLater(() -> actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
-                                            GUIController.getController().selectWorkerRequest(GUIController.getController().getPlayerNickname(), finalI, finalJ);
+                                            GUIController.getController().selectWorkerRequest(finalI, finalJ);
 
                                             populateWorkerViewMap();
                                             renderWorkerView();
