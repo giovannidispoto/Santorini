@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.clientModel.BattlefieldClient;
 import it.polimi.ingsw.client.clientModel.basic.Block;
+import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.clientModel.basic.Step;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
@@ -11,15 +12,19 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPha
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,6 +51,12 @@ public class BattlefieldView extends Scene {
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
         this.root = root;
+        /* Pawn */
+        Map<Color, String> colorWorker = new HashMap<>();
+        colorWorker.put(Color.BLUE,getClass().getResource("/Images/BoardElements/Blue PAWN.png").toString());
+        colorWorker.put(Color.BROWN, getClass().getResource("/Images/BoardElements/Brown Pawn.png").toString());
+        colorWorker.put(Color.GREY, getClass().getResource("/Images/BoardElements/Grey PAWN.png").toString());
+
         actionLabel = (Label) root.lookup("#phaseLabel");
         numberOfTower = (Label) root.lookup("#fullTowersLabel");
         showCardButton = (Button) root.lookup("#cardsButton");
@@ -105,10 +116,18 @@ public class BattlefieldView extends Scene {
             positions = new ArrayList<>();
             workersId = new LinkedList<>(GUIController.getController().getWorkersID());
             ((Label) root.lookup("#phaseLabel")).setText("Workers Placement");
-            List<String> players = GUIController.getController().getPlayers().stream().map(PlayerInterface::getPlayerNickname).collect(Collectors.toList());
-            for(String player : players){
-                Label p = new Label(player);
-                ((VBox) root.lookup("#playersVBox")).getChildren().add(p);
+            List<PlayerInterface> players = GUIController.getController().getPlayers();
+            for(PlayerInterface player : players){
+                try {
+                    Parent playerLable = FXMLLoader.load(getClass().getResource("/PlayerTemplate.fxml"));
+                    ((Label) playerLable.lookup("#playerNameLabel")).setText(player.getPlayerNickname());
+                    ((Label) playerLable.lookup("#playerCardLabel")).setText(player.getCard());
+                    ((ImageView) playerLable.lookup("#playerPawn")).
+                            setImage(new Image(colorWorker.get(player.getColor())));
+                    ((VBox) root.lookup("#playersVBox")).getChildren().add(playerLable);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             // populateBattlefield();
             populateBattlefieldMap();

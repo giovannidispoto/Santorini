@@ -524,11 +524,7 @@ public class Controller implements ObserverPlayers {
     /*Notify client who lose */
     @Override
     public void update(Player removedPlayer) {
-        for(String nickname : handlers.keySet()){
-            if(removedPlayer.getPlayerNickname().equals(nickname))
-                 handlers.get(nickname).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
-            else
-                handlers.get(nickname).response(new Gson().toJson(new BasicMessageResponse("removedPlayer", new ActualPlayerResponse(removedPlayer.getPlayerNickname()))));
-        }
+        handlers.get(removedPlayer.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+
     }
 }

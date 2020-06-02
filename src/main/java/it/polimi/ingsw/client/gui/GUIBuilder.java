@@ -2,6 +2,7 @@
 
 package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.clientModel.basic.Color;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.model.Battlefield;
@@ -23,6 +24,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -165,6 +168,7 @@ public class GUIBuilder extends Application {
 
     public void showCards() {
         Parent root = null;
+
         try {
             root = FXMLLoader.load(getClass().getResource("/CardsContainer.fxml"));
             Scene actual = mainStage.getScene();
@@ -203,6 +207,12 @@ public class GUIBuilder extends Application {
         }
         @Override
         protected void updateItem(String item, boolean empty) {
+            //pawn data
+            Map<Color, String> colorWorker = new HashMap<>();
+            colorWorker.put(Color.BLUE,getClass().getResource("/Images/BoardElements/Blue PAWN.png").toString());
+            colorWorker.put(Color.BROWN, getClass().getResource("/Images/BoardElements/Brown Pawn.png").toString());
+            colorWorker.put(Color.GREY, getClass().getResource("/Images/BoardElements/Grey PAWN.png").toString());
+
             super.updateItem(item, empty);
             if (empty || item == null) {
                 imageView.setImage(null);
@@ -213,6 +223,7 @@ public class GUIBuilder extends Application {
                 try {
                     root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
                     ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
+                    ((ImageView) root.lookup("#playerPawn")).setImage(new Image(colorWorker.get(GUIController.getController().getPlayers().stream().filter(el->el.getCard().equalsIgnoreCase(item)).map(el->el.getColor()).findFirst().get())));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
