@@ -40,6 +40,7 @@ public class BattlefieldView extends Scene {
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
     private Map<Step, String> messageStep;
     private Button showCardButton;
+    private Button skipButton;
 
 
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
@@ -48,6 +49,7 @@ public class BattlefieldView extends Scene {
         actionLabel = (Label) root.lookup("#phaseLabel");
         numberOfTower = (Label) root.lookup("#fullTowersLabel");
         showCardButton = (Button) root.lookup("#cardsButton");
+        skipButton = (Button) root.lookup("#skipButton");
         actionLabel.setText("Waiting your turn");
         executor = Executors.newSingleThreadExecutor();
         //Battlefield Map
@@ -156,6 +158,19 @@ public class BattlefieldView extends Scene {
 
         showCardButton.setOnMouseClicked(event->{
             guiBuilder.showCards();
+        });
+
+        //On skip clicked
+        skipButton.setOnMouseClicked(event->{
+            try {
+                GUIController.getController().skipStepRequest();
+                skipButton.setDisable(true);
+                Platform.runLater(()->actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
+                callRenderWorkerView();
+                removeWorkerAvailableCell();
+            } catch (SantoriniException e) {
+                System.out.println(e.getMessage());
+            }
         });
 
     }
@@ -389,14 +404,17 @@ public class BattlefieldView extends Scene {
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_SPECIAL){
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                skipButton.setDisable(false);
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_UNTIL){
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                skipButton.setDisable(false);
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD_SPECIAL){
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                skipButton.setDisable(false);
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
