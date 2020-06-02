@@ -6,7 +6,7 @@
 
 <AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="400.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="147.0" fitWidth="141.0" layoutX="133.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="132.1258316040039" AnchorPane.topAnchor="14.0">
+      <ImageView fitHeight="147.0" fitWidth="141.0" layoutX="133.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="139.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="132.1258316040039" AnchorPane.topAnchor="14.0">
          <image>
             <Image url="@Images/Decorations/Lose.png" />
          </image>
@@ -23,12 +23,12 @@
       </ImageView>
       <AnchorPane id="resultBox" layoutX="40.0" layoutY="101.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="101.0">
          <children>
-            <ImageView fitHeight="56.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-10.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="131.0">
                <image>
                   <Image url="@Images/Decorations/ErrorCloudSX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="218.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-10.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="218.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="131.0">
                <image>
                   <Image url="@Images/Decorations/ErrorCloudDX.png" />
                </image>

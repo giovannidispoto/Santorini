@@ -209,9 +209,9 @@ public class GUIBuilder extends Application {
         protected void updateItem(String item, boolean empty) {
             //pawn data
             Map<Color, String> colorWorker = new HashMap<>();
-            colorWorker.put(Color.BLUE,getClass().getResource("/Images/BoardElements/Blue PAWN.png").toString());
-            colorWorker.put(Color.BROWN, getClass().getResource("/Images/BoardElements/Brown Pawn.png").toString());
-            colorWorker.put(Color.GREY, getClass().getResource("/Images/BoardElements/Grey PAWN.png").toString());
+            colorWorker.put(Color.BLUE,getClass().getResource("/Images/Cards/BluePawnCard.png").toString());
+            colorWorker.put(Color.BROWN, getClass().getResource("/Images/Cards/BrownPawnCard.png").toString());
+            colorWorker.put(Color.GREY, getClass().getResource("/Images/Cards/GrayPawnCard.png").toString());
 
             super.updateItem(item, empty);
             if (empty || item == null) {

@@ -11,14 +11,14 @@
             <Image url="@Images/Decorations/Trophy.png" />
          </image>
       </ImageView>
-      <AnchorPane id="resultBox" layoutX="40.0" layoutY="119.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+      <AnchorPane id="resultBox" layoutX="40.0" layoutY="119.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="119.0">
          <children>
-            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-27.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0">
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-27.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-30.0" AnchorPane.rightAnchor="248.42105102539062" AnchorPane.topAnchor="118.0">
                <image>
                   <Image url="@Images/Decorations/CloudDX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="-20.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="0.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="-20.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="226.31578826904297" AnchorPane.topAnchor="124.0">
                <image>
                   <Image url="@Images/Decorations/CloudDX.png" />
                </image>
@@ -28,7 +28,7 @@
                   <Image url="@Images/Decorations/CloudRX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="252.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="0.0">
+            <ImageView fitHeight="56.0" fitWidth="86.0" layoutX="252.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="225.68421173095703" AnchorPane.rightAnchor="0.31578826904296875" AnchorPane.topAnchor="124.0">
                <image>
                   <Image url="@Images/Decorations/CloudRX.png" />
                </image>

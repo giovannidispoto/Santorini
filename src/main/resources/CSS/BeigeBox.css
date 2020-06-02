@@ -57,3 +57,9 @@
     -fx-background-color: #E3DBC5;
     -fx-background-radius: 16;
 }
+
+#playerBox{
+    -fx-effect: innershadow(gaussian,rgba(0,0,0,0.1), 16, 0.3, 0, 0);
+    -fx-background-color: #A6A296;
+    -fx-background-radius: 12;
+}

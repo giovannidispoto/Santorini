@@ -34,15 +34,16 @@
 }
 
 #playerNameLabel{
-    -fx-font-size: 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
     -fx-font-family: "Minion Pro";
-    -fx-text-fill: #626262;
 }
 
 #playerCardLabel{
     -fx-font-size: 12;
+    -fx-text-fill: #ffffff;
     -fx-font-family: "Minion Pro";
-    -fx-text-fill: #626262;
 }
 
 #waitMessageLabel{

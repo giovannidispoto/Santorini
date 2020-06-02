@@ -53,9 +53,9 @@ public class BattlefieldView extends Scene {
         this.root = root;
         /* Pawn */
         Map<Color, String> colorWorker = new HashMap<>();
-        colorWorker.put(Color.BLUE,getClass().getResource("/Images/BoardElements/Blue PAWN.png").toString());
-        colorWorker.put(Color.BROWN, getClass().getResource("/Images/BoardElements/Brown Pawn.png").toString());
-        colorWorker.put(Color.GREY, getClass().getResource("/Images/BoardElements/Grey PAWN.png").toString());
+        colorWorker.put(Color.BLUE,getClass().getResource("/Images/Cards/BluePawnCard.png").toString());
+        colorWorker.put(Color.BROWN, getClass().getResource("/Images/Cards/BrownPawnCard.png").toString());
+        colorWorker.put(Color.GREY, getClass().getResource("/Images/Cards/GrayPawnCard.png").toString());
 
         actionLabel = (Label) root.lookup("#phaseLabel");
         numberOfTower = (Label) root.lookup("#fullTowersLabel");
