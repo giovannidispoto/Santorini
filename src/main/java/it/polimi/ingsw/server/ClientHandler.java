@@ -54,24 +54,29 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         ClientHandler playerHandler = this;
         clientTimeoutTimer = new Timer();
         clockPingTimer = new Timer();
-        //check if it is necessary to set the default value
-        if(pingDelay <= 0)
-            pingDelay = 5000;
-        //ping after waiting for : pingDelay (ms)
-        clockPingTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                response(new Gson().toJson(new BasicMessageResponse("ping", null)));
+        try {
+            //check if it is necessary to set the default value
+            if (pingDelay <= 0)
+                pingDelay = 5000;
+            //ping after waiting for : pingDelay (ms)
+            clockPingTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    response(new Gson().toJson(new BasicMessageResponse("ping", null)));
 
-                clientTimeoutTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
-                        playerDisconnected();
-                    }
-                }, 10000);
-            }
-        }, pingDelay);
+                    clientTimeoutTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
+                            playerDisconnected();
+                        }
+                    }, 10000);
+                }
+            }, pingDelay);
+
+        }catch (Exception e){
+            System.out.println(ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET);
+        }
     }
 
     /**
@@ -144,26 +149,35 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     /**
      * Process command received from socket, only if the client is not blocked by the server<br>
+     * If the player makes an illegal move, the game is ended, considering him as responsible<br>
      * (Do not send the ping / pong message)
      * @param m message
      */
     public void process(String m){
-        if(!isMustStopExecution()) {
-            synchronized (lobbyManager) {
-                try {
+        try {
+            if (!isMustStopExecution()) {
+                synchronized (lobbyManager) {
                     if (m.contains("addPlayer") && !isLobbyStarted()) {
                         CommandFactory.from(m).execute(null, this);
 
                     } else if (isLobbyStarted()) {
 
                         this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute(
-                                () -> CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this));
+                                () -> {
+                                    try{
+                                        CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
+                                    }catch (RuntimeException gameException) {
+                                        //TODO: testing, exception during game shutdown all client
+                                        System.out.println(ansiMAGENTA+"!!!-> Player: "+lobbyManager.getPlayerNickName(this)+" Disconnected From The Game by Server, Cause: Game Tampering <-!!!"+ansiRESET);
+                                        playerDisconnected();
+                                    }
+                                }
+                        );
                     }
-
-                } catch (JsonParseException e) {
-                    System.out.println(ansiRED+"FAILED-JsonParse"+ansiRESET);
                 }
             }
+        }catch (JsonParseException e) {
+            System.out.println(ansiRED + "FAILED-JsonParse" + ansiRESET);
         }
     }
 
