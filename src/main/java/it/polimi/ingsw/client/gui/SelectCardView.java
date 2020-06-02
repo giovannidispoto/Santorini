@@ -1,14 +1,8 @@
 package it.polimi.ingsw.client.gui;
 
-import it.polimi.ingsw.client.clientModel.basic.Deck;
-import it.polimi.ingsw.client.clientModel.basic.DivinityCard;
-import it.polimi.ingsw.client.controller.GameState;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -17,17 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Paint;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class SelectCardView extends Scene {
@@ -108,7 +97,7 @@ public class SelectCardView extends Scene {
                             if(map.get(card))
                                 cards.add(card);
                         }
-                        GUIController.getController().setPlayerCardRequest(GUIController.getController().getPlayerNickname(), cards.get(0));
+                        GUIController.getController().setPlayerCardRequest(cards.get(0));
                         builder.changeView(Optional.empty());
                         //t2.start();
                     });

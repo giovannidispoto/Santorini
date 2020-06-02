@@ -978,7 +978,7 @@ public class CLIBuilder implements UIActions{
             userInput=consoleScanner.next().toUpperCase();
             validInput= availableCards.contains(userInput);
         }
-        clientController.setPlayerCardRequest(clientController.getPlayerNickname(), userInput);
+        clientController.setPlayerCardRequest(userInput);
         System.out.print(String.format(CURSOR_UP,1));
         System.out.print(COLOR_SCHEME+CLI_INPUT+ANSI_ORANGE+WAIT_PLAYERS+NEW_LINE);
         printedLinesCounter+=2;
@@ -1234,7 +1234,7 @@ public class CLIBuilder implements UIActions{
                 }
             }
             while (!validSelection);
-            clientController.selectWorkerRequest(clientController.getPlayerNickname(),workerRow,workerCol);
+            clientController.selectWorkerRequest(workerRow,workerCol);
             if(!clientController.isInvalidWorkerView())
                 validWorker=true;
             else
