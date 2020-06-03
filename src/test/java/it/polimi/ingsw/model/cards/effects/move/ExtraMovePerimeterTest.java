@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraMovePerimeterTest  {
@@ -25,7 +26,7 @@ class ExtraMovePerimeterTest  {
     void extraMovePerimeterCellTrue() throws IOException {
         //Preliminary stuff
         DeckReader reader = new DeckReader();
-        Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
@@ -59,7 +60,7 @@ class ExtraMovePerimeterTest  {
     void extraMovePerimeterCellFalse() throws IOException {
         //Preliminary stuff
         DeckReader reader = new DeckReader();
-        Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
@@ -91,7 +92,7 @@ class ExtraMovePerimeterTest  {
     void extraMovePerimeterCellException() throws IOException {
         //Preliminary stuff
         DeckReader reader = new DeckReader();
-        Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         p1.setPlayerCard(deck.getDivinityCard("TRITON"));
         List<Player> players = new ArrayList<>();
@@ -125,7 +126,7 @@ class ExtraMovePerimeterTest  {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("TRITON"));
         p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);

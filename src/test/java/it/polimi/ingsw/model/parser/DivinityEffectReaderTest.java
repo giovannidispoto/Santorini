@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathCardsEffects;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DivinityEffectReaderTest {
@@ -34,7 +35,7 @@ class DivinityEffectReaderTest {
     @Test
     void readDivinity() throws IOException {
         DivinityEffectReader der = new DivinityEffectReader();
-        Map<String, Turn> map = der.load(new FileReader("src/CardsEffect.json"));
+        Map<String, Turn> map = der.load(new FileReader(absPathCardsEffects));
 
         assertTrue(map.containsKey("ZEUS"));
         assertTrue(map.get("ZEUS") instanceof BlockUnder);

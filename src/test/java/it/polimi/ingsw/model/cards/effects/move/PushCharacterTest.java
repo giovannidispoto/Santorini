@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PushCharacterTest {
@@ -27,7 +28,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
@@ -67,7 +68,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
@@ -117,7 +118,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
@@ -162,7 +163,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
@@ -201,7 +202,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);
@@ -242,7 +243,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         p2.setPlayerCard(d.getDivinityCard("ATLAS"));
         players.add(p1);
@@ -434,7 +435,7 @@ class PushCharacterTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("CHRONUS"));
         p2.setPlayerCard(d.getDivinityCard("MINOTAUR"));
         players.add(p1);

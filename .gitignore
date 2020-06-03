@@ -37,9 +37,8 @@
 !NetworkCommunications/netJson/msgToServer/*.json
 !NetworkCommunications/netJson/msgToServer/*.txt
 
-#src/	(rules = 2)
+#src/	(rules = 1)
 !src/
-!src/*.json
 
 #src/main/	(rules = 2) (this folder has it's own gitignore)
 !src/main/

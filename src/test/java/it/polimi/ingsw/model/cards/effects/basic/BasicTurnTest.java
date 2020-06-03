@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BasicTurnTest {
@@ -25,7 +26,7 @@ class BasicTurnTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         p2.setPlayerCard(d.getDivinityCard("ZEUS"));
         players.add(p1);
@@ -46,7 +47,7 @@ class BasicTurnTest {
         m.setSelectedWorker(w1);
         //2. Generate Movement Matrix
         w1.setWorkerView(t.generateMovementMatrix(w1));
-        assertTrue(w1.getWorkerView()[0][0] == null);
+        assertNull(w1.getWorkerView()[0][0]);
         //3. Move()
         t.moveWorker(m.getSelectedWorker(),m.getSelectedWorker().getRowWorker()+1,m.getSelectedWorker().getColWorker()+1);
         //4. Generate Building Matrix
@@ -66,7 +67,7 @@ class BasicTurnTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -97,7 +98,7 @@ class BasicTurnTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("APOLLO"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();

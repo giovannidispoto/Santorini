@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraBlockAboveTestFalse {
@@ -23,7 +24,7 @@ class ExtraBlockAboveTestFalse {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("DEMETER"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();
@@ -57,7 +58,7 @@ class ExtraBlockAboveTestFalse {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("DEMETER"));
         players.add(p1);
         List<Worker> workers = new ArrayList<>();

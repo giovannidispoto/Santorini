@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraMoveTest {
@@ -25,7 +26,7 @@ class ExtraMoveTest {
     void tripleMove() throws IOException {
         //Preliminary stuff
         DeckReader reader = new DeckReader();
-        Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         p1.setPlayerCard(deck.getDivinityCard("ARTEMIS"));
         List<Player> players = new ArrayList<>();
@@ -62,7 +63,7 @@ class ExtraMoveTest {
         //Preliminary stuff
         DeckReader reader = new DeckReader();
 
-        Deck deck = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         p1.setPlayerCard(deck.getDivinityCard("ARTEMIS"));
 
@@ -100,7 +101,7 @@ class ExtraMoveTest {
         //Preliminary stuff
         Battlefield battlefield = Battlefield.getBattlefieldInstance();
         List<Player> players = new ArrayList<>();
-        Deck d = reader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck d = reader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
         p1.setPlayerCard(d.getDivinityCard("ARTEMIS"));
         p2.setPlayerCard(d.getDivinityCard("CHRONUS"));
         players.add(p1);

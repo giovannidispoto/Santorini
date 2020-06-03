@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
+import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckReaderTest {
@@ -16,7 +17,7 @@ class DeckReaderTest {
 
         DeckReader deckReader = new DeckReader();
         //load from *.json
-        Deck deck = deckReader.loadDeck(new FileReader("src/Divinities.json"));
+        Deck deck = deckReader.loadDeck(new FileReader(absPathDivinitiesCardsDeck));
 
         assertNotNull(deck.getDivinityCard("APOLLO"));
         assertSame(deck.getDivinityCard("APOLLO").getCardType(), Type.MOVEMENT);
