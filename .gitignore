@@ -26,18 +26,20 @@
 !windows10/
 !windows10/*
 
-#src/	(rules = 7)
+#NetworkCommunications/     (rules = 9)
+!NetworkCommunications/
+!NetworkCommunications/*.txt
+!NetworkCommunications/netJson/
+!NetworkCommunications/netJson/msgtoClient/
+!NetworkCommunications/netJson/msgtoClient/*.json
+!NetworkCommunications/netJson/msgtoClient/*.txt
+!NetworkCommunications/netJson/msgToServer/
+!NetworkCommunications/netJson/msgToServer/*.json
+!NetworkCommunications/netJson/msgToServer/*.txt
+
+#src/	(rules = 2)
 !src/
 !src/*.json
-!src/networkCommunications/
-!src/networkCommunications/*.txt
-!src/networkCommunications/netJson/
-!src/networkCommunications/netJson/msgtoClient/
-!src/networkCommunications/netJson/msgtoClient/*.json
-!src/networkCommunications/netJson/msgtoClient/*.txt
-!src/networkCommunications/netJson/msgToServer/
-!src/networkCommunications/netJson/msgToServer/*.json
-!src/networkCommunications/netJson/msgToServer/*.txt
 
 #src/main/	(rules = 2) (this folder has it's own gitignore)
 !src/main/
