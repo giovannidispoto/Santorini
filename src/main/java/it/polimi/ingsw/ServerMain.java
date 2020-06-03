@@ -28,7 +28,7 @@ public class ServerMain
         //Start Server Testing - Essential Files
         serverFileManager.testFileReading();
         serverFileManager.readServerSettings();
-        ServerSocketManager serverSocketManager = new ServerSocketManager(serverFileManager.getServerPort(), new LobbyManager());
+        ServerSocketManager serverSocketManager = new ServerSocketManager(serverFileManager.getServerPort(), new LobbyManager(serverFileManager.getMaxNumLobbiesManaged()));
 
         ServerExit.execute(() -> {
             Scanner inConsole = new Scanner(System.in);

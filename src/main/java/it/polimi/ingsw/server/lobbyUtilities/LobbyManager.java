@@ -22,7 +22,7 @@ public class LobbyManager {
     /**
      * Lobby Manager builder, in addition to initializing it here, you can enter the sizes of the lobbies existing on the server
      */
-    public LobbyManager() {
+    public LobbyManager(int maxNumLobbiesManaged) {
         this.existingLobbiesMap = new HashMap<>();
         this.playersNickNameMap = new HashMap<>();
         this.playersHandlerMap = new HashMap<>();
@@ -30,7 +30,7 @@ public class LobbyManager {
         //Initialize Server Possibles Lobbies (null = default)
         this.existingLobbiesMap.put(2,null);
         this.existingLobbiesMap.put(3,null);
-        this.maxNumLobbiesManaged = 2;
+        this.maxNumLobbiesManaged = maxNumLobbiesManaged;
     }
 
     //----------    LOBBY MANAGEMENT

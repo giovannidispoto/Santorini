@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.fileUtilities;
 
+import it.polimi.ingsw.server.fileUtilities.regex.MaxNumLobbiesRegex;
 import it.polimi.ingsw.server.fileUtilities.regex.Regex;
 import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.server.fileUtilities.regex.ServerPortRegex;
@@ -20,15 +21,25 @@ public class FileManager {
     private final List<Regex> regexList;
     private static final int maxFileAdditionalLines = 10;
     //------------------------------------------    DEFAULT DATA
+    /**
+     * DEFAULT: serverPort = 1337
+     */
     private int serverPort = 1337;
+    /**
+     * DEFAULT: maxNumLobbiesManaged = 5
+     */
+    private int maxNumLobbiesManaged = 5;
 
     /**
      *  Constructor of the FileManager,
-     *  takes care of initializing the Regex that will be used for reading from files
+     *  takes care of initializing the Regex that will be used for reading from files<br>
+     *
+     *  To developers: if you want to implement a new regex just create a new class insert it in the regex package and here in the constructor add it to the list
      */
     public FileManager() {
         this.regexList = new ArrayList<>();
         this.regexList.add(new ServerPortRegex());
+        this.regexList.add(new MaxNumLobbiesRegex());
     }
 
     /**
@@ -119,5 +130,13 @@ public class FileManager {
 
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
+    }
+
+    public int getMaxNumLobbiesManaged() {
+        return maxNumLobbiesManaged;
+    }
+
+    public void setMaxNumLobbiesManaged(int maxNumLobbiesManaged) {
+        this.maxNumLobbiesManaged = maxNumLobbiesManaged;
     }
 }
