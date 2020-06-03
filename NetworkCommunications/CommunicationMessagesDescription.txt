@@ -20,12 +20,11 @@ N.B:   (OPTIONAL) : the message is not always present   |    (ASYNCHRONOUS) : th
     -If it exists and it's the player's choice, check if the nickname is unique in the whole server
     then sends the response
 
-    -playerNickname: unique in the whole server
-    -lobbySize: type of lobby chosen
-    -lobbyState: indicates whether the lobby is a choice chosen by the player is present and therefore created,
-    or if (false) indicates that the choice of the lobby does not exist but another active one exists
-    -validNick: result of the check made by the server, on the validity of the nickname
-    -fullLobby: if false, it indicates that the server is occupied by a game and the player cannot be entered in a lobby
+    -playerNickname: unique in the whole server (String lowCase)
+    -lobbySize: type of lobby chosen (integer)
+    -lobbyState: indicates if the chosen lobby is valid on the server to which the request was sent (true)
+    -validNick: result of the check made by the server, on the validity of the nickname (true)
+    -fullLobby: if false, indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum number
     }
 
 2
@@ -130,7 +129,7 @@ N.B:   (OPTIONAL) : the message is not always present   |    (ASYNCHRONOUS) : th
 
         -ServerResponse:        {"action":"playStepResponse","data":{"x":4,"y":4,"nextStep":"END"}}
 
-    The server responds with the action made and with the next step
+    The server responds with the coordinates of the currently active / selected worker (x,y) and with the next step
     }
 
 5   (OPTIONAL)
@@ -172,4 +171,14 @@ N.B:   (OPTIONAL) : the message is not always present   |    (ASYNCHRONOUS) : th
 
     Notifies the client that there has been a server-side error (unexpected or a cheat attempt)
     The client has the task of reporting the error and closing the program
+    }
+
+3   (ASYNCHRONOUS)
+    {   -pingClient&Server:    Server send: {"action":"ping"}    Client send: {"action":"pong"}
+
+    -The server first initiates the ping message, this activates a timeout mechanism in the client,
+    responding to the server with a pong message (notifies the receipt of the ping),
+    the server dictates the average cadence of the pings,
+    if in twice the time is not received a ping message on both (server and client),
+    the connection is considered dropped.
     }

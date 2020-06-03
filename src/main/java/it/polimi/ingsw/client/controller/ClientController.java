@@ -49,7 +49,7 @@ public class ClientController {
      */
     private boolean lobbyState;
     /**
-     * Indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum number
+     * Indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum lobbies number
      */
     private boolean fullLobby;
     /**
