@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -138,8 +139,9 @@ public class GUIBuilder extends Application {
             root = FXMLLoader.load(getClass().getResource("/WinMessage.fxml"));
             Scene actual = mainStage.getScene();
             actual.lookup("#blurResult").setVisible(true);
-            ((AnchorPane) actual.lookup("#paneResult")).getChildren().add(root);
-            ((AnchorPane) actual.lookup("#paneResult")).setVisible(true);
+            actual.lookup("#paneResult").setVisible(true);
+            ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
+            ((StackPane) actual.lookup("#paneResult")).setVisible(true);
             (root.lookup("#exitButton")).setOnMouseClicked(event->System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,8 +155,9 @@ public class GUIBuilder extends Application {
             root = FXMLLoader.load(getClass().getResource("/LoseMessage.fxml"));
             Scene actual = mainStage.getScene();
             actual.lookup("#blurResult").setVisible(true);
-            ((AnchorPane) actual.lookup("#paneResult")).getChildren().add(root);
-            ((AnchorPane) actual.lookup("#paneResult")).setVisible(true);
+            actual.lookup("#paneResult").setVisible(true);
+            ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
+            ((StackPane) actual.lookup("#paneResult")).setVisible(true);
             (root.lookup("#exitButton")).setOnMouseClicked(event->System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();
@@ -174,16 +177,17 @@ public class GUIBuilder extends Application {
             root = FXMLLoader.load(getClass().getResource("/CardsContainer.fxml"));
             Scene actual = mainStage.getScene();
             actual.lookup("#blurResult").setVisible(true);
-            ((AnchorPane) actual.lookup("#paneResult")).getChildren().add(root);
-            ((AnchorPane) actual.lookup("#paneResult")).setVisible(true);
+            actual.lookup("#paneResult").setVisible(true);
+            ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
+            actual.lookup("#paneResult").setVisible(true);
             ListView<String> listView = ((ListView<String>) root.lookup("#cardsList"));
             listView.setCellFactory(param -> new BuildCell());
             listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getPlayers().stream().map(plauer->plauer.getCard()).collect(Collectors.toList()))));
             //Hide
             ((Button) actual.lookup("#closeButton")).setOnMouseClicked(event->{
                 actual.lookup("#blurResult").setVisible(false);
-                ((AnchorPane) actual.lookup("#paneResult")).getChildren().clear();
-                ((AnchorPane) actual.lookup("#paneResult")).setVisible(true);
+                ((StackPane) actual.lookup("#paneResult")).getChildren().clear();
+                ((StackPane) actual.lookup("#paneResult")).setVisible(false);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,8 +200,8 @@ public class GUIBuilder extends Application {
             root = FXMLLoader.load(getClass().getResource("/ConnectionError.fxml"));
             Scene actual = mainStage.getScene();
             actual.lookup("#blurResult").setVisible(true);
-            ((AnchorPane) actual.lookup("#paneResult")).getChildren().add(root);
-            ((AnchorPane) actual.lookup("#paneResult")).setVisible(true);
+            ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
+            ((StackPane) actual.lookup("#paneResult")).setVisible(true);
             (root.lookup("#exitButton")).setOnMouseClicked(event->System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();

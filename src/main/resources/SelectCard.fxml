@@ -24,5 +24,6 @@
             <Label id="waitLabelCards" alignment="CENTER" layoutX="47.0" layoutY="41.0" prefHeight="46.0" prefWidth="202.0" stylesheets="@CSS/SantoriniLabel.css" text="Wait your Turn" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
+      <StackPane id="resultPane" layoutX="157.0" layoutY="22.0" prefHeight="400.0" prefWidth="440.0" visible="false" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="22.0" />
    </children>
 </AnchorPane>

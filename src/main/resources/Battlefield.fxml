@@ -69,13 +69,13 @@
                         <Insets bottom="2.0" />
                     </padding>
                 </Button>
-            <VBox id="playersVBox" layoutX="21.0" layoutY="55.0" prefHeight="200.0" prefWidth="144.0" spacing="5.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="55.0" />
+            <VBox id="playersVBox" fillWidth="false" layoutX="20.0" layoutY="48.0" prefHeight="209.0" prefWidth="141.0" spacing="15.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="58.0" />
             </children></AnchorPane>
       <ImageView id="blurResult" fitHeight="617.0" fitWidth="1097.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Decorations/BlurBoard.png" />
          </image>
       </ImageView>
-      <AnchorPane id="paneResult" layoutX="284.0" layoutY="139.0" prefHeight="345.0" prefWidth="528.0" />
+      <StackPane id="paneResult" prefHeight="440.0" prefWidth="440.0" visible="false" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="327.888916015625" AnchorPane.topAnchor="93.0" />
     </children>
 </AnchorPane>

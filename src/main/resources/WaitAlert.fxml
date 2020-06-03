@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="waitRoot" prefHeight="106.0" prefWidth="322.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WaitAlert">
+<AnchorPane id="resultRoot" prefHeight="106.0" prefWidth="322.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WaitAlert">
    <children>
-      <AnchorPane id="popUpBox" layoutX="14.0" prefHeight="106.0" prefWidth="290.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <ImageView fitHeight="161.0" fitWidth="158.0" layoutX="165.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="253.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="26.0">
+         <image>
+            <Image url="@Images/Decorations/WaitGod.png" />
+         </image>
+      </ImageView>
+      <AnchorPane id="popUpBox" layoutX="71.0" layoutY="167.0" prefHeight="106.0" prefWidth="290.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="167.0" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="167.0">
          <children>
-            <Label id="waitMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="23.0" prefHeight="75.0" prefWidth="279.0" stylesheets="@CSS/SantoriniLabel.css" text="Wait your Turn" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+            <Label id="waitMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="16.0" prefHeight="75.0" prefWidth="279.0" stylesheets="@CSS/SantoriniLabel.css" text="Wait your Turn" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

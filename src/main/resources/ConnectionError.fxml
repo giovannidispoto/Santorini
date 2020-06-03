@@ -5,36 +5,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="380.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
+<AnchorPane id="resultRoot" prefHeight="344.0" prefWidth="400.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="152.0" fitWidth="133.0" layoutX="124.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="154.86111450195312" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="161.0" fitWidth="158.0" layoutX="154.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="138.4654541015625" AnchorPane.topAnchor="43.0">
          <image>
             <Image url="@Images/Decorations/Error.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="21.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0">
+      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="7.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="317.90291595458984" AnchorPane.topAnchor="268.0">
          <image>
             <Image url="@Images/Decorations/ErrorCloudSX.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="273.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="10.0">
+      <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="313.0" layoutY="298.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="276.0">
          <image>
             <Image url="@Images/Decorations/ErrorCloudDX.png" />
          </image>
       </ImageView>
-      <AnchorPane id="resultBox" layoutX="50.0" layoutY="101.0" prefHeight="160.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="101.0">
+      <AnchorPane id="resultBox" layoutX="70.0" layoutY="154.0" prefHeight="161.0" prefWidth="300.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="154.0">
          <children>
-            <Button id="exitButton" layoutX="90.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="103.0" />
-            <Label id="errorLabel" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="46.0" prefWidth="271.0" stylesheets="@CSS/SantoriniLabel.css" text="Something went wrong!" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="34.0">
+            <Button id="exitButton" layoutX="90.0" layoutY="95.0" mnemonicParsing="false" stylesheets="@CSS/SantoriniButton.css" text="Exit" />
+            <Label id="errorLabel" alignment="CENTER" layoutX="15.0" layoutY="25.0" prefHeight="46.0" prefWidth="271.0" stylesheets="@CSS/SantoriniLabel.css" text="Something went wrong!" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="25.0">
                <font>
                   <Font size="24.0" />
                </font></Label>
-            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-20.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0">
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="-21.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0">
                <image>
                   <Image url="@Images/Decorations/ErrorCloudSX.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="95.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.rightAnchor="-10.0">
+            <ImageView fitHeight="62.0" fitWidth="95.0" layoutX="239.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.rightAnchor="-10.0">
                <image>
                   <Image url="@Images/Decorations/ErrorCloudDX.png" />
                </image>

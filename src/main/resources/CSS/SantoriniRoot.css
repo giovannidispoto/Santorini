@@ -21,14 +21,14 @@
 }
 
 #resultRoot{
-    -fx-pref-height: 300;
-    -fx-pref-width: 380;
+    -fx-pref-height: 440;
+    -fx-pref-width: 440;
     -fx-background-color: transparent;
 }
 
 #playerDataRoot{
     -fx-pref-width: 144;
-    -fx-pref-height: 60;
+    -fx-pref-height: 50;
     -fx-background-color: transparent;
 }
 
