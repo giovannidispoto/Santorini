@@ -21,6 +21,14 @@ class RemoveBlockTest {
     final Worker w3 = new Worker(p2);
     final DeckReader reader = new DeckReader();
 
+    /** -REMOVE BLOCK Class Test-<br>
+     *  N.B:    These tests contain visual images of the battlefield and allow for a better understanding of the tests<br><br>
+     *  Simulation of a game between 2 players, with only one using this effect, number of workers involved = 3<br>
+     *  Are checked that the ares workerViews are correct and do not allow illegal movements (base)<br>
+     *  Initially the game is brought to the removal phase and a block is removed from a tower 3 -> 2<br>
+     *  All heights, worker presences and workerView are checked<br>
+     *  Finally, illegal moves are tried, such as: removing a dome, moving and building on a dome<br>
+     */
     @Test
     void removeBlock() throws IOException {
         //Preliminary stuff
@@ -164,6 +172,9 @@ class RemoveBlockTest {
         battlefield.cleanField();
     }
 
+    /**
+     * In this test ares won (from level 2 to 3) and it is checked that it has only consumed the movement phase
+     */
     @Test
     void removeBlockSubTest() throws IOException {
         //Preliminary stuff
@@ -248,7 +259,7 @@ class RemoveBlockTest {
         ╚══╩════╩═══╩════╩══════╝
          */
         //FirstAssertion
-        assertEquals(p1, m.winner);//Check if p1 with PAN it's the winner
+        assertEquals(p1, m.winner);//Check if p1 with ARES it's the winner
         assertEquals(w2, battlefield.getCell(2, 4).getWorker());    //check position
         assertEquals(3, battlefield.getCell(2, 4).getTower().getHeight());  //check build
         //Control correct Turn NotCompleted

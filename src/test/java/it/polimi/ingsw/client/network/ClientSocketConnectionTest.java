@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClientSocketConnectionTest {
 
+    /**
+     * Test ServerName Validator IP & Hostname<br>
+     * Must be run with an active and functioning internet connection !!!
+     */
     @Test
-    //Test ServerName Validator IP & Hostname
     void setServerNameTest() {
         ClientController clientController = new ClientController();
         ClientSocketConnection clientSocketConnection = new ClientSocketConnection( clientController);

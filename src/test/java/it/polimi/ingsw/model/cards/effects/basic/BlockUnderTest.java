@@ -84,6 +84,15 @@ class BlockUnderTest {
         battlefield.cleanField();
     }
 
+    /** -Extensive Class Test-<br>
+     *  N.B:    These tests contain visual images of the battlefield and allow for a better understanding of the tests<br><br>
+     *  Simulation of a game between 2 players, with only one using this effect, number of workers involved = 3<br>
+     *  Are checked that the zeus workerViews are correct and do not allow illegal movements (base)<br>
+     *  Initially we move zeus from level 3 to 3, checking not to win and then we try to build under the worker on level 3 (illegal = exception)<br>
+     *  The remaining movements and constructions are also controlled (because they are not completed)<br>
+     *  Then by changing shift, the worker moves from level 2 to 3 (he checks he has won), he checks the workerView (the battlefield represents the greatest number of constraints),
+     *  finally he tries to make an illegal movement where there is an opposing worker<br>
+     */
     @Test
     void extensiveTurnTest() throws IOException {
         //Preliminary stuff
