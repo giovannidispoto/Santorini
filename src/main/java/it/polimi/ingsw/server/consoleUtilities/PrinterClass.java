@@ -12,6 +12,12 @@ public final class PrinterClass {
     public static final String CLEAN = "\u001b[0J";
     public static final String INITIALIZE_SCREEN = "\033[0;0H";
 
+    public static final String jsonParseError = ansiRED + "FAILED-JsonParse" + ansiRESET;
+    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET;
+
+    public static final String socketClosedMessage = ansiBLUE+"Socket Closed"+ansiRESET;
+    public static final String serverReadyMessage = ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator;
+
     //Variable used in case of debugging, must be set to false in case of publication of the program
-    public static boolean printDebugInfo = false;
+    public static final boolean printDebugInfo = false;
 }

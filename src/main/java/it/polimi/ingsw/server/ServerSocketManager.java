@@ -41,7 +41,7 @@ public class ServerSocketManager {
         //open TCP port
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("Server socket ready on port: "+ansiGREEN+port+ansiRESET+nextLine);
-        System.out.println(ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator);
+        System.out.println(serverReadyMessage);
         //wait for connection
         while(true) {
             Socket socket = serverSocket.accept();

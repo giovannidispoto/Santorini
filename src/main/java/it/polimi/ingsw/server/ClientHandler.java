@@ -72,13 +72,13 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                             }
                         }, 10000);
                     }catch (IllegalStateException e){
-                        System.out.println(ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET);
+                        System.out.println(timerTimeoutError);
                     }
                 }
             }, pingDelay);
 
         }catch (IllegalStateException e){
-            System.out.println(ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET);
+            System.out.println(timerTimeoutError);
         }
     }
 
@@ -170,9 +170,10 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                                     try{
                                         CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
                                     }catch (RuntimeException gameException) {
-                                        //TODO: testing, exception during game shutdown all client
+                                        if(printDebugInfo)  System.out.println(gameException.getMessage());
                                         System.out.println(ansiMAGENTA+"!!!-> Player: "+lobbyManager.getPlayerNickName(this)+" Disconnected From The Game by Server, Cause: Game Tampering <-!!!"+ansiRESET);
                                         playerDisconnected();
+                                        //TODO: testing, exception during game shutdown all client
                                     }
                                 }
                         );
@@ -180,7 +181,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                 }
             }
         }catch (JsonParseException e) {
-            System.out.println(ansiRED + "FAILED-JsonParse" + ansiRESET);
+            System.out.println(jsonParseError);
         }
     }
 

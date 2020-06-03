@@ -86,7 +86,7 @@ public class ClientThread implements Runnable {
         }
         in.close();
         out.close();
-        System.out.println(ansiBLUE+"Socket Closed"+ansiRESET);
+        System.out.println(socketClosedMessage);
     }
 
     /**
