@@ -185,8 +185,14 @@ public class BattlefieldView extends Scene {
                 GUIController.getController().skipStepRequest();
                 skipButton.setDisable(true);
                 Platform.runLater(()->actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
-                callRenderWorkerView();
+                if(GUIController.getController().getCurrentStep() != Step.END)
+                     callRenderWorkerView();
+
                 removeWorkerAvailableCell();
+
+                if(GUIController.getController().getCurrentStep() == Step.END)
+                    restartTurn();
+
             } catch (SantoriniException e) {
                 System.out.println(e.getMessage());
             }
