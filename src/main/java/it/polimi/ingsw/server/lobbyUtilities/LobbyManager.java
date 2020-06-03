@@ -16,6 +16,8 @@ public class LobbyManager {
     private final Map<String, ClientHandler> playersNickNameMap;
     private final Map<ClientHandler, String> playersHandlerMap;
     private final Map<UUID, Lobby> lobbyLiveMap;
+    private final int maxNumLobbiesManaged;
+    private int waitingLobbies = 0;
 
     /**
      * Lobby Manager builder, in addition to initializing it here, you can enter the sizes of the lobbies existing on the server
@@ -28,13 +30,14 @@ public class LobbyManager {
         //Initialize Server Possibles Lobbies (null = default)
         this.existingLobbiesMap.put(2,null);
         this.existingLobbiesMap.put(3,null);
+        this.maxNumLobbiesManaged = 2;
     }
 
     //----------    LOBBY MANAGEMENT
 
 
     /**
-     * Request function to add player to a lobby, check that the nickname is unique and at least length 1,
+     * Request function to add player to a lobby, check that the nickname is unique, if the maximum number of active lobbies has not been reached and at least nickName length 1,
      * that the size of the chosen lobby is implemented on the server (this function does not differentiate the two errors,
      * if it returns false it can only be said that the player has not been added to the lobby),
      * the handler and nickname are linked and uniquely represent a player.
@@ -51,11 +54,11 @@ public class LobbyManager {
         else
             return false;
         //Check if the nickname has already been registered
-        if(null == playersNickNameMap.get(nickName) && isValidLobbySize(lobbySize)){
+        if(null == playersNickNameMap.get(nickName) && isValidLobbySize(lobbySize) && !isReachedMaxNumLobbies()){
+            System.out.println(ansiGREEN + "Player_Registered: " + nickName + ansiRESET);
             this.playersNickNameMap.put(nickName, playerHandler);
             this.playersHandlerMap.put(playerHandler, nickName);
             this.putPlayerInLobby(lobbySize, nickName, playerHandler);
-            System.out.println(ansiGREEN + "Player_Registered: " + nickName + ansiRESET);
             return true;
         }
         else {
@@ -76,6 +79,7 @@ public class LobbyManager {
             //Re-set new Lobby
             this.existingLobbiesMap.put(lobbySize, new Lobby(new Controller(), lobbySize));
             this.lobbyLiveMap.put(this.existingLobbiesMap.get(lobbySize).getLobbyID(), this.existingLobbiesMap.get(lobbySize));
+            this.waitingLobbies++;
         }
 
         if (this.existingLobbiesMap.get(lobbySize).setPlayerInLobby(nickName, playerHandler)) {
@@ -92,6 +96,8 @@ public class LobbyManager {
             System.out.println(ansiBLUE+"Players: "+this.existingLobbiesMap.get(lobbySize).getPlayersNickName()+ansiRESET);
             //Set to default
             this.existingLobbiesMap.put(lobbySize, null);
+            this.waitingLobbies--;
+            System.out.println(ansiGREEN+"ACTIVE_LOBBIES: "+activeLobbies()+ansiRESET);
         }
     }
 
@@ -131,6 +137,7 @@ public class LobbyManager {
         this.lobbyLiveMap.get(lobbyID).deleteAll();
         this.lobbyLiveMap.remove(lobbyID);
         System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
+        System.out.println(ansiGREEN+"ACTIVE_LOBBIES: "+activeLobbies()+ansiRESET);
     }
 
     /**
@@ -201,5 +208,21 @@ public class LobbyManager {
      */
     public String getPlayerNickName(ClientHandler playerHandler){
         return this.playersHandlerMap.get(playerHandler);
+    }
+
+    /**
+     * Informs if the server has reached the maximum number of ACTIVE lobbies running
+     * @return true if the running lobbies have reached the maximum number
+     */
+    public boolean isReachedMaxNumLobbies(){
+        return activeLobbies() >= this.maxNumLobbiesManaged;
+    }
+
+    /**
+     * Returns the number of lobbies currently active on the server, those on hold are not counted
+     * @return lobbies currently active
+     */
+    private int activeLobbies(){
+        return (lobbyLiveMap.size()-this.waitingLobbies);
     }
 }

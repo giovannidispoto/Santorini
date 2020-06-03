@@ -40,12 +40,33 @@ public class ClientController {
     private String actualPlayer;
     private List<PlayerInterface> players;
     //--    Lobby
-    private boolean validNick;          //Indicates if your nickname is valid
-    private boolean lobbyState;         //Indicates if you are registered with a lobby
-    private boolean fullLobby;          //Indicates if the server is already busy with a game
-    private String godPlayer;           //Player choosing godCards from cardsDeck
-    private List<String> godCards;      //Contains Cards chosen by GodPlayer, from which you can choose your card
-    private Deck cardsDeck;             //Deck sent by the server, containing the playable cards in this lobby
+    /**
+     * Indicates whether the nickname has been accepted by the server, or it is necessary to choose it again
+     */
+    private boolean validNick;
+    /**
+     * Indicates whether the chosen lobby is valid on the server to which the request was sent
+     */
+    private boolean lobbyState;
+    /**
+     * Indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum number
+     */
+    private boolean fullLobby;
+    /**
+     * Player choosing godCards (for all players) from cardsDeck
+     */
+    private String godPlayer;
+    /**
+     * Contains Cards chosen by GodPlayer, from which each player can choose his card
+     */
+    private List<String> godCards;
+    /**
+     * Deck sent by the server, containing the playable cards in this lobby
+     */
+    private Deck cardsDeck;
+    /**
+     * Lobby size the player attempted to register or register with (depends on lobbyState)
+     */
     private int currentLobbySize;
     //--    Utils - Locks for Wait & Notify
     private final WaitManager waitManager;
