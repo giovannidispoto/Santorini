@@ -27,6 +27,9 @@ public class SelectCardView extends Scene {
         Task<Void> wait = null;
         Task<Void> wait1 = null;
         Task<Void> wait2 = null;
+        Button selectButton = ((Button) root.lookup("#selectButton"));
+        //default disabled button
+        selectButton.setDisable(true);
 
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
@@ -41,14 +44,18 @@ public class SelectCardView extends Scene {
                 listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        if (map.values().stream().filter(e -> e == true).count() < GUIController.getController().getCurrentLobbySize())
+                        if (map.values().stream().filter(e -> e == true).count() < GUIController.getController().getCurrentLobbySize()) {
                             map.put(t1, true);
+                        }
+                        if(map.values().stream().filter(e -> e == true).count() ==  GUIController.getController().getCurrentLobbySize()){
+                            selectButton.setDisable(false);
+                        }
                         listView.refresh();
                     }
                 });
 
 
-            ((Button) root.lookup("#selectButton")).setOnMouseClicked(
+            selectButton.setOnMouseClicked(
                     e->{
                         List<String> cards = new LinkedList<>();
                         for(String card : map.keySet()){
@@ -83,14 +90,16 @@ public class SelectCardView extends Scene {
                 listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        if (map.values().stream().filter(e -> e == true).count() == 0)
+                        if (map.values().stream().filter(e -> e == true).count() == 0) {
                             map.put(t1, true);
+                            selectButton.setDisable(false);
+                        }
                         //refresh list
                         listView.refresh();
                     }
                 });
 
-            ((Button) root.lookup("#selectButton")).setOnMouseClicked(
+            selectButton.setOnMouseClicked(
                     e->{
                         List<String> cards = new LinkedList<>();
                         for(String card : map.keySet()){
