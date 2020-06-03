@@ -162,7 +162,7 @@ public class BattlefieldView extends Scene {
                         }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
                             Platform.runLater(() -> guiBuilder.showLose());
                         }else{
-                            System.out.println("Generic Error");
+                            Platform.runLater(() -> guiBuilder.showError());
                         }
                         executor.shutdown();
                         Thread.currentThread().interrupt();

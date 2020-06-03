@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="380.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="META-INF.ConnectionError">
+<AnchorPane id="resultRoot" prefHeight="300.0" prefWidth="380.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
       <ImageView fitHeight="152.0" fitWidth="133.0" layoutX="124.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="154.86111450195312" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="0.0">
          <image>

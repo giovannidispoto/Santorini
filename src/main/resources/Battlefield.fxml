@@ -76,6 +76,6 @@
             <Image url="@Images/Decorations/BlurBoard.png" />
          </image>
       </ImageView>
-      <BorderPane id="paneResult" layoutX="327.0" layoutY="91.0" prefHeight="440.0" prefWidth="440.0" visible="false" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="91.0" />
+      <AnchorPane id="paneResult" layoutX="284.0" layoutY="139.0" prefHeight="345.0" prefWidth="528.0" />
     </children>
 </AnchorPane>
