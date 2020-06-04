@@ -1,9 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.ServerMain;
-import it.polimi.ingsw.server.actions.data.BasicMessageResponse;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
@@ -11,15 +9,16 @@ import it.polimi.ingsw.model.parser.DeckReader;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.Step;
 import it.polimi.ingsw.server.actions.data.*;
+import it.polimi.ingsw.server.consoleUtilities.PrinterClass;
+import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 import it.polimi.ingsw.server.observers.ObserverPlayers;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiGREEN;
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.ansiRESET;
 
 /**
  * Controller Class
@@ -321,6 +320,7 @@ public class Controller implements ObserverPlayers {
         if(match.getMatchPlayers().size() == 1){
             match.declareWinner(match.getMatchPlayers().get(0));
             handlers.get(match.getMatchPlayers().get(0).getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youWin", null)));
+            PrinterClass.getPrinterInstance().printWinner(match.getWinner().getPlayerNickname());
         }
     }
 
@@ -390,7 +390,7 @@ public class Controller implements ObserverPlayers {
                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
         }
 
-        System.out.println(ansiGREEN+"Winner: "+ match.getWinner().getPlayerNickname()+ansiRESET);
+        PrinterClass.getPrinterInstance().printWinner(match.getWinner().getPlayerNickname());
         this.lobbyManager.gameEnded(this.lobbyID);
     }
 

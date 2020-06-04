@@ -66,7 +66,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
             }, pingDelay);
 
         }catch (IllegalStateException e){
-            consolePrinter.printMessage(PrinterClass.timerTimeoutError);
+            consolePrinter.printMessage(PrinterClass.timerTimeoutError+" clockPingTimer");
         }
     }
 
@@ -82,7 +82,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                 }
             }, 10000);
         }catch (IllegalStateException e){
-            consolePrinter.printMessage(PrinterClass.timerTimeoutError);
+            consolePrinter.printMessage(PrinterClass.timerTimeoutError+" clientTimeoutTimer");
         }
     }
 
@@ -158,17 +158,19 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * Process command received from socket, only if the client is not blocked by the server<br>
      * If the player makes an illegal move, the game is ended, considering him as responsible<br>
      * (Do not send the ping / pong message)
-     * @param m message
+     * @param message containing the command
      */
-    public void process(String m){
+    public void process(String message){
         try {
             if (!isMustStopExecution()) {
                 synchronized (lobbyManager) {
-                    if (m.matches(NetworkUtilities.addPlayerRegex) && !isLobbyStarted()) {
-                        CommandFactory.from(m).execute(null, this);
+                    if (message.matches(NetworkUtilities.addPlayerRegex) && !isLobbyStarted()) {
+                        //In the lobby phase the controller is not yet present therefore the only command that can be executed is the addPlayer
+                        CommandFactory.from(message).execute(null, this);
 
                     } else if (isLobbyStarted()) {
-                        this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute( () -> executeCommandInMatch(m) );
+                        //In the match phase the commands are executed by the pool that controls the match
+                        this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute( () -> executeCommandInMatch(message) );
                     }
                 }
             }
@@ -177,10 +179,15 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         }
     }
 
+    /**
+     * Executes all commands in the match phase (through the controller)
+     * @param message   containing the command
+     */
     private void executeCommandInMatch(String message){
         try{
             CommandFactory.from(message).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
         }catch (RuntimeException gameException) {
+            //Game  Tampering
             consolePrinter.printDebugMessage(gameException.getMessage());
             consolePrinter.printGameTampering(getNickName());
             playerDisconnected();
@@ -240,33 +247,55 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         return lobbyManager;
     }
 
+    /**
+     * Get the id of the lobby where the handler was registered
+     * @return  LOBBY ID
+     */
     public UUID getLobbyID() {
         return lobbyID;
     }
 
-    public boolean isMustStopExecution() {
-        return mustStopExecution;
-    }
-
-    public void setMustStopExecution() {
-        this.mustStopExecution = true;
-    }
-
+    /**
+     * Set the id of the lobby where the handler was registered
+     * @param lobbyID   LOBBY ID
+     */
     public void setLobbyID(UUID lobbyID) {
         this.lobbyID = lobbyID;
     }
 
+    /**
+     * Informs the caller if the handler is forced by the server to block its status and all ongoing executions
+     * @return true if the Handler is blocked
+     */
+    public boolean isMustStopExecution() {
+        return mustStopExecution;
+    }
+
+    /**
+     * Informs the handler if it is forced by the server to block its status and all ongoing executions
+     */
+    public void setMustStopExecution() {
+        this.mustStopExecution = true;
+    }
+
+    /**
+     * Informs the handler that the lobby has been started
+     */
     public void setLobbyStart() {
         this.lobbyStarted = true;
     }
 
+    /**
+     * Informs if the handler is in a match state (the lobby has been started)
+     * @return true if the lobby has been started
+     */
     public boolean isLobbyStarted() {
         return lobbyStarted;
     }
 
     /**
-     * Get the nickName registered on the server, if it is not registered an error message is returned
-     * @return nickName or Not-Registered
+     * Get the nickName registered on the server, if it is not registered a message is returned
+     * @return nickName or Not_Registered message
      */
     public String getNickName(){
         return Objects.requireNonNullElse(getLobbyManager().getPlayerNickName(this), "Not_Registered");

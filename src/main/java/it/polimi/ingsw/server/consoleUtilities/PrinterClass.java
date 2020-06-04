@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.consoleUtilities;
 import java.util.UUID;
 
 public class PrinterClass {
-    private static PrinterClass instance = null;
+    private static final PrinterClass instance = new PrinterClass();
 
     public static final String ansiRED      = "\u001B[31m";
     public static final String ansiMAGENTA  = "\u001B[95m";
@@ -17,7 +17,7 @@ public class PrinterClass {
     public static final String INITIALIZE_SCREEN = "\033[0;0H";
 
     public static final String jsonParseError = ansiRED + "FAILED-JsonParse" + ansiRESET;
-    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_Failed" + ansiRESET;
+    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_NotStarted" + ansiRESET;
 
     public static final String socketClosedMessage = ansiBLUE+"Socket Closed"+ansiRESET;
     public static final String serverReadyMessage = ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator;
@@ -33,9 +33,6 @@ public class PrinterClass {
      * @return PrinterClass object
      */
     public static PrinterClass getPrinterInstance() {
-        if(instance == null)
-            instance = new PrinterClass();
-
         return instance;
     }
 
@@ -54,19 +51,23 @@ public class PrinterClass {
     }
 
     public void printClientDeleted(String nickName){
-        System.out.println(ansiRED+"Client-Deleted_NickName: " + nickName +ansiRESET);
+        System.out.println(ansiRED + "Client-Deleted_NickName: " + nickName + ansiRESET);
     }
 
     public void printPlayerEliminated(String nickName, UUID lobbyID){
-        System.out.println(ansiBLUE+"Player: "+nickName+" Eliminated from the game: "+lobbyID+ansiRESET);
+        System.out.println(ansiBLUE + "Player: " + nickName + " Eliminated from the game: " + lobbyID + ansiRESET);
     }
 
     public void printGameEnd(String nickName){
-        System.out.println(ansiRED+"GameEnd_NickName: " + nickName +ansiRESET);
+        System.out.println(ansiRED + "GameEnd_NickName: " + nickName + ansiRESET);
     }
 
     public void printGameTampering(String nickName){
-        System.out.println(ansiMAGENTA+"!!!-> Player: "+nickName+" Disconnected From The Game by Server, Cause: Game Tampering <-!!!"+ansiRESET);
+        System.out.println(ansiMAGENTA + "!!!-> Player: " + nickName + " Disconnected From The Game by Server, Cause: Game Tampering <-!!!" + ansiRESET);
+    }
+
+    public void printWinner(String nickName){
+        System.out.println(ansiGREEN + "Winner: " + nickName + ansiRESET);
     }
 
     /**
