@@ -28,7 +28,6 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     private final ClientThread clientThread;
     private final Stack<String> messageQueue;
     private Timer clientTimeoutTimer;
-    private Timer clockPingTimer;
     private boolean mustStopExecution;
 
     /**
@@ -42,38 +41,33 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
        this.lobbyStarted = false;
        this.clientThread = clientThread;
        this.messageQueue = new Stack<>();
-       this.clientTimeoutTimer = new Timer();
        this.mustStopExecution = false;
     }
 
     /**
      * Execute ping to the client (with a certain cadence: pingDelay), expecting a feedback from client before timeout,
      * If the timer expires the client is considered disconnected
-     * @param pingDelay milliseconds after which to ping (clockPingTimer), if <= 0 : set to default value = 5000
+     * @param pingDelay milliseconds after which to ping (clockPingTimer), if pingDelay <= 0 then is set to default value = 5000ms
      */
     public void setTimer(int pingDelay){
-        clockPingTimer = new Timer();
+        clientTimeoutTimer = new Timer();
         //check if it is necessary to set the default value
         if (pingDelay <= 0)
             pingDelay = 5000;
-        try {
-            //ping after waiting for : pingDelay (ms)
-            clockPingTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    startPingSchedule();
-                }
-            }, pingDelay);
-
-        }catch (IllegalStateException e){
-            consolePrinter.printMessage(PrinterClass.timerTimeoutError+" clockPingTimer");
-        }
+        //ping after waiting for : pingDelay (ms)
+        clientTimeoutTimer.schedule(new NewPingTimeoutTask(), pingDelay);
     }
 
-    private void startPingSchedule(){
-        clientTimeoutTimer = new Timer();
-        response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.PING_ACTION, null)));
-        try {
+    /**
+     * This TimerTask must be instantiated every time, Operation:<br>
+     * Sends a ping message immediately to the client, then wait 10s, if within this time the timer is not canceled,
+     * the method that notifies the client disconnection is called.
+     */
+    private class NewPingTimeoutTask extends TimerTask {
+
+        @Override
+        public void run() {
+            response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.PING_ACTION, null)));
             clientTimeoutTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -81,17 +75,14 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     playerDisconnected();
                 }
             }, 10000);
-        }catch (IllegalStateException e){
-            consolePrinter.printMessage(PrinterClass.timerTimeoutError+" clientTimeoutTimer");
         }
     }
 
     /**
-     * Reset Timeout set by ping request
+     * Cancel current Timeout set by ping request
      */
-    public void resetTimeout(){
+    public void cancelPingTimeoutTimer(){
         clientTimeoutTimer.cancel();
-        clockPingTimer.cancel();
     }
 
     /**
@@ -151,7 +142,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     private void stopClient(){
         setMustStopExecution();
         clientThread.socketShutdown();
-        resetTimeout();
+        cancelPingTimeoutTimer();
     }
 
     /**

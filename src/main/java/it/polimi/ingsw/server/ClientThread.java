@@ -111,7 +111,7 @@ public class ClientThread implements Runnable {
     }
 
     private void replyPongMessage(){
-        clientHandler.resetTimeout();
+        clientHandler.cancelPingTimeoutTimer();
         //Set timer to default value
         clientHandler.setTimer(0);
     }
