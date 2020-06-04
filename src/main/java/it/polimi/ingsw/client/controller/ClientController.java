@@ -92,7 +92,7 @@ public class ClientController {
         this.controllerThread = Thread.currentThread();
         this.gameException = new SantoriniException(ExceptionMessages.genericError);
         this.gameState = GameState.START;
-        this.loggerIO = start_IO_Logger();
+        this.loggerIO = start_IO_Logger(false);
     }
 
     //------    VIEW - UTILS
@@ -577,11 +577,17 @@ public class ClientController {
      *
      *  If it is impossible to create a new log file, execution continues with an error
      *
+     * @param uniqueness boolean that allows you to generate always different files (true)
      * @return  Logger interface on which messages can be sent (info, severe etc.)
      */
-    public Logger start_IO_Logger(){
+    public Logger start_IO_Logger(boolean uniqueness){
+        int randomHash = Math.abs(UUID.randomUUID().hashCode());
+        String fileID = "groupAM28";
         Logger logger = Logger.getLogger("SantoriniClientLogger");
         FileHandler fileHandler;
+
+        if(uniqueness)
+            fileID = Integer.toString(randomHash);
 
         try {
             // This block configure the logger with handler and formatter
@@ -589,7 +595,7 @@ public class ClientController {
             File dir = f.getAbsoluteFile().getParentFile();
             String path = dir.toString();
             //System.out.println(path); //debug
-            fileHandler = new FileHandler(path + "/Client_" + Math.abs(UUID.randomUUID().hashCode()) + "_SantoriniLogFile.log");
+            fileHandler = new FileHandler(path + "/" + fileID + "_SantoriniMatch.log");
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             // Set the preferred format

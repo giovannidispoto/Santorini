@@ -4,22 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import it.polimi.ingsw.server.actions.CommandFactory;
 import it.polimi.ingsw.server.actions.data.*;
+import it.polimi.ingsw.server.consoleUtilities.PrinterClass;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 import it.polimi.ingsw.server.observers.ObserverBattlefield;
 import it.polimi.ingsw.server.observers.ObserverWorkerView;
 
-import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
-
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
+import java.util.*;
 
 /**
  * ClientHandler execute commands from socket and send response to client.
  * Every Thread has his own ClientHandler, such as a Virtual Client
  */
 public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
+    /**
+     * Server system printer
+     */
+    private final PrinterClass consolePrinter;
     //Lobby Data
     private final LobbyManager lobbyManager;
     private boolean lobbyStarted;
@@ -37,6 +37,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * @param clientThread socket thread
      */
     public ClientHandler(LobbyManager lobbyManager, ClientThread clientThread){
+       this.consolePrinter = PrinterClass.getPrinterInstance();
        this.lobbyManager = lobbyManager;
        this.lobbyStarted = false;
        this.clientThread = clientThread;
@@ -51,8 +52,6 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * @param pingDelay milliseconds after which to ping (clockPingTimer), if <= 0 : set to default value = 5000
      */
     public void setTimer(int pingDelay){
-        ClientHandler playerHandler = this;
-        clientTimeoutTimer = new Timer();
         clockPingTimer = new Timer();
         //check if it is necessary to set the default value
         if (pingDelay <= 0)
@@ -62,23 +61,28 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
             clockPingTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    response(new Gson().toJson(new BasicMessageResponse("ping", null)));
-                    try {
-                        clientTimeoutTimer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                System.out.println(ansiRED + "Timeout_" + ansiRESET + lobbyManager.getPlayerNickName(playerHandler) + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution());
-                                playerDisconnected();
-                            }
-                        }, 10000);
-                    }catch (IllegalStateException e){
-                        System.out.println(timerTimeoutError);
-                    }
+                    startPingSchedule();
                 }
             }, pingDelay);
 
         }catch (IllegalStateException e){
-            System.out.println(timerTimeoutError);
+            consolePrinter.printMessage(PrinterClass.timerTimeoutError);
+        }
+    }
+
+    private void startPingSchedule(){
+        clientTimeoutTimer = new Timer();
+        response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.PING_ACTION, null)));
+        try {
+            clientTimeoutTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    consolePrinter.printPingTimeout(getNickName(), lobbyStarted, isMustStopExecution());
+                    playerDisconnected();
+                }
+            }, 10000);
+        }catch (IllegalStateException e){
+            consolePrinter.printMessage(PrinterClass.timerTimeoutError);
         }
     }
 
@@ -98,7 +102,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     public void playerDisconnected(){
         synchronized (lobbyManager) {
             if (!isMustStopExecution()) {
-                System.out.println(ansiRED + "Client-Disconnected-Suddenly_NickName: " + getLobbyManager().getPlayerNickName(this) + ansiRESET);
+                consolePrinter.printClientDisconnected(getNickName());
 
                 if (isLobbyStarted()) {
                     //end game for all in the lobby
@@ -106,7 +110,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
                 } else {
                     //remove from lobby
-                    System.out.println(ansiRED + "Player-Waiting-LobbyStart-Removed: " + lobbyManager.getPlayerNickName(this) + ansiRESET);
+                    consolePrinter.printPlayerWaitingRemoved(getNickName());
                     stopClient();
                     lobbyManager.removePlayer(this);
                 }
@@ -119,9 +123,9 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      * the handler will take care of notifying the client and closing the connection
      */
     public void disconnectionShutDown(){
-            response(new Gson().toJson(new BasicMessageResponse("serverError", new BasicErrorMessage("One Client Disconnected - Game Interrupted"))));
+            response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.SERVER_ERROR_ACTION, new BasicErrorMessage(NetworkUtilities.DISCONNECTION_ERROR))));
             stopClient();
-            System.out.println(ansiRED+"Client-Deleted_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
+            consolePrinter.printClientDeleted(getNickName());
     }
 
     /**
@@ -129,7 +133,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     public void playerIsEliminated(){
         setMustStopExecution();
-        System.out.println(ansiBLUE+"Player: "+lobbyManager.getPlayerNickName(this)+" Eliminated from the game: "+lobbyID+ansiRESET);
+        consolePrinter.printPlayerEliminated(getNickName(),lobbyID);
     }
 
     /**
@@ -138,7 +142,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     public void gameEnded(){
         stopClient();
-        System.out.println(ansiRED+"GameEnd_NickName: " + getLobbyManager().getPlayerNickName(this) +ansiRESET);
+        consolePrinter.printGameEnd(getNickName());
     }
 
     /**
@@ -160,28 +164,26 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         try {
             if (!isMustStopExecution()) {
                 synchronized (lobbyManager) {
-                    if (m.contains("addPlayer") && !isLobbyStarted()) {
+                    if (m.matches(NetworkUtilities.addPlayerRegex) && !isLobbyStarted()) {
                         CommandFactory.from(m).execute(null, this);
 
                     } else if (isLobbyStarted()) {
-
-                        this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute(
-                                () -> {
-                                    try{
-                                        CommandFactory.from(m).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
-                                    }catch (RuntimeException gameException) {
-                                        if(printDebugInfo)  System.out.println(gameException.getMessage());
-                                        System.out.println(ansiMAGENTA+"!!!-> Player: "+lobbyManager.getPlayerNickName(this)+" Disconnected From The Game by Server, Cause: Game Tampering <-!!!"+ansiRESET);
-                                        playerDisconnected();
-                                        //TODO: testing, exception during game shutdown all client
-                                    }
-                                }
-                        );
+                        this.lobbyManager.getExecutorByLobbyID(this.lobbyID).execute( () -> executeCommandInMatch(m) );
                     }
                 }
             }
         }catch (JsonParseException e) {
-            System.out.println(jsonParseError);
+            consolePrinter.printMessage(PrinterClass.jsonParseError);
+        }
+    }
+
+    private void executeCommandInMatch(String message){
+        try{
+            CommandFactory.from(message).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
+        }catch (RuntimeException gameException) {
+            consolePrinter.printDebugMessage(gameException.getMessage());
+            consolePrinter.printGameTampering(getNickName());
+            playerDisconnected();
         }
     }
 
@@ -210,9 +212,8 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     @Override
     public void update(CellInterface[][] cellInterfaces) {
-        this.response(new Gson().toJson(new BasicMessageResponse("battlefieldUpdate", new CellMatrixResponse(cellInterfaces))));
-
-        if(printDebugInfo)  System.out.println("Battlefield Updated!");
+        this.response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.BATTLEFIELD_UPDATE_ACTION, new CellMatrixResponse(cellInterfaces))));
+        consolePrinter.printDebugMessage("Battlefield Updated!");
     }
 
     /**
@@ -221,9 +222,8 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
      */
     @Override
     public void update(boolean[][] workerView) {
-        this.response(new Gson().toJson(new BasicMessageResponse("workerViewUpdate", new WorkerViewResponse(workerView))));
-
-        if(printDebugInfo)  System.out.println("WorkerView Updated!");
+        this.response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.WORKERVIEW_UPDATE_ACTION, new WorkerViewResponse(workerView))));
+        consolePrinter.printDebugMessage("WorkerView Updated!");
     }
 
     /**
@@ -262,6 +262,14 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     public boolean isLobbyStarted() {
         return lobbyStarted;
+    }
+
+    /**
+     * Get the nickName registered on the server, if it is not registered an error message is returned
+     * @return nickName or Not-Registered
+     */
+    public String getNickName(){
+        return Objects.requireNonNullElse(getLobbyManager().getPlayerNickName(this), "Not_Registered");
     }
 
 }

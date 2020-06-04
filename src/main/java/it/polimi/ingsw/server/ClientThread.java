@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.consoleUtilities.PrinterClass;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 
 import java.io.IOException;
@@ -7,8 +8,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
 
 /**
  *
@@ -19,6 +18,9 @@ public class ClientThread implements Runnable {
     private ClientHandler clientHandler;
     private PrintWriter out;
     private Scanner in;
+    /**
+     * Indicates the status required by the server, if true the socket must turn off without touching other parts of the program
+     */
     private boolean socketShutdown;
 
     /**
@@ -47,18 +49,18 @@ public class ClientThread implements Runnable {
             while (isNotSocketShutdown()) {
                 String line = in.nextLine();
                 if (isNotSocketShutdown()) {
-                    if(line.contains("{\"action\":\"pong\"}")){
-                        clientHandler.resetTimeout();
-                        clientHandler.setTimer(0);
+                    //Special treatment for ping messages, processed at the lowest possible level
+                    if(line.matches(NetworkUtilities.pongRegex)){
+                        replyPongMessage();
                     }else {
+                        printDebugInfo(line);
                         clientHandler.process(line);
-                        if(printDebugInfo) System.out.println("Received: " + line + " From:" + clientHandler.getLobbyManager().getPlayerNickName(clientHandler));
                     }
 
                 }
             }
         }catch (IOException | NoSuchElementException e){
-            if(isNotSocketShutdown() && !clientHandler.isMustStopExecution())
+            if(isNotSocketShutdown())
                 clientHandler.playerDisconnected();
         }
         socketShutdown();
@@ -71,22 +73,6 @@ public class ClientThread implements Runnable {
     public void send(String message){
         out.println(message);
         out.flush();
-    }
-
-    /**
-     * Close the socket input and output and close socket
-     */
-    private void closeSocket(){
-        if(!socket.isClosed()){
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        in.close();
-        out.close();
-        System.out.println(socketClosedMessage);
     }
 
     /**
@@ -106,5 +92,31 @@ public class ClientThread implements Runnable {
      */
     public boolean isNotSocketShutdown() {
         return !socketShutdown;
+    }
+
+    /**
+     * Close the socket and input and output
+     */
+    private void closeSocket(){
+        if(!socket.isClosed()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        in.close();
+        out.close();
+        PrinterClass.getPrinterInstance().printMessage(PrinterClass.socketClosedMessage);
+    }
+
+    private void replyPongMessage(){
+        clientHandler.resetTimeout();
+        //Set timer to default value
+        clientHandler.setTimer(0);
+    }
+
+    private void printDebugInfo(String line){
+        PrinterClass.getPrinterInstance().printSocketMessage(line, clientHandler.getNickName());
     }
 }

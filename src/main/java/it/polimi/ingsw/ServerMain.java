@@ -25,11 +25,14 @@ public class ServerMain
         System.out.print(INITIALIZE_SCREEN);
         System.out.print(CLEAN);
         System.out.println(consoleSeparator);
+
         //Start Server Testing - Essential Files
         serverFileManager.testFileReading();
+        //Start Server Reading - serverSettings from File
         serverFileManager.readServerSettings();
         ServerSocketManager serverSocketManager = new ServerSocketManager(serverFileManager.getServerPort(), new LobbyManager(serverFileManager.getMaxNumLobbiesManaged()));
 
+        //On a separate pool starts reading from the console (to end the program immediately)
         ServerExit.execute(() -> {
             Scanner inConsole = new Scanner(System.in);
             do{
@@ -40,6 +43,7 @@ public class ServerMain
 
         System.out.println(consoleSeparator);
 
+        //Start the server socket
         try {
             serverSocketManager.startServerSocket();
         } catch(IOException e) {
