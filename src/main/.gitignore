@@ -38,6 +38,10 @@
 #client/controller
 !java/it/polimi/ingsw/client/controller/
 !java/it/polimi/ingsw/client/controller/*.java
+!java/it/polimi/ingsw/client/controller/fileUtilities/
+!java/it/polimi/ingsw/client/controller/fileUtilities/*.java
+!java/it/polimi/ingsw/client/controller/fileUtilities/regex/
+!java/it/polimi/ingsw/client/controller/fileUtilities/regex/*.java
 #client/gui
 !java/it/polimi/ingsw/client/gui/
 !java/it/polimi/ingsw/client/gui/*.java
