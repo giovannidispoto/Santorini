@@ -23,7 +23,6 @@
 #resultRoot{
     -fx-pref-height: 440;
     -fx-pref-width: 440;
-    -fx-background-color: transparent;
 }
 
 #playerDataRoot{
