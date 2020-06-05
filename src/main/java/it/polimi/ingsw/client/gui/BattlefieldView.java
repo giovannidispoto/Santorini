@@ -45,6 +45,7 @@ public class BattlefieldView extends Scene {
     private Map<Pair<Integer, Integer>, BattlefieldCell> battlefieldMap;
     private Map<Step, String> messageStep;
     private Button showCardButton;
+    private Pair<Integer, Integer> selectedWorker = new Pair<>(-1,-1);
     private Button skipButton;
 
 
@@ -384,6 +385,12 @@ public class BattlefieldView extends Scene {
                                             //clean old workerView
                                             removeWorkerAvailableCell();
 
+                                            //enable other worker click
+                                            enableClick();
+                                            node.setDisable(true);
+
+                                            selectedWorker = new Pair<>(finalI,finalJ);
+
                                             Platform.runLater(() -> actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
                                             GUIController.getController().selectWorkerRequest(finalI, finalJ);
 
@@ -430,6 +437,7 @@ public class BattlefieldView extends Scene {
 
             if(GUIController.getController().getCurrentStep() == Step.MOVE){
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                skipButton.setDisable(true);
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.MOVE_SPECIAL){
@@ -449,6 +457,7 @@ public class BattlefieldView extends Scene {
             }
             if(GUIController.getController().getCurrentStep() == Step.BUILD) {
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                skipButton.setDisable(true);
                 callRenderWorkerView();
             }
             if(GUIController.getController().getCurrentStep() == Step.REMOVE){
