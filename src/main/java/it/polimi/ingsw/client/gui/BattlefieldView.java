@@ -158,7 +158,7 @@ public class BattlefieldView extends Scene {
                     }catch( InterruptedException e){
                         //If the user if winner show relative view
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
-                            Platform.runLater(() -> guiBuilder.showWin());
+                            Platform.runLater(() -> guiBuilder.showLose());
                         }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
                             Platform.runLater(() -> guiBuilder.showLose());
                         }else{
@@ -378,8 +378,11 @@ public class BattlefieldView extends Scene {
                                     //if request interaction, disable click on workers
                                    if(requestInteraction)
                                        node.setDisable(true);
+
                                     node.setOnMouseClicked(event -> {
                                         try {
+                                            //clean old workerView
+                                            removeWorkerAvailableCell();
 
                                             Platform.runLater(() -> actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
                                             GUIController.getController().selectWorkerRequest(finalI, finalJ);
@@ -422,7 +425,9 @@ public class BattlefieldView extends Scene {
 
     private void handleWorkerViewselection(int i, int j){
         try {
+
             GUIController.getController().playStepRequest(i, j);
+
             if(GUIController.getController().getCurrentStep() == Step.MOVE){
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
@@ -448,12 +453,16 @@ public class BattlefieldView extends Scene {
             }
             if(GUIController.getController().getCurrentStep() == Step.REMOVE){
                 //code for remove
+                actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
+                callRenderWorkerView();
             }
+
             if(GUIController.getController().getCurrentStep() == Step.END) {
-                removeWorkerAvailableCell();
-                reloadBattlefield();
+                //reloadBattlefield();
+                System.out.println("Reached end");
                 restartTurn();
             }
+
             removeWorkerAvailableCell();
         } catch (SantoriniException e) {
             System.out.println(e.getMessage());
