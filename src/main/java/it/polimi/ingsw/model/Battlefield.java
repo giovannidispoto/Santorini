@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.server.observers.SubjectBattlefield;
-import it.polimi.ingsw.server.actions.data.CellInterface;
+import it.polimi.ingsw.server.network.messagesInterfaces.CellInterface;
 import it.polimi.ingsw.server.observers.ObserverBattlefield;
 
 import java.util.ArrayList;

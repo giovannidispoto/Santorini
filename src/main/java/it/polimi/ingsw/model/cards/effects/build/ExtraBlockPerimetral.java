@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.cards.effects.build;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.controller.Step;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -75,10 +75,6 @@
 #server
 !java/it/polimi/ingsw/server/
 !java/it/polimi/ingsw/server/*.java
-!java/it/polimi/ingsw/server/actions/
-!java/it/polimi/ingsw/server/actions/*.java
-!java/it/polimi/ingsw/server/actions/data
-!java/it/polimi/ingsw/server/actions/data/*.java
 !java/it/polimi/ingsw/server/consoleUtilities/
 !java/it/polimi/ingsw/server/consoleUtilities/*.java
 !java/it/polimi/ingsw/server/fileUtilities/
@@ -89,6 +85,15 @@
 !java/it/polimi/ingsw/server/lobbyUtilities/*.java
 !java/it/polimi/ingsw/server/observers/
 !java/it/polimi/ingsw/server/observers/*.java
+#server/network
+!java/it/polimi/ingsw/server/network/
+!java/it/polimi/ingsw/server/network/*.java
+!java/it/polimi/ingsw/server/network/commandDeserializer/
+!java/it/polimi/ingsw/server/network/commandDeserializer/*.java
+!java/it/polimi/ingsw/server/network/commands/
+!java/it/polimi/ingsw/server/network/commands/*.java
+!java/it/polimi/ingsw/server/network/messagesInterfaces/
+!java/it/polimi/ingsw/server/network/messagesInterfaces/*.java
 
 #model/
 !java/it/polimi/ingsw/model/

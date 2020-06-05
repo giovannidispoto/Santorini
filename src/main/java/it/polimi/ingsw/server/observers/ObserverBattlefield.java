@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.observers;
 
-import it.polimi.ingsw.server.actions.data.CellInterface;
+import it.polimi.ingsw.server.network.messagesInterfaces.CellInterface;
 
 /**
  * Interface used in Observer Pattern

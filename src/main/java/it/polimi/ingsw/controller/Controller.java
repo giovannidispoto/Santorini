@@ -6,12 +6,11 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.DivinityCard;
 import it.polimi.ingsw.model.parser.DeckReader;
-import it.polimi.ingsw.server.ClientHandler;
-import it.polimi.ingsw.server.Step;
-import it.polimi.ingsw.server.actions.data.*;
+import it.polimi.ingsw.server.network.ClientHandler;
 import it.polimi.ingsw.server.consoleUtilities.PrinterClass;
 import it.polimi.ingsw.server.fileUtilities.FileManager;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
+import it.polimi.ingsw.server.network.messagesInterfaces.*;
 import it.polimi.ingsw.server.observers.ObserverPlayers;
 
 import java.io.IOException;

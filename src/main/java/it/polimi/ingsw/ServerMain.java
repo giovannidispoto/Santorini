@@ -2,7 +2,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
-import it.polimi.ingsw.server.ServerSocketManager;
+import it.polimi.ingsw.server.network.ServerSocketManager;
 import it.polimi.ingsw.server.fileUtilities.FileManager;
 
 import java.io.IOException;

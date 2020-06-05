@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.controller.Step;
 
 import java.util.List;
 

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.observers;
 
-import it.polimi.ingsw.server.actions.data.CellInterface;
-
 /**
  * Interface used in Observer Pattern
  */

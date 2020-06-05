@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.cards.effects.move;
 import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Block;
 import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.server.Step;
+import it.polimi.ingsw.controller.Step;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;

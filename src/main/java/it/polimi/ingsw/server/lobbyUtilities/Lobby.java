@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.lobbyUtilities;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.network.ClientHandler;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
