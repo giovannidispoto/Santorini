@@ -138,6 +138,7 @@ public class GUIBuilder extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/WinMessage.fxml"));
             Scene actual = mainStage.getScene();
+            ((StackPane) actual.lookup("#paneResult")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);
             actual.lookup("#paneResult").setVisible(true);
             ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
@@ -154,6 +155,7 @@ public class GUIBuilder extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/LoseMessage.fxml"));
             Scene actual = mainStage.getScene();
+            ((StackPane) actual.lookup("#paneResult")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);
             actual.lookup("#paneResult").setVisible(true);
             ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
@@ -199,6 +201,7 @@ public class GUIBuilder extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/ConnectionError.fxml"));
             Scene actual = mainStage.getScene();
+            ((StackPane) actual.lookup("#paneResult")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);
             ((StackPane) actual.lookup("#paneResult")).getChildren().add(root);
             ((StackPane) actual.lookup("#paneResult")).setVisible(true);
