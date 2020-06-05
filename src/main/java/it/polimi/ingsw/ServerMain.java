@@ -1,6 +1,7 @@
 
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.server.consoleUtilities.PrinterClass;
 import it.polimi.ingsw.server.lobbyUtilities.LobbyManager;
 import it.polimi.ingsw.server.network.ServerSocketManager;
 import it.polimi.ingsw.server.fileUtilities.FileManager;
@@ -30,6 +31,7 @@ public class ServerMain
         serverFileManager.testFileReading();
         //Start Server Reading - serverSettings from File
         serverFileManager.readServerSettings();
+        PrinterClass.getPrinterInstance().setPrintDebugInfo(serverFileManager.isDebugMessages());
         ServerSocketManager serverSocketManager = new ServerSocketManager(serverFileManager.getServerPort(), new LobbyManager(serverFileManager.getMaxNumLobbiesManaged()));
 
         //On a separate pool starts reading from the console (to end the program immediately)

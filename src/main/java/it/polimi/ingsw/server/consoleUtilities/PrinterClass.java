@@ -7,6 +7,7 @@ public class PrinterClass {
 
     public static final String ansiRED      = "\u001B[31m";
     public static final String ansiMAGENTA  = "\u001B[95m";
+    public static final String ansiYELLOW  = "\u001B[93m";
     public static final String ansiGREEN    = "\u001B[32m";
     public static final String ansiBLUE     = "\u001B[34m";
     public static final String ansiRESET    = "\u001B[0m";
@@ -22,10 +23,10 @@ public class PrinterClass {
     public static final String socketClosedMessage = ansiBLUE+"Socket Closed"+ansiRESET;
     public static final String serverReadyMessage = ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator;
 
-    /**Variable used in case of debugging, must be set to false in case of publication of the program
-     *
+    /**
+     * Variable used in case of debugging, must be set to false in case of publication of the program
      */
-    public static final boolean printDebugInfo = false;
+    public boolean printDebugInfo = false;
 
 
     /**
@@ -34,6 +35,14 @@ public class PrinterClass {
      */
     public static PrinterClass getPrinterInstance() {
         return instance;
+    }
+
+    /**
+     * Enable or disable debug messages on cli
+     * @param printDebugInfo true = active
+     */
+    public void setPrintDebugInfo(boolean printDebugInfo) {
+        this.printDebugInfo = printDebugInfo;
     }
 
     //---------------------     Console Printers
@@ -71,22 +80,21 @@ public class PrinterClass {
     }
 
     /**
-     * Print the passed message only if debugging is active on the server (debug set in PrinterClass)
-     * @param message to print
-     */
-    public void printDebugMessage(String message){
-        if(printDebugInfo)
-            System.out.println(message);
-    }
-
-    /**
      * Print the socket message only if debugging is active on the server (debug set in PrinterClass)
      * @param line received from the socket
      * @param nickName player NickName registered in the server
      */
     public void printSocketMessage(String line, String nickName){
+        printDebugMessage("Received: " + line + " From:" + nickName);
+    }
+
+    /**
+     * Print the passed message only if debugging is active on the server (debug set in PrinterClass)
+     * @param message to print
+     */
+    public void printDebugMessage(String message){
         if(printDebugInfo)
-            System.out.println("Received: " + line + " From:" + nickName);
+            System.out.println(ansiYELLOW + message + ansiRESET);
     }
 
     /**

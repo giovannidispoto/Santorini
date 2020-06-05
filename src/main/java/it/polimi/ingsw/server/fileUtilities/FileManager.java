@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.fileUtilities;
 
+import it.polimi.ingsw.server.fileUtilities.regex.DebugMessagesRegex;
 import it.polimi.ingsw.server.fileUtilities.regex.MaxNumLobbiesRegex;
 import it.polimi.ingsw.server.fileUtilities.regex.Regex;
 import it.polimi.ingsw.ServerMain;
@@ -22,13 +23,20 @@ public class FileManager {
     private static final int maxFileAdditionalLines = 10;
     //------------------------------------------    DEFAULT DATA
     /**
+     * Set the ip port, from which the server accepts client connections<br>
      * DEFAULT: serverPort = 1337
      */
     private int serverPort = 1337;
     /**
+     * Set the maximum number of active lobbies<br>
      * DEFAULT: maxNumLobbiesManaged = 5
      */
     private int maxNumLobbiesManaged = 5;
+    /**
+     *  Enable or disable debug messages on cli<br>
+     *  DEFAULT: debugMessages = false
+     */
+    private boolean debugMessages = false;
 
     /**
      *  Constructor of the FileManager,
@@ -40,6 +48,7 @@ public class FileManager {
         this.regexList = new ArrayList<>();
         this.regexList.add(new ServerPortRegex());
         this.regexList.add(new MaxNumLobbiesRegex());
+        this.regexList.add(new DebugMessagesRegex());
     }
 
     /**
@@ -124,6 +133,8 @@ public class FileManager {
     }
 
     //------------------------------------------    GETTERS & SETTERS
+    //N.B:  SETTERS are for the exclusive use of Regex
+
     public int getServerPort() {
         return serverPort;
     }
@@ -138,5 +149,13 @@ public class FileManager {
 
     public void setMaxNumLobbiesManaged(int maxNumLobbiesManaged) {
         this.maxNumLobbiesManaged = maxNumLobbiesManaged;
+    }
+
+    public boolean isDebugMessages() {
+        return debugMessages;
+    }
+
+    public void setDebugMessages(boolean debugMessages) {
+        this.debugMessages = debugMessages;
     }
 }
