@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,6 +62,15 @@ public class GUIBuilder extends Application {
         state = ViewState.CONNECTION;
         mainScene = new Scene(root);
         mainStage = stage;
+
+        /* End Program on close*/
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+            }
+        });
+
 
         LoginView view = new LoginView(root, this);
 

@@ -161,11 +161,12 @@ public class BattlefieldView extends Scene {
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
                             Platform.runLater(() -> guiBuilder.showWin());
                         }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
+                            System.out.println("You Lose");
                             Platform.runLater(() -> guiBuilder.showLose());
                         }else{
                             Platform.runLater(() -> guiBuilder.showError());
                         }
-                        executor.shutdown();
+                        executor.shutdownNow();
                         Thread.currentThread().interrupt();
                     }
                 }
@@ -330,40 +331,70 @@ public class BattlefieldView extends Scene {
                     basicTurn.set(false);
                     root.lookup("#godPowerBox").setVisible(false);
 
-                    try {
-                        GUIController.getController().setStartTurn(basicTurn.get());
-                    } catch (SantoriniException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    Task<Void> innerTask1 = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            try {
+                                GUIController.getController().setStartTurn(basicTurn.get());
+                            } catch (SantoriniException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            return null;
+                        }
+                    };
 
-                    Platform.runLater(() -> actionLabel.setText("Select Worker"));
-                    enableClick();
+                    innerTask1.setOnSucceeded(e->{
+                        Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                        enableClick();
+                    });
 
+                    executor.execute(innerTask1);
                 });
 
                 ((Button) root.lookup("#refuseButton")).setOnMouseClicked(event->{
                     basicTurn.set(true);
                     root.lookup("#godPowerBox").setVisible(false);
 
-                    try {
-                        GUIController.getController().setStartTurn(basicTurn.get());
-                    } catch (SantoriniException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    Task<Void> innerTask2 = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            try {
+                                GUIController.getController().setStartTurn(basicTurn.get());
+                            } catch (SantoriniException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            return null;
+                        }
+                    };
 
-                    Platform.runLater(() -> actionLabel.setText("Select Worker"));
-                    enableClick();
+                    innerTask2.setOnSucceeded(e->{
+                        Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                        enableClick();
+                    });
 
+                    executor.execute(innerTask2);
                 });
 
             }else{
-                try {
-                    GUIController.getController().setStartTurn(false);
-                } catch (SantoriniException e) {
-                    System.out.println(e.getMessage());
-                }
 
-                Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                Task<Void> innerTask = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        try {
+                            GUIController.getController().setStartTurn(false);
+                        } catch (SantoriniException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        return null;
+                    }
+                };
+
+                innerTask.setOnSucceeded(e ->{
+                    Platform.runLater(() -> actionLabel.setText("Select Worker"));
+                });
+
+                executor.execute(innerTask);
+
             }
 
 
