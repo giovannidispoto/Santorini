@@ -18,7 +18,7 @@ public class PrinterClass {
     public static final String INITIALIZE_SCREEN = "\033[0;0H";
 
     public static final String jsonParseError = ansiRED + "FAILED-JsonParse" + ansiRESET;
-    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_Already-Cancelled" + ansiRESET;
+    public static final String timerTimeoutError = ansiBLUE + "Ping_Schedule_Already-Cancelled" + ansiRESET;
 
     public static final String socketClosedMessage = ansiBLUE+"Socket Closed"+ansiRESET;
     public static final String serverReadyMessage = ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator;
@@ -48,7 +48,7 @@ public class PrinterClass {
     //---------------------     Console Printers
 
     public void printPingTimeout(String nickName, boolean lobbyStarted, boolean isMustStopExecution){
-        System.out.println(ansiRED + "Timeout_" + ansiRESET + nickName + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution);
+        System.out.println(ansiRED + "Ping_Timeout_" + nickName + ansiRESET + " -isLobbyStart:" + lobbyStarted + " -isStoppedByServer:" + isMustStopExecution);
     }
 
     public void printClientDisconnected(String nickName){

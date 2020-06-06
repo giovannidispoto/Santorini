@@ -55,7 +55,12 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         if (pingDelay <= 0)
             pingDelay = 5000;
         //ping after waiting for : pingDelay (ms)
-        clientTimeoutTimer.schedule(new NewPingTimeoutTask(), pingDelay);
+        try {
+            clientTimeoutTimer.schedule(new NewPingTimeoutTask(), pingDelay);
+        }catch (IllegalStateException e){
+            consolePrinter.printMessage(PrinterClass.timerTimeoutError);
+            consolePrinter.printDebugMessage(e.getMessage());
+        }
     }
 
     /**
@@ -77,7 +82,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     }
                 }, 10000);
             }catch (IllegalStateException e){
-                consolePrinter.printDebugMessage(PrinterClass.timerTimeoutError);
+                consolePrinter.printMessage(PrinterClass.timerTimeoutError);
                 consolePrinter.printDebugMessage(e.getMessage());
             }
         }
