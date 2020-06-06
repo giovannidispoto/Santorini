@@ -68,20 +68,25 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
         @Override
         public void run() {
             response(new Gson().toJson(new BasicMessageResponse(NetworkUtilities.PING_ACTION, null)));
-            clientTimeoutTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    consolePrinter.printPingTimeout(getNickName(), lobbyStarted, isMustStopExecution());
-                    playerDisconnected();
-                }
-            }, 10000);
+            try {
+                clientTimeoutTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        consolePrinter.printPingTimeout(getNickName(), lobbyStarted, isMustStopExecution());
+                        playerDisconnected();
+                    }
+                }, 10000);
+            }catch (IllegalStateException e){
+                consolePrinter.printDebugMessage(PrinterClass.timerTimeoutError);
+                consolePrinter.printDebugMessage(e.getMessage());
+            }
         }
     }
 
     /**
      * Cancel current Timeout set by ping request
      */
-    public void cancelPingTimeoutTimer(){
+    public synchronized void cancelPingTimeoutTimer(){
         clientTimeoutTimer.cancel();
     }
 
@@ -100,8 +105,10 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
                     lobbyManager.clientDisconnected(lobbyID);
 
                 } else {
-                    //remove from lobby
-                    consolePrinter.printPlayerWaitingRemoved(getNickName());
+                    //remove from lobby (if it's waiting, lobby manager know, printer not)
+                    if(null != getLobbyManager().getPlayerNickName(this))
+                        consolePrinter.printPlayerWaitingRemoved(getNickName());
+
                     stopClient();
                     lobbyManager.removePlayer(this);
                 }
@@ -129,10 +136,11 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
 
     /**
      * Notifies the handler that the game has ended successfully,
-     * blocks any incoming and outgoing requests for the handler (including ping) & shutdown it's Net-Thread (the client will have to reconnect)
+     * Client it's out the lobby (the client will have to redo addPlayer)
      */
     public void gameEnded(){
-        stopClient();
+        lobbyStarted = false;
+        lobbyID = null;
         consolePrinter.printGameEnd(getNickName());
     }
 

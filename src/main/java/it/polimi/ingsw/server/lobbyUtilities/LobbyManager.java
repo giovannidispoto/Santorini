@@ -133,7 +133,7 @@ public class LobbyManager {
      */
     private void deleteLobby(UUID lobbyID){
         this.lobbyLiveMap.get(lobbyID).getPlayersNickName().forEach(this.playersNickNameMap::remove);
-        this.lobbyLiveMap.get(lobbyID).getPlayersHandlerInLobby().forEach(this.playersHandlerMap::remove);
+        this.lobbyLiveMap.get(lobbyID).getPlayersHandlerInLobby().forEach((nick, clientHandler) -> this.playersHandlerMap.remove(clientHandler));
         this.lobbyLiveMap.get(lobbyID).deleteAll();
         this.lobbyLiveMap.remove(lobbyID);
         System.out.println(ansiRED + "Lobby-Deleted_ID: " + lobbyID + ansiRESET);
@@ -142,7 +142,7 @@ public class LobbyManager {
 
     /**
      * Call when when the game ended correctly (can only be called once per game),
-     * Its job is to shutdown all the handlers in the lobby and delete all the lobby & players from the server
+     * Its job is to notify all the handlers in the lobby and delete all the lobby & players from the server
      * @param lobbyID Lobby id on which to call the method
      */
     public void gameEnded(UUID lobbyID){

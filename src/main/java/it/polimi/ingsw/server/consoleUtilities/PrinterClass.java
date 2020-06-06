@@ -18,7 +18,7 @@ public class PrinterClass {
     public static final String INITIALIZE_SCREEN = "\033[0;0H";
 
     public static final String jsonParseError = ansiRED + "FAILED-JsonParse" + ansiRESET;
-    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_NotStarted" + ansiRESET;
+    public static final String timerTimeoutError = ansiBLUE + "Timeout_Schedule_Already-Cancelled" + ansiRESET;
 
     public static final String socketClosedMessage = ansiBLUE+"Socket Closed"+ansiRESET;
     public static final String serverReadyMessage = ansiGREEN + "Server READY" + ansiRESET + nextLine + consoleSeparator;

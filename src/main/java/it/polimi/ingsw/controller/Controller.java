@@ -376,7 +376,7 @@ public class Controller implements ObserverPlayers {
             declareWinner(match.getWinner());
             //TODO: END GAME
             //For security, lock the current player
-            //this.lobbyManager.gameEnded(this.lobbyID);
+            this.lobbyManager.gameEnded(this.lobbyID);
             return Step.END;
         }
 
