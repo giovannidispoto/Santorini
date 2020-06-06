@@ -376,6 +376,8 @@ public class Controller implements ObserverPlayers {
             declareWinner(match.getWinner());
             //TODO: END GAME
             //For security, lock the current player
+            //this.lobbyManager.gameEnded(this.lobbyID);
+            return Step.END;
         }
 
         return turn.getCurrentStep();
@@ -390,7 +392,6 @@ public class Controller implements ObserverPlayers {
         }
 
         PrinterClass.getPrinterInstance().printWinner(match.getWinner().getPlayerNickname());
-        this.lobbyManager.gameEnded(this.lobbyID);
     }
 
     /**
