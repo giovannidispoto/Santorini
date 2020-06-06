@@ -462,13 +462,15 @@ public class BattlefieldView extends Scene {
             }
             if(GUIController.getController().getCurrentStep() == Step.REMOVE){
                 //code for remove
+                skipButton.setDisable(false);
                 actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep()));
                 callRenderWorkerView();
             }
 
             if(GUIController.getController().getCurrentStep() == Step.END) {
+                skipButton.setDisable(true);
                 //reloadBattlefield();
-                System.out.println("Reached end");
+                //System.out.println("Reached end");
                 restartTurn();
             }
 
