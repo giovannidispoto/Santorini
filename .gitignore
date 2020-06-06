@@ -22,9 +22,9 @@
 !DELIVERABLES/
 !DELIVERABLES/*
 
-#Windows10/     (rules = 2) (You can do everything here, this folder has it's own gitignore)
-!windows10/
-!windows10/*
+#Github Resources/     (rules = 2) (You can do everything here, this folder has it's own gitignore)
+!Github Resources/
+!Github Resources/*
 
 #NetworkCommunications/     (rules = 9)
 !NetworkCommunications/
