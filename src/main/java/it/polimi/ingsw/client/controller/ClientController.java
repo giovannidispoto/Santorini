@@ -478,7 +478,7 @@ public class ClientController {
     /**
      * Getter to get the current worker who will have to make the action,
      * N.B: It can be null, if it is not your turn
-     * @return  SelectedWorker object
+     * @return  selectedWorker object
      */
     public SelectedWorker getCurrentWorker() {
         return currentWorker;

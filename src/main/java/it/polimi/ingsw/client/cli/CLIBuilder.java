@@ -23,7 +23,6 @@ public class CLIBuilder implements UIActions{
     private static final String CODE_BLUE = "33";
     private static final String CODE_LIGHTBLUE = "75";
     private static final String CODE_GRAY = "244";
-    private static final String CODE_LIGHT_GRAY = "248";
     private static final String CODE_GREEN = "41";
     private static final String CODE_LIGHT_GREEN = "83";
     private static final String CODE_BROWN = "130";
@@ -83,16 +82,15 @@ public class CLIBuilder implements UIActions{
     private static final String SANTORINI = ANSI_LIGHTBLUE+"SANTORINI";
     private static final String WELCOME = "Welcome to %s : The Board Game 🎲 → Enable the full screen to enjoy the best experience";
     private static final String BOARD_TITLE = "BOARD";
-    private static final String PLAYERS_TITLE = "PLAYERS 👦🏼";
+    private static final String PLAYERS_TITLE = "PLAYERS 👾";
     private static final String TOWERS_TITLE = "FULL TOWERS 🏗";
     private static final String MOVES_TITLE = "PLAYER MOVES 🎮";
     private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
-    private static final String SELECTED_WORKER = "SELECTED WORKER 👷🏻 ‍• ";
+    private static final String SELECTED_WORKER = "SELECTED WORKER 📍 ‍• ";
 
     //------------------ # UI Data # ------------------
     private HashMap<Color,String> WorkerColorsMap;
     private CLIDataObject[] boardCellsContents; // Each element is a row ┃   ┃   ┃   ┃   ┃   ┃
-    private List<String> playerMoves; //Available Moves for the Player
     private String currentPhase;
     private int fullTowersNumber;
     private boolean operationRepeated=false;
@@ -268,7 +266,6 @@ public class CLIBuilder implements UIActions{
     public CLIBuilder(String colorMode, ClientController clientController, Scanner consoleScanner) {
         this.consoleScanner = consoleScanner;
         this.boardCellsContents = new CLIDataObject[5];
-        this.playerMoves = new ArrayList<>();
         this.WorkerColorsMap = new HashMap<>();
         this.phasesMap = new HashMap<>();
         this.fullTowersNumber = 0;
@@ -510,7 +507,7 @@ public class CLIBuilder implements UIActions{
         currentLine.append(edge_distance+intermediateEdgeBoard+edge_distance);
         currentLine.append(ANSI_RED+L_THIN_T_CORNER);
         currentLine.append(H_THIN_LINE.repeat(Math.max(0, currentPhase.length() + 2)));
-        currentLine.append(R_THIN_T_CORNER+COLOR_SCHEME);
+        currentLine.append(R_THIN_T_CORNER).append(COLOR_SCHEME);
         System.out.println(currentLine);
         currentLine.setLength(0);
 

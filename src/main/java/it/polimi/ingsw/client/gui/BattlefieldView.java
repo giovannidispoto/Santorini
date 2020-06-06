@@ -62,7 +62,7 @@ public class BattlefieldView extends Scene {
         numberOfTower = (Label) root.lookup("#fullTowersLabel");
         showCardButton = (Button) root.lookup("#cardsButton");
         skipButton = (Button) root.lookup("#skipButton");
-        actionLabel.setText("Waiting your turn");
+        actionLabel.setText("Wait your turn");
         executor = Executors.newSingleThreadExecutor();
         //Battlefield Map
         battlefieldMap = new HashMap<>();
@@ -79,10 +79,10 @@ public class BattlefieldView extends Scene {
         /* Message Map */
         messageStep = new HashMap<>();
         messageStep.put(Step.MOVE, "Move");
-        messageStep.put(Step.MOVE_SPECIAL, "Move");
-        messageStep.put(Step.MOVE_UNTIL, "Move");
+        messageStep.put(Step.MOVE_SPECIAL, "Special Move");
+        messageStep.put(Step.MOVE_UNTIL, "Looped Move");
         messageStep.put(Step.BUILD, "Build");
-        messageStep.put(Step.BUILD_SPECIAL, "Build");
+        messageStep.put(Step.BUILD_SPECIAL, "Special Build");
         messageStep.put(Step.REMOVE, "Remove");
 
         /*
@@ -141,7 +141,7 @@ public class BattlefieldView extends Scene {
 
         /*
          * Starting Turn
-         * Waiting turn
+         * Wait turn
          * */
 
 
@@ -159,7 +159,7 @@ public class BattlefieldView extends Scene {
                     }catch( InterruptedException e){
                         //If the user if winner show relative view
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
-                            Platform.runLater(() -> guiBuilder.showLose());
+                            Platform.runLater(() -> guiBuilder.showWin());
                         }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
                             Platform.runLater(() -> guiBuilder.showLose());
                         }else{
@@ -301,7 +301,7 @@ public class BattlefieldView extends Scene {
             protected Void call() {
                 //default no basic turn
 
-                Platform.runLater(() -> actionLabel.setText("Waiting your turn"));
+                Platform.runLater(() -> actionLabel.setText("Wait your turn"));
 
                 do {
                     try {
