@@ -5,7 +5,7 @@
 
 <AnchorPane id="cardRoot" prefHeight="298.0" prefWidth="166.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView id="cardImage" fitHeight="298.0" fitWidth="166.0" layoutY="6.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView id="cardImage" preserveRatio="true" fitHeight="298.0" fitWidth="166.0" layoutY="6.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Cards/APOLLO.png" />
          </image></ImageView>

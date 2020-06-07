@@ -63,11 +63,12 @@ public class GUIBuilder extends Application {
         mainScene = new Scene(root);
         mainStage = stage;
 
-        /* End Program on close*/
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        /* Handle Close event*/
+        mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 Platform.exit();
+                System.exit(0);
             }
         });
 
@@ -140,6 +141,8 @@ public class GUIBuilder extends Application {
         }
 
         mainStage.setScene(mainScene);
+
+
         mainStage.show();
 
     }
