@@ -141,8 +141,6 @@ public class GUIBuilder extends Application {
         }
 
         mainStage.setScene(mainScene);
-
-
         mainStage.show();
 
     }
@@ -224,6 +222,7 @@ public class GUIBuilder extends Application {
             e.printStackTrace();
         }
     }
+
 
 
     private class BuildCell extends ListCell<String> {

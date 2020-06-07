@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /*
 * Add Player Worker View
@@ -57,13 +58,13 @@ public class AddPlayerView extends Scene {
             /*When server response, go on*/
             wait.setOnSucceeded( s ->{
                 GUIController.getController().setGameState(GameState.LOBBY);
+
+                //shutdown thread
+                executorService.shutdown();
                 if(GUIController.getController().getPlayerNickname().equals(GUIController.getController().getGodPlayer()))
                     builder.changeView(Optional.of(ViewState.SELECT_GOD_CARD));
                 else
                     builder.changeView(Optional.of(ViewState.SELECT_CARD));
-
-                //shutdown thread
-                executorService.shutdown();
             });
 
 

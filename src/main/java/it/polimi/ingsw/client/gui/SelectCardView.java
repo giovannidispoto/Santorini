@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.util.*;
@@ -37,22 +39,22 @@ public class SelectCardView extends Scene {
         if(god){
             ObservableList<String> deck =  FXCollections.emptyObservableList();
 
-                map = new HashMap<>();
+            map = new HashMap<>();
 
-                ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
+            ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
 
-                listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        if (map.values().stream().filter(e -> e == true).count() < GUIController.getController().getCurrentLobbySize()) {
-                            map.put(t1, true);
-                        }
-                        if(map.values().stream().filter(e -> e == true).count() ==  GUIController.getController().getCurrentLobbySize()){
-                            selectButton.setDisable(false);
-                        }
-                        listView.refresh();
+            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (map.values().stream().filter(e -> e == true).count() < GUIController.getController().getCurrentLobbySize()) {
+                        map.put(t1, true);
                     }
-                });
+                    if(map.values().stream().filter(e -> e == true).count() ==  GUIController.getController().getCurrentLobbySize()){
+                        selectButton.setDisable(false);
+                    }
+                    listView.refresh();
+                }
+            });
 
 
             selectButton.setOnMouseClicked(
@@ -84,20 +86,20 @@ public class SelectCardView extends Scene {
 
             executor.submit(wait);
         }else{
-                map = new HashMap<>();
-
-                ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
-                listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                        if (map.values().stream().filter(e -> e == true).count() == 0) {
-                            map.put(t1, true);
-                            selectButton.setDisable(false);
-                        }
-                        //refresh list
-                        listView.refresh();
+            map = new HashMap<>();
+            // showWait();
+            ListView<String> listView = ((ListView<String>) root.lookup("#listView"));
+            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (map.values().stream().filter(e -> e == true).count() == 0) {
+                        map.put(t1, true);
+                        selectButton.setDisable(false);
                     }
-                });
+                    //refresh list
+                    listView.refresh();
+                }
+            });
 
             selectButton.setOnMouseClicked(
                     e->{
@@ -114,12 +116,15 @@ public class SelectCardView extends Scene {
             wait1 = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
+                    // showWait();
                     GUIController.getController().waitSetPlayerCard();
                     return null;
                 }
             };
 
             wait1.setOnSucceeded(e->{
+                // hideWait();
+                hideWait();
                 listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards())));
                 for (int i = 0; i < listView.getItems().size(); i++)
                     map.put(listView.getItems().get(i), false);
@@ -128,8 +133,30 @@ public class SelectCardView extends Scene {
 
 
             executor.submit(wait1);
+            showWait();
         }
     }
+
+    public void hideWait() {
+        try {
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitAlert.fxml"));
+            Platform.runLater (()->((StackPane)  lookup("#resultPane")).getChildren().remove(view));
+            Platform.runLater (()-> ((StackPane) lookup("#resultPane")).setVisible(false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showWait() {
+        try {
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitAlert.fxml"));
+            Platform.runLater (()-> ((StackPane) lookup("#resultPane")).getChildren().add(view));
+            Platform.runLater (()-> ((StackPane) lookup("#resultPane")).setVisible(true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /* Create custom ListView for showing cards*/
 
@@ -159,10 +186,10 @@ public class SelectCardView extends Scene {
             } else {
                 try {
                     root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
-                    ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toExternalForm()));
+                    ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
 
                     if(map.get(item) == true)
-                        ((ImageView) root.lookup("#playerPawn")).setImage(new Image(getClass().getResource("/Images/Cards/SelectedCard.png").toExternalForm()));
+                        ((ImageView) root.lookup("#playerPawn")).setImage(new Image(getClass().getResource("/Images/Cards/SelectedCard.png").toString()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
