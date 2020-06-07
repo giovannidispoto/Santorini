@@ -159,10 +159,10 @@ public class SelectCardView extends Scene {
             } else {
                 try {
                     root = FXMLLoader.load(getClass().getResource("/CardTemplate.fxml"));
-                    ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toString()));
+                    ((ImageView) root.lookup("#cardImage")).setImage(new Image(getClass().getResource("/Images/Cards/"+item+".png").toExternalForm()));
 
                     if(map.get(item) == true)
-                        ((ImageView) root.lookup("#playerPawn")).setImage(new Image(getClass().getResource("/Images/Cards/SelectedCard.png").toString()));
+                        ((ImageView) root.lookup("#playerPawn")).setImage(new Image(getClass().getResource("/Images/Cards/SelectedCard.png").toExternalForm()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
