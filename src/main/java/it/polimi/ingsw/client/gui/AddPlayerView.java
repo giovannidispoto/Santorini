@@ -6,6 +6,7 @@ import javafx.concurrent.Task;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -27,30 +28,28 @@ public class AddPlayerView extends Scene {
         TextField nicknameField = (TextField) root.lookup("#nicknameField");
         RadioButton btn1 = (RadioButton) root.lookup("#twoPlayers");
         RadioButton btn2 = (RadioButton) root.lookup("#threePlayers");
+        Label terminalLabel = (Label)  root.lookup("#terminalLabel");
         ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        terminalLabel.setText("> Waiting..");
 
         /*Adding listener to button*/
         btn.setOnMouseClicked(e->{
            String nickname = nicknameField.getText().trim();
            boolean result;
            int number = (btn1.isSelected()) ? 2 : 3;
-            try {
-                /*Send request to controller*/
-                GUIController.getController().setPlayerNickname(nickname);
-                GUIController.getController().addPlayerRequest(nickname, number);
-            } catch (SantoriniException santoriniException) {
-                System.out.println(santoriniException.getMessage());
-            }
+
+           /* Disable all */
+            btn.setDisable(true);
+            nicknameField.setDisable(true);
+            btn1.setDisable(true);
+            btn2.setDisable(true);
 
             /* Waiting for server response */
             Task<Void> wait = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
                     /* Disable input */
-                    btn.setDisable(true);
-                    nicknameField.setDisable(true);
-                    btn1.setDisable(true);
-                    btn2.setDisable(true);
                     GUIController.getController().waitSetPickedCards();
                     return null;
                 }
@@ -68,7 +67,35 @@ public class AddPlayerView extends Scene {
             });
 
 
-            executorService.execute(wait);
+            Task<Void> sendRequest = new Task<Void>() {
+               @Override
+               protected Void call() throws Exception {
+                   try {
+                       /*Send request to controller*/
+                       GUIController.getController().setPlayerNickname(nickname);
+                       GUIController.getController().addPlayerRequest(nickname, number);
+                   } catch (SantoriniException santoriniException) {
+                       System.out.println(santoriniException.getMessage());
+                   }
+                   return null;
+               }
+           };
+
+            sendRequest.setOnSucceeded(event->{
+                if(GUIController.getController().getValidNick())
+                     executorService.execute(wait);
+                else{
+                    //Request username
+                    /* enable all */
+                    btn.setDisable(false);
+                    nicknameField.setDisable(false);
+                    btn1.setDisable(false);
+                    btn2.setDisable(false);
+                    terminalLabel.setText("> Invalid username.. Pick another one!");
+                }
+            });
+
+            executorService.execute(sendRequest);
         });
 
     }
