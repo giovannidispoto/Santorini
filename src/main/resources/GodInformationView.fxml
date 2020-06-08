@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="cardInformationRoot" prefHeight="553.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardsInformationView">
+   <children>
+      <ImageView fitHeight="553.0" fitWidth="562.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@CSS/PickerBackground.png" />
+         </image></ImageView>
+      <AnchorPane id="cardInfoBox" layoutX="59.0" layoutY="48.0" prefHeight="480.0" prefWidth="512.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="48.0">
+         <children>
+            <VBox layoutX="206.0" layoutY="14.0" prefHeight="314.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="86.0" fitWidth="266.0" layoutX="148.0" layoutY="10.0" pickOnBounds="true" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@Images/Decorations/Flag.png" />
+         </image>
+      </ImageView>
+      <Label id="godsLabel" alignment="CENTER" layoutX="246.0" layoutY="14.0" prefHeight="56.0" prefWidth="84.0" style="-fx-font-size: 20;" stylesheets="@CSS/SantoriniLabel.css" text="Gods" AnchorPane.leftAnchor="246.0" AnchorPane.rightAnchor="231.0" AnchorPane.topAnchor="10.0" />
+   </children>
+</AnchorPane>

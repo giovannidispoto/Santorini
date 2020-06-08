@@ -3,9 +3,6 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.clientModel.basic.Color;
-import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.controller.SantoriniException;
-import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,12 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -34,8 +27,6 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.io.File;
 import java.util.stream.Collectors;
 
 public class GUIBuilder extends Application {
@@ -96,7 +87,7 @@ public class GUIBuilder extends Application {
         switch(state){
             case CONNECTION:
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/AddPlayer.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/PlayerSettings.fxml"));
                     mainScene = new AddPlayerView(root, this);
                 }catch(IOException e){
                     System.out.println(e.getMessage());
@@ -106,7 +97,7 @@ public class GUIBuilder extends Application {
             case SELECT_GOD_CARD:
                 try {
 
-                    root = FXMLLoader.load(getClass().getResource("/SelectCard.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/CardPicker.fxml"));
                     // mainScene = new Scene(root);
                     mainScene = new SelectCardView(root, this, true);
                     state = ViewState.SELECT_CARD;
@@ -117,7 +108,7 @@ public class GUIBuilder extends Application {
                 break;
             case SELECT_CARD:
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/SelectCard.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/CardPicker.fxml"));
                     // mainScene = new Scene(root);
                     mainScene = new SelectCardView(root, this,false);
                     state = ViewState.GAME;
@@ -128,7 +119,7 @@ public class GUIBuilder extends Application {
                 break;
             case GAME:
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/Battlefield.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/Board.fxml"));
                     /// mainScene = new Scene(root);
                     mainScene = new BattlefieldView(root, this);
                     // state = ViewState.LOGIN;
@@ -188,7 +179,7 @@ public class GUIBuilder extends Application {
         Parent root = null;
 
         try {
-            root = FXMLLoader.load(getClass().getResource("/CardsContainer.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/CardDrawer.fxml"));
             Scene actual = mainStage.getScene();
             actual.lookup("#blurResult").setVisible(true);
             actual.lookup("#paneResult").setVisible(true);
@@ -211,7 +202,7 @@ public class GUIBuilder extends Application {
     public void showError() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/ConnectionError.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/ErrorMessage.fxml"));
             Scene actual = mainStage.getScene();
             ((StackPane) actual.lookup("#paneResult")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);

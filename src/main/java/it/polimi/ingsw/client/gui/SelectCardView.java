@@ -139,7 +139,7 @@ public class SelectCardView extends Scene {
 
     public void hideWait() {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource("/WaitAlert.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));
             Platform.runLater (()->((StackPane)  lookup("#resultPane")).getChildren().remove(view));
             Platform.runLater (()-> ((StackPane) lookup("#resultPane")).setVisible(false));
         } catch (IOException e) {
@@ -149,7 +149,7 @@ public class SelectCardView extends Scene {
 
     public void showWait() {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource("/WaitAlert.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));
             Platform.runLater (()-> ((StackPane) lookup("#resultPane")).getChildren().add(view));
             Platform.runLater (()-> ((StackPane) lookup("#resultPane")).setVisible(true));
         } catch (IOException e) {

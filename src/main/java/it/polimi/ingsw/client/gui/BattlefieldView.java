@@ -120,7 +120,7 @@ public class BattlefieldView extends Scene {
             List<PlayerInterface> players = GUIController.getController().getPlayers();
             for(PlayerInterface player : players){
                 try {
-                    Parent playerLable = FXMLLoader.load(getClass().getResource("/PlayerTemplate.fxml"));
+                    Parent playerLable = FXMLLoader.load(getClass().getResource("/PlayerInformationTemplate.fxml"));
                     ((Label) playerLable.lookup("#playerNameLabel")).setText(player.getPlayerNickname());
                     ((Label) playerLable.lookup("#playerCardLabel")).setText(player.getCard());
                     ((ImageView) playerLable.lookup("#playerPawn")).
