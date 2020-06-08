@@ -5,10 +5,13 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the response: SetStartTurn
+ */
 public class SetStartTurnResponse implements Command {
-    private String playerNickname;
-    private boolean basicTurn;
-    private Step currentStep;
+    String playerNickname;
+    boolean basicTurn;
+    Step currentStep;
 
     public SetStartTurnResponse(String playerNickname, boolean basicTurn, Step currentStep) {
         this.playerNickname = playerNickname;

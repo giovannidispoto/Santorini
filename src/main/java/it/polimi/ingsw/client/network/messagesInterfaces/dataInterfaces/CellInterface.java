@@ -9,8 +9,8 @@ import it.polimi.ingsw.client.clientModel.basic.Color;
 public class CellInterface {
     private String player;
     private Color workerColor;
-    private int height;
-    private Block lastBlock;
+    private final int height;
+    private final Block lastBlock;
 
     /**
      * Create new CellInterface

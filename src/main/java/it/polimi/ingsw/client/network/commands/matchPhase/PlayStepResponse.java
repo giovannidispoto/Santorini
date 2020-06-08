@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the response: PlayStep
+ */
 public class PlayStepResponse implements Command {
     int x;
     int y;

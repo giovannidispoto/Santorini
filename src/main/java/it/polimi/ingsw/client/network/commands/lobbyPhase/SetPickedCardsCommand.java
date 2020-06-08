@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the command: SetPickedCards
+ */
 public class SetPickedCardsCommand implements Command {
     String playerNickname;
 

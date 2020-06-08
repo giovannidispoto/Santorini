@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the response: SkipStep
+ */
 public class SkipStepResponse implements Command {
     Step currentStep;
 

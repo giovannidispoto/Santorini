@@ -8,7 +8,7 @@ import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPha
 import java.util.List;
 
 /**
- * GetPlayersCommand represent getPlayers action returned by server
+ * Class that manages the command: GetPlayers
  */
 public class GetPlayersCommand implements Command {
     private final List<PlayerInterface> players;
@@ -21,9 +21,6 @@ public class GetPlayersCommand implements Command {
         this.players = players;
     }
 
-    /*
-     * Execute command
-     */
     @Override
     public void execute(ClientController clientController) {
         clientController.setPlayers(this.players);

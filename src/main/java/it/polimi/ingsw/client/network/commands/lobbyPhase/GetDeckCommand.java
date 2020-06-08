@@ -5,9 +5,11 @@ import it.polimi.ingsw.client.clientModel.basic.Deck;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the command: GetDeck
+ */
 public class GetDeckCommand implements Command {
     Deck deck;
-    boolean result;
 
     @Override
     public void execute(ClientController clientController) {

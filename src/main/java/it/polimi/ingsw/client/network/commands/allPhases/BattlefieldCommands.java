@@ -7,7 +7,9 @@ import it.polimi.ingsw.client.network.commands.Command;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.CellInterface;
 import it.polimi.ingsw.client.controller.ClientController;
 
-
+/**
+ * Class that manages the command: BattlefieldUpdate & GetBattlefieldResponse
+ */
 public class BattlefieldCommands implements Command {
     CellInterface[][] battlefield;
     String action;
