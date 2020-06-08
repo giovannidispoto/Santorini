@@ -192,6 +192,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
             CommandFactory.from(message).execute(this.lobbyManager.getControllerByLobbyID(this.lobbyID), this);
         }catch (RuntimeException gameException) {
             //Game  Tampering
+            consolePrinter.printDebugMessage(Arrays.toString(gameException.getStackTrace()));
             consolePrinter.printDebugMessage(gameException.getMessage());
             consolePrinter.printGameTampering(getNickName());
             playerDisconnected();
