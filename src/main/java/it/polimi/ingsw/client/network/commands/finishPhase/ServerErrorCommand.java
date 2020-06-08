@@ -7,6 +7,9 @@ import it.polimi.ingsw.client.network.commands.Command;
 
 import java.util.Objects;
 
+/**
+ * Class that manages the command: ServerError
+ */
 public class ServerErrorCommand implements Command {
     String errorMessage;
 

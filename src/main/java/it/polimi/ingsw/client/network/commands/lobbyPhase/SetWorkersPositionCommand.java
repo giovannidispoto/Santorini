@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.network.commands.Command;
 
 import java.util.List;
 
+/**
+ * Class that manages the command: SetWorkersPosition
+ */
 public class SetWorkersPositionCommand implements Command {
     List<Integer> workersID;
 

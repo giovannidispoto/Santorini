@@ -1,7 +1,10 @@
 package it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces;
 
+/**
+ * Allows you to create a message to the server with only the action field
+ */
 public class BasicActionInterface {
-    private String action;
+    String action;
 
     /**
      * Create new message

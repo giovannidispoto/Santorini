@@ -180,8 +180,7 @@ public class ClientController {
     }
 
     /**
-     * Interrupts the thread that started the controller first and
-     * therefore started executing the program (controllerThread)
+     * Interrupts the controllerThread that started the controller first (or was registered later)-(controllerThread)
      */
     public void interruptNormalThreadExecution(){
         if(null != controllerThread && !controllerThread.isInterrupted())

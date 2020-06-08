@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.controller;
 
+/**
+ * Class containing the exception messages used by networks and controllers
+ */
 public final class ExceptionMessages {
     //Error Messages
     public static final String genericError = "Unexpected Error";

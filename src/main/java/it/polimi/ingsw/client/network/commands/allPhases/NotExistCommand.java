@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.network.commands.allPhases;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the commands that notExists in the client
+ */
 public class NotExistCommand implements Command {
     private final String message;
 

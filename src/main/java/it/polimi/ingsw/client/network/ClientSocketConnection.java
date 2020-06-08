@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * Client Socket Connection Class
+ * Client Socket Connection Class, manages the creation of the socket and connection to the ip and port of the server
  */
 public class ClientSocketConnection {
     private int serverPort = 1337;  //default server port

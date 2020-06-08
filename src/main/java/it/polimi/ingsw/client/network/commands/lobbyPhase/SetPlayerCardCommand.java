@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.network.commands.Command;
 
 import java.util.List;
 
+/**
+ * Class that manages the command: SetPlayerCard
+ */
 public class SetPlayerCardCommand implements Command {
     List<String> cards;
 

@@ -10,21 +10,22 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * ServerHandler get server response and send command to server
+ * ServerHandler get server response and send command to server,
+ * manages the commands coming from the server and sending the request by the client
  */
 public class ServerHandler{
     private final ClientController clientController;
-    private final ServerThread thread;
+    private final ServerThread serverThread;
     private Timer serverTimeout;
 
     /**
      * Create ServerHandler
      * @param clientController controller
-     * @param thread ServerThread manage connection with Server
+     * @param serverThread ServerThread manage connection with Server
      */
-    public ServerHandler(ClientController clientController, ServerThread thread) {
+    public ServerHandler(ClientController clientController, ServerThread serverThread) {
        this.clientController = clientController;
-       this.thread = thread;
+       this.serverThread = serverThread;
        clientController.registerHandler(this);
        this.serverTimeout = new Timer();
     }
@@ -48,9 +49,12 @@ public class ServerHandler{
      * @param m message
      */
     public void request (String m){
-        this.thread.send(m);
+        this.serverThread.send(m);
     }
 
+    /**
+     * Set the ping timer, wait 10s for a ping to arrive, if it does not arrive, notify the controller
+     */
     public void setTimer(){
         serverTimeout = new Timer();
         serverTimeout.schedule(new TimerTask() {
@@ -64,6 +68,9 @@ public class ServerHandler{
         },10000);
     }
 
+    /**
+     * Clear the old ping timer and initialize another
+     */
     public void resetServerTimeout(){
         serverTimeout.cancel();
         this.setTimer();

@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.Command;
 
+/**
+ * Class that manages the command: ActualPlayer
+ */
 public class AddPlayerCommand implements Command {
     boolean validNick;
     boolean lobbyState;

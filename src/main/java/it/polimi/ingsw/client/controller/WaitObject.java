@@ -8,7 +8,10 @@ package it.polimi.ingsw.client.controller;
 public class WaitObject {
     private boolean used = false;
 
-    //Getter
+    /**
+     * Informs if it has been used
+     * @return true if it has been used
+     */
     public boolean isUsed() {
         return used;
     }

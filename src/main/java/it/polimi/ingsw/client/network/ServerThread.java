@@ -10,12 +10,15 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Thread/Runnable that manages the connection with the server via socket, reads and writes to the socket
+ */
 public class ServerThread implements Runnable {
 
     private final Socket socket;
     private final ServerHandler serverHandler;
     private final ClientController clientController;
-    private PrintWriter out;
+    private PrintWriter outStream;
 
     /**
      *Create new ServerThread to manage clientSocket
@@ -35,7 +38,7 @@ public class ServerThread implements Runnable {
     public void run() {
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            this.out = new PrintWriter(socket.getOutputStream());
+            this.outStream = new PrintWriter(socket.getOutputStream());
             //read from and write to the connection until I receive "quit"
             String line;
             while ( !(null == (line = in.nextLine())) ) {
@@ -45,23 +48,21 @@ public class ServerThread implements Runnable {
                     //line received
                     serverHandler.process(line);
                     //log input messages
-                    if(!line.equals("{\"action\":\"ping\"}")){
-                        clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ line + "\n");
-                    }
+                    printLog(line);
                 }
             }
             //close streams and socket
             in.close();
-            this.out.close();
+            this.outStream.close();
             this.socket.close();
             clientController.loggerIO.info("Socket Connection Closed, received quit\n");
 
         }catch (IOException  e1){
             clientController.setGameExceptionMessage(ExceptionMessages.IOSocketError, GameState.ERROR, true);
-            clientController.loggerIO.severe("IO-EXCEPTION "+ e1.getMessage() + "\n");
+            clientController.loggerIO.severe("IO-EXCEPTION "+ e1.getMessage() + System.lineSeparator());
         }catch (NoSuchElementException e2){
             clientController.setGameExceptionMessage(ExceptionMessages.streamDownSocketError, GameState.ERROR, true);
-            clientController.loggerIO.severe("NO-SOCKET-LINE-EXCEPTION "+ e2.getMessage() + "\n");
+            clientController.loggerIO.severe("NO-SOCKET-LINE-EXCEPTION "+ e2.getMessage() + System.lineSeparator());
         }
     }
 
@@ -70,7 +71,17 @@ public class ServerThread implements Runnable {
      * @param message to the server
      */
     public void send(String message){
-        this.out.println(message);
-        this.out.flush();
+        this.outStream.println(message);
+        this.outStream.flush();
+    }
+
+    /**
+     * If the message is not a ping, it is printed in the logger
+     * @param message to print (null not printed)
+     */
+    private void printLog(String message){
+        if(null != message && !message.equals("{\"action\":\"ping\"}")){
+            clientController.loggerIO.info(clientController.getPlayerNickname() + "Received: "+ message + System.lineSeparator());
+        }
     }
 }

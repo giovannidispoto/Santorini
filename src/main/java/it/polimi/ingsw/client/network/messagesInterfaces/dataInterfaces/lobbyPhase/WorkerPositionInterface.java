@@ -1,14 +1,22 @@
 package it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase;
 
+/**
+ * Allows you to enter the data necessary to represent a worker selection
+ */
 public class WorkerPositionInterface {
-    private int workerID;
-    private int x;
-    private int y;
+    int workerID;
+    int x;
+    int y;
 
-
-    public WorkerPositionInterface(int workerID, int x, int y) {
+    /**
+     * Create new data interface
+     * @param workerID id assigned by the server
+     * @param row battlefield row
+     * @param col battlefield column
+     */
+    public WorkerPositionInterface(int workerID, int row, int col) {
         this.workerID = workerID;
-        this.x = x;
-        this.y = y;
+        this.x = row;
+        this.y = col;
     }
 }

@@ -3,11 +3,10 @@ package it.polimi.ingsw.client.network.commandDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import it.polimi.ingsw.client.network.commands.*;
 import it.polimi.ingsw.client.network.commands.allPhases.BattlefieldCommands;
 import it.polimi.ingsw.client.network.commands.allPhases.PingCommand;
-import it.polimi.ingsw.client.network.commands.finishPhase.ServerErrorCommand;
 import it.polimi.ingsw.client.network.commands.finishPhase.LoseCommand;
+import it.polimi.ingsw.client.network.commands.finishPhase.ServerErrorCommand;
 import it.polimi.ingsw.client.network.commands.finishPhase.WinCommand;
 import it.polimi.ingsw.client.network.commands.lobbyPhase.*;
 import it.polimi.ingsw.client.network.commands.matchPhase.*;
@@ -20,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class that contains all possible network messages that can be deserializes and therefore treated by the command pattern
+ */
 public class  DeserializerHashMap  {
     private Map<String, ProcessingCommand> commandMap;
     private static DeserializerHashMap instance = null;
@@ -76,169 +78,103 @@ public class  DeserializerHashMap  {
 
     //1
     private void loadAddPlayerResponse(){
-        this.commandMap.put("addPlayerResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new AddPlayerCommand(
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("validNick").getAsBoolean(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbyState").getAsBoolean(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt(),
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("fullLobby").getAsBoolean());
-            }
-        });
+        this.commandMap.put("addPlayerResponse", jsonElement -> new AddPlayerCommand(
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("validNick").getAsBoolean(),
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbyState").getAsBoolean(),
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("lobbySize").getAsInt(),
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("fullLobby").getAsBoolean()));
     }
 
     //2
     private void loadSetPickedCards(){
-        this.commandMap.put("setPickedCards", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new SetPickedCardsCommand(
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
-            }
-        });
+        this.commandMap.put("setPickedCards", jsonElement -> new SetPickedCardsCommand(
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString()));
     }
 
     //3
     private void loadGetDeckResponse(){
-        this.commandMap.put("getDeckResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetDeckCommand.class);
-            }
-        });
+        this.commandMap.put("getDeckResponse", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), GetDeckCommand.class));
     }
 
     //4
     private void loadSetPlayerCard(){
-        this.commandMap.put("setPlayerCard", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetPlayerCardCommand.class);
-            }
-        });
+        this.commandMap.put("setPlayerCard", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetPlayerCardCommand.class));
     }
 
     //5
     private void loadSetWorkersPosition(){
-        this.commandMap.put("setWorkersPosition", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetWorkersPositionCommand.class);
-            }
-        });
+        this.commandMap.put("setWorkersPosition", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetWorkersPositionCommand.class));
     }
 
     //6
     private void loadGetPlayersResponse(){
-        this.commandMap.put("getPlayersResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new GetPlayersCommand(deserializePlayers(jsonElement));
-            }
-        });
+        this.commandMap.put("getPlayersResponse", jsonElement -> new GetPlayersCommand(deserializePlayers(jsonElement)));
     }
 
     //7
     private void loadGetBattlefieldResponse(){
-        this.commandMap.put("getBattlefieldResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "getBattlefieldResponse");
-            }
-        });
+        this.commandMap.put("getBattlefieldResponse", jsonElement -> new BattlefieldCommands(deserializeCellMatrix(jsonElement), "getBattlefieldResponse"));
     }
 
     //8
     private void loadBattlefieldUpdate(){
-        this.commandMap.put("battlefieldUpdate", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new BattlefieldCommands(deserializeCellMatrix(jsonElement), "battlefieldUpdate");
-            }
-        });
+        this.commandMap.put("battlefieldUpdate", jsonElement -> new BattlefieldCommands(deserializeCellMatrix(jsonElement), "battlefieldUpdate"));
     }
 
     //9
     private void loadActualPlayer(){
-        this.commandMap.put("actualPlayer", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new ActualPlayerCommand(
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString());
-            }
-        });
+        this.commandMap.put("actualPlayer", jsonElement -> new ActualPlayerCommand(
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("playerNickname").getAsString()));
     }
 
     //10
     private void loadSetStartTurnResponse(){
-        this.commandMap.put("setStartTurnResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetStartTurnResponse.class);
-            }
-        });
+        this.commandMap.put("setStartTurnResponse", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SetStartTurnResponse.class));
     }
 
     //11
     private void loadWorkerViewUpdate(){
-        this.commandMap.put("workerViewUpdate", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), WorkerViewUpdateCommand.class);
-            }
-        });
+        this.commandMap.put("workerViewUpdate", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), WorkerViewUpdateCommand.class));
     }
 
     //12
     private void loadPlayStepResponse(){
-        this.commandMap.put("playStepResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), PlayStepResponse.class);
-            }
-        });
+        this.commandMap.put("playStepResponse", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), PlayStepResponse.class));
     }
 
     //13
     private void loadSkipStepResponse(){
-        this.commandMap.put("skipStepResponse", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SkipStepResponse.class);
-            }
-        });
+        this.commandMap.put("skipStepResponse", jsonElement -> new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), SkipStepResponse.class));
     }
 
     //14
     private void loadYouWin(){
-        this.commandMap.put("youWin", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new WinCommand();
-            }
-        });
+        this.commandMap.put("youWin", jsonElement -> new WinCommand());
     }
 
     //15
     private void loadYouLose(){
-        this.commandMap.put("youLose", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new LoseCommand();
-            }
-        });
+        this.commandMap.put("youLose", jsonElement -> new LoseCommand());
     }
 
     //16
     private void loadServerError(){
-        this.commandMap.put("serverError", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new ServerErrorCommand(
-                        jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("error").getAsString());
-            }
-        });
+        this.commandMap.put("serverError", jsonElement -> new ServerErrorCommand(
+                jsonElement.getAsJsonObject().get("data").getAsJsonObject().get("error").getAsString()));
     }
 
     //17
     private void loadPing(){
-        this.commandMap.put("ping", new ProcessingCommand() {
-            public Command command(JsonElement jsonElement) {
-                return  new PingCommand();
-            }
-        });
+        this.commandMap.put("ping", jsonElement -> new PingCommand());
     }
 
     //Common Methods
+
     private CellInterface[][] deserializeCellMatrix (JsonElement jsonElement){
         CellMatrixInterface cellMatrix = new Gson().fromJson(jsonElement.getAsJsonObject().get("data"), CellMatrixInterface.class);
         return cellMatrix.getCellMatrix();
     }
+
     private List<PlayerInterface> deserializePlayers (JsonElement jsonElement){
         List<PlayerInterface> players = new ArrayList<>();
         //Start Deserialization of jsonElement

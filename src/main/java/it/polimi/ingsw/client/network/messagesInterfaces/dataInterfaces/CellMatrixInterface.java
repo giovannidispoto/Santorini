@@ -1,17 +1,23 @@
 package it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces;
 
+/**
+ *  Allows you to manage CellInterface matrices
+ */
 public class CellMatrixInterface {
-    private CellInterface[][] cellMatrix;
+    private final CellInterface[][] cellMatrix;
 
     /**
-     * Create new Message Interface
+     * Create new CellMatrix Interface
      * @param cellMatrix data
      */
     public CellMatrixInterface(CellInterface[][] cellMatrix){
         this.cellMatrix = cellMatrix;
     }
 
-    //return board of data interface
+    /**
+     * Return board of Cell data interface
+     * @return cellMatrix
+     */
     public CellInterface[][] getCellMatrix() {
         return cellMatrix;
     }
