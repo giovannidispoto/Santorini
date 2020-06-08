@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -25,5 +26,9 @@
          </children>
       </AnchorPane>
       <StackPane id="resultPane" layoutX="157.0" layoutY="22.0" prefHeight="400.0" prefWidth="440.0" visible="false" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="22.0" />
+      <Button id="infoButton" contentDisplay="CENTER" layoutX="45.0" layoutY="377.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="49.0" stylesheets="@CSS/SantoriniButton.css" text="?" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0">
+         <padding>
+            <Insets bottom="-10.0" top="-10.0" />
+         </padding></Button>
    </children>
 </AnchorPane>

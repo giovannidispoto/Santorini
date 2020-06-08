@@ -53,3 +53,13 @@
 #closeButton{
     -fx-background-radius: 10;
 }
+
+#infoButton{
+    -fx-pref-height: 42;
+    -fx-pref-width: 42;
+    -fx-font-size: 18;
+}
+
+#infoButton:pressed{
+    -fx-opacity: 0.5;
+}
