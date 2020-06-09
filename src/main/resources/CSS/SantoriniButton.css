@@ -16,7 +16,7 @@
 }
 
 .button:pressed{
-    -fx-background-color: #BAB29E;
+    -fx-opacity: 0.7;
 }
 
 .button:disabled{
@@ -57,9 +57,9 @@
 #infoButton{
     -fx-pref-height: 42;
     -fx-pref-width: 42;
-    -fx-font-size: 18;
-}
-
-#infoButton:pressed{
-    -fx-opacity: 0.5;
+    -fx-background-color: transparent;
+    -fx-background-image: url("InfoButtonIcon.png");
+    -fx-background-size: 42px 42px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }

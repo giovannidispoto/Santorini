@@ -124,6 +124,7 @@ public class SelectCardView extends Scene {
 
             wait1.setOnSucceeded(e->{
                 // hideWait();
+                root.lookup("#blurResult").setVisible(false);
                 hideWait();
                 listView.setItems(FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(GUIController.getController().getGodCards())));
                 for (int i = 0; i < listView.getItems().size(); i++)
@@ -133,6 +134,7 @@ public class SelectCardView extends Scene {
 
 
             executor.submit(wait1);
+            root.lookup("#blurResult").setVisible(true);
             showWait();
         }
     }
