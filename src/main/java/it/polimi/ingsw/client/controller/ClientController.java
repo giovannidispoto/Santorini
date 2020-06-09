@@ -124,11 +124,11 @@ public class ClientController {
 
     /**
      *  Initialize a new socket on the controller from which it is called,
-     *  the socket is missing the host address of the server to be able to start, have a default port that can be changed.
+     *  the socket is missing the host address of the server to be able to start, have a default port that can be changed.<br><br>
      *
-     *  1) setIP:       clientController.getSocketConnection().setServerName("String")
-     *  (opt)setPort:   clientController.getSocketConnection().setServerPort("int")
-     *  2) startSocket: clientController.getSocketConnection().startConnection()
+     *  1) setIP:       clientController.getSocketConnection().setServerName("String")<br>
+     *  (opt)setPort:   clientController.getSocketConnection().setServerPort("int")<br>
+     *  2) startSocket: clientController.getSocketConnection().startConnection()<br>
      */
     public void initializeNetwork(){
         this.socketConnection = new ClientSocketConnection(this);
@@ -146,9 +146,8 @@ public class ClientController {
 
     /**
      * If you use a different thread to invoke the functions of the controller,
-     * through this function you can register correctly so that you are interrupted in case of error
-     * -
-     * N.B: It is recommended to use only one thread to manage all commands to the controller
+     * through this function you can register correctly so that you are interrupted in case of error<br><br>
+     * - N.B: It is recommended to use only one thread to manage all commands to the controller
      *
      * @param controllerThread Thread that can be stopped in case of errors
      */
@@ -156,9 +155,9 @@ public class ClientController {
         this.controllerThread = controllerThread;
     }
 
-    /** Set an error code ("string") in the exception,
-     *  It is the easiest way to throw an exception to the client via the controller
-     *  You can pass a null in place of the error string, to keep the default error or the previous exception
+    /** Set an error code ("string") in the exception,<br>
+     *  It is the easiest way to throw an exception to the client via the controller<br>
+     *  You can pass a null in place of the error string, to keep the default error or the previous exception<br><br>
      *
      *  N.B:    It is recommended to use ExceptionMessages to choose error messages
      *
