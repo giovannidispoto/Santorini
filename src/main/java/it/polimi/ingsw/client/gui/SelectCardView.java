@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -162,6 +163,27 @@ public class SelectCardView extends Scene {
             }
 
         });
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (this){
+                    try{
+                        wait();
+                    }catch( InterruptedException e){
+                        //If the user if winner show relative view
+
+                        Platform.runLater(()->builder.showErrorPicker());
+                        executor.shutdownNow();
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        });
+        /* Register thread to controller for error handling*/
+        GUIController.getController().registerControllerThread(t);
+
+        t.start();
     }
 
     public void hideWait() {

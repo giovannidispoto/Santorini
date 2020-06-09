@@ -303,6 +303,7 @@ public class BattlefieldView extends Scene {
                         if(workersId.size() == 0) {
                             GUIController.getController().setWorkersPositionRequest(positions);
                             GUIController.getController().setGameState(GameState.MATCH);
+                            Platform.runLater(() -> actionLabel.setText("Wait your turn"));
                             cleanBattlefield();
                         }
                     });
