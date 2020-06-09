@@ -120,7 +120,11 @@ class ExtraMovePerimeterTest  {
         battlefield.cleanField();
     }
 
-    //general purpose test
+    /**
+     * Test the power of triton, trying to move around the perimeter and make another move<br>
+     * Build the workerView for the build and look at it is correct, trying to make an irregular (illegal) build<br>
+     * Finally try to win with another worker and to complete a construction correctly, always checking the workerView
+     */
     @Test
     void extensiveTurnTest() throws IOException {
         //Preliminary stuff

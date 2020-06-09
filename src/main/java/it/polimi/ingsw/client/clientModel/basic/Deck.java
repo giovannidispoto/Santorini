@@ -45,14 +45,10 @@ public class Deck {
         return cardsNames;
     }
 
-    /** Remove the matching card from the deck by its name
-     *  N:B: No case sensitive
-     * @param cardName  Card Name (English)
+    /**
+     * Cards Getter
+     * @return  All the cards in the deck
      */
-    public void removeDivinityCard(String cardName){
-        listOfCards.removeIf(card -> card.getCardName().equalsIgnoreCase(cardName));
-    }
-
     public List<DivinityCard> getAllCards(){
         return listOfCards;
     }
