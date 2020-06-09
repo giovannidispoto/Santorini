@@ -54,7 +54,7 @@
 
 #godPowerBox{
     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.1), 16, 0.3, 0, 0);
-    -fx-background-color: #E3DBC5;
+    -fx-background-color: #9E9584;
     -fx-background-radius: 16;
 }
 

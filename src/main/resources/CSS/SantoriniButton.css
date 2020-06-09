@@ -8,7 +8,7 @@
     -fx-font-size: 16;
     -fx-text-fill: #ffffff;
     -fx-background-color:  #9E9584;
-    -fx-background-radius: 20;
+    -fx-background-radius: 10;
     -fx-pref-height: 20;
     -fx-pref-width: 120;
     -fx-alignment: center;
@@ -35,23 +35,11 @@
     -fx-pref-width: 60;
 }
 
-#exitButton{
-    -fx-background-radius: 10;
-}
-
 #acceptButton, #refuseButton{
     -fx-font-size: 12;
     -fx-pref-height: 20;
-    -fx-pref-width: 60;
-    -fx-background-radius: 10;
-}
-
-#cardsButton{
-    -fx-background-radius: 10;
-}
-
-#closeButton{
-    -fx-background-radius: 10;
+    -fx-pref-width: 80;
+    -fx-background-color: #C1BAA8;
 }
 
 #infoButton{
@@ -62,4 +50,8 @@
     -fx-background-size: 42px 42px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+}
+
+#skipButton{
+    -fx-background-radius: 20;
 }

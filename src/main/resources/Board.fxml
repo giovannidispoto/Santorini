@@ -28,14 +28,14 @@
                 <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <AnchorPane id="godPowerBox" blendMode="SRC_ATOP" prefHeight="151.0" prefWidth="181.0" stylesheets="@CSS/BeigeBox.css" visible="false" AnchorPane.bottomAnchor="446.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <AnchorPane id="godPowerBox" blendMode="SRC_ATOP" prefHeight="141.0" prefWidth="200.0" stylesheets="@CSS/BeigeBox.css" visible="false" AnchorPane.bottomAnchor="456.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <ImageView blendMode="SRC_ATOP" fitHeight="112.0" fitWidth="103.0" layoutX="-9.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-26.0" AnchorPane.rightAnchor="-26.0">
+            <ImageView blendMode="SRC_ATOP" fitHeight="110.0" fitWidth="95.0" layoutX="115.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-24.0" AnchorPane.rightAnchor="-16.0">
                <image>
                   <Image url="@Images/Decorations/PowerOne.png" />
                </image>
             </ImageView>
-            <Label id="godPowerLabel" alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="17.0" prefWidth="159.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="14.0" />
+            <Label id="godPowerLabel" alignment="CENTER" layoutX="11.0" layoutY="8.0" prefHeight="17.0" prefWidth="159.0" stylesheets="@CSS/SantoriniLabel.css" text="Activate God Power" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="8.0" />
             <Button id="acceptButton" layoutX="59.0" layoutY="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" stylesheets="@CSS/SantoriniButton.css" text="Yes" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="58.0" />
             <Button id="refuseButton" layoutX="59.0" layoutY="91.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" stylesheets="@CSS/SantoriniButton.css" text="No" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="58.0" />
             <ImageView fitHeight="50.0" fitWidth="43.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0">
