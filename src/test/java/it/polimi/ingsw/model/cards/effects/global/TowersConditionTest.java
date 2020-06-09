@@ -20,6 +20,10 @@ class TowersConditionTest {
     final Worker w3 = new Worker(p2);
     final DeckReader reader = new DeckReader();
 
+    /**
+     * There are two players in the game, it is checked that in the turn of atlas,
+     * building the fifth complete tower wins immediately Chronus
+     */
     @Test
     void checkWinCondition() throws IOException {
         //Preliminary stuff
