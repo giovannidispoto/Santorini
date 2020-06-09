@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="cardInformationRoot" prefHeight="553.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardsInformationView">
+<AnchorPane id="cardInformationRoot" prefHeight="553.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
       <ImageView fitHeight="553.0" fitWidth="562.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -12,7 +12,7 @@
          </image></ImageView>
       <AnchorPane id="cardInfoBox" layoutX="59.0" layoutY="48.0" prefHeight="480.0" prefWidth="512.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="48.0">
          <children>
-            <VBox layoutX="206.0" layoutY="46.0" prefHeight="424.0" prefWidth="486.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="45.0" />
+            <VBox id="cardBox" layoutX="206.0" layoutY="46.0" prefHeight="424.0" prefWidth="486.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="45.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="86.0" fitWidth="266.0" layoutX="148.0" layoutY="10.0" pickOnBounds="true" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="10.0">

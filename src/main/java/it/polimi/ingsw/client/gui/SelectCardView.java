@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,6 +31,7 @@ public class SelectCardView extends Scene {
         Task<Void> wait1 = null;
         Task<Void> wait2 = null;
         Button selectButton = ((Button) root.lookup("#selectButton"));
+        Button infoButton = ((Button) root.lookup("#infoButton"));
         //default disabled button
         selectButton.setDisable(true);
 
@@ -137,6 +139,29 @@ public class SelectCardView extends Scene {
             root.lookup("#blurResult").setVisible(true);
             showWait();
         }
+
+        /* On CLick on info, show cards*/
+        infoButton.setOnMouseClicked(event->{
+            try {
+                Parent view = FXMLLoader.load(getClass().getResource("/GodInformationView.fxml"));
+                Scene scene = new CardsInfoView(view);
+
+                // New window (Stage)
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Cards Info");
+                newWindow.setScene(scene);
+
+                // Set position of second window, related to primary window.
+                newWindow.setX(scene.getX() + 200);
+                newWindow.setY(scene.getY() + 100);
+
+                newWindow.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
     public void hideWait() {

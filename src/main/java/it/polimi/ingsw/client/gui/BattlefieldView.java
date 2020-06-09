@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
@@ -91,7 +92,6 @@ public class BattlefieldView extends Scene {
 
 
         root.lookup("#skipButton").setDisable(true);
-        root.lookup("#blurResult").setVisible(true);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         battlefieldGrid = ((GridPane) root.lookup("#battlefieldGrid"));
         guiBuilder.GUIController().addBattlefield(this);
@@ -101,6 +101,8 @@ public class BattlefieldView extends Scene {
         Task<Void> wait = new Task<Void>() {
             @Override
             protected Void call()  {
+                root.lookup("#blurResult").setVisible(true);
+                showWait();
                 try {
                     GUIController.getController().waitSetWorkersPosition();
                     GUIController.getController().getPlayersRequest();
@@ -114,6 +116,7 @@ public class BattlefieldView extends Scene {
 
         wait.setOnSucceeded(s->{
             root.lookup("#blurResult").setVisible(false);
+            hideWait();
             positions = new ArrayList<>();
             workersId = new LinkedList<>(GUIController.getController().getWorkersID());
             ((Label) root.lookup("#phaseLabel")).setText("Workers Placement");
@@ -200,6 +203,26 @@ public class BattlefieldView extends Scene {
             }
         });
 
+    }
+
+    public void hideWait() {
+        try {
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));
+            Platform.runLater (()-> ((StackPane)  lookup("#paneResult")).getChildren().clear());
+            Platform.runLater (()-> ((StackPane) lookup("#paneResult")).setVisible(false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showWait() {
+        try {
+            Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));
+            Platform.runLater (()-> ((StackPane) lookup("#paneResult")).getChildren().add(view));
+            Platform.runLater (()-> ((StackPane) lookup("#paneResult")).setVisible(true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void startBattlefieldPhase(){
