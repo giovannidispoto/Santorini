@@ -11,13 +11,13 @@ We have written an exhaustive wiki about the game and the features that we have 
 https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/wiki
 
 ## Project Status 🏗
-
+**Current** : Performing final code cleanup and adjustments</br>
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
 | Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Complete rules |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Socket | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| GUI | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
+| GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Multiple games | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
