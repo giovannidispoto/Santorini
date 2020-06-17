@@ -24,7 +24,7 @@ N.B:   (OPTIONAL) : the message is not always present   |    (ASYNCHRONOUS) : th
     -lobbySize: type of lobby chosen (integer)
     -lobbyState: indicates if the chosen lobby is valid on the server to which the request was sent (true)
     -validNick: result of the check made by the server, on the validity of the nickname (true)
-    -fullLobby: if false, indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum number
+    -fullLobby: if true, indicates if the server is busy and cannot manage multiple games, it may be because it has reached the maximum number (true)
     }
 
 2
