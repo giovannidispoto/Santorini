@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.controller.GameState;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Parent;

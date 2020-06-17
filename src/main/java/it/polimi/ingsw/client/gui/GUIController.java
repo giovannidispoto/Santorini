@@ -29,11 +29,6 @@ public class GUIController implements View {
 
 
 
-
-
-
-        //test
-
     }
 
     public void addBattlefield(BattlefieldView battlefield){

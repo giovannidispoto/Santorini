@@ -36,17 +36,25 @@ public class GUIBuilder extends Application {
     private ViewState state;
     private static GUIController controller;
 
+    /*
+    * Sets GUIController inside the application
+    * */
     public static void setGUIController(GUIController GUIcontroller){
         controller = GUIcontroller;
     }
 
+    /*
+    * Gets GUIController
+    * */
     public static GUIController getGUIController(){
         return controller;
     }
 
 
 
-
+    /*
+    * Create JavaFx Application
+    * */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
@@ -72,11 +80,15 @@ public class GUIBuilder extends Application {
 
 
     public void launchGUI(GUIController controller){
-        System.out.println(controller != null);
         launch();
     }
 
 
+    /**
+     * Change view at the end of different phase.
+     * @param view indicate in which picking card phase is the application. If player is god then he has to pick all the card
+     *             and then waiting for card picking is his turn.
+     * */
     public void changeView(Optional<ViewState> view) {
         Parent root = null;
         ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -136,6 +148,9 @@ public class GUIBuilder extends Application {
 
     }
 
+    /*
+    * Shows Win Message to GUI
+    * */
     public void showWin() {
         Parent root = null;
         try {
@@ -153,6 +168,9 @@ public class GUIBuilder extends Application {
 
     }
 
+    /*
+     * Shows Win Message to GUI
+     * */
     public void showLose(){
         Parent root = null;
         try {
@@ -170,11 +188,16 @@ public class GUIBuilder extends Application {
 
     }
 
-
+    /*
+    * Gets controller
+    * */
     public GUIController GUIController(){
         return controller;
     }
 
+    /*
+     * Shows Cards in Game View
+     * */
     public void showCards() {
         Parent root = null;
 
@@ -199,6 +222,9 @@ public class GUIBuilder extends Application {
         }
     }
 
+    /*
+     * Shows error message on GUI
+     * */
     public void showError() {
         Parent root = null;
         try {
@@ -214,6 +240,9 @@ public class GUIBuilder extends Application {
         }
     }
 
+    /*
+     * Shows error message on GUI while in Picking Card phase
+     * */
     public void showErrorPicker(){
         Parent root = null;
         try {
@@ -230,7 +259,9 @@ public class GUIBuilder extends Application {
     }
 
 
-
+    /*
+    * ListView template used for showing cards in game information
+    * */
     private class BuildCell extends ListCell<String> {
         private ImageView imageView = new ImageView();
         private Parent root;
@@ -248,7 +279,8 @@ public class GUIBuilder extends Application {
         }
         @Override
         protected void updateItem(String item, boolean empty) {
-            //pawn data
+
+            /* Adding element to cell */
             Map<Color, String> colorWorker = new HashMap<>();
             colorWorker.put(Color.BLUE,getClass().getResource("/Images/Cards/BluePawnCard.png").toString());
             colorWorker.put(Color.BROWN, getClass().getResource("/Images/Cards/BrownPawnCard.png").toString());

@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 * Add Player Worker View
 * */
 public class AddPlayerView extends Scene {
+    
 
     public AddPlayerView(Parent root, GUIBuilder builder) {
         super(root);
