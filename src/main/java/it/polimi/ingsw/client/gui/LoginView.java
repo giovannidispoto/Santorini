@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /* Login View */
 public class LoginView {
@@ -22,6 +25,9 @@ public class LoginView {
             Label terminalLabel = (Label) root.lookup("#terminalLabel");
             TextField socketPortField = (TextField) root.lookup("#socketPortField");
             TextField serverIPField = (TextField) root.lookup("#serverIPField");
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+            
 
 
             /* Adding listener to button*/
@@ -42,17 +48,24 @@ public class LoginView {
                     serverIPField.setDisable(false);
                     btn.setDisable(false);
                 }else {
-                    GUIController.getController().getSocketConnection().setServerPort(socketPort);
-                    boolean result = GUIController.getController().getSocketConnection().startConnection();
-
-                    if (result) {
-                        builder.changeView(Optional.empty());
-                    } else { //If there is a problem with connection, request another time
-                        Platform.runLater(() -> terminalLabel.setText("Something went wrong"));
-                        socketPortField.setDisable(false);
-                        serverIPField.setDisable(false);
-                        btn.setDisable(false);
-                    }
+                    /* Try server connection */
+                    Task<Void> connectTask = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            GUIController.getController().getSocketConnection().setServerPort(socketPort);
+                            boolean result = GUIController.getController().getSocketConnection().startConnection();
+                            if (result) {//If connection is esablished correctly, change view
+                                Platform.runLater(()->builder.changeView(Optional.empty()));
+                            } else { //If there is a problem with connection, request another time
+                                Platform.runLater(() -> terminalLabel.setText("Something went wrong"));
+                                socketPortField.setDisable(false);
+                                serverIPField.setDisable(false);
+                                btn.setDisable(false);
+                            }
+                            return null;
+                        }
+                    };
+                    executorService.submit(connectTask);
                 }
             });
 
