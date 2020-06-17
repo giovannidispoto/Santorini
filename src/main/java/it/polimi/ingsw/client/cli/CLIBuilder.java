@@ -348,7 +348,7 @@ public class CLIBuilder implements UIActions{
         clientController.getPlayersRequest();
         //Logic
         resetScreen();
-        System.out.print(COLOR_SCHEME+edge_distance+PLAYERS_TITLE+NEW_LINE+NEW_LINE);
+        System.out.print(COLOR_SCHEME+NEW_LINE+edge_distance+PLAYERS_TITLE+NEW_LINE+NEW_LINE);
         for(PlayerInterface currentPlayer : clientController.getPlayers()){
             playerData.append(edge_distance).append(String.format(playerDataTemplate, WorkerColorsMap.get(currentPlayer.getColor()), COLOR_SCHEME+currentPlayer.getPlayerNickname(), currentPlayer.getCard()));
             playersInfo.add(playerData.toString());
