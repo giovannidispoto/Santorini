@@ -2,18 +2,15 @@ package it.polimi.ingsw.client.gui;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /* Login View */
 public class LoginView {
@@ -27,7 +24,32 @@ public class LoginView {
             TextField serverIPField = (TextField) root.lookup("#serverIPField");
             ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-            
+            //Disable button
+            btn.setDisable(true);
+
+            AtomicBoolean emptyIP = new AtomicBoolean(true);
+            AtomicBoolean emptyPort = new AtomicBoolean(true);
+
+            /*
+            * Activate button when user insert IP and port
+            * */
+            socketPortField.textProperty().addListener((observable,oldText, newText)->{
+                emptyPort.set(newText.isEmpty());
+
+                if(!emptyPort.get() && !emptyIP.get())
+                    btn.setDisable(false);
+                else
+                    btn.setDisable(true);
+            });
+
+            serverIPField.textProperty().addListener((observable, oldText, newText)->{
+                emptyIP.set(newText.isEmpty());
+
+                if(!emptyPort.get() && !emptyIP.get())
+                    btn.setDisable(false);
+                else
+                    btn.setDisable(true);
+            });
 
 
             /* Adding listener to button*/

@@ -32,6 +32,17 @@ public class AddPlayerView extends Scene {
         Label terminalLabel = (Label)  root.lookup("#terminalLabel");
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+        btn.setDisable(true);
+
+        /*
+        * Enbale button when user insert username
+        * */
+
+        nicknameField.textProperty().addListener((observable, oldText, newText)->{
+            if(!newText.isEmpty())
+                btn.setDisable(false);
+        });
+
         terminalLabel.setText("> Waiting..");
 
         /*Adding listener to button*/
