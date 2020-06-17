@@ -21,7 +21,7 @@ public class CLIController implements View {
     public CLIController(String cliColor, ClientController clientController, Scanner consoleScanner) {
         this.clientController = clientController;
         this.moveMessages = new HashMap<>();
-        this.commandLine = new CLIBuilder(cliColor, clientController, consoleScanner);
+        this.commandLine = new CLIBuilder(cliColor, consoleScanner);
         moveMessages.put(0,"Wait ");}
 
     @Override
@@ -85,7 +85,6 @@ public class CLIController implements View {
                 clientController.setStartTurn(false);
             }
             //Woke up by: SetStartTurnResponse
-            commandLine.resetScreen();
             commandLine.renderPlayersInfo(clientController);
             commandLine.selectWorker(clientController);
 
