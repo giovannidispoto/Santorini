@@ -38,12 +38,14 @@ public class PushCharacter extends MoveEffect {
                     //check worker presence (enemy: due to getWorkerView)
                     if(MINOTAURMatrix[i][j].isWorkerPresent()){
                         //check possible player direction
-                        int directionRow = i- selectedWorker.getRowWorker();
+                        int directionRow = i - selectedWorker.getRowWorker();
                         int directionCol = j - selectedWorker.getColWorker();
+                        int nextCellRow = i + directionRow;
+                        int nextCellCol = j + directionCol;
                         //check valid push direction inside battlefield
-                        if(i+directionRow < Battlefield.N_ROWS_VIEW && j+directionCol < Battlefield.N_COLUMNS_VIEW) {
+                        if(nextCellRow > -1 && nextCellRow < Battlefield.N_ROWS_VIEW && nextCellCol > -1 && nextCellCol < Battlefield.N_COLUMNS_VIEW) {
                             //get cell on that direction
-                            Cell forcedMoveCell = battlefield.getCell(i + directionRow, j + directionCol);
+                            Cell forcedMoveCell = battlefield.getCell(nextCellRow, nextCellCol);
 
                             //check another worker presence
                             if (forcedMoveCell.isWorkerPresent()) {
