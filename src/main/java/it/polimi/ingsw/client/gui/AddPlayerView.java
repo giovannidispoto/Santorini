@@ -45,6 +45,7 @@ public class AddPlayerView extends Scene {
                 btn.setDisable(false);
         });
 
+        terminalLabel.setTextFill(Color.web("#FFFFFF",1));
         terminalLabel.setText("Setup Player Information...");
 
         /*Adding listener to button*/
@@ -98,7 +99,7 @@ public class AddPlayerView extends Scene {
             sendRequest.setOnSucceeded(event->{
                 if(GUIController.getController().getValidNick())
                 {
-                    terminalLabel.setTextFill(Color.web("#2BE06A",1));
+                    terminalLabel.setTextFill(Color.web("#49CA3E",1));
                     terminalLabel.setText("Success! Wait for the match startup...");
                     executorService.execute(wait);
                 }
@@ -109,7 +110,7 @@ public class AddPlayerView extends Scene {
                     nicknameField.setDisable(false);
                     btn1.setDisable(false);
                     btn2.setDisable(false);
-                    terminalLabel.setTextFill(Color.web("#FF3C75",1));
+                    terminalLabel.setTextFill(Color.web("#FC2A5D",1));
                     terminalLabel.setText("Invalid Username...retry!");
                 }
             });

@@ -175,16 +175,9 @@ public class SelectCardView extends Scene {
                 Parent view = FXMLLoader.load(getClass().getResource("/GodInformationView.fxml"));
                 Scene scene = new CardsInfoView(view);
 
-                // New window (Stage)
                 Stage newWindow = new Stage();
-                newWindow.setTitle("Santorini Gods");
                 newWindow.setScene(scene);
                 newWindow.setResizable(false);
-
-                /* Set position of second window, related to primary window.
-                newWindow.setX(scene.getX() + 200);
-                newWindow.setY(scene.getY() + 100);
-*/
                 newWindow.show();
 
             } catch (IOException e) {

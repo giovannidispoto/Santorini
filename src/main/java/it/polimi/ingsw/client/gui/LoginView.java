@@ -30,6 +30,7 @@ public class LoginView {
             btn.setDisable(true);
 
             //Setup terminal label
+            terminalLabel.setTextFill(Color.web("#FFFFFF",1));
             terminalLabel.setText("Setup Server Parameters...");
 
             AtomicBoolean emptyIP = new AtomicBoolean(true);
@@ -60,7 +61,8 @@ public class LoginView {
             /* Adding listener to button*/
             btn.setOnMouseClicked(e->{
                 /* Disable input */
-                terminalLabel.setText("Handshaking with the server...");
+                terminalLabel.setTextFill(Color.web("#FFFFFF",1));
+                terminalLabel.setText("Handshaking with the Server...");
                 btn.setDisable(true);
                 socketPortField.setDisable(true);
                 serverIPField.setDisable(true);
@@ -71,7 +73,8 @@ public class LoginView {
                 boolean server = GUIController.getController().getSocketConnection().setServerName(serverIP);
 
                 if(!server){
-                    Platform.runLater(()-> terminalLabel.setText("Are you sure that server is right?"));
+                    Platform.runLater(()-> terminalLabel.setText("This doesn't seem to be a Server..."));
+                    terminalLabel.setTextFill(Color.web("#FC2A5D",1));
                     socketPortField.setDisable(false);
                     serverIPField.setDisable(false);
                     btn.setDisable(false);
@@ -86,7 +89,7 @@ public class LoginView {
                                 Platform.runLater(()->builder.changeView(Optional.empty()));
                             } else { //If there is a problem with connection, request another time
                                 Platform.runLater(() -> terminalLabel.setText("Something went wrong...retry!"));
-                                terminalLabel.setTextFill(Color.web("#FF3C75",1));
+                                terminalLabel.setTextFill(Color.web("#FC2A5D",1));
                                 socketPortField.setDisable(false);
                                 serverIPField.setDisable(false);
                                 btn.setDisable(false);
