@@ -18,7 +18,6 @@ public class CardsInfoView extends Scene {
         super(parent);
         VBox cardBox = ((VBox) lookup("#cardBox"));
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-
         Task<Void> wait = new Task<>() {
             @Override
             protected Void call() throws Exception {

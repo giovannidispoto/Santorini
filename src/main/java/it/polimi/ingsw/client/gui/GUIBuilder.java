@@ -61,6 +61,7 @@ public class GUIBuilder extends Application {
         state = ViewState.CONNECTION;
         mainScene = new Scene(root);
         mainStage = stage;
+        stage.setResizable(false);
 
         /* Handle Close event*/
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
