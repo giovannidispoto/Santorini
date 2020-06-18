@@ -177,8 +177,9 @@ public class SelectCardView extends Scene {
 
                 // New window (Stage)
                 Stage newWindow = new Stage();
-                newWindow.setTitle("Cards Info");
+                newWindow.setTitle("Santorini Gods");
                 newWindow.setScene(scene);
+                newWindow.setResizable(false);
 
                 // Set position of second window, related to primary window.
                 newWindow.setX(scene.getX() + 200);

@@ -146,6 +146,7 @@ public class GUIBuilder extends Application {
 
         mainStage.setScene(mainScene);
         mainStage.show();
+        mainStage.setResizable(false);
 
     }
 
