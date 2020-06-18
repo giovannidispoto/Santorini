@@ -6,7 +6,7 @@
 
 <AnchorPane id="cardInformationRoot" prefHeight="716.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="716.0" fitWidth="1202.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="716.0" fitWidth="1202.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Decorations/PickerBlur.png" />
          </image></ImageView>

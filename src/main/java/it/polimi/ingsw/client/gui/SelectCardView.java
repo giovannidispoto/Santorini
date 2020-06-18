@@ -181,10 +181,10 @@ public class SelectCardView extends Scene {
                 newWindow.setScene(scene);
                 newWindow.setResizable(false);
 
-                // Set position of second window, related to primary window.
+                /* Set position of second window, related to primary window.
                 newWindow.setX(scene.getX() + 200);
                 newWindow.setY(scene.getY() + 100);
-
+*/
                 newWindow.show();
 
             } catch (IOException e) {
