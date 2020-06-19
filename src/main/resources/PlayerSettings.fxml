@@ -78,7 +78,8 @@
             </VBox>
             <AnchorPane id="terminalBox" maxWidth="260.0" prefHeight="30.0" stylesheets="@CSS/SantoriniTerminal.css">
                <children>
-                  <Label id="terminalLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="240.0" stylesheets="@CSS/SantoriniTerminal.css" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                  <Label id="terminalLabel" layoutX="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="227.0" stylesheets="@CSS/SantoriniTerminal.css" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                  <Label layoutX="33.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="227.0" stylesheets="@CSS/SantoriniTerminal.css" text="&gt;" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="4.0" />
                </children>
             </AnchorPane>
          </children></VBox>

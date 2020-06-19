@@ -6,19 +6,19 @@
 
 <AnchorPane id="cardInformationRoot" prefHeight="716.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ImageView fitHeight="716.0" fitWidth="1202.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="716.0" fitWidth="1202.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@Images/Decorations/PickerBlur.png" />
          </image></ImageView>
       <AnchorPane id="cardInfoBox" layoutX="59.0" layoutY="48.0" prefHeight="643.0" prefWidth="1079.0" stylesheets="@CSS/BeigeBox.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="48.0">
          <children>
-            <VBox id="cardBox" layoutX="206.0" layoutY="46.0" prefHeight="424.0" prefWidth="1130.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
-            <ImageView fitHeight="86.0" fitWidth="266.0" layoutX="495.0" layoutY="-28.0" pickOnBounds="true" AnchorPane.topAnchor="-38.0">
+            <VBox id="cardBox" fillWidth="false" layoutX="206.0" layoutY="46.0" prefHeight="424.0" prefWidth="1130.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
+            <ImageView fitHeight="86.0" fitWidth="266.0" layoutX="495.0" layoutY="-28.0" pickOnBounds="true" AnchorPane.bottomAnchor="595.0" AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="391.0" AnchorPane.topAnchor="-38.0">
                <image>
                   <Image url="@Images/Decorations/Flag.png" />
                </image>
             </ImageView>
-            <Label id="godsLabel" alignment="CENTER" layoutX="586.0" layoutY="-28.0" prefHeight="56.0" prefWidth="84.0" style="-fx-font-size: 20;" stylesheets="@CSS/SantoriniLabel.css" text="Gods" AnchorPane.topAnchor="-38.0" />
+            <Label id="godsLabel" alignment="CENTER" layoutX="586.0" layoutY="-28.0" prefHeight="56.0" prefWidth="84.0" style="-fx-font-size: 20;" stylesheets="@CSS/SantoriniLabel.css" text="Gods" AnchorPane.bottomAnchor="625.0" AnchorPane.leftAnchor="586.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="-38.0" />
          </children>
       </AnchorPane>
    </children>

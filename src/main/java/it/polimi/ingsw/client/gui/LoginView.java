@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -27,6 +28,10 @@ public class LoginView {
 
             //Disable button
             btn.setDisable(true);
+
+            //Setup terminal label
+            terminalLabel.setTextFill(Color.web("#FFFFFF",1));
+            terminalLabel.setText("Setup Server Parameters...");
 
             AtomicBoolean emptyIP = new AtomicBoolean(true);
             AtomicBoolean emptyPort = new AtomicBoolean(true);
@@ -56,6 +61,8 @@ public class LoginView {
             /* Adding listener to button*/
             btn.setOnMouseClicked(e->{
                 /* Disable input */
+                terminalLabel.setTextFill(Color.web("#FFFFFF",1));
+                terminalLabel.setText("Handshaking with the Server...");
                 btn.setDisable(true);
                 socketPortField.setDisable(true);
                 serverIPField.setDisable(true);
@@ -66,7 +73,8 @@ public class LoginView {
                 boolean server = GUIController.getController().getSocketConnection().setServerName(serverIP);
 
                 if(!server){
-                    Platform.runLater(()-> terminalLabel.setText("Are you sure that server is right?"));
+                    Platform.runLater(()-> terminalLabel.setText("This doesn't seem to be a Server..."));
+                    terminalLabel.setTextFill(Color.web("#FC2A5D",1));
                     socketPortField.setDisable(false);
                     serverIPField.setDisable(false);
                     btn.setDisable(false);
@@ -77,10 +85,11 @@ public class LoginView {
                         protected Void call() throws Exception {
                             GUIController.getController().getSocketConnection().setServerPort(socketPort);
                             boolean result = GUIController.getController().getSocketConnection().startConnection();
-                            if (result) {//If connection is esablished correctly, change view
+                            if (result) {//If connection is established correctly, change view
                                 Platform.runLater(()->builder.changeView(Optional.empty()));
                             } else { //If there is a problem with connection, request another time
-                                Platform.runLater(() -> terminalLabel.setText("Something went wrong"));
+                                Platform.runLater(() -> terminalLabel.setText("Something went wrong...retry!"));
+                                terminalLabel.setTextFill(Color.web("#FC2A5D",1));
                                 socketPortField.setDisable(false);
                                 serverIPField.setDisable(false);
                                 btn.setDisable(false);

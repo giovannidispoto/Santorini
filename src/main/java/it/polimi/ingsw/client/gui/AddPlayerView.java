@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +37,7 @@ public class AddPlayerView extends Scene {
         btn.setDisable(true);
 
         /*
-        * Enbale button when user insert username
+        * Enable button when user insert username
         * */
 
         nicknameField.textProperty().addListener((observable, oldText, newText)->{
@@ -44,7 +45,8 @@ public class AddPlayerView extends Scene {
                 btn.setDisable(false);
         });
 
-        terminalLabel.setText("> Waiting..");
+        terminalLabel.setTextFill(Color.web("#FFFFFF",1));
+        terminalLabel.setText("Setup Player Information...");
 
         /*Adding listener to button*/
         btn.setOnMouseClicked(e->{
@@ -96,7 +98,11 @@ public class AddPlayerView extends Scene {
 
             sendRequest.setOnSucceeded(event->{
                 if(GUIController.getController().getValidNick())
-                     executorService.execute(wait);
+                {
+                    terminalLabel.setTextFill(Color.web("#49CA3E",1));
+                    terminalLabel.setText("Success! Wait for the match startup...");
+                    executorService.execute(wait);
+                }
                 else{
                     //Request username
                     /* enable all */
@@ -104,7 +110,8 @@ public class AddPlayerView extends Scene {
                     nicknameField.setDisable(false);
                     btn1.setDisable(false);
                     btn2.setDisable(false);
-                    terminalLabel.setText("> Invalid username.. Pick another one!");
+                    terminalLabel.setTextFill(Color.web("#FC2A5D",1));
+                    terminalLabel.setText("Invalid Username...retry!");
                 }
             });
 
