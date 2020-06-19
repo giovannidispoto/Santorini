@@ -73,6 +73,7 @@ public class Battlefield implements SubjectBattlefield {
         workersInGame = workersInGame.stream()
                         .filter(w->!w.getOwnerWorker().equals(player))
                             .collect(Collectors.toList());
+        notifyUpdate();
     }
 
     /**

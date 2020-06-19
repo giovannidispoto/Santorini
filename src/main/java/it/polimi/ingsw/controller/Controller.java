@@ -312,6 +312,11 @@ public class Controller implements ObserverPlayers {
             checkDeclareWinner();
             handlers.get(playerNickname).responseQueue(new Gson().toJson(new BasicMessageResponse("youLose", null)));
             handlers.get(playerNickname).playerIsEliminated();
+            /* If there is other players in game, pass turn */
+            if(match.getMatchPlayers().size() > 0) {
+                turn.passTurn();
+                handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+            }
         }
     }
 

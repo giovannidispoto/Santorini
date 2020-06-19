@@ -339,6 +339,7 @@ public class BattlefieldView extends Scene {
                 } while (!GUIController.getController().getActualPlayer().equals(GUIController.getController().getPlayerNickname()));
 
                 resetBattlefieldMap();
+                reloadBattlefield();
                 return null;
             }
         };
