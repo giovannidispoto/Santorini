@@ -12,6 +12,7 @@ import static it.polimi.ingsw.server.consoleUtilities.PrinterClass.*;
  * Server class that manages the lobbies, with phases of connection disconnection, end of game, interruption of game
  */
 public class LobbyManager {
+    private static final String nickNameRegex = "^[a-zA-Z0-9_.-]+$";
     private final Map<Integer, Lobby> existingLobbiesMap;
     private final Map<String, ClientHandler> playersNickNameMap;
     private final Map<ClientHandler, String> playersHandlerMap;
@@ -49,7 +50,7 @@ public class LobbyManager {
      */
     public boolean addPlayer(int lobbySize, String nickName, ClientHandler playerHandler){
         //Input string treatment at least length == 1
-        if(nickName.length() >=1)
+        if(nickName.matches(nickNameRegex))
             nickName = nickName.toLowerCase(Locale.ROOT);
         else
             return false;
