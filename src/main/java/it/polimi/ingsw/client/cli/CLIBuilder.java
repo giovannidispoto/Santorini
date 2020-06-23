@@ -84,7 +84,7 @@ public class CLIBuilder implements UIActions{
     private static final String WELCOME = "Welcome to %s : THE BOARD GAME 🎲"+NEW_LINE+ANSI_GRAY+"ADVICE: Enable the full screen to enjoy the best experience possible!";
     private static final String BOARD_TITLE = "BOARD";
     private static final String PLAYERS_TITLE = "PLAYERS 👾";
-    private static final String TOWERS_TITLE = "FULL TOWERS 🏛";
+    private static final String TOWERS_TITLE = "FULL TOWERS 🏠";
     private static final String MOVES_TITLE = "PLAYER MOVES 🎮";
     private static final String PHASE_TITLE = "CURRENT PHASE 🚀";
     private static final String SELECTED_WORKER = "SELECTED WORKER 📍 ‍• ";
