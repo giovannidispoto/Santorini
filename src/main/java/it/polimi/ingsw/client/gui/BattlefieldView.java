@@ -10,6 +10,7 @@ import it.polimi.ingsw.client.controller.SantoriniException;
 import it.polimi.ingsw.client.gui.component.*;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.PlayerInterface;
 import it.polimi.ingsw.client.network.messagesInterfaces.dataInterfaces.lobbyPhase.WorkerPositionInterface;
+import it.polimi.ingsw.model.Battlefield;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -191,7 +192,7 @@ public class BattlefieldView extends Scene {
                 skipButton.setDisable(true);
                 Platform.runLater(()->actionLabel.setText(messageStep.get(GUIController.getController().getCurrentStep())));
                 if(GUIController.getController().getCurrentStep() != Step.END)
-                     callRenderWorkerView();
+                    callRenderWorkerView();
 
                 removeWorkerAvailableCell();
 
@@ -433,8 +434,8 @@ public class BattlefieldView extends Scene {
                                     int finalI = i;
                                     int finalJ = j;
                                     //if request interaction, disable click on workers
-                                   if(requestInteraction)
-                                       node.setDisable(true);
+                                    if(requestInteraction)
+                                        node.setDisable(true);
 
                                     node.setOnMouseClicked(event -> {
                                         try {

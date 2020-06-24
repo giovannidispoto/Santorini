@@ -4,9 +4,12 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.SantoriniException;
+import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class GUIController implements View {
     private static  ClientController clientController;
@@ -38,8 +41,6 @@ public class GUIController implements View {
     public static ClientController getController(){
         return clientController;
     }
-
-
 
 
     @Override

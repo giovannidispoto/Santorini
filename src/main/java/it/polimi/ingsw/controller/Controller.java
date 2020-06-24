@@ -37,6 +37,7 @@ public class Controller implements ObserverPlayers {
     private int lobbySize;
     private UUID lobbyID;
     private LobbyManager lobbyManager;
+    private Player removedPlayer = null;
 
     /**
      * Returns the [Row] of the currently selected worker
@@ -373,6 +374,25 @@ public class Controller implements ObserverPlayers {
                 break;
         }
 
+        /* If can't move or can't build */
+        if(match.getSelectedWorker().isInvalidWorkerView()) {
+            if(turn.getCurrentStep() == Step.BUILD || turn.getCurrentStep() == Step.MOVE){
+                removedPlayer = match.getCurrentPlayer();
+                checkDeclareWinner();
+                handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+                handlers.get(match.getCurrentPlayer().getPlayerNickname()).playerIsEliminated();
+                match.removePlayer(match.getCurrentPlayer());
+                /* If there is other players in game, pass turn */
+                if(match.getMatchPlayers().size() > 1) {
+                    turn.passTurn();
+                    handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
+                }
+                //match.removePlayer(match.getCurrentPlayer());
+            }
+            return Step.END;
+        }
+
+
         if(!winner && turn.getCurrentStep() == Step.END) {
             turn.passTurn();
             handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
@@ -382,7 +402,7 @@ public class Controller implements ObserverPlayers {
             //TODO: END GAME
             //For security, lock the current player
             this.lobbyManager.gameEnded(this.lobbyID);
-            return Step.END;
+            turn.setCurrentSteptoEnd();
         }
 
         return turn.getCurrentStep();
@@ -390,10 +410,11 @@ public class Controller implements ObserverPlayers {
 
     private void declareWinner(Player winner) {
         for(Player p : match.getMatchPlayers()){
-            if(p.getPlayerNickname().equals(winner.getPlayerNickname()))
+            if(p.getPlayerNickname().equals(winner.getPlayerNickname())) {
                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youWin", null)));
-            else
-                handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+            } else {
+                 handlers.get(p.getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("youLose", null)));
+            }
         }
 
         PrinterClass.getPrinterInstance().printWinner(match.getWinner().getPlayerNickname());

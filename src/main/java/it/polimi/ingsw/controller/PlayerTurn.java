@@ -139,6 +139,7 @@ public class PlayerTurn {
         return true;
     }
 
+
     /**
      *  Perform a move
      * @param w worker
@@ -260,5 +261,9 @@ public class PlayerTurn {
     public Step getCurrentStep(){
         return this.steps.get(0);
     }
-    
+
+    public void setCurrentSteptoEnd() {
+        this.steps.clear();
+        this.steps.add(Step.END);
+    }
 }
