@@ -11,7 +11,7 @@ We have written an exhaustive wiki about the game and the features that we have 
 https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/wiki
 
 ## Project Status 🏗
-**Current** : Playing night matches to decide who's the strongest one</br>
+**Current** : Everything is finished. We're currently playing some matches between us</br>
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
 | Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
