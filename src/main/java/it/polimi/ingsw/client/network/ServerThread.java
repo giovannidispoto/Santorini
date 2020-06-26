@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.network;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
+import it.polimi.ingsw.client.controller.WaitManager;
 
 import java.io.IOException;
 import java.io.PrintWriter;

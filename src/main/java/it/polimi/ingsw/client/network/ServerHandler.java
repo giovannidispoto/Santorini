@@ -4,6 +4,7 @@ import com.google.gson.JsonParseException;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
+import it.polimi.ingsw.client.controller.WaitManager;
 import it.polimi.ingsw.client.network.commands.CommandFactory;
 
 import java.util.Timer;
@@ -63,6 +64,12 @@ public class ServerHandler{
             public void run() {
                 clientController.setGameExceptionMessage(ExceptionMessages.pingSocketError, GameState.ERROR, true);
                 clientController.loggerIO.severe("NO-PING-ERROR\n");
+
+                synchronized (WaitManager.waitPlayStepResponse){
+                    /*If client is waiting for playStep response, wake*/
+                    WaitManager.waitPlayStepResponse.notify();
+                }
+
             }
 
         },10000);
