@@ -7,7 +7,7 @@
 
 <AnchorPane id="resultRoot" prefHeight="435.0" prefWidth="398.0" stylesheets="@CSS/SantoriniRoot.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.GUIBuilder">
    <children>
-      <ListView id="cardsList" fixedCellSize="0.0" layoutX="36.0" layoutY="26.0" orientation="HORIZONTAL" prefHeight="338.0" prefWidth="384.0" stylesheets="@CSS/SantoriniCardDrawer.css" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="16.0" />
+      <ListView id="cardsList" fixedCellSize="0.0" layoutX="38.0" layoutY="14.0" orientation="HORIZONTAL" prefHeight="344.0" prefWidth="364.0" stylesheets="@CSS/SantoriniCardDrawer.css" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="14.0" />
       <Button id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="368.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" stylesheets="@CSS/SantoriniButton.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <font>
             <Font name="Mistral" size="22.0" />
