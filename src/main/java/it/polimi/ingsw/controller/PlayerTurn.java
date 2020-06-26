@@ -120,6 +120,10 @@ public class PlayerTurn {
         }
     }
 
+    /**
+     * Check if player is loser
+     * @return true if player is loser, false otherwise
+    * */
     public boolean isLoser(){
         List<Cell[][]> workerViews = new ArrayList<>();
 
@@ -262,6 +266,9 @@ public class PlayerTurn {
         return this.steps.get(0);
     }
 
+    /**
+     * Force turn to end phase
+    * */
     public void setCurrentSteptoEnd() {
         this.steps.clear();
         this.steps.add(Step.END);

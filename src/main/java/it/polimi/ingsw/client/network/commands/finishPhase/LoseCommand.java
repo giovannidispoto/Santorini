@@ -15,7 +15,7 @@ public class LoseCommand implements Command {
         clientController.setGameExceptionMessage(ExceptionMessages.loseMessage, GameState.FINISH, true);
 
         synchronized (WaitManager.waitPlayStepResponse){
-           // WaitManager.waitPlayStepResponse.setUsed();
+            /*wake up*/
             WaitManager.waitPlayStepResponse.notify();
         }
     }

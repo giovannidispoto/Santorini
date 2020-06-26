@@ -138,7 +138,7 @@ public class Controller implements ObserverPlayers {
     }
 
     /**
-     *
+     * Send request to client
      */
     private void requestSelectCard(String playerNickname){
         List<String> pickedCardsName = new ArrayList<>();
@@ -149,9 +149,9 @@ public class Controller implements ObserverPlayers {
     }
 
     /**
-     *
-     * @param player
-     * @return
+     * Gets next player of the turn
+     * @param player current player
+     * @return next player
      */
     private String getNextPlayer(String player){
         return playersInLobby.get(((playersInLobby.indexOf(player) + 1) % playersInLobby.size()));
@@ -167,7 +167,6 @@ public class Controller implements ObserverPlayers {
             System.out.println("Not waiting this message");
         }
         else {
-
             Color c = colors.get(new Random().nextInt(colors.size()));
             colors.remove(c);
             Player p = new Player(playerNickname, c);
@@ -187,7 +186,7 @@ public class Controller implements ObserverPlayers {
         }
 
     }
-
+    /* Method used for handling setWorkerPosition phase */
     private void setWorkerPositionRequest(String playerNickname) {
         addWorkers(playerNickname, handlers.get(playerNickname));
         handlers.get(playerNickname).response(new Gson().toJson(new BasicMessageResponse("setWorkersPosition", new SetWorkerPositionRequest(getWorkersId(playerNickname)))));
@@ -230,10 +229,6 @@ public class Controller implements ObserverPlayers {
         workerList.add(w2);
         p.setPlayerWorkers(workerList);
         Battlefield.getBattlefieldInstance().setWorkersInGame(workerList);
-
-        //Register observer
-        //w1.attach(clientHandler);
-        // w2.attach(clientHandler);
 
     }
 
@@ -321,6 +316,7 @@ public class Controller implements ObserverPlayers {
         }
     }
 
+    /* Check declare winner */
     private void checkDeclareWinner(){
         if(match.getMatchPlayers().size() == 1){
             match.declareWinner(match.getMatchPlayers().get(0));
@@ -408,6 +404,10 @@ public class Controller implements ObserverPlayers {
         return turn.getCurrentStep();
     }
 
+    /**
+     * Declare winner of the game
+     * @param winner winner player
+     * */
     private void declareWinner(Player winner) {
         for(Player p : match.getMatchPlayers()){
             if(p.getPlayerNickname().equals(winner.getPlayerNickname())) {
@@ -442,12 +442,6 @@ public class Controller implements ObserverPlayers {
         return turn.getCurrentStep();
     }
 
-    /**
-     * End Turn
-     */
-    public void passTurn(){
-        turn.passTurn();
-    }
 
     /**
      *  Gets workers id of the player
@@ -487,34 +481,10 @@ public class Controller implements ObserverPlayers {
         return w.get();
     }
 
-    /**
-     * Check if nickname is valid
-     * @param playerNickname
-     * @return
-     */
-    public boolean isValidNickame(String playerNickname) {
-        return !playersInLobby.contains(playerNickname);
-    }
 
     /**
-     * Check if lobbySize is valid
-     * @param lobbySize
-     * @return
-     */
-    public boolean isValidLobby(int lobbySize) {
-        return this.lobbySize == 0 || this.lobbySize == lobbySize;
-    }
-
-    /**
-     * Check if lobby is full
-     * @return
-     */
-    public boolean isFullLobby(){
-        return lobbySize != 0 && lobbySize == playersInLobby.size();
-    }
-
-    /**
-     * get cards in gamee
+     * Get cards in game
+     * @return cards in game
      */
     public List<DivinityCard> getCardsInGame() {
         if(gameState.getState() == GameStep.CREATE_LOBBY || gameState.getState() == GameStep.PICKING_CARDS){
@@ -530,7 +500,7 @@ public class Controller implements ObserverPlayers {
 
     /**
      * Create interface copy of the battlefield
-     * @return
+     * @return battlefield matrix
      */
     public CellInterface[][] getBattlefield() {
         CellInterface[][] battlefieldInterface = new CellInterface[Battlefield.N_ROWS][Battlefield.N_COLUMNS];
@@ -547,7 +517,10 @@ public class Controller implements ObserverPlayers {
         return battlefieldInterface;
     }
 
-    /*Notify client who lose */
+    /**
+     * Send notification to player who lose
+     * @param removedPlayer loser player
+     */
     @Override
     public void update(Player removedPlayer) {
         checkDeclareWinner();
