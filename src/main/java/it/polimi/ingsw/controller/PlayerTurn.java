@@ -60,6 +60,8 @@ public class PlayerTurn {
     /**
      * Update movement matrix,
      * LOSE CHECK + NULL CHECK (skip)
+     * @param currentStep current step
+     * @return true if matrix is generated correctly, false otherwise
      */
     public boolean updateMovementMatrix(Step currentStep){
         match.getSelectedWorker().setWorkerView(currentTurn.generateMovementMatrix(match.getSelectedWorker()));
@@ -82,6 +84,8 @@ public class PlayerTurn {
     /**
      * Update building matrix,
      * LOSE CHECK + NULL CHECK (skip)
+     * @param currentStep current step
+     * @return true if matrix is generated correctly, false otherwise
      */
     public boolean updateBuildingMatrix(Step currentStep){
         match.getSelectedWorker().setWorkerView(currentTurn.generateBuildingMatrix(match.getSelectedWorker()));
@@ -209,6 +213,7 @@ public class PlayerTurn {
      * @param w worker
      * @param x row
      * @param y col
+     * @return boolean
      */
     public boolean build(Worker w, int x, int y){
         //build
@@ -241,6 +246,7 @@ public class PlayerTurn {
      * @param w Worker
      * @param x row
      * @param y col
+     * @return boolean
      */
     public boolean remove(Worker w,int x, int y){
         //remove

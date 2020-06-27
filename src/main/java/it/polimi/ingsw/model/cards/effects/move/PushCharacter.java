@@ -10,6 +10,7 @@ import java.util.List;
 public class PushCharacter extends MoveEffect {
     /**
      * Class Constructor
+     * @param turnStructure structure of the turn
      */
     public PushCharacter(List<Step> turnStructure) {
         super();

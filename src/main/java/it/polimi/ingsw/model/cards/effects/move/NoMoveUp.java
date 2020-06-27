@@ -11,6 +11,7 @@ import java.util.List;
 public class NoMoveUp extends MoveEffect {
     /**
      * Class Constructor
+     * @param turnStructure structure of the turn
      */
     public NoMoveUp(List<Step> turnStructure) {
         super();

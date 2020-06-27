@@ -9,6 +9,7 @@ import java.util.List;
 public class RemoveBlock extends BasicRemove {
     /**
      * Class Constructor
+     * @param turnStructure turn structure
      */
     public RemoveBlock(List<Step> turnStructure) {
         super();

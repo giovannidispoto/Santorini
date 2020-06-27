@@ -11,6 +11,7 @@ import java.util.List;
 public class ExtraMovePerimeter extends MoveEffect {
     /**
      * Class Constructor
+     * @param turnStructure structure of the turn
      */
     public ExtraMovePerimeter(List<Step> turnStructure) {
         super.turnStructure = new ArrayList<>(turnStructure);

@@ -59,6 +59,7 @@ public abstract class Turn {
     }
     /**
      * Abstract methods that are specialized by the sons of this class
+     * @param selectedWorker selected worker
      */
     public abstract void checkLocalCondition(Worker selectedWorker);
     public abstract void moveWorker(Worker selectedWorker, int newRow, int newCol);
@@ -128,8 +129,8 @@ public abstract class Turn {
     }
 
     /**
-     *
-     * @return
+     * Gets turn structure
+     * @return turn structure
      */
     public List<Step> getTurnStructure() {
         return List.copyOf(this.turnStructure);

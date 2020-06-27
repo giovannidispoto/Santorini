@@ -9,6 +9,8 @@ public abstract class GlobalWinCondition {
 
     /**
      * Class Constructor
+     * @param subject subject
+     * @param match match
      */
     public GlobalWinCondition(Player subject, Match match){
         this.subject = subject;

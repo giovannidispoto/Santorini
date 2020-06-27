@@ -19,6 +19,8 @@ public class ExtraMove extends MoveEffect {
 
     /**
      * Class Constructor
+     * @param movesLeft moves left
+     * @param turnStructure structure of the turn
      */
     public ExtraMove(int movesLeft, List<Step> turnStructure){
         super();

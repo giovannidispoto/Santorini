@@ -22,6 +22,7 @@ public class LobbyManager {
 
     /**
      * Lobby Manager builder, in addition to initializing it here, you can enter the sizes of the lobbies existing on the server
+     * @param maxNumLobbiesManaged number of lobby
      */
     public LobbyManager(int maxNumLobbiesManaged) {
         this.existingLobbiesMap = new HashMap<>();
@@ -143,7 +144,7 @@ public class LobbyManager {
 
     /**
      * Call when when the game ended correctly (can only be called once per game),
-     * Its job is to notify all the handlers in the lobby and delete all the lobby & players from the server
+     * Its job is to notify all the handlers in the lobby and delete all the lobby and players from the server
      * @param lobbyID Lobby id on which to call the method
      */
     public void gameEnded(UUID lobbyID){
@@ -154,7 +155,7 @@ public class LobbyManager {
 
     /**
      * Call when a player first disconnects (can only be called once per game)
-     * Its job is to shutdown all the handlers in the lobby and delete all the lobby & players from the server
+     * Its job is to shutdown all the handlers in the lobby and delete all the lobby and players from the server
      * @param lobbyID Lobby id to be deleted
      */
     public void clientDisconnected(UUID lobbyID){

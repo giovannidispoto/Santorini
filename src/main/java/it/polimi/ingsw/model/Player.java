@@ -76,7 +76,8 @@ public class Player {
 
     /**
      * Get another player who has not been moved
-     * @return stationaryWorker
+     * @param selectedWorker selected worker
+     * @return fixed worker
      * */
     public Worker getStationaryWorker(Worker selectedWorker){
         Worker stationaryWorker = null;
@@ -95,8 +96,8 @@ public class Player {
     }
 
     /**
-     *
-     * @return
+     * Gets isReady
+     * @return true if is ready, false otherwise
      */
     public boolean isReady(){
         return ready;

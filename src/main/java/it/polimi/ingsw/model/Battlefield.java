@@ -81,6 +81,8 @@ public class Battlefield implements SubjectBattlefield {
      * @param worker subject of the action
      * @param newColWorker new y coordinate of the worker
      * @param newRowWorker new x coordinate of the worker
+     * @param oldColWorker old y coordinate of the worker
+     * @param oldRowWorker old x coordinate of the worker
      */
     public void updateWorkerPosition(Worker worker, int oldRowWorker, int oldColWorker, int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
@@ -206,7 +208,7 @@ public class Battlefield implements SubjectBattlefield {
 
     /**
      * Remove Observer
-     * @param o
+     * @param o observer
      */
     @Override
     public void detach(ObserverBattlefield o) {

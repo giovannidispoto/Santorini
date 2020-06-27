@@ -9,6 +9,7 @@ import java.util.List;
 public class SwitchCharacter extends MoveEffect {
     /**
      * Class Constructor
+     * @param turnStructure structure of the turn
      */
     public SwitchCharacter(List<Step> turnStructure) {
         super();

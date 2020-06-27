@@ -13,6 +13,7 @@ public class JumpEffect extends WinEffect {
 
     /**
      * Class Constructor
+     * @param turnStructure structure of the turn
      */
     public JumpEffect(List<Step> turnStructure) {
         super();

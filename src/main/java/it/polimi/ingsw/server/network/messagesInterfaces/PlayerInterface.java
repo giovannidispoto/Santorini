@@ -14,6 +14,7 @@ public class PlayerInterface {
      * Create new Player
      * @param playerNickname player nickname
      * @param color color
+     * @param card card
      */
     public PlayerInterface(String playerNickname, Color color, String card) {
         this.playerNickname = playerNickname;

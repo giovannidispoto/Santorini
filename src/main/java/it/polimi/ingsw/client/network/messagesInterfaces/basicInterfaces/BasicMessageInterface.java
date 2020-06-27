@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.network.messagesInterfaces.basicInterfaces;
 
 /**
- * Allows you to create a message to the server with the action & data field
+ * Allows you to create a message to the server with the action and data field
  */
 public class BasicMessageInterface {
     String action;

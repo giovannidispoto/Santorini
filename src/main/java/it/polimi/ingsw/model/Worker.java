@@ -32,6 +32,8 @@ public class Worker implements SubjectWorkerView {
 
     /**
      * Updates the worker position
+     * @param newRowWorker new row worker
+     * @param newColWorker new col worker
      */
     public void changeWorkerPosition(int newRowWorker, int newColWorker){
         Battlefield.getBattlefieldInstance().updateWorkerPosition(this, rowWorker, colWorker, newRowWorker, newColWorker);
@@ -66,8 +68,8 @@ public class Worker implements SubjectWorkerView {
     }
 
     /**
-     *
-     * @return
+     * Gets WorkerView to requester
+     * @return worker view
      */
     public Cell[][] getWorkerView(){
         return this.workerView;
@@ -121,7 +123,7 @@ public class Worker implements SubjectWorkerView {
 
     /**
      * Remove Observer
-     * @param o
+     * @param o observer
      */
     @Override
     public void detach(ObserverWorkerView o) {
@@ -156,7 +158,7 @@ public class Worker implements SubjectWorkerView {
 
     /**
      * Gets worker id
-     * @return
+     * @return worker id
      */
     public int getId() {
         return id;

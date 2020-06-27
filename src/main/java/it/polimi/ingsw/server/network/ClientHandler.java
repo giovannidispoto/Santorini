@@ -47,7 +47,7 @@ public class ClientHandler implements ObserverBattlefield, ObserverWorkerView {
     /**
      * Execute ping to the client (with a certain cadence: pingDelay), expecting a feedback from client before timeout,
      * If the timer expires the client is considered disconnected
-     * @param pingDelay milliseconds after which to ping (clockPingTimer), if pingDelay <= 0 then is set to default value = 5000ms
+     * @param pingDelay milliseconds after which to ping (clockPingTimer), if pingDelay less or equal 0 then is set to default value = 5000ms
      */
     public void setTimer(int pingDelay){
         clientTimeoutTimer = new Timer();
