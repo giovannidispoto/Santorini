@@ -800,7 +800,7 @@ public class CLIBuilder implements UIActions{
             ┌───────────────┐
             │ Cards Pick Up │
             └───────────────┘
-            • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
+            • APOLLO | Your Move: Your Worker may move into an opponent Worker's space by forcing their Worker to the space yours just vacated
             •
             •
             •
@@ -852,7 +852,7 @@ public class CLIBuilder implements UIActions{
             ┌───────────────┐
             │ Cards Pick Up │
             └───────────────┘
-            • APOLLO | Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated
+            • APOLLO | Your Move: Your Worker may move into an opponent Worker's space by forcing their Worker to the space yours just vacated
             •
             •
             •

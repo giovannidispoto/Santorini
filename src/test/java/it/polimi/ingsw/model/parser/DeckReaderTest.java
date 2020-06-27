@@ -10,7 +10,7 @@ import static it.polimi.ingsw.TestsStaticResources.absPathDivinitiesCardsDeck;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckReaderTest {
-    String effectAPOLLO ="Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated";
+    String effectAPOLLO ="Your Move: Your Worker may move into an opponent Worker's space by forcing their Worker to the space yours just vacated";
 
     @Test
     void readerTest() throws IOException {
