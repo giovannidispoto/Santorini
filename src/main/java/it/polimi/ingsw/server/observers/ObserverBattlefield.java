@@ -3,7 +3,8 @@ package it.polimi.ingsw.server.observers;
 import it.polimi.ingsw.server.network.messagesInterfaces.CellInterface;
 
 /**
- * Interface used in Observer Pattern
+ * Interface used for observe Battlefield change.
+ * The update notify client about new configuration of battlefield.
  */
 public interface ObserverBattlefield {
     /**
