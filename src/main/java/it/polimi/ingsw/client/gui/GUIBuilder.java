@@ -250,7 +250,7 @@ public class GUIBuilder extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/ErrorMessage.fxml"));
             Scene actual = mainStage.getScene();
-          //  ((StackPane) actual.lookup("#resultPane")).getChildren().clear();
+           ((StackPane) actual.lookup("#resultPane")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);
             ((StackPane) actual.lookup("#resultPane")).getChildren().add(root);
             ((StackPane) actual.lookup("#resultPane")).setVisible(true);
