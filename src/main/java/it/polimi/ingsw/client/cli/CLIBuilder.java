@@ -251,6 +251,8 @@ public class CLIBuilder implements UIActions{
     //SECTION : Class Constructor
     /**
      * Class Constructor
+     * @param colorMode is the selected color scheme for the DLI
+     * @param consoleScanner is the console Scanner
      */
     public CLIBuilder(String colorMode, Scanner consoleScanner) {
         this.consoleScanner = consoleScanner;
@@ -296,6 +298,7 @@ public class CLIBuilder implements UIActions{
 
     /**
      * Prints the notification about the God player activity
+     * @param clientController is the client-side controller
      */
     public void printGodPlayerActivity(ClientController clientController){
         System.out.print(String.format(CURSOR_UP,1));
@@ -338,6 +341,7 @@ public class CLIBuilder implements UIActions{
 
     /**
      * Prints players information
+     * @exception SantoriniException is the multi purpose exception for the game
      * @param clientController is the client-side controller
      */
     public void renderPlayersInfo(ClientController clientController) throws SantoriniException {
@@ -385,6 +389,7 @@ public class CLIBuilder implements UIActions{
 
     /**
      *  Renders the entire deck (list of cards)
+     * @exception SantoriniException is the multi purpose exception for the game
      * @param clientController is the client side controller
      */
     public void renderDeck(ClientController clientController) throws SantoriniException {

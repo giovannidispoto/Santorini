@@ -15,6 +15,8 @@ public class DivinityCard {
      * @param cardName Name of the card
      * @param cardType Type of the card, according to enum
      * @param numberOfPlayersAllowed Number of player
+     * @param chooseBasic boolean for basic turn
+     * @param cardEffect is the description of the effect
      */
     public DivinityCard(String cardName, Type cardType, boolean chooseBasic, String cardEffect, int numberOfPlayersAllowed) {
         this.cardName = cardName;

@@ -10,6 +10,7 @@ public class ExtraBlockPerimetral extends BuildEffect {
     /**
      * Class Constructor
      * @param blocksLeft set blocksLeft and blocks in turn
+     * @param turnStructure is the list of the steps for the turn
      */
     public ExtraBlockPerimetral(int blocksLeft, List<Step> turnStructure) {
         super();

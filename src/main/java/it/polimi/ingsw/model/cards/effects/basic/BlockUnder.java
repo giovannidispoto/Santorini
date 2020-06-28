@@ -8,6 +8,7 @@ import java.util.List;
 public class BlockUnder extends BasicTurn {
     /**
      * Class Constructor
+     * @param turnStructure is the list of the steps for the turn
      */
     public BlockUnder(List<Step> turnStructure) {
         super();

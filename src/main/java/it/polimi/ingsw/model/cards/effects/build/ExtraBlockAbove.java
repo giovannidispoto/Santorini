@@ -17,6 +17,7 @@ public class ExtraBlockAbove extends BuildEffect{
      * Class Constructor
      * @param buildInSameCell boolean to split the effects
      * @param blocksLeft set blocksLeft in turn
+     * @param turnStructure is the list of the steps for the turn
      */
     public ExtraBlockAbove(boolean buildInSameCell,int blocksLeft, List<Step> turnStructure) {
         super();

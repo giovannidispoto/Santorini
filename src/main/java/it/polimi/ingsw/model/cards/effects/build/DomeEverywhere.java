@@ -10,6 +10,7 @@ public class DomeEverywhere extends BuildEffect {
 
     /**
      * Class Constructor
+     * @param turnStructure is the list of the steps for the turn
      */
     public DomeEverywhere(List<Step> turnStructure){
         super.turnStructure = new ArrayList<>(turnStructure);

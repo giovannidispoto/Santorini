@@ -13,6 +13,7 @@ public class CantLevelUp extends BasicTurn {
 
     /**
      * Class Constructor
+     * @param turnStructure is the list of the steps for the turn
      */
     public CantLevelUp(List<Step> turnStructure) {
         super.turnStructure = new ArrayList<>(turnStructure);

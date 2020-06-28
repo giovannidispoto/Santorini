@@ -38,7 +38,7 @@ public class WaitManager {
      *
      * @param object    WaitObject based on the activity you are waiting for
      * @param clientController  ClientController
-     * @throws SantoriniException: if there was an error (InterruptedException)
+     * @throws SantoriniException game general purpose exception
      */
     public void setWait(WaitObject object, ClientController clientController) throws SantoriniException {
         //If the unlocking operation has already been performed

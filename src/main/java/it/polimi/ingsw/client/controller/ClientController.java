@@ -190,7 +190,7 @@ public class ClientController {
 
     /** Wait until you receive SetPickedCards message from the server
      *  N.B: Blocking method until a response is received
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void waitSetPickedCards() throws SantoriniException {
         synchronized (WaitManager.waitSetPickedCards){
@@ -200,7 +200,7 @@ public class ClientController {
 
     /** Wait until you receive SetPlayerCard message from the server
      *  N.B: Blocking method until a response is received
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void waitSetPlayerCard() throws SantoriniException {
         synchronized (WaitManager.waitSetPlayerCard){
@@ -210,7 +210,7 @@ public class ClientController {
 
     /** Wait until you receive SetWorkersPosition message from the server
      *  N.B: Blocking method until a response is received
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void waitSetWorkersPosition() throws SantoriniException {
         synchronized (WaitManager.waitSetWorkersPosition){
@@ -220,7 +220,7 @@ public class ClientController {
 
     /** Wait until you receive ActualPlayer message from the server
      *  N.B: Blocking method until a response is received
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void waitActualPlayer() throws SantoriniException {
         synchronized (WaitManager.waitActualPlayer){
@@ -230,7 +230,7 @@ public class ClientController {
 
     /** Wait until you receive WorkerViewUpdate message from the server
      *  N.B: Blocking method until a response is received
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void waitWorkerViewUpdate() throws SantoriniException {
         synchronized (WaitManager.waitWorkerViewUpdate){
@@ -248,7 +248,7 @@ public class ClientController {
      *
      * @param playerNickname    NickName Choose by the player
      * @param lobbySize Preferred size of the lobby
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void addPlayerRequest(String playerNickname, int lobbySize) throws SantoriniException {
         //Set In the Controller
@@ -265,7 +265,7 @@ public class ClientController {
     /** Communicates to the server the need to get the deck
      *  N.B: Blocking request until a response is received
      *
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void getDeckRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getDeck")));
@@ -285,7 +285,7 @@ public class ClientController {
         serverHandler.request(new Gson().toJson(new BasicMessageInterface("setPickedCards", data)));
     }
 
-    /** Communicate to the server the card chosen by the Player & save it in the ClientController
+    /** Communicate to the server the card chosen by the Player and save it in the ClientController
      *  (choice between possible cards sent by the server with the mirror command)
      *
      * @param cardName  name of the chosen card
@@ -300,7 +300,7 @@ public class ClientController {
     /** Client asks the server for PlayersList Update
      *  N.B: Blocking request until a response is received
      *
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void getPlayersRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getPlayers")));
@@ -313,7 +313,7 @@ public class ClientController {
     /** Client asks the server for Battlefield Update
      *  N.B: Blocking request until a response is received
      *
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void getBattlefieldRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("getBattlefield")));
@@ -340,7 +340,7 @@ public class ClientController {
      *  N.B: Blocking request until a response is received
      *
      * @param basicTurn     true: turn without effects, false: turn with effects from your card
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void setStartTurn(boolean basicTurn) throws SantoriniException {
         SetStartTurnInterface data = new SetStartTurnInterface(this.playerNickname, basicTurn);
@@ -357,7 +357,7 @@ public class ClientController {
      *
      * @param row     selected worker battlefield row coordinate
      * @param col     selected worker battlefield column coordinate
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void selectWorkerRequest(int row, int col) throws SantoriniException {
         SelectWorkerInterface data = new SelectWorkerInterface(this.playerNickname, row, col);
@@ -372,7 +372,7 @@ public class ClientController {
      *
      * @param row     action battlefield row coordinate
      * @param col     action battlefield column coordinate
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void playStepRequest(int row, int col) throws SantoriniException {
         PlayStepInterface data = new PlayStepInterface(row, col);
@@ -386,7 +386,7 @@ public class ClientController {
     /** Client notifies the server of the choice of player to skip the current step
      *  N.B: Blocking request until a response is received
      *
-     * @throws SantoriniException: if there was an error (usually when normal execution is stopped)
+     * @throws SantoriniException game general purpose exception
      */
     public void skipStepRequest() throws SantoriniException {
         serverHandler.request(new Gson().toJson(new BasicActionInterface("skipStep")));

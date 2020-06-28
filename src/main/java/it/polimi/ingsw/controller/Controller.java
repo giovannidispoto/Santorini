@@ -92,6 +92,8 @@ public class Controller implements ObserverPlayers {
      * @param playerNickname nickname of the last player who completed the lobby
      * @param playersInLobby list containing the nicknames of the players
      * @param handlerMap a map that uniquely links their handler to each nickname
+     * @param lobbyID is the lobby ID
+     * @param lobbyManager is the lobby manager
      */
     public void lobbyIsReady(int lobbySize, String playerNickname, List<String> playersInLobby, Map<String, ClientHandler> handlerMap, UUID lobbyID, LobbyManager lobbyManager) {
         //Set Lobby Data in Controller
@@ -199,7 +201,7 @@ public class Controller implements ObserverPlayers {
 
     /**
      * Gets deck
-     * @return
+     * @return Deck
      */
     public Deck getDeck(){
         deck = deck.getDeckAllowed(lobbySize);
@@ -238,6 +240,9 @@ public class Controller implements ObserverPlayers {
      * @param worker worker
      * @param x row position
      * @param y col position
+     * @param worker2 worker 2
+     * @param x2 row position 2
+     * @param y2 col position 2
      */
     public void setInitialWorkerPosition(String playerNickname, int worker, int x, int y, int worker2, int x2, int y2){
         if(gameState.getState() != GameStep.ADDING_WORKER){
@@ -330,6 +335,7 @@ public class Controller implements ObserverPlayers {
      * @param player player
      * @param x row
      * @param y column
+     * @param handler is the client handler
      */
     public void selectWorker(String player, ClientHandler handler,int x, int y){
         if(!Battlefield.getBattlefieldInstance().getCell(x,y).getWorker().getOwnerWorker().getPlayerNickname().equalsIgnoreCase(player))
@@ -351,6 +357,7 @@ public class Controller implements ObserverPlayers {
      * Play step in the turn (move, build or remove)
      * @param x row
      * @param y col
+     * @return step
      */
     public Step playStep(int x, int y){
         boolean winner=false;
@@ -430,6 +437,7 @@ public class Controller implements ObserverPlayers {
 
     /**
      * Skip step if possible
+     * @return step
      */
     public Step skipStep(){
         turn.skip();

@@ -40,6 +40,7 @@ public class CLIDataObject {
 
     /**
      * Class Constructor
+     * @param cliColor is the selected color scheme
      */
     public CLIDataObject(String cliColor) {
         this.cellsData = new String[5];
