@@ -228,8 +228,9 @@ public class PlayerTurn {
             return true;
 
         //build special
-        if(steps.get(0) == Step.BUILD_SPECIAL)
+        if(steps.get(0) == Step.BUILD_SPECIAL) {
             updateBuildingMatrix(steps.get(0));
+        }
 
         //for turn that have a build before a move
         if(steps.get(0) == Step.MOVE)

@@ -391,8 +391,9 @@ public class Controller implements ObserverPlayers {
                     handlers.get(match.getCurrentPlayer().getPlayerNickname()).response(new Gson().toJson(new BasicMessageResponse("actualPlayer", new ActualPlayerResponse(match.getCurrentPlayer().getPlayerNickname()))));
                 }
                 //match.removePlayer(match.getCurrentPlayer());
+                return Step.END;
             }
-            return Step.END;
+
         }
 
 
