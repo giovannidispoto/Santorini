@@ -176,24 +176,36 @@ public class Match implements SubjectPlayers {
         return this.currentPlayer;
     }
 
-    /*
-    * Observer Pattern on players
-    * */
+    /**
+     * Add observer
+     * @param o observer
+     */
     @Override
     public void attach(ObserverPlayers o) {
         observerPlayers.add(o);
     }
 
+    /**
+     * Detach observer
+     * @param o observer
+     */
     @Override
     public void detach(ObserverPlayers o) {
         observerPlayers.remove(o);
     }
 
+    /**
+     * detach all observer
+     */
     @Override
     public void detachAll() {
         observerPlayers.clear();
     }
 
+    /**
+     * Notify observer
+     * @param removedPlayer removed Player
+     */
     @Override
     public void notify(Player removedPlayer) {
         for(ObserverPlayers o : observerPlayers)
