@@ -160,7 +160,7 @@ public class Controller implements ObserverPlayers {
     }
 
     /**
-     * Set Card
+     * Set card to player
      * @param playerNickname player
      * @param card card
      */

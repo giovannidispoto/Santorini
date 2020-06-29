@@ -20,13 +20,6 @@ public abstract class Turn {
     protected boolean reachedLevel3 = false;
     protected List<Step> turnStructure;
 
-    /**
-     * Class Constructor
-     */
-    public Turn() {
-        //null
-    }
-
 
     /**
      *

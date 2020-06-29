@@ -91,7 +91,12 @@ public class Battlefield implements SubjectBattlefield {
         boardCells[newRowWorker][newColWorker].setWorker(worker);
         notifyUpdate();
     }
-
+    /**
+     * Register worker to new position
+     * @param worker subject of the action
+     * @param newColWorker new y coordinate of the worker
+     * @param newRowWorker new x coordinate of the worker
+     */
     public void updateWorkerPosition(Worker worker,int newRowWorker, int newColWorker) throws RuntimeException {
         if(!workersInGame.contains(worker))
             throw new RuntimeException("Trying to update the position of a worker that's not in game");
@@ -157,12 +162,17 @@ public class Battlefield implements SubjectBattlefield {
        return workerView;
    }
 
+    /**
+     * Gets worker view of a specified worker
+     * @param w worker
+     * @return worker view of the worker
+     */
    public Cell[][] getWorkerView(Worker w){
        return getWorkerView(w, (cell)-> true);
    }
 
     /**
-     *
+     * Gets perimeter cell of the battlefield
      * @return the perimeter cell list which contains the list of the perimeter cells
      */
    public List<Cell> getPerimeterCells() {

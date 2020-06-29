@@ -150,7 +150,7 @@ public class GUIBuilder extends Application {
 
     }
 
-    /*
+    /**
     * Shows Win Message to GUI
     * */
     public void showWin() {
@@ -170,7 +170,7 @@ public class GUIBuilder extends Application {
 
     }
 
-    /*
+    /**
      * Shows Win Message to GUI
      * */
     public void showLose(){
@@ -190,14 +190,14 @@ public class GUIBuilder extends Application {
 
     }
 
-    /*
+    /**
     * Gets controller
     * */
     public GUIController GUIController(){
         return controller;
     }
 
-    /*
+    /**
      * Shows Cards in Game View
      * */
     public void showCards() {
@@ -224,7 +224,7 @@ public class GUIBuilder extends Application {
         }
     }
 
-    /*
+    /**
      * Shows error message on GUI
      * */
     public void showError() {
@@ -242,7 +242,7 @@ public class GUIBuilder extends Application {
         }
     }
 
-    /*
+    /**
      * Shows error message on GUI while in Picking Card phase
      * */
     public void showErrorPicker(){
@@ -250,7 +250,7 @@ public class GUIBuilder extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/ErrorMessage.fxml"));
             Scene actual = mainStage.getScene();
-          //  ((StackPane) actual.lookup("#resultPane")).getChildren().clear();
+           ((StackPane) actual.lookup("#resultPane")).getChildren().clear();
             actual.lookup("#blurResult").setVisible(true);
             ((StackPane) actual.lookup("#resultPane")).getChildren().add(root);
             ((StackPane) actual.lookup("#resultPane")).setVisible(true);
@@ -261,7 +261,7 @@ public class GUIBuilder extends Application {
     }
 
 
-    /*
+    /**
     * ListView template used for showing cards in game information
     * */
     private class BuildCell extends ListCell<String> {
@@ -279,6 +279,7 @@ public class GUIBuilder extends Application {
             }
             setGraphic(root);
         }
+        
         @Override
         protected void updateItem(String item, boolean empty) {
 
