@@ -14,7 +14,7 @@ public interface SubjectBattlefield {
 
     /**
      * Detech observer from subject
-     * @param o
+     * @param o observer
      */
     public void detach(ObserverBattlefield o);
 

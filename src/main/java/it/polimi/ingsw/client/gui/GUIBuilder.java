@@ -192,6 +192,7 @@ public class GUIBuilder extends Application {
 
     /**
     * Gets controller
+     * @return controller
     * */
     public GUIController GUIController(){
         return controller;
