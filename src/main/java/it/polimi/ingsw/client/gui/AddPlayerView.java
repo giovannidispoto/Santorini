@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.controller.ExceptionMessages;
 import it.polimi.ingsw.client.controller.GameState;
 import it.polimi.ingsw.client.controller.SantoriniException;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,6 +37,30 @@ public class AddPlayerView extends Scene {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         btn.setDisable(true);
+
+        /*
+         * Interrupt thread used for catching end of the game
+         * */
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (this){
+                    try{
+                        wait();
+                    }catch( InterruptedException e){
+                        //If the user if winner show relative view
+                        Platform.runLater(()->terminalLabel.setTextFill(Color.web("#FC2A5D",1)));
+                        Platform.runLater(()->terminalLabel.setText("Server Error!"));
+                        nicknameField.setDisable(true);
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        });
+
+
+        t.start();
+        GUIController.getController().registerControllerThread(t);
 
         /*
         * Enable button when user insert username
