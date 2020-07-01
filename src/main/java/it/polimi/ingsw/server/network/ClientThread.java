@@ -10,7 +10,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- *
+ * ClientThread is the thread created for comunicate with client.
+ * Every client connected has is own thread.
  */
 public class ClientThread implements Runnable {
 
