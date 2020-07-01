@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * ExtraMove class represents the effect that allows the player to do an extra move
+ * ExtraMove Effect
  */
 public class ExtraMove extends MoveEffect {
     int oldRow;

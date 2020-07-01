@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.cards.effects.global.NoLevelUpCondition;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * NoMoveUp Effect
+ */
 public class NoMoveUp extends MoveEffect {
     /**
      * Class Constructor

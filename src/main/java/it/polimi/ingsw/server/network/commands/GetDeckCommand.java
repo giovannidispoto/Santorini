@@ -7,8 +7,8 @@ import it.polimi.ingsw.server.network.ClientHandler;
 import it.polimi.ingsw.server.network.messagesInterfaces.BasicMessageResponse;
 
 /**
- *
- */
+ * GetDecKCommand  class represent getDeck action from the client
+ * */
 public class GetDeckCommand implements Command{
     private Deck deck;
     /**

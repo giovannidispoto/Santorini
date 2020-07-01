@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.cards.effects.global;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Player;
 
+/**
+ * GlobalWin condition
+ */
 public abstract class GlobalWinCondition {
     private final Player subject;
     private final Match match;

@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ExtraBlockAbove Effect
+ */
 public class ExtraBlockAbove extends BuildEffect{
     private final boolean buildInSameCell;
     private int lastBuiltBlockRow_SameCell;

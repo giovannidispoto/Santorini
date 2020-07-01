@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.Step;
 
 import java.util.ArrayList;
 
+/**
+ * BasicTurn class
+ */
 public class BasicTurn extends Turn {
 
     /**

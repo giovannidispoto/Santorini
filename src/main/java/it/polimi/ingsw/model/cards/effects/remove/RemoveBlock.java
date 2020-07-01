@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RemoveBlock Effect
+ */
 public class RemoveBlock extends BasicRemove {
     /**
      * Class Constructor

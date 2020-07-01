@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.Step;
 
 import java.util.List;
 
+/**
+ * BlockUnder Effect
+ */
 public class BlockUnder extends BasicTurn {
     /**
      * Class Constructor

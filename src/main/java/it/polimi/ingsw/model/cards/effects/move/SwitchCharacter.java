@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SwitchCharacter Effect
+ */
 public class SwitchCharacter extends MoveEffect {
     /**
      * Class Constructor

@@ -6,7 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * PushCharacter Effect
+ */
 public class PushCharacter extends MoveEffect {
     /**
      * Class Constructor

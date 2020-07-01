@@ -4,6 +4,9 @@ import it.polimi.ingsw.model.Battlefield;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.Worker;
 
+/**
+ * MoveEffect class
+ */
 public abstract class MoveEffect extends Turn {
 
     /**

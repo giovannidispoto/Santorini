@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DomeEveryWhere Effect
+ */
 public class DomeEverywhere extends BuildEffect {
 
     /**

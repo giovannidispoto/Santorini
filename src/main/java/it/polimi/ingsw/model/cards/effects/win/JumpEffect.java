@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.Worker;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JumpEffect effect
+ */
 public class JumpEffect extends WinEffect {
     private int oldRow;
     private int oldCol;

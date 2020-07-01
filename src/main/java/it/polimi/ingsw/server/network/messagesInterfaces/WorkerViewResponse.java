@@ -7,6 +7,10 @@ package it.polimi.ingsw.server.network.messagesInterfaces;
 public class WorkerViewResponse {
     private boolean workerView[][];
 
+    /**
+     * Create new response
+     * @param workerView worker view
+     */
     public WorkerViewResponse(boolean [][] workerView){
         this.workerView = workerView;
     }

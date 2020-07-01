@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.Worker;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ExtraMovePerimeter Effect
+ */
 public class ExtraMovePerimeter extends MoveEffect {
     /**
      * Class Constructor

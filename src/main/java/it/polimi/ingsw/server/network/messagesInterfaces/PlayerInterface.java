@@ -22,14 +22,26 @@ public class PlayerInterface {
         this.card = card.toUpperCase();
     }
 
+    /**
+     * Gets playerNickname
+     * @return playerNickname
+     */
     public String getPlayerNickname() {
         return playerNickname;
     }
 
+    /**
+     * Gets player's workerd color
+     * @return workers color
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Gets card of the player
+     * @return card
+     */
     public String getCard(){
         return card;
     }

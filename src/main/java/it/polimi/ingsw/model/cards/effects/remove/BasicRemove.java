@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.Worker;
 
+/**
+ * BasicRemove class
+ */
 public abstract class BasicRemove extends Turn {
     /**
      * Class Constructor

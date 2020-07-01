@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ExtraBlockPerimetral Effect
+ */
 public class ExtraBlockPerimetral extends BuildEffect {
     /**
      * Class Constructor
