@@ -165,7 +165,6 @@ public class BattlefieldView extends Scene {
                         if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.winMessage)){
                             Platform.runLater(() -> guiBuilder.showWin());
                         }else if(GUIController.getController().getGameException().getMessage().equals(ExceptionMessages.loseMessage)){
-                            System.out.println("You Lose");
                             Platform.runLater(() -> guiBuilder.showLose());
                         }else{
                             Platform.runLater(() -> guiBuilder.showError());
