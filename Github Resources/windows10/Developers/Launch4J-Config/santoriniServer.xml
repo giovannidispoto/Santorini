@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>console</headerType>
-  <jar>C:\Users\ProgettoFinale-IDS\Desktop\Santorini\serverAM28.jar</jar>
+  <jar>C:\Users\ProgettoFinale-IDS\Desktop\Santorini\SantoriniServerAM28.jar</jar>
   <outfile>C:\Users\ProgettoFinale-IDS\Desktop\SantoriniServerAM28\SantoriniServerAM28.exe</outfile>
   <errTitle>Santorini Server Error</errTitle>
   <cmdLine></cmdLine>
