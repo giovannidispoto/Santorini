@@ -24,9 +24,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+/**
+ * SelectCard view of the game
+ */
 public class SelectCardView extends Scene {
     private Map<String,Boolean> map;
 
+    /**
+     * Create view
+     * @param root parent
+     * @param builder GUIBuilder
+     * @param god true if is view of the god player, false otherwise
+     * @throws IOException IOException
+     * @throws ExecutionException ExecutionException
+     * @throws InterruptedException InterruptedException
+     */
     public SelectCardView(Parent root, GUIBuilder builder, boolean god) throws IOException, ExecutionException, InterruptedException {
         super(root);
         Task<Void> wait = null;
@@ -188,6 +200,9 @@ public class SelectCardView extends Scene {
 
     }
 
+    /**
+     * Hide wait message
+     */
     public void hideWait() {
         try {
             Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));
@@ -198,6 +213,9 @@ public class SelectCardView extends Scene {
         }
     }
 
+    /**
+     * Show wait message
+     */
     public void showWait() {
         try {
             Parent view = FXMLLoader.load(getClass().getResource("/WaitMessage.fxml"));

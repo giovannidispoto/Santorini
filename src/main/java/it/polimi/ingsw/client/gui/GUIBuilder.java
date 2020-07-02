@@ -29,6 +29,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+/**
+ * GUIBuilder create GUI and, showing and hiding windows in phases of the game
+ */
 public class GUIBuilder extends Application {
 
     private Scene mainScene;
@@ -51,10 +54,11 @@ public class GUIBuilder extends Application {
     }
 
 
-
-    /*
-    * Create JavaFx Application
-    * */
+    /**
+     * Create Window
+     * @param stage Stage
+     * @throws Exception exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
@@ -79,7 +83,10 @@ public class GUIBuilder extends Application {
         stage.show();
     }
 
-
+    /**
+     * Launch GUI
+     * @param controller controller
+     */
     public void launchGUI(GUIController controller){
         launch();
     }

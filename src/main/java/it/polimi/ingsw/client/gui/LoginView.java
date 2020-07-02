@@ -14,10 +14,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/* Login View */
+/**
+ * Login View of the game
+ */
 public class LoginView {
 
-
+    /**
+     * Create Login View
+     * @param root root
+     * @param builder GUIBuilder
+     */
     public LoginView(Parent root, GUIBuilder builder) {
             /* Looking up element on fxml */
             Button btn = (Button) root.lookup("#connectButton");

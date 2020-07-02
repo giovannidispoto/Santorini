@@ -12,12 +12,20 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * CardsInfoView shows information about effects of the cards
+ */
 public class CardsInfoView extends Scene {
 
+    /**
+     * Create Scene
+     * @param parent parent
+     */
     public CardsInfoView(Parent parent) {
         super(parent);
         VBox cardBox = ((VBox) lookup("#cardBox"));
         ExecutorService executorService = Executors.newSingleThreadExecutor();
+        /* Send request to controller */
         Task<Void> wait = new Task<>() {
             @Override
             protected Void call() throws Exception {

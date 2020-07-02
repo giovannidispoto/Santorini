@@ -33,6 +33,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+/**
+ * Battlefield of the game
+ */
 public class BattlefieldView extends Scene {
 
     private GridPane battlefieldGrid;
@@ -50,7 +53,11 @@ public class BattlefieldView extends Scene {
     private Pair<Integer, Integer> selectedWorker = new Pair<>(-1,-1);
     private Button skipButton;
 
-
+    /**
+     * Create Battlefield Scene
+     * @param root parent
+     * @param guiBuilder GUIBuilder
+     */
     public BattlefieldView(Parent root, GUIBuilder guiBuilder) {
         super(root);
         this.root = root;
@@ -678,7 +685,7 @@ public class BattlefieldView extends Scene {
          * */
         for(int i = 0; i < BattlefieldClient.N_ROWS; i++){
             for(int j = 0; j < BattlefieldClient.N_COLUMNS; j++){
-                /**
+                /*
                  * Render Towers
                  */
                 if(BattlefieldClient.getBattlefieldInstance().getCell(i,j).getHeight() > 0){
