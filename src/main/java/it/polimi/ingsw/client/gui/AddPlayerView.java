@@ -127,7 +127,14 @@ public class AddPlayerView extends Scene {
            };
 
             sendRequest.setOnSucceeded(event->{
-                if(GUIController.getController().getValidNick())
+                if(GUIController.getController().isFullLobby()){
+                    btn.setDisable(false);
+                    nicknameField.setDisable(false);
+                    btn1.setDisable(false);
+                    btn2.setDisable(false);
+                    terminalLabel.setTextFill(Color.web("#FC2A5D",1));
+                    terminalLabel.setText("It seems that server is full..");
+                } else if(GUIController.getController().getValidNick())
                 {
                     terminalLabel.setTextFill(Color.web("#49CA3E",1));
                     terminalLabel.setText("Success! Wait for the match startup...");
