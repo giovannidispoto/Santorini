@@ -113,7 +113,7 @@ public class CLIBuilder implements UIActions{
     private static final String REPEAT_REQUEST = "Repeat request";
 
     //Web
-    private static final String SOCKET_PORT = "Socket Port ⛩";
+    private static final String SOCKET_PORT = "Socket Port 🚪";
     private static final String PORT_SUGGESTION = "We suggest you the port 1337 • ";
     private static final String SERVER_IP = "Server IP 🌍";
     private static final String NICKNAME = "Nickname ✏️";
@@ -607,7 +607,7 @@ public class CLIBuilder implements UIActions{
             /*  # Setup Socket Port #
                 Server IP 🌍
                 >
-                Socket Port ⛩
+                Socket Port 🚪
                 We suggest you the port 1337 • >
                 |
             */
@@ -624,7 +624,7 @@ public class CLIBuilder implements UIActions{
                 /*  # Connection Success #
                     Server IP 🌍
                     >
-                    Socket Port ⛩
+                    Socket Port 🚪
                     We suggest you the port 1337 • >
                     Handshaking with 192.168.1.9 on port 1337...🦖
                     |
@@ -634,7 +634,7 @@ public class CLIBuilder implements UIActions{
                 /*  # Connection Success #
                     Server IP 🌍
                     >
-                    Socket Port ⛩
+                    Socket Port 🚪
                     We suggest you the port 1337 • >
                     Handshaking with 192.168.1.9 on port 1337...🦖
                     Connection established!
@@ -656,7 +656,7 @@ public class CLIBuilder implements UIActions{
         /*  # Nickname Setup #
             Server IP 🌍
             >
-            Socket Port ⛩
+            Socket Port 🚪
             We suggest you the port 1337 • >
             Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
@@ -670,7 +670,7 @@ public class CLIBuilder implements UIActions{
         /*  # Lobby Setup #
             Server IP 🌍
             >
-            Socket Port ⛩
+            Socket Port 🚪
             We suggest you the port 1337 • >
             Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
@@ -694,7 +694,7 @@ public class CLIBuilder implements UIActions{
             /*  # Lobby Setup #
                 Server IP 🌍
                 >
-                Socket Port ⛩
+                Socket Port 🚪
                 We suggest you the port 1337 • >
                 Handshaking with 192.168.1.9 on port 1337...🦖
                 Connection established!
@@ -729,7 +729,7 @@ public class CLIBuilder implements UIActions{
             /*  # Nickname Unavailable #
                 Server IP 🌍
                 >
-                Socket Port ⛩
+                Socket Port 🚪
                 We suggest you the port 1337 • >
                 Handshaking with 192.168.1.9 on port 1337...🦖
                 Connection established!
@@ -768,7 +768,7 @@ public class CLIBuilder implements UIActions{
         /*  # Setup Completed! #
             Server IP 🌍
             >
-            Socket Port ⛩
+            Socket Port 🚪
             We suggest you the port 1337 • >
             Handshaking with 192.168.1.9 on port 1337...🦖
             Connection established!
@@ -943,7 +943,7 @@ public class CLIBuilder implements UIActions{
         /* Scheme
          * 0 |            BOARD
          * 1 |
-         * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+         * 2 |     0   1   2   3   4      FULL TOWERS 🏠
          * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
          * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 0 ┊
          * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
@@ -1071,7 +1071,7 @@ public class CLIBuilder implements UIActions{
         /* Scheme
          * 0 |            BOARD
          * 1 |
-         * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+         * 2 |     0   1   2   3   4      FULL TOWERS 🏠
          * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
          * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 0 ┊
          * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
@@ -1224,7 +1224,7 @@ public class CLIBuilder implements UIActions{
         /* Scheme
          * 0 |            BOARD
          * 1 |
-         * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+         * 2 |     0   1   2   3   4      FULL TOWERS 🏠
          * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
          * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
          * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
@@ -1338,7 +1338,7 @@ public class CLIBuilder implements UIActions{
         /* Scheme
          * 0 |            BOARD
          * 1 |
-         * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+         * 2 |     0   1   2   3   4      FULL TOWERS 🏠
          * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
          * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
          * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
@@ -1451,7 +1451,7 @@ public class CLIBuilder implements UIActions{
         /* Scheme
          * 0 |            BOARD
          * 1 |
-         * 2 |     0   1   2   3   4      FULL TOWERS 🏗
+         * 2 |     0   1   2   3   4      FULL TOWERS 🏠
          * 3 |   ┏━━━┳━━━┳━━━┳━━━┳━━━┓    ┌╌╌╌┐
          * 4 | 0 ┃   ┃   ┃   ┃   ┃   ┃    ┊ 4 ┊
          * 5 |   ┣━━━╋━━━╋━━━╋━━━╋━━━┫    └╌╌╌┘
