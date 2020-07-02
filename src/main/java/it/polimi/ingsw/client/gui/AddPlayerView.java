@@ -128,12 +128,12 @@ public class AddPlayerView extends Scene {
 
             sendRequest.setOnSucceeded(event->{
                 if(GUIController.getController().isFullLobby()){
-                    btn.setDisable(false);
-                    nicknameField.setDisable(false);
-                    btn1.setDisable(false);
-                    btn2.setDisable(false);
+                    btn.setDisable(true);
+                    nicknameField.setDisable(true);
+                    btn1.setDisable(true);
+                    btn2.setDisable(true);
                     terminalLabel.setTextFill(Color.web("#FC2A5D",1));
-                    terminalLabel.setText("It seems that server is full..");
+                    terminalLabel.setText("The server is crowded...try later!️");
                 } else if(GUIController.getController().getValidNick())
                 {
                     terminalLabel.setTextFill(Color.web("#49CA3E",1));
