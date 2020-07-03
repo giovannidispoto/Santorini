@@ -71,7 +71,7 @@ public class PlayerTurn {
             if(currentStep == Step.MOVE_SPECIAL){
                 this.skip();
             }else {
-                //TODO: Player LOSE
+                //worker matrix invalid
                 return false;
             }
         }
@@ -94,7 +94,7 @@ public class PlayerTurn {
             if(currentStep == Step.BUILD_SPECIAL){
                 this.skip();
             }else {
-                //TODO: Player LOSE
+                //worker matrix invalid
                 match.removePlayer(match.getCurrentPlayer());
                 return false;
             }
@@ -132,7 +132,25 @@ public class PlayerTurn {
         List<Cell[][]> workerViews = new ArrayList<>();
 
         for(Worker w: match.getCurrentPlayer().getPlayerWorkers()){
-            workerViews.add(currentTurn.generateMovementMatrix(w));
+            //workerViews.add(currentTurn.generateMovementMatrix(w));
+
+            switch (getCurrentStep()){
+                case MOVE:
+                case MOVE_UNTIL:
+                case MOVE_SPECIAL:
+                    w.setWorkerView(currentTurn.generateMovementMatrix(w));
+                    break;
+                case BUILD:
+                case BUILD_SPECIAL:
+                    w.setWorkerView(currentTurn.generateBuildingMatrix(w));
+                    break;
+                case REMOVE:
+                    w.setWorkerView(currentTurn.generateRemoveMatrix(w));
+                    break;
+            }
+
+            match.checkMatchGlobalEffects(w);
+            workerViews.add(w.getWorkerView());
         }
 
         for(Cell[][] workerView: workerViews){

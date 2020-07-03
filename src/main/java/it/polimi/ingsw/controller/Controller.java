@@ -403,8 +403,7 @@ public class Controller implements ObserverPlayers {
         }
         else if(winner){
             declareWinner(match.getWinner());
-            //TODO: END GAME
-            //For security, lock the current player
+            //For security, set current step to end
             this.lobbyManager.gameEnded(this.lobbyID);
             turn.setCurrentSteptoEnd();
         }
