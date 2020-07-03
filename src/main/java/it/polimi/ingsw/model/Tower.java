@@ -63,7 +63,7 @@ public class Tower {
      * @throws RuntimeException if the tower has no blocks
      */
     public void removeLatestBlock() throws RuntimeException{
-        /* TODO: Check if tower is not completed => last block is a dome*/
+        /* Check if tower is not completed => last block is a dome*/
         if(towerBlocks.get(towerBlocks.size()-1) == Block.DOME)
             throw new RuntimeException("Trying to remove Dome");
         if(towerBlocks.size() == 1 )

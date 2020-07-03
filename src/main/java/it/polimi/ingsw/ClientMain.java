@@ -51,11 +51,14 @@ public class ClientMain {
                 userInterface.callErrorMessage(e.getMessage());
             }
 
-            //TODO: testing
+            /*
+            To continue the game, check the thread flag, if it has been blocked,
+            check the type of game state and restart the game or shutdown ...
+
             if(Thread.interrupted()){
                 clientController.loggerIO.severe("Thread interrupted but now ready (test)\n");
             }
-
+             */
         }
     }
 }
