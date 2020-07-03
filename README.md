@@ -11,7 +11,8 @@ We have written an exhaustive wiki about the game and the features that we have 
 https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/wiki
 
 ## Project Status 🏗
-**Current** : Everything is finished. We're currently playing some matches between us</br>
+**Latest Releases :** [LINK](https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/releases/)<br>
+**Current Step :** Everything is finished. We're currently playing some matches between us</br>
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
 | Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
