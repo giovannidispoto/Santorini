@@ -1,10 +1,10 @@
 # Prova Finale Ingegneria del Software 2020
 ## Gruppo AM28 👷🏻‍♂️ 
-| Personal Data | Username | ID | Email |
-|---------------|----------|----|-------|
-|Dario Crippa|[@AstroWLAN](https://github.com/AstroWLAN)|10529288|dario2.crippa@mail.polimi.it|
-|Giovanni Dispoto|[@giovannidispoto](https://github.com/giovannidispoto)|10540027|giovanni.dispoto@mail.polimi.it|
-|Stefano Facchinetti|[@Gorlenah](https://github.com/Gorlenah)|10538529|stefano1.facchinetti@mail.polimi.it|
+| Personal Data | Username | Email |
+|---------------|----------|-------|
+|Dario Crippa|[@AstroWLAN](https://github.com/AstroWLAN)|dario2.crippa@mail.polimi.it|
+|Giovanni Dispoto|[@giovannidispoto](https://github.com/giovannidispoto)|giovanni.dispoto@mail.polimi.it|
+|Stefano Facchinetti|[@Gorlenah](https://github.com/Gorlenah)|stefano1.facchinetti@mail.polimi.it|
 
 ## Wiki 📚
 We have written an exhaustive wiki about the game and the features that we have implemented<br/>
