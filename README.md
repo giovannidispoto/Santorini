@@ -11,7 +11,7 @@ We have written an exhaustive wiki about the game and the features that we have 
 https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/wiki
 
 ## Project Status 🏗
-**Latest Releases :** [LINK](https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/releases/)<br>
+**Latest Release :** [LINK](https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/releases/)<br>
 **Current Step :** Everything is finished. We're currently playing some matches among us</br>
 | Functionality | State | Type |
 |:-----------------------|:------------------------------------:|:---------------------:|
@@ -20,7 +20,7 @@ https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/wiki
 | Socket | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic 🌱 |
 | GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic 🌱 |
 | CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic 🌱 |
-| Multiple games | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Advanced 🔥 |
+| Multiple Matches | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Advanced 🔥 |
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) | Advanced 🔥 |
 | Advanced Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Advanced 🔥 |
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#) | Advanced 🔥 |
