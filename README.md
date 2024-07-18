@@ -1,12 +1,19 @@
-## Santorini 🏛️
+# Santorini 
+> Project for the Software Engineering course A.Y. 2020/2021 @Polimi
+
+| Author 👨🏼‍💻 | Release 💿 | Version 📐 | Language ☕️ | 
+| :--- | :--- | :--- | :--- |
+| Team AM28 | [Download](https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/releases/) | `1.0.0` | `Java` |
+## Concept 🏛️
 > Santorini is an abstract strategy board game for 2-4 players, set on a 3D grid where players move workers and build structures. The goal is to be the first to move a worker to the top of a three-story building, using tactical positioning and blocking strategies.
 <div align="center">
   <img src="Github Resources/Screenshots/Game/GUIBoardExample.png" width="60%">
 </div>
 
 ## Project Status 🏗
-The **latest release** is available [here](https://github.com/giovannidispoto/ing-sw-2020-Crippa-Dispoto-Facchinetti/releases/)<br>
-Actually the project is finished and has been evaluated so it is not under development anymore
+> The red square means that the feature has not been developed since it was not assigned to us
+
+The project is finished and has been evaluated so it is not under development anymore
 
 | Func ⚙️ | State 🩻 | Type 🏷️ |
 |:--|:--:|:--|
@@ -25,7 +32,6 @@ Actually the project is finished and has been evaluated so it is not under devel
 [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)
 [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)
 -->
-> The red square means that the feature has not been developed since it was not assigned to us
 ## Team👷🏻‍♂️
 We are team **AM28** under the supervision of [prof](https://margara.faculty.polimi.it) Margara
 
