@@ -1,5 +1,5 @@
 # Santorini 
-> Project for the Software Engineering course A.Y. 2020/2021 @Polimi
+> Project for the Software Engineering course A.Y. 2020/2021 @Polimi conducted in collaboration with Cranio Creations
 
 | Author 👨🏼‍💻 | Release 💿 | Version 📐 | Language ☕️ | 
 | :--- | :--- | :--- | :--- |
@@ -38,7 +38,7 @@ We are team **AM28** under the supervision of [prof](https://margara.faculty.pol
 | Member 👤 | Username 👾 | Email 📨 | Tasks 📋|
 |:--|:--|:--|:--|
 |Dario Crippa|[@AstroWLAN](https://github.com/AstroWLAN)|dario2.crippa@mail.polimi.it|Model and User Interface [CLI + minor GUI]
-|Giovanni Dispoto|[@giovannidispoto](https://github.com/giovannidispoto)|giovanni.dispoto@mail.polimi.it|Model and User Interface [GUI]
+|Giovanni Dispoto|[@giovannidispoto](https://github.com/giovannidispoto)|giovanni.dispoto@polimi.it|Model and User Interface [GUI]
 |Stefano Facchinetti|[@Gorlenah](https://github.com/Gorlenah)|stefano1.facchinetti@mail.polimi.it|Communication
 
 ## Wiki 🤓
