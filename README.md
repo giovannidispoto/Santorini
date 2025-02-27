@@ -11,27 +11,22 @@
 </div>
 
 ## Project Status 🏗
-> The red square means that the feature has not been developed since it was not assigned to us
+> The red dots means that the feature has not been developed since it was not assigned to us
 
 The project is finished and has been evaluated so it is not under development anymore
 
 | Func ⚙️ | State 🩻 | Type 🏷️ |
 |:--|:--:|:--|
-| Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic |
-| Complete rules |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic |
-| Socket | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic |
-| GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic |
-| CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Basic |
-| Multiple Matches | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Advanced |
-| Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) | Advanced |
-| Advanced Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) | Advanced |
-| Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#) | Advanced |
+| Basic rules | 🟢 | Basic |
+| Complete rules |🟢 | Basic |
+| Socket | 🟢 | Basic |
+| GUI | 🟢 | Basic |
+| CLI | 🟢 | Basic |
+| Multiple Matches | 🟢 | Advanced |
+| Persistence | 🔴 | Advanced |
+| Advanced Gods | 🟢 | Advanced |
+| Undo | 🔴 | Advanced |
 
-<!--
-[![RED](https://placehold.it/15/f03c15/f03c15)](#)
-[![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)
-[![GREEN](https://placehold.it/15/44bb44/44bb44)](#)
--->
 ## Team👷🏻‍♂️
 We are team **AM28** under the supervision of [prof](https://margara.faculty.polimi.it) Margara
 
